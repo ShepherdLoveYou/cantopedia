@@ -10,19 +10,93 @@ ingredients:
   - ref: beef-brisket
     qty: 9
     unit: 件
+    prep:
+      yue: 預先用柱侯醬炆好嘅牛腩塊（同 #28 共用）
+      zh: 预先用柱侯酱炖好的牛腩块（与 #28 共用）
+      en: pre-braised brisket cubes in chu hou sauce (same prep as #28)
   - ref: long-bean
     qty: 3
     unit: 兩
+    prep:
+      yue: 切 5 cm 段、飛水後過冷河瀝乾
+      zh: 切 5 cm 段、飞水后过冷水沥干
+      en: cut into 5 cm segments, blanched and shocked in cold water
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎
+      zh: 拍碎
+      en: smashed
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+  - ref: chu-hou-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 牛腩本身嘅柱侯炆汁 3 匙
+      zh: 牛腩本身的柱侯炖汁 3 勺
+      en: 3 Tbsp of the chu hou braising liquid the brisket cooked in
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒熱落 1 匙油，落蒜頭爆 10 秒，再落洋蔥大火炒 30 秒到表面金黃帶焦邊。
+      zh: 锅烧热下 1 勺油，下蒜头爆 10 秒，再下洋葱大火炒 30 秒至表面金黄带焦边。
+      en: Heat 1 Tbsp oil in a wok. Fry the garlic 10 seconds, then add the onion and stir-fry on high for 30 seconds until golden with charred edges.
+    time_seconds: 40
+  - order: 2
+    body:
+      yue: 落豆仔翻炒 60 秒到表面起皺紋、出豆香——「炒豆」唔可以淨係飛水算，鑊氣係靈魂。
+      zh: 下豆仔翻炒 60 秒至表面起皱、出豆香——「炒豆」不能只飞水了事，镬气是灵魂。
+      en: Add the long beans and stir-fry for 60 seconds until the skin wrinkles and the beans turn fragrant — never just blanched; the wok hei is essential.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 落已經炆好嘅牛腩塊，倒入柱侯汁，翻 30 秒令牛腩同豆仔都裹勻汁。
+      zh: 下已炖好的牛腩块，倒入柱侯汁，翻 30 秒令牛腩与豆仔都裹匀汁。
+      en: Add the pre-braised brisket and the chu hou braising liquid. Toss for 30 seconds so the meat and beans are evenly coated.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 白飯一碗倒扣喺碟中央，淋上牛腩同豆仔，多餘嘅汁淋少少喺白飯邊上，即上枱。
+      zh: 白饭一碗倒扣在碟中央，淋上牛腩与豆仔，多余的汁淋少许在白饭边上，即可上桌。
+      en: Invert the bowl of rice in the centre of a plate, ladle the brisket and beans on top, drizzle excess sauce around the edge of the rice, and serve.
+tips:
+  - yue: 豆仔（yard-long bean / 豇豆）唔同青豆——豆仔皮帶纖維、需要先飛水定型、再炒先唔會生青味。
+    zh: 豆仔（yard-long bean / 豇豆）不同于青豆——豆仔皮带纤维、需先飞水定型、再炒才不会有生青味。
+    en: Long bean (yard-long bean / 豇豆) is fibrous and needs to be blanched before stir-frying to set the texture and remove the raw vegetal note. Distinct from regular green beans or peas.
+  - yue: 牛腩同豆仔嘅組合源自客家菜——客家人喺廣東山區用豆仔調節肥膩、用牛腩補蛋白，呢個菜由客家入粵後傳入香港。
+    zh: 牛腩与豆仔的组合源自客家菜——客家人在广东山区以豆仔调节肥腻、以牛腩补蛋白，此菜从客家传入粤菜后再到香港。
+    en: The brisket-and-long-bean pairing comes from Hakka cuisine — Hakka cooks in the Guangdong mountains used long beans to cut richness and brisket for protein. The combination spread through Cantonese cuisine into Hong Kong.
+  - yue: 牛腩炆汁可以用嚟「醬汁」——茶餐廳通常會炆一大鍋牛腩，剩低嘅汁用嚟做配菜，呢個成本控制係小店生存之道。
+    zh: 牛腩炖汁可以做「酱汁」——茶餐厅常炖一大锅牛腩，剩下的汁用来做配菜，是小店成本控制的智慧。
+    en: The braising liquid is a precious resource — HK tea-restaurants reuse it as the sauce for noodle and rice dishes throughout the day. This kind of frugality is the economic logic of the small tea-restaurant.
+history:
+  yue: 豆仔牛腩飯反映客家菜對粵菜嘅影響——客家人喺粵北山區因為氣候濕冷而發展出「以豆制肥」嘅烹飪邏輯。豆仔搭配油重食材幫助消化、豐富口感。今日呢個菜係香港茶餐廳午市套餐嘅基本選擇之一，配白飯食得飽。
+  zh: 豆仔牛腩饭反映客家菜对粤菜的影响——客家人在粤北山区因气候湿冷而发展出「以豆制肥」的烹饪逻辑。豆仔搭配油重食材帮助消化、丰富口感。今天此菜是香港茶餐厅午市套餐的基本选择之一，配白饭吃得饱。
+  en: This dish reflects the Hakka influence on Cantonese cuisine — Hakka cooks in the cool wet mountains of northern Guangdong developed the principle of "beans against richness," using legumes to lighten heavy proteins. Long beans paired with fatty brisket aid digestion and balance the dish. Today it is a staple of the Hong Kong tea-restaurant lunch set, always served over rice.
+allergens:
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #20 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #20 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

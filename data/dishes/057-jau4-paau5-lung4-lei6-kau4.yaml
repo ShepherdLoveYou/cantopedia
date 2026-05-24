@@ -7,22 +7,96 @@ names:
   en: Oil-blanched Sole Balls
 category: main
 ingredients:
-  - ref: celery
-    qty: 5
-    unit: 兩
   - ref: sole-balls
     qty: 5
     unit: 兩
+    prep:
+      yue: 龍利柳切大塊（每塊約 30 g）、用蛋白漿 + 生粉漿薄薄一層
+      zh: 龙利柳切大块（每块约 30 g）、用蛋白浆 + 生粉浆薄薄一层
+      en: sole fillet cut into large pieces (~30 g each); coated with thin egg-white-and-cornstarch slurry
+  - ref: celery
+    qty: 5
+    unit: 兩
+    prep:
+      yue: 西芹去筋斜切片，飛水 30 秒過冷河
+      zh: 西芹去筋斜切片，飞水 30 秒过冷水
+      en: celery destringed and sliced diagonally; blanched 30 seconds and shocked
   - ref: onion
     qty: 1
     unit: 兩
+    prep:
+      yue: 切粒
+      zh: 切粒
+      en: diced
   - ref: oil-poach-mix
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 油泡料——鹽 1/2 茶匙 + 雞粉少少 + 紹興酒 1 茶匙 + 雞湯 2 匙 + 生粉 1/2 茶匙
+      zh: 油泡料——盐 1/2 茶匙 + 鸡粉少许 + 绍兴酒 1 茶匙 + 鸡汤 2 勺 + 生粉 1/2 茶匙
+      en: oil-blanching seasoning — ½ tsp salt + pinch chicken bouillon + 1 tsp Shaoxing + 2 Tbsp chicken stock + ½ tsp cornstarch
+  - ref: ginger
+    qty: 2
+    unit: 片
+    prep:
+      yue: 切薄片
+      zh: 切薄片
+      en: thinly sliced
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎
+      zh: 拍碎
+      en: smashed
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 15
+  cook: 4
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 油泡——鑊燒油到 120-130°C（油溫一定要低），落龍利球輕輕推散，浸炸 30 秒到剛剛變白即撈起瀝油。「油泡」係粵菜獨有手法，低溫慢浸保住魚肉嫩滑。
+      zh: 油泡——锅烧油至 120-130°C（油温必须低），下龙利球轻轻推散，浸炸 30 秒至刚变白即捞起沥油。「油泡」是粤菜独有手法，低温慢浸保住鱼肉嫩滑。
+      en: Oil-blanch — heat oil to 120-130°C / 250-265°F (must be low). Slip the sole pieces in, gently nudge apart, and bathe for 30 seconds until just opaque white; remove and drain. This Cantonese-specific technique uses low-temp oil to set the protein while preserving silky texture.
+    temperature_c: 125
+    time_seconds: 30
+  - order: 2
+    body:
+      yue: 鑊餘油大概 1 匙，落薑片同蒜頭爆 10 秒香氣出嚟，落洋蔥粒同西芹片翻炒 30 秒到斷生。
+      zh: 锅余油约 1 勺，下姜片与蒜头爆 10 秒出香气，下洋葱粒与西芹片翻炒 30 秒至断生。
+      en: With about 1 Tbsp oil remaining, fry the ginger and garlic 10 seconds, add the diced onion and celery, stir-fry 30 seconds until just tender.
+    time_seconds: 40
+  - order: 3
+    body:
+      yue: 落番油泡好嘅龍利球，加油泡料調味，輕手翻 15 秒——魚肉好脆弱，唔好用力翻動，落生粉水推稠，即上碟。
+      zh: 倒回油泡好的龙利球，加油泡料调味，轻手翻 15 秒——鱼肉脆弱，不要用力翻动，加生粉水勾芡，即上碟。
+      en: Return the fish, add the seasoning, and toss gently for 15 seconds — the sole is fragile, do not stir hard. Thicken with the cornstarch slurry and plate immediately.
+    time_seconds: 15
+tips:
+  - yue: 「油泡」係粵菜獨有手法，類似法式 confit 但時間短得多——目的係用 120°C 嘅油溫令蛋白慢慢凝固，保持嫩滑。新手用油溫計確保唔超過 130°C。
+    zh: 「油泡」是粤菜独有手法，类似法式 confit 但时间短得多——目的是用 120°C 油温令蛋白慢慢凝固，保持嫩滑。新手用油温计确保不超过 130°C。
+    en: Oil-blanching is uniquely Cantonese — similar to French confit but with much shorter time. The point is to let 120°C oil set the protein slowly, preserving silkiness. Beginners should use a thermometer to keep below 130°C.
+  - yue: 龍利柳（sole / dover sole）係海外華埠最易買到嘅油泡材料——冷凍 dory 解凍後切大塊都得。鮮魚最佳但成本高。
+    zh: 龙利柳（sole / dover sole）是海外华人区最易买到的油泡材料——冷冻 dory 解冻后切大块亦可。鲜鱼最佳但成本高。
+    en: Sole fillet (or dover sole) is the easiest oil-blanching protein to find overseas. Frozen "dory" (basa) cut into chunks also works. Fresh sole is best but expensive.
+  - yue: 西芹「飛水過冷河」係保持脆口同翠綠嘅關鍵——熱水 30 秒、冰水浸 1 分鐘、瀝乾備用，呢個動作必須完成先可以炒。
+    zh: 西芹「飞水过冷水」是保持脆口与翠绿的关键——热水 30 秒、冰水浸 1 分钟、沥干备用，此步骤必须完成才能炒。
+    en: Blanching and shocking the celery is essential — 30 seconds boiling, 1 minute in ice water, then drained. Skipping this step gives you stringy, dull celery in the finished dish.
+history:
+  yue: 油泡係粵菜「四大手法」之一（蒸、炒、油泡、炆），相傳源自清代廣州茶居，當時用嚟整貴價海鮮如蝦球、魚柳。油泡龍利球係茶餐廳將「酒樓油泡蝦球」民主化嘅版本——將高價蝦球換成平價龍利球，但保持手法不變，等普通家庭都食得到油泡嘅幼滑口感。
+  zh: 油泡是粤菜「四大手法」之一（蒸、炒、油泡、炖），相传源自清代广州茶居，最初用来做贵价海鲜如虾球、鱼柳。油泡龙利球是茶餐厅将「酒楼油泡虾球」民主化的版本——把高价虾球换成平价龙利球，但保持手法不变，让寻常家庭也能吃到油泡的细滑口感。
+  en: Oil-blanching is one of the "four canonical techniques" of Cantonese cuisine (steam, stir-fry, oil-blanch, braise), traced to Qing-dynasty Canton tea-houses where it was used for premium seafood like prawn balls and fish fillet. The tea-restaurant version with sole is a democratisation — substituting the expensive prawn for cheaper sole while keeping the technique, so everyday diners can experience that signature Cantonese silky texture.
+allergens:
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #57 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #57 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

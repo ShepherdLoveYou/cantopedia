@@ -10,22 +10,91 @@ ingredients:
   - ref: sichuan-wonton
     qty: 8
     unit: 件
+    prep:
+      yue: 抄手皮包豬肉茸（豬肉 + 薑茸 + 蔥白 + 鹽 + 麻油 + 紹興酒）
+      zh: 抄手皮包猪肉茸（猪肉 + 姜茸 + 葱白 + 盐 + 麻油 + 绍兴酒）
+      en: thin wonton skins around a pork filling (minced pork + ginger + scallion + salt + sesame oil + Shaoxing)
   - ref: wonton-broth
     qty: 1
     unit: 份
+    prep:
+      yue: 抄手汁——生抽 2 匙 + 糖 1 茶匙 + 蒜茸 1 茶匙 + 鎮江醋 1 茶匙 + 雞湯 4 匙
+      zh: 抄手汁——生抽 2 勺 + 糖 1 茶匙 + 蒜茸 1 茶匙 + 镇江醋 1 茶匙 + 鸡汤 4 勺
+      en: dipping sauce — 2 Tbsp light soy + 1 tsp sugar + 1 tsp minced garlic + 1 tsp Chinkiang vinegar + 4 Tbsp chicken stock
   - ref: chili-oil
     qty: 1
     unit: 份
+    prep:
+      yue: 四川自製紅油 3 匙（連辣椒籽）
+      zh: 四川自制红油 3 勺（连辣椒籽）
+      en: 3 Tbsp Sichuan red chili oil (with the sediment)
   - ref: sesame
     qty: 1
     unit: 份
+    prep:
+      yue: 炒香芝麻 1 茶匙
+      zh: 炒香芝麻 1 茶匙
+      en: 1 tsp toasted sesame seeds
   - ref: scallion
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: chopped
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 整餡——豬肉 150 g 剁茸，加薑茸 1 茶匙、蔥白末 1 茶匙、生抽 1 茶匙、鹽 1/4 茶匙、糖 1/4 茶匙、麻油 1 茶匙、紹興酒 1 茶匙、生粉 1 茶匙、水 1 匙——順時針攪到起膠。
+      zh: 做馅——猪肉 150 g 剁茸，加姜茸 1 茶匙、葱白末 1 茶匙、生抽 1 茶匙、盐 1/4 茶匙、糖 1/4 茶匙、麻油 1 茶匙、绍兴酒 1 茶匙、生粉 1 茶匙、水 1 勺——顺时针搅至起胶。
+      en: Filling — 150 g minced pork + 1 tsp minced ginger + 1 tsp scallion white + 1 tsp light soy + ¼ tsp salt + ¼ tsp sugar + 1 tsp sesame oil + 1 tsp Shaoxing + 1 tsp cornstarch + 1 Tbsp water. Stir vigorously in one direction until tacky and bouncy.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 抄手皮（薄方皮）一張，中央放 1/2 茶匙餡，皮一邊摺起包住餡，再將兩個角向中央捏緊——形似手抄。
+      zh: 抄手皮（薄方皮）一张，中央放 1/2 茶匙馅，皮一边折起包住馅，再将两角向中央捏紧——形似手抄。
+      en: Take a square wonton skin, place ½ tsp filling in the centre, fold over to enclose the filling, then pinch the two corners together at the middle — forming the classic "hand-folded" shape.
+    time_seconds: 600
+  - order: 3
+    body:
+      yue: 大鍋燒水，水滾後落抄手煮 3 分鐘（皮浮起且半透明即熟），用漏勺撈起入碗。
+      zh: 大锅烧水，水沸后下抄手煮 3 分钟（皮浮起且半透明即熟），用漏勺捞起入碗。
+      en: Bring a large pot of water to a rolling boil. Drop in the wontons and cook for 3 minutes — they should float and the skin should be translucent. Scoop into bowls.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 將抄手汁先淋落碗底，再放煮好嘅抄手，淋上紅油 3 匙（連辣椒籽）、灑炒香芝麻同蔥花，即食。
+      zh: 将抄手汁先倒入碗底，再放煮好的抄手，淋上红油 3 勺（连辣椒籽）、撒炒香芝麻与葱花，即食。
+      en: Spoon the dipping sauce into the bowl first, top with the cooked wontons, drizzle 3 Tbsp chili oil (with sediment), scatter sesame and scallion, and serve immediately.
+tips:
+  - yue: 紅油係呢個菜嘅靈魂——用乾辣椒粉同八角、桂皮、香葉浸熟油，色澤要鮮紅、香味要層次分明。市售嘅紅油通常油量過多、辣椒粉沉澱不足，建議自家整。
+    zh: 红油是这道菜的灵魂——用干辣椒粉同八角、桂皮、香叶浸热油，色泽要鲜红、香味要层次分明。市售红油通常油多、辣椒粉沉淀不足，建议自家做。
+    en: Chili oil is the soul of this dish — slow-infuse hot oil with chili flakes, star anise, cassia bark, and bay leaves. Aim for vivid red with layered aroma. Bottled chili oil is usually too thin and lacks sediment; homemade is much better.
+  - yue: 抄手皮要薄——「皮薄餡少湯包」係四川嘅標準，抄手皮厚就唔對。海外華埠超市搵「四川抄手皮」或者「香港雲吞皮」薄款都得。
+    zh: 抄手皮要薄——「皮薄馅少汤多」是四川的标准，抄手皮厚就不对。海外华人超市找「四川抄手皮」或「香港云吞皮」薄款均可。
+    en: The skins should be thin — Sichuan tradition calls for thin wrappers around small fillings in plenty of sauce. Overseas Asian markets sell both Sichuan wonton skins and thin Hong Kong-style wonton skins; either works.
+  - yue: 抄手汁同紅油嘅比例係 4:3——抄手汁提供鮮味同酸味基礎，紅油提供麻辣同油香。少咗任何一樣就唔協調。
+    zh: 抄手汁与红油的比例是 4:3——抄手汁提供鲜味与酸味基础，红油提供麻辣与油香。任何一样不够就不协调。
+    en: The dipping sauce to chili oil ratio is roughly 4:3 — sauce provides umami and acidity, chili oil provides heat and fragrance. Skimping on either throws off the balance.
+history:
+  yue: 抄手係四川對雲吞嘅叫法——傳說源自抄手包食嘅人形而得名，亦有講係抄手喺鍋裡浮起時「抄手交叉」嘅形態。四川紅油抄手由廣州夜市傳入香港，喺 1970 年代成為茶餐廳開胃菜經典——粵菜入面少有嘅辣菜。
+  zh: 抄手是四川对云吞的叫法——传说源自抄手包食时的人形得名，亦有说是抄手在锅里浮起时「抄手交叉」的形态。四川红油抄手由广州夜市传入香港，1970 年代成为茶餐厅开胃菜经典——粤菜中少有的辣菜。
+  en: Chao shou (抄手) is the Sichuan name for wontons — folklore explains the name as either the way one folds hands across the chest when eating, or how the dumplings cross when they float. Sichuan chili-oil wontons reached Hong Kong via Cantonese night markets and were absorbed into the tea-restaurant appetiser canon by the 1970s — one of the rare Cantonese spicy dishes.
+allergens:
+  - gluten
+  - soy
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #6 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #6 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

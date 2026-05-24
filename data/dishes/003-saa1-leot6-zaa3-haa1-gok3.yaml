@@ -10,12 +10,85 @@ ingredients:
   - ref: shrimp-fritter
     qty: 6
     unit: 件
-method_status: stub
+    prep:
+      yue: 自家整餡——蝦肉剁茸 + 馬蹄粒 + 蛋白 + 鹽 + 麻油
+      zh: 自家做馅——虾肉剁茸 + 马蹄粒 + 蛋白 + 盐 + 麻油
+      en: shrimp filling — minced shrimp + diced water chestnut + egg white + salt + sesame oil
+  - ref: salad-mayo
+    qty: 1
+    unit: 份
+    prep:
+      yue: 日式沙律醬 4 匙 + 煉奶 1 茶匙
+      zh: 日式沙律酱 4 勺 + 炼奶 1 茶匙
+      en: 4 Tbsp Kewpie mayo + 1 tsp sweetened condensed milk
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: thinly sliced
+  - ref: large-shrimp
+    qty: 6
+    unit: 件
+    prep:
+      yue: 「角」嘅內餡用——鮮蝦剁茸
+      zh: 「角」的内馅用——鲜虾剁茸
+      en: for the parcel filling — minced fresh shrimp
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 將鮮蝦剁茸（保留少少粒狀），加馬蹄碎、半隻蛋白、1/4 茶匙鹽、少少胡椒粉、半茶匙生粉、半茶匙麻油，順時針攪到起膠。
+      zh: 鲜虾剁茸（保留少许粒状），加马蹄碎、半个蛋白、1/4 茶匙盐、少许胡椒粉、半茶匙生粉、半茶匙麻油，顺时针搅至起胶。
+      en: Roughly mince the shrimp (keep some texture). Mix with chopped water chestnut, half an egg white, ¼ tsp salt, white pepper, ½ tsp cornstarch, ½ tsp sesame oil. Stir in one direction until the mixture is sticky and bouncy.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 春卷皮切成 8 cm 方形，每張中央放 1 茶匙蝦餡，對摺成三角形，邊位用少少蛋白封口。
+      zh: 春卷皮切成 8 cm 方形，每张中央放 1 茶匙虾馅，对折成三角形，边位用少许蛋白封口。
+      en: Cut spring-roll skins into 8 cm squares. Place 1 tsp filling in the centre of each, fold diagonally into triangles, and seal the edges with a touch of egg white.
+    time_seconds: 600
+  - order: 3
+    body:
+      yue: 油溫 170°C，落蝦角炸 90 秒到金黃酥脆，撈起瀝油。
+      zh: 油温 170°C，下虾角炸 90 秒至金黄酥脆，捞出沥油。
+      en: Heat oil to 170°C / 340°F. Deep-fry the parcels for 90 seconds until golden and crispy; drain.
+    temperature_c: 170
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 沙律醬同煉奶調勻成淋汁；炸好嘅蝦角排碟，淋上沙律醬，灑少少蔥花裝飾。
+      zh: 沙律酱与炼奶调匀成淋汁；炸好的虾角排盘，淋上沙律酱，撒少许葱花装饰。
+      en: Whisk the mayo and condensed milk together. Arrange the parcels, drizzle the sauce, and garnish with chopped scallion.
+tips:
+  - yue: 蝦肉一定要部份剁茸、部份留粒狀——口感先有對比。全部剁泥會「橡皮」，全部粒會散唔成型。
+    zh: 虾肉必须部分剁茸、部分留粒状——口感才有对比。全部剁泥会「橡皮」，全部颗粒则散不成型。
+    en: Mince part of the shrimp finely and leave part chunky — this gives the bite contrast. All-paste is rubbery, all-chunks won't bind into a parcel.
+  - yue: 沙律醬必須係日式款（如 Kewpie）——西式 mayonnaise 太酸太鹹，喺粵菜入面唔對味。加少少煉奶可以平衡甜度。
+    zh: 沙律酱必须是日式款（如 Kewpie）——西式 mayonnaise 太酸太咸，在粤菜中味道不对。加少许炼奶平衡甜度。
+    en: Use Japanese-style mayo (Kewpie) — Western mayonnaise is too acidic and salty for this Cantonese application. A touch of condensed milk balances the savouriness.
+  - yue: 包蝦餡時封口要仔細——封口不密落油就會散開，蝦餡會跌入油鑊。
+    zh: 包虾馅时封口要仔细——封口不密下油就会散开，虾馅会掉入油锅。
+    en: Seal carefully — a poorly sealed parcel will burst in hot oil and spill the filling. Use plenty of egg white at the edges.
+history:
+  yue: 沙律蝦角係 1970 年代香港茶餐廳借鑒日式天婦羅同西式蝦多士嘅產物——將鮮蝦餡包入春卷皮炸脆，淋上日式沙律醬。代表咗香港戰後「融合料理」嘅一個面向：用本地手法重新詮釋西方同日本嘅食材組合，從而創造新嘅本地經典。
+  zh: 沙律虾角是 1970 年代香港茶餐厅借鉴日式天妇罗与西式虾多士的产物——将鲜虾馅包入春卷皮炸脆，淋上日式沙律酱。代表了香港战后「融合料理」的一个面向：用本地手法重新诠释西方与日本的食材组合，从而创造新的本地经典。
+  en: Salad shrimp parcels emerged from 1970s Hong Kong tea-restaurants riffing on Japanese tempura and Western shrimp toast — fresh shrimp filling in a deep-fried wrapper, finished with Japanese-style mayo. It exemplifies the post-war HK "fusion" sensibility — reinterpreting Western and Japanese ingredient combinations with local technique to create new local classics.
+allergens:
+  - shellfish
+  - egg
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #3 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 伴沙律醬
+    accessed: 2026-05-24
+    note: "Item #3 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

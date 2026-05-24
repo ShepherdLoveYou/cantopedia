@@ -10,33 +10,124 @@ ingredients:
   - ref: beef-slices
     qty: 8
     unit: 件
+    prep:
+      yue: 牛肉逆紋切薄片，醃 15 分鐘（生抽 + 蠔油 + 糖 + 紹興酒 + 生粉 + 蛋白 + 油 + 1 茶匙小蘇打）
+      zh: 牛肉逆纹切薄片，腌 15 分钟（生抽+蠔油+糖+绍兴酒+生粉+蛋白+油+1 茶匙小苏打）
+      en: beef sliced thinly against the grain; marinated 15 min with soy + oyster + sugar + Shaoxing + cornstarch + egg white + oil + 1 tsp baking soda
+  - ref: black-bean-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 乾豆豉 1.5 匙浸軟剁碎、與蒜茸 1 匙、薑茸 1 茶匙、辣椒粒少少、糖 1/2 茶匙拌勻
+      zh: 干豆豉 1.5 勺浸软剁碎、与蒜茸 1 勺、姜茸 1 茶匙、辣椒粒少许、糖 1/2 茶匙拌匀
+      en: 1.5 Tbsp dried fermented black beans soaked and chopped; mixed with 1 Tbsp minced garlic, 1 tsp minced ginger, a touch of chili, ½ tsp sugar
   - ref: bell-pepper
     qty: 1
     unit: 份
-  - ref: mushroom
-    qty: 1
-    unit: 份
+    prep:
+      yue: 青紅各半，切菱角形
+      zh: 青红各半，切菱形片
+      en: red and green, cut into diamond shapes
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
+  - ref: mushroom
+    qty: 1
+    unit: 份
+    prep:
+      yue: 草菇或鮮冬菇切件
+      zh: 草菇或鲜冬菇切件
+      en: straw or fresh shiitake, cut into quarters
   - ref: large-shrimp
     qty: 6
     unit: 件
+    prep:
+      yue: 大蝦去殼留尾、薄拍生粉
+      zh: 大虾去壳留尾、薄拍生粉
+      en: large prawns peeled with tail-on, lightly dusted with cornstarch
   - ref: spring-rolls-veg
     qty: 1
     unit: 條
+    prep:
+      yue: 春卷 1 條切段裝飾
+      zh: 春卷 1 条切段装饰
+      en: 1 spring roll, sliced into segments for plate garnish
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落醃好嘅牛肉攤平煎 20 秒，再撥散快炒到剛變色撈起，留住肉汁。
+      zh: 锅烧至大热，下 2 勺油，下腌好的牛肉摊平煎 20 秒，再拨散快炒至刚变色捞起，保留肉汁。
+      en: Crank the wok hot. Add 2 Tbsp oil, lay the marinated beef flat, sear 20 seconds, then break apart and stir-fry just until coloured; remove with the juices.
+    time_seconds: 30
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落大蝦煎 30 秒至外殼變紅、撈起。
+      zh: 锅留 1 勺油，下大虾煎 30 秒至外壳变红、捞起。
+      en: With 1 Tbsp oil remaining, sear the prawns for 30 seconds until the shells flush pink; remove.
+    time_seconds: 30
+  - order: 3
+    body:
+      yue: 鑊留油，落豉汁料（豆豉 + 蒜 + 薑 + 辣椒）中火爆 30 秒到極香——豉汁係呢個菜嘅靈魂，要爆夠時間。
+      zh: 锅留油，下豉汁料（豆豉+蒜+姜+辣椒）中火爆 30 秒至极香——豉汁是这道菜的灵魂，要爆够时间。
+      en: Keeping the oil, lower to medium and stir-fry the black bean mixture (beans + garlic + ginger + chili) for 30 seconds until intensely aromatic — the black bean is the soul of this dish, do not rush.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 落洋蔥、青紅椒、草菇翻炒 30 秒到開始軟身。
+      zh: 下洋葱、青红椒、草菇翻炒 30 秒至开始软身。
+      en: Add the onion, peppers, and mushrooms; stir-fry 30 seconds until starting to soften.
+    time_seconds: 30
+  - order: 5
+    body:
+      yue: 落番牛肉同大蝦，加 1 匙紹興酒、1 茶匙生抽、1/2 茶匙老抽（上色）、3 匙雞湯、最後落 1 茶匙生粉水推稠，翻炒 30 秒到芡汁掛勻，即上碟。
+      zh: 倒回牛肉与大虾，加 1 勺绍兴酒、1 茶匙生抽、1/2 茶匙老抽（上色）、3 勺鸡汤、最后加 1 茶匙生粉水勾芡，翻炒 30 秒至芡汁挂匀，即出锅。
+      en: Return the beef and prawns. Add 1 Tbsp Shaoxing, 1 tsp light soy, ½ tsp dark soy (colour), 3 Tbsp chicken stock, and finally a 1 tsp cornstarch slurry. Toss for 30 seconds until the sauce glosses and clings, then plate.
+    time_seconds: 30
+  - order: 6
+    body:
+      yue: 配白飯一碗、春卷一條，做成「碟頭飯」格式，即上枱。
+      zh: 配白饭一碗、春卷一条，做成「碟头饭」格式，即上桌。
+      en: Plate with a bowl of rice and one segment of spring roll as a side garnish, forming the classic "one-plate" set-meal layout.
+tips:
+  - yue: 「豉汁牛」「豉汁雞」「豉汁蝦」三個版本共用豉汁同手法，只換主蛋白——茶餐廳通常一鑊豉汁可以炒三個版本，方便操作。
+    zh: 「豉汁牛」「豉汁鸡」「豉汁虾」三个版本共用豉汁与手法，只换主蛋白——茶餐厅通常一锅豉汁可以炒三种版本，方便操作。
+    en: The three versions — beef, chicken, shrimp — share the identical black bean sauce and technique; only the protein changes. HK tea-restaurants pre-make the black bean mixture and use it across all three on demand.
+  - yue: 乾豆豉一定要先浸軟——直接落鑊會有沙感同苦味。浸過嘅水唔好倒——可以加入芡汁增加豉香。
+    zh: 干豆豉必须先浸软——直接下锅会有沙感与苦味。浸过的水别倒——可加入芡汁增加豉香。
+    en: Dry fermented black beans must be soaked first — using them dry leaves a sandy, bitter mouthfeel. Save the soaking water and add it to the sauce for extra depth.
+  - yue: 牛肉嫩唔嫩睇兩樣嘢——逆紋切薄、適量小蘇打。蝦留尾係視覺處理，亦方便用手食。
+    zh: 牛肉嫩不嫩看两点——逆纹切薄、适量小苏打。虾留尾是视觉处理，亦方便手食。
+    en: Beef tenderness needs both thin against-the-grain slicing and a touch of baking soda. Leaving tails on the prawns is a visual choice that also gives diners a handle.
+history:
+  yue: 豉汁係粵菜獨有嘅複合醬——主成份係豆豉（fermented black soybean）、蒜、薑。豉汁牛、豉汁雞、豉汁蝦係粵菜「豉汁三寶」，源自 1920 年代廣州茶居「即叫即炒」菜式。香港茶餐廳將之發展為「碟頭飯」配白飯，係日常午餐至高點。
+  zh: 豉汁是粤菜独有的复合酱——主成分是豆豉（fermented black soybean）、蒜、姜。豉汁牛、豉汁鸡、豉汁虾是粤菜「豉汁三宝」，源自 1920 年代广州茶居「即叫即炒」菜式。香港茶餐厅将之发展为「碟头饭」配白饭，是日常午餐的至高点。
+  en: Black bean sauce is uniquely Cantonese — built on fermented black soybeans, garlic, and ginger. The "black bean trio" of beef, chicken, and shrimp traces to 1920s Canton tea-houses serving stir-fries to order. HK tea-restaurants developed it into the modern "one-plate-with-rice" lunch format, now an everyday Cantonese midday standard.
+allergens:
+  - soy
+  - shellfish
+  - egg
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #47 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #47 on the source menu"
 variants:
   - 047b-si6-zap1-gai1
   - 047c-si6-zap1-haa1
-tips:
-  - zh: 另有雞、蝦兩個版本
+created: 2026-05-24
+updated: 2026-05-24
