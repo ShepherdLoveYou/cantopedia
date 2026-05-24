@@ -1,0 +1,38 @@
+# Node
+node_modules/
+dist/
+.astro/
+.cache/
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+.env.*
+!.env.example
+
+# Pipeline cache (never commit fetched payloads)
+pipeline/cache/
+pipeline/.cache/
+
+# Build artefacts
+site/.vite/
+site/dist/
+site/.astro/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Pagefind output
+site/public/pagefind/
+
+# Drafts (must be promoted via `pipeline validate` before commit)
+data/**/*.yaml.draft
