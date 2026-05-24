@@ -1,0 +1,213 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const dishes = await getCollection('dish');
+  const paths = [];
+  for (const locale of ['zh', 'en', 'yue'] as const) {
+    for (const dish of dishes) {
+      paths.push({ params: { locale, id: dish.id }, props: { dish } });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
+const { dish } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const category = await getEntry('category', dish.data.category.id);
+const sauce = dish.data.sauce ? await getEntry('sauce', dish.data.sauce.id) : null;
+const sources = await Promise.all(
+  dish.data.sources.map((s: { source_id: string }) =>
+    getEntry('source', s.source_id).then((entry) => ({ ref: s, entry }))
+  )
+);
+const ingredientRefs = await Promise.all(
+  dish.data.ingredients.map(async (i: { ref: { id: string }; qty: number; unit: string; prep?: any }) => ({
+    ...i,
+    entry: await getEntry('ingredient', i.ref.id),
+  }))
+);
+
+function tNames(names: any, prefer = locale): string {
+  if (prefer === 'en') return names.en;
+  if (prefer === 'yue') return names.yue_hant;
+  return names.yue_hant || names.zh;
+}
+
+function tBody(body: any, prefer = locale): string {
+  if (!body) return '';
+  if (prefer === 'en' && body.en) return body.en;
+  if (prefer === 'yue' && body.yue) return body.yue;
+  return body.zh;
+}
+
+const dict = {
+  zh: {
+    ingredients: '配料', method: '做法', tips: '小貼士', history: '由來', sources: '引用源',
+    sauce_link: '關聯醬料', servings: '份量', difficulty: '難度', equipment: '設備', allergens: '過敏原',
+    prep: '備料', cook: '烹飪', minutes: '分鐘', stub_warn: '此菜僅有配料表，做法待補。',
+    draft_warn: '此做法為流水線初稿，待人工校對。',
+    cite: '引用',
+    back: '← 回到首頁',
+  },
+  en: {
+    ingredients: 'Ingredients', method: 'Method', tips: 'Tips', history: 'History', sources: 'Sources',
+    sauce_link: 'Linked sauce', servings: 'Servings', difficulty: 'Difficulty', equipment: 'Equipment', allergens: 'Allergens',
+    prep: 'Prep', cook: 'Cook', minutes: 'min', stub_warn: 'Ingredients only — the cooking method has not yet been written.',
+    draft_warn: 'Auto-generated draft — pending human review.',
+    cite: 'cite',
+    back: '← Back to home',
+  },
+  yue: {
+    ingredients: '配料', method: '做法', tips: '貼士', history: '由來', sources: '引用源',
+    sauce_link: '關聯醬料', servings: '份量', difficulty: '難度', equipment: '設備', allergens: '過敏原',
+    prep: '備料', cook: '烹飪', minutes: '分鐘', stub_warn: '此菜淨係有配料，做法仲未寫。',
+    draft_warn: '此做法係流水線初稿，未經人工校對。',
+    cite: '引用',
+    back: '← 返首頁',
+  },
+}[locale];
+
+const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
+---
+<BaseLayout title={title} locale={locale}>
+  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
+
+  <header style="margin-bottom: 2rem;">
+    <div class="meta" style="color: var(--seal); font-weight: 600;">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+    <h1 style="margin: 0.25rem 0;">{dish.data.names.yue_hant}</h1>
+    <div class="meta" style="font-family: var(--mono); font-size: 0.875rem; color: var(--ink-dim);">{dish.data.names.jyutping}</div>
+    <div class="meta" style="margin-top: 0.75rem;">
+      · {dish.data.names.zh} · {dish.data.names.en}
+    </div>
+    <div style="margin-top: 1rem;">
+      <span class="badge">{category?.data.names[locale === 'en' ? 'en' : 'yue_hant']}</span>
+      {dish.data.difficulty && <span class="badge">{dict.difficulty}: {dish.data.difficulty}</span>}
+      {dish.data.time_minutes && (
+        <span class="badge">{dict.prep} {dish.data.time_minutes.prep}{dict.minutes} · {dict.cook} {dish.data.time_minutes.cook}{dict.minutes}</span>
+      )}
+      <span class="badge">{dict.servings}: {dish.data.servings}</span>
+      {dish.data.method_status === 'complete' && <span class="badge badge--seal">{dict.method} ✓</span>}
+      {dish.data.method_status === 'draft' && <span class="badge badge--warn">{dict.method} draft</span>}
+    </div>
+  </header>
+
+  <h2>{dict.ingredients}</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>{locale === 'en' ? 'Ingredient' : '食材'}</th>
+        <th style="text-align: right;">{locale === 'en' ? 'Qty' : '份量'}</th>
+        <th>{locale === 'en' ? 'Prep' : '處理'}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {ingredientRefs.map((ing) => (
+        <tr>
+          <td>
+            <a href={`${base}/${locale}/ingredients/${ing.entry?.id}`}>
+              {ing.entry ? tNames(ing.entry.data.names) : ing.ref.id}
+            </a>
+          </td>
+          <td style="text-align: right;">{ing.qty} {ing.unit}</td>
+          <td class="meta">{ing.prep ? tBody({ zh: ing.prep.zh, en: ing.prep.en }) : ''}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {sauce && (
+    <div class="plate">
+      <strong>{dict.sauce_link}:</strong>
+      <a href={`${base}/${locale}/sauces/${sauce.id}`}>
+        {locale === 'en' ? sauce.data.names.en : sauce.data.names.yue_hant}
+      </a>
+    </div>
+  )}
+
+  {dish.data.method_status === 'stub' && (
+    <div class="plate" style="border-left-color: #E8C46C; background: #FFF9E6;">
+      <strong>⚠️ {dict.stub_warn}</strong>
+    </div>
+  )}
+
+  {dish.data.method_status === 'draft' && (
+    <div class="plate" style="border-left-color: #E8C46C; background: #FFF9E6;">
+      <strong>⚠️ {dict.draft_warn}</strong>
+    </div>
+  )}
+
+  {dish.data.method_status !== 'stub' && dish.data.method && (
+    <>
+      <h2>{dict.method}</h2>
+      <ol>
+        {dish.data.method.map((step: any) => (
+          <li style="margin: 1rem 0;">
+            <div>{tBody(step.body)}</div>
+            {(step.temperature_c || step.time_seconds) && (
+              <div class="meta" style="margin-top: 0.25rem;">
+                {step.temperature_c && <span style="margin-right: 0.75rem;">🌡 {step.temperature_c}°C</span>}
+                {step.time_seconds && <span>⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
+              </div>
+            )}
+            {step.cite && step.cite.length > 0 && (
+              <div class="meta" style="margin-top: 0.25rem;">
+                {step.cite.map((c: string) => (
+                  <a href={`#source-${c}`} style="margin-right: 0.5rem; font-size: 0.75rem;">[{c}]</a>
+                ))}
+              </div>
+            )}
+          </li>
+        ))}
+      </ol>
+    </>
+  )}
+
+  {dish.data.tips && dish.data.tips.length > 0 && (
+    <>
+      <h2>{dict.tips}</h2>
+      <ul>
+        {dish.data.tips.map((tip: any) => <li>{tBody(tip)}</li>)}
+      </ul>
+    </>
+  )}
+
+  {dish.data.history && (
+    <>
+      <h2>{dict.history}</h2>
+      <p>{tBody(dish.data.history)}</p>
+    </>
+  )}
+
+  {dish.data.allergens && dish.data.allergens.length > 0 && (
+    <>
+      <h2>{dict.allergens}</h2>
+      <p>{dish.data.allergens.join(', ')}</p>
+    </>
+  )}
+
+  <h2>{dict.sources}</h2>
+  <ol style="font-size: 0.875rem;">
+    {sources.map(({ ref, entry }) => (
+      <li id={`source-${ref.source_id}`}>
+        {entry ? (
+          <>
+            <strong>{entry.data.title}</strong>
+            {entry.data.url && <> · <a href={entry.data.url}>link</a></>}
+            <span class="meta"> · {entry.data.license} · accessed {ref.accessed}</span>
+            {ref.note && <span class="meta"> · {ref.note}</span>}
+          </>
+        ) : (
+          <span class="meta">{ref.source_id} (missing source entry)</span>
+        )}
+      </li>
+    ))}
+  </ol>
+
+  <footer>
+    粵食典 · <a href={`${base}/${locale}`}>{dict.back}</a>
+  </footer>
+</BaseLayout>

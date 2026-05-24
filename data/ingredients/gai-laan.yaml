@@ -1,0 +1,20 @@
+id: gai-laan
+names:
+  yue_hant: 芥蘭
+  jyutping: gaai3 laan2
+  zh: 芥兰
+  en: Chinese broccoli (gai lan)
+category: vegetable
+nutrition_per_100g:
+  kcal: 22
+  protein_g: 1.2
+  fat_g: 0.5
+  carb_g: 4.7
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr, au, eu]
+  notes:
+    zh: 海外 Asian supermarket 通行，叶片大、茎粗壮的更佳；可用 broccolini 或 rapini 临时替代但风味略差。
+    en: Widely available at Asian supermarkets. Pick broad-leafed bunches with thick stems. Broccolini or rapini work as substitutes but the flavour is milder.
+sources:
+  - source_id: wikipedia-en-kai-lan
+    accessed: 2026-05-24

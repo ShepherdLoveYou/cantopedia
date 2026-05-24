@@ -1,0 +1,100 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const sauces = await getCollection('sauce');
+  const paths = [];
+  for (const locale of ['zh', 'en', 'yue'] as const) {
+    for (const sauce of sauces) {
+      paths.push({ params: { locale, id: sauce.id }, props: { sauce } });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
+const { sauce } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const baseIngs = await Promise.all(
+  sauce.data.base_ingredients.map(async (i: any) => ({
+    ...i,
+    entry: await getEntry('ingredient', i.ref.id),
+  }))
+);
+
+function tBody(body: any): string {
+  if (!body) return '';
+  if (locale === 'en' && body.en) return body.en;
+  if (locale === 'yue' && body.yue) return body.yue;
+  return body.zh;
+}
+
+const title = locale === 'en' ? sauce.data.names.en : sauce.data.names.yue_hant;
+const dict = {
+  zh: { back: '← 首頁', ingredients: '配料', method: '做法', storage: '儲存', sources: '引用源', minutes: '分鐘' },
+  en: { back: '← Home', ingredients: 'Ingredients', method: 'Method', storage: 'Storage', sources: 'Sources', minutes: 'min' },
+  yue: { back: '← 返首頁', ingredients: '配料', method: '做法', storage: '儲存', sources: '引用源', minutes: '分鐘' },
+}[locale];
+---
+<BaseLayout title={title} locale={locale}>
+  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
+
+  <header>
+    <div class="meta" style="color: var(--seal); font-weight: 600;">{locale === 'en' ? 'SAUCE' : '醬料'}</div>
+    <h1 style="margin: 0.25rem 0;">{sauce.data.names.yue_hant}</h1>
+    <div class="meta" style="font-family: var(--mono); color: var(--ink-dim);">{sauce.data.names.jyutping}</div>
+    <div class="meta" style="margin-top: 0.5rem;">· {sauce.data.names.zh} · {sauce.data.names.en}</div>
+    {sauce.data.yield_ml && <div style="margin-top: 1rem;"><span class="badge">yield: {sauce.data.yield_ml} ml</span></div>}
+  </header>
+
+  <h2>{dict.ingredients}</h2>
+  <table>
+    <tbody>
+      {baseIngs.map((i: any) => (
+        <tr>
+          <td>
+            {i.entry ? (
+              <a href={`${base}/${locale}/ingredients/${i.entry.id}`}>
+                {locale === 'en' ? i.entry.data.names.en : i.entry.data.names.yue_hant}
+              </a>
+            ) : i.ref.id}
+          </td>
+          <td style="text-align: right;">{i.qty} {i.unit}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {sauce.data.method && (
+    <>
+      <h2>{dict.method}</h2>
+      <ol>
+        {sauce.data.method.map((step: any) => (
+          <li style="margin: 1rem 0;">
+            <div>{tBody(step.body)}</div>
+            {(step.temperature_c || step.time_seconds) && (
+              <div class="meta" style="margin-top: 0.25rem;">
+                {step.temperature_c && <span style="margin-right: 0.75rem;">🌡 {step.temperature_c}°C</span>}
+                {step.time_seconds && <span>⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
+              </div>
+            )}
+          </li>
+        ))}
+      </ol>
+    </>
+  )}
+
+  {sauce.data.storage && (
+    <>
+      <h2>{dict.storage}</h2>
+      <p>{tBody(sauce.data.storage)}</p>
+    </>
+  )}
+
+  <h2>{dict.sources}</h2>
+  <ul class="meta">
+    {sauce.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
+  </ul>
+</BaseLayout>

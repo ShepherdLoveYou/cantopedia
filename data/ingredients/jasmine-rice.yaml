@@ -1,0 +1,20 @@
+id: jasmine-rice
+names:
+  yue_hant: 絲苗白飯
+  jyutping: si1 miu4 baak6 faan6
+  zh: 丝苗白饭
+  en: Jasmine rice (cooked)
+category: grain
+nutrition_per_100g:
+  kcal: 130
+  protein_g: 2.7
+  fat_g: 0.3
+  carb_g: 28.2
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr, au, eu]
+  notes:
+    zh: 港式茶餐厅惯用「丝苗米」——长粒、低粘性、油润。海外用泰国 jasmine 即可。
+    en: Cantonese restaurants traditionally use "si miu" — a long-grain, low-stickiness, fragrant variety. Thai jasmine is the easiest worldwide substitute.
+sources:
+  - source_id: usda-jasmine-rice
+    accessed: 2026-05-24

@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: 'zh' } },
+    { params: { locale: 'en' } },
+    { params: { locale: 'yue' } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
+const dishes = await getCollection('dish');
+const categories = await getCollection('category');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const sortedCategories = categories.sort((a, b) => a.data.sort_order - b.data.sort_order);
+const dishesByCategory = new Map<string, typeof dishes>();
+for (const dish of dishes) {
+  const catId = dish.data.category.id;
+  if (!dishesByCategory.has(catId)) dishesByCategory.set(catId, []);
+  dishesByCategory.get(catId)!.push(dish);
+}
+for (const arr of dishesByCategory.values()) {
+  arr.sort((a, b) => a.data.menu_no - b.data.menu_no);
+}
+
+const dict = {
+  zh: {
+    hero_title: '粵食典',
+    hero_subtitle: '六張港式茶餐廳水牌、66 道菜、三語可溯源的開源典籍',
+    counts: (n: number) => `共 ${n} 道菜`,
+    other_locales: { en: 'English', yue: '粵' },
+    complete: '已完成',
+    draft: '草稿',
+    stub: '配料表',
+  },
+  en: {
+    hero_title: 'Cantopedia',
+    hero_subtitle: 'Six hand-written 港式茶餐廳 menus · 66 dishes · tri-lingual, citation-traceable, open source',
+    counts: (n: number) => `${n} dishes`,
+    other_locales: { zh: '中文', yue: '粵' },
+    complete: 'complete',
+    draft: 'draft',
+    stub: 'ingredients only',
+  },
+  yue: {
+    hero_title: '粵食典',
+    hero_subtitle: '六張茶餐廳水牌、66 道菜、三語可溯源嘅開源典籍',
+    counts: (n: number) => `共 ${n} 道菜`,
+    other_locales: { zh: '中文', en: 'English' },
+    complete: '已完成',
+    draft: '草稿',
+    stub: '配料表',
+  },
+}[locale];
+---
+<BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_subtitle}>
+  <header style="text-align:center; margin-bottom: 3rem;">
+    <div style="font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--seal); text-transform: uppercase; margin-bottom: 0.5rem;">粵 · CANTOPEDIA</div>
+    <h1 style="font-size: 3.5rem; margin: 0.5rem 0;">{dict.hero_title}</h1>
+    <p class="meta" style="font-size: 1rem; max-width: 480px; margin: 1rem auto;">{dict.hero_subtitle}</p>
+    <div style="margin-top: 1.5rem;">
+      <span class="meta">{dict.counts(dishes.length)}</span>
+      <span style="margin: 0 0.5rem; color: var(--rule);">·</span>
+      {Object.entries(dict.other_locales).map(([loc, label]) => (
+        <a href={`${base}/${loc}`} class="meta" style="margin: 0 0.5rem;">{label}</a>
+      ))}
+    </div>
+  </header>
+
+  <hr />
+
+  {sortedCategories.map((cat) => {
+    const inCat = dishesByCategory.get(cat.id) ?? [];
+    if (inCat.length === 0) return null;
+    const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
+    const catDesc = locale === 'en' ? (cat.data.description.en ?? cat.data.description.zh) : cat.data.description.zh;
+    return (
+      <section style="margin-bottom: 2.5rem;">
+        <h2>{catName} <span class="meta" style="font-weight: 400; font-size: 0.875rem; margin-left: 0.5rem;">{inCat.length}</span></h2>
+        <p class="meta" style="margin-top: -0.5rem;">{catDesc}</p>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0 0; columns: 2; column-gap: 2rem;">
+          {inCat.map((dish) => {
+            const name = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
+            const statusBadge =
+              dish.data.method_status === 'complete' ? 'badge--seal' :
+              dish.data.method_status === 'draft' ? 'badge--warn' : '';
+            return (
+              <li style="break-inside: avoid; padding: 0.375rem 0;">
+                <a href={`${base}/${locale}/dishes/${dish.id}`}>
+                  <span class="meta" style="color: var(--ink-dim); margin-right: 0.5rem;">{String(dish.data.menu_no).padStart(2, '0')}</span>
+                  {name}
+                </a>
+                {dish.data.method_status === 'complete' && (
+                  <span class={`badge ${statusBadge}`} style="margin-left: 0.5rem; font-size: 0.6875rem;">{dict.complete}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  })}
+
+  <footer>
+    粵食典 · Cantopedia · v0.1-alpha · Code MIT, Content CC BY-SA 4.0 ·
+    <a href="https://github.com/ShepherdLoveYou/cantopedia">GitHub</a>
+  </footer>
+</BaseLayout>

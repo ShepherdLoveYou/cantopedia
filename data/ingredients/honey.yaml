@@ -1,0 +1,20 @@
+id: honey
+names:
+  yue_hant: 蜂蜜
+  jyutping: fung1 mat6
+  zh: 蜂蜜
+  en: Honey
+category: other
+nutrition_per_100g:
+  kcal: 304
+  protein_g: 0.3
+  fat_g: 0
+  carb_g: 82.4
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr, au, eu]
+  notes:
+    zh: 用三叶草蜜或多花蜂蜜即可。叉烧蜜汁不宜用风味过强的麦卢卡蜜。
+    en: Use clover or wildflower honey. Avoid strongly flavoured varieties (manuka) for char siu glaze.
+sources:
+  - source_id: usda-honey
+    accessed: 2026-05-24

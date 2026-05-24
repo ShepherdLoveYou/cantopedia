@@ -1,0 +1,15 @@
+id: hoisin-sauce
+names:
+  yue_hant: 海鮮醬
+  jyutping: hoi2 sin1 zoeng3
+  zh: 海鲜酱
+  en: Hoisin sauce
+category: sauce
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr, au, eu]
+  notes:
+    zh: 李锦记是行内标准；冠珍口感更咸鲜。「海鲜酱」并不含海鲜，主成分是发酵大豆、番薯与香料。
+    en: Lee Kum Kee is the standard; Koon Chun is a more savoury alternative. Despite the name, it contains no seafood — primary ingredients are fermented soy, sweet potato, and spices.
+sources:
+  - source_id: wikipedia-en-hoisin
+    accessed: 2026-05-24

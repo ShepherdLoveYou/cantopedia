@@ -1,0 +1,31 @@
+id: honey-glaze
+names:
+  yue_hant: 蜜汁
+  jyutping: mat6 zap1
+  zh: 蜜汁
+  en: Char siu honey glaze
+base_ingredients:
+  - { ref: honey, qty: 3, unit: 匙 }
+  - { ref: maltose, qty: 2, unit: 匙 }
+  - { ref: hoisin-sauce, qty: 1, unit: 匙 }
+yield_ml: 90
+method:
+  - order: 1
+    body:
+      zh: 将蜂蜜、麦芽糖与海鲜酱倒入小奶锅，小火加热到刚刚冒小泡（约 60°C），关火搅匀。
+      en: Combine honey, maltose, and hoisin in a small saucepan. Heat gently until just bubbling at the edges (~60°C). Remove from heat and whisk until smooth.
+    temperature_c: 60
+    time_seconds: 90
+    cite: [wikipedia-en-char-siu]
+  - order: 2
+    body:
+      zh: 用刷子趁热刷在已烤至七成熟的叉烧上，再回炉烤 5-7 分钟收糖色。
+      en: While still warm, brush onto char siu that has been roasted to ~70% doneness. Return to the oven for 5-7 minutes to caramelise the glaze.
+    cite: [wikipedia-en-char-siu]
+storage:
+  zh: 室温可放 1 周；冷藏可放 1 个月，使用前温水浴回温即可。
+  en: Keeps 1 week at room temperature; 1 month refrigerated. Warm in a water bath before brushing.
+sources:
+  - source_id: wikipedia-en-char-siu
+    url: https://en.wikipedia.org/wiki/Char_siu
+    accessed: 2026-05-24

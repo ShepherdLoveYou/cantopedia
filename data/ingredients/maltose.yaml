@@ -1,0 +1,16 @@
+id: maltose
+names:
+  yue_hant: 麥芽糖
+  jyutping: mak6 ngaa4 tong4
+  zh: 麦芽糖
+  en: Maltose
+category: other
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr]
+  alternatives: [honey]
+  notes:
+    zh: 琥珀色稠浆，在华人超市瓶装出售（找「麦芽糖」标签）。叉烧的招牌光亮拉丝感来自麦芽糖，单用蜂蜜替代不到位。买不到可用 golden syrup 或米麦芽糖浆。
+    en: Thick amber syrup, sold in jars in Chinese supermarkets (look for "麥芽糖"). Provides the classic glossy, sticky finish on char siu that honey alone cannot replicate. If unavailable, substitute with golden syrup or rice malt syrup.
+sources:
+  - source_id: wikipedia-en-maltose
+    accessed: 2026-05-24

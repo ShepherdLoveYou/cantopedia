@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const ingredients = await getCollection('ingredient');
+  const paths = [];
+  for (const locale of ['zh', 'en', 'yue'] as const) {
+    for (const ing of ingredients) {
+      paths.push({ params: { locale, id: ing.id }, props: { ing } });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
+const { ing } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const title = locale === 'en' ? ing.data.names.en : ing.data.names.yue_hant;
+const dict = {
+  zh: { back: '← 首頁', nutrition: '營養（每 100 克）', procurement: '採購', kcal: '熱量', protein: '蛋白', fat: '脂肪', carb: '碳水', sources: '引用源' },
+  en: { back: '← Home', nutrition: 'Nutrition (per 100 g)', procurement: 'Procurement', kcal: 'kcal', protein: 'protein', fat: 'fat', carb: 'carbs', sources: 'Sources' },
+  yue: { back: '← 返首頁', nutrition: '營養（每 100 克）', procurement: '採購', kcal: '熱量', protein: '蛋白', fat: '脂肪', carb: '碳水', sources: '引用源' },
+}[locale];
+---
+<BaseLayout title={title} locale={locale}>
+  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
+
+  <header>
+    <h1 style="margin-bottom: 0.25rem;">{ing.data.names.yue_hant}</h1>
+    <div class="meta" style="font-family: var(--mono); color: var(--ink-dim);">{ing.data.names.jyutping}</div>
+    <div class="meta" style="margin-top: 0.5rem;">· {ing.data.names.zh} · {ing.data.names.en}</div>
+    <div style="margin-top: 1rem;">
+      <span class="badge">{ing.data.category}</span>
+    </div>
+  </header>
+
+  {ing.data.nutrition_per_100g && (
+    <>
+      <h2>{dict.nutrition}</h2>
+      <table>
+        <tr><th>{dict.kcal}</th><td>{ing.data.nutrition_per_100g.kcal}</td></tr>
+        <tr><th>{dict.protein}</th><td>{ing.data.nutrition_per_100g.protein_g} g</td></tr>
+        <tr><th>{dict.fat}</th><td>{ing.data.nutrition_per_100g.fat_g} g</td></tr>
+        <tr><th>{dict.carb}</th><td>{ing.data.nutrition_per_100g.carb_g} g</td></tr>
+      </table>
+    </>
+  )}
+
+  {ing.data.procurement && (
+    <>
+      <h2>{dict.procurement}</h2>
+      <p class="meta">{ing.data.procurement.availability.join(' · ')}</p>
+      {ing.data.procurement.notes && (
+        <p>{locale === 'en' ? (ing.data.procurement.notes.en ?? ing.data.procurement.notes.zh) : ing.data.procurement.notes.zh}</p>
+      )}
+    </>
+  )}
+
+  <h2>{dict.sources}</h2>
+  <ul class="meta">
+    {ing.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
+  </ul>
+</BaseLayout>

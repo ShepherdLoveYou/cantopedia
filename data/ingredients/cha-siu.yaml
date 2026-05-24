@@ -1,0 +1,20 @@
+id: cha-siu
+names:
+  yue_hant: 叉燒
+  jyutping: caa1 siu1
+  zh: 叉烧
+  en: Char siu (Cantonese BBQ pork)
+category: meat
+nutrition_per_100g:
+  kcal: 232
+  protein_g: 16.4
+  fat_g: 14.6
+  carb_g: 9.8
+procurement:
+  availability: [hk, mainland, us, sea, jp_kr, au]
+  notes:
+    zh: 海外大多 Chinatown 烧腊店有售；自家做的话挑梅头肉（pork shoulder / boston butt）肥瘦比 3:7 最理想。
+    en: Available at most overseas Chinatown roast-meat shops. For homemade, pork shoulder (Boston butt) at roughly 3:7 fat-to-lean ratio gives the best result.
+sources:
+  - source_id: wikipedia-en-char-siu
+    accessed: 2026-05-24
