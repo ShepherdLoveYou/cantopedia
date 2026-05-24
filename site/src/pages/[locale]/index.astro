@@ -26,16 +26,20 @@ for (const arr of dishesByCategory.values()) {
   arr.sort((a, b) => a.data.menu_no - b.data.menu_no);
 }
 
-// Live-tile colours per category (Metro / 印章紅 palette)
+// Authentic Metro / W3CSS palette
 const tileColors: Record<string, string> = {
-  appetizer:   '#B71C1C',  // 印章紅
-  'soup-wonton': '#1565C0', // 深藍
-  rice:        '#E65100',   // 橙
-  noodle:      '#2E7D32',   // 翠
-  'soup-noodle': '#00838F', // 青
-  'baked-rice': '#6D4C41',  // 焙茶
-  congee:      '#6A1B9A',   // 紫
-  main:        '#263238',   // 墨
+  appetizer:    '#e51400',  // Metro red — 印章
+  'soup-wonton':'#2d89ef',  // Metro blue — clear stock
+  rice:         '#f09609',  // Metro orange — wok hei
+  noodle:       '#008a00',  // Metro green — gai lan + scallion
+  'soup-noodle':'#00aba9',  // Metro teal — laksa
+  'baked-rice': '#a05000',  // Metro brown — gratin crust
+  congee:       '#9f00a7',  // Metro purple — long simmer
+  main:         '#1d1d1d',  // Metro near-black — banquet
+};
+const tileGlyphs: Record<string, string> = {
+  appetizer: '🥟', 'soup-wonton': '🥣', rice: '🍚', noodle: '🍜',
+  'soup-noodle': '🍲', 'baked-rice': '🧀', congee: '🥄', main: '🍖',
 };
 
 const total = dishes.length;
@@ -44,67 +48,66 @@ const draft = dishes.filter(d => d.data.method_status === 'draft').length;
 
 const dict = {
   zh: {
-    seal_label: '粵 · CANTOPEDIA',
     hero_title: '粵食典',
-    hero_sub: '六張港式茶餐廳水牌 · 66 道菜 · 三語可溯源開源典籍',
+    hero_sub_a: '六張港式茶餐廳水牌',
+    hero_sub_b: '66 道菜 · 三語可溯源',
     browse: '按類別瀏覽',
-    progress: '進度',
-    complete: '已完成', draft: '草稿', stub: '配料表',
-    other_locales: { en: 'English', yue: '粵' },
+    progress: '收錄進度',
+    complete: '完整做法', draft: '草稿', stub: '配料表',
     pieces: '道',
+    dishes_text: '菜',
   },
   en: {
-    seal_label: '粵 · CANTOPEDIA',
     hero_title: 'Cantopedia',
-    hero_sub: 'Six hand-written 港式茶餐廳 menus · 66 dishes · tri-lingual, citation-traceable, open source',
+    hero_sub_a: 'Six hand-written 茶餐廳 menus',
+    hero_sub_b: '66 dishes · tri-lingual · citation-traceable',
     browse: 'Browse by category',
-    progress: 'Progress',
-    complete: 'complete', draft: 'draft', stub: 'ingredients only',
-    other_locales: { zh: '中文', yue: '粵' },
+    progress: 'Cataloging progress',
+    complete: 'with method', draft: 'draft', stub: 'ingredients only',
     pieces: 'dishes',
+    dishes_text: 'dishes',
   },
   yue: {
-    seal_label: '粵 · CANTOPEDIA',
     hero_title: '粵食典',
-    hero_sub: '六張茶餐廳水牌 · 66 道菜 · 三語可溯源嘅開源典籍',
+    hero_sub_a: '六張茶餐廳水牌',
+    hero_sub_b: '66 道菜 · 三語可溯源',
     browse: '按類別瀏覽',
-    progress: '進度',
-    complete: '已完成', draft: '草稿', stub: '配料表',
-    other_locales: { zh: '中文', en: 'English' },
+    progress: '收錄進度',
+    complete: '完整做法', draft: '草稿', stub: '配料表',
     pieces: '道',
+    dishes_text: '菜',
   },
 }[locale];
 ---
-<BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_sub}>
-  <header style="text-align: center; margin: -2rem auto 3rem; max-width: 720px;">
-    <div class="seal" aria-label="seal logo">
-      <span>粵</span>
+<BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_sub_a}>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">{dict.hero_title}</h1>
+      <p class="hero-sub">
+        <span>{dict.hero_sub_a}</span>
+        <span class="dot">·</span>
+        <span>{dict.hero_sub_b}</span>
+      </p>
     </div>
-    <h1 style="font-size: 4rem; margin: 1rem 0 0.25rem; letter-spacing: 0.05em;">{dict.hero_title}</h1>
-    <p class="meta" style="font-size: 1rem; margin: 0.5rem auto 1.25rem; max-width: 540px;">{dict.hero_sub}</p>
-    <div class="locale-switch">
-      <strong>{locale === 'en' ? 'English' : locale === 'yue' ? '粵' : '中文'}</strong>
-      <span class="sep">·</span>
-      {Object.entries(dict.other_locales).map(([loc, label]) => (
-        <a href={`${base}/${loc}`}>{label}</a>
-      ))}
-    </div>
-  </header>
+  </section>
 
-  <section class="progress-bar">
-    <div class="prog-label">{dict.progress}</div>
+  <section class="progress-section">
+    <div class="progress-head">
+      <h3 style="margin: 0;">{dict.progress}</h3>
+      <div class="progress-counts">
+        <span class="ct"><b style="color:var(--m-green)">{complete}</b> {dict.complete}</span>
+        <span class="ct"><b style="color:var(--m-orange)">{draft}</b> {dict.draft}</span>
+        <span class="ct"><b>{total - complete - draft}</b> {dict.stub}</span>
+        <span class="ct ct-total">{total} {dict.pieces}</span>
+      </div>
+    </div>
     <div class="prog-track">
       <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
       <div class="prog-seg prog-draft" style={`width: ${(draft / total) * 100}%`}></div>
     </div>
-    <div class="prog-stats">
-      <span><b>{complete}</b> {dict.complete}</span>
-      <span><b>{draft}</b> {dict.draft}</span>
-      <span><b>{total - complete - draft}</b> {dict.stub}</span>
-    </div>
   </section>
 
-  <h2 style="margin-top: 4rem;">{dict.browse}</h2>
+  <h2 style="margin-top: 3rem;">{dict.browse}</h2>
 
   <div class="tile-grid">
     {sortedCategories.map((cat) => {
@@ -117,135 +120,157 @@ const dict = {
           ? (cat.data.description.yue ?? cat.data.description.zh)
           : cat.data.description.zh;
       const tileColor = tileColors[cat.id] || '#37474F';
+      const glyph = tileGlyphs[cat.id] ?? '·';
       return (
         <a class="tile" href={`${base}/${locale}/browse/${cat.id}`} style={`--tile: ${tileColor}`}>
-          <div class="tile-count">{inCat.length}</div>
-          <div class="tile-pieces">{dict.pieces}</div>
+          <div class="tile-glyph" aria-hidden="true">{glyph}</div>
+          <div class="tile-meta">
+            <span class="tile-count">{inCat.length}</span>
+            <span class="tile-of">{dict.pieces}</span>
+          </div>
           <div class="tile-name">{catName}</div>
           <div class="tile-desc">{desc}</div>
+          <div class="tile-chev">›</div>
         </a>
       );
     })}
   </div>
 
   <footer>
-    粵食典 · Cantopedia · v0.1-alpha · Code MIT, Content CC BY-SA 4.0 ·
-    <a href="https://github.com/ShepherdLoveYou/cantopedia">GitHub</a>
+    粵食典 · Cantopedia · v0.1-alpha · MIT (code) + CC BY-SA 4.0 (content)<br>
+    <a href="https://github.com/ShepherdLoveYou/cantopedia">github.com/ShepherdLoveYou/cantopedia</a>
   </footer>
 </BaseLayout>
 
 <style>
-  main { max-width: 980px !important; }
-
-  .seal {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 96px;
-    height: 96px;
-    background: var(--seal);
-    color: var(--bg);
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 56px;
-    border-radius: 6px;
+  .hero {
+    margin: -1.5rem -1.5rem 2rem;
+    background: linear-gradient(135deg, var(--m-red) 0%, #c10e0e 100%);
+    color: white;
+    padding: 4rem 1.5rem 4rem;
+  }
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+  .hero-title {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 300;
+    font-size: 5rem;
     line-height: 1;
+    margin: 0;
+    letter-spacing: -0.02em;
   }
+  .hero-sub { font-size: 1.125rem; margin: 0.5rem 0 0; opacity: 0.92; font-weight: 300; }
+  .hero-sub .dot { margin: 0 0.5rem; opacity: 0.6; }
 
-  .locale-switch { font-family: var(--meta); font-size: 0.875rem; color: var(--ink-dim); }
-  .locale-switch strong { color: var(--ink); }
-  .locale-switch .sep { margin: 0 0.5rem; color: var(--rule); }
-  .locale-switch a { margin: 0 0.5rem; border-bottom: none; }
-  .locale-switch a:hover { border-bottom: 1px solid var(--seal); }
-
-  .progress-bar {
-    background: var(--plate);
-    padding: 1.25rem 1.5rem;
-    border-radius: 4px;
-    margin-top: 1rem;
+  .progress-section {
+    background: white;
+    padding: 1.5rem;
+    border-left: 4px solid var(--m-blue);
+    margin-bottom: 1rem;
   }
-  .prog-label {
-    font-family: var(--meta);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-dim);
-    margin-bottom: 0.5rem;
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
   }
+  .progress-counts { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: 0.875rem; }
+  .ct { color: var(--ink-dim); }
+  .ct b { font-size: 1.25rem; color: var(--ink); margin-right: 0.25rem; font-weight: 700; }
+  .ct-total b { color: var(--m-red); }
   .prog-track {
-    height: 8px;
+    height: 6px;
     background: var(--rule);
-    border-radius: 2px;
     overflow: hidden;
     display: flex;
   }
   .prog-seg { height: 100%; }
-  .prog-complete { background: var(--seal); }
-  .prog-draft    { background: #E8C46C; }
-  .prog-stats {
-    font-family: var(--meta);
-    font-size: 0.8125rem;
-    color: var(--ink-dim);
-    margin-top: 0.75rem;
-    display: flex;
-    gap: 1.5rem;
-  }
-  .prog-stats b { color: var(--ink); margin-right: 0.25rem; }
+  .prog-complete { background: var(--m-green); }
+  .prog-draft { background: var(--m-orange); }
 
   .tile-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 8px;
+    margin-top: 1rem;
   }
   .tile {
     background: var(--tile);
-    color: white;
-    padding: 1.5rem;
-    border: none;
-    border-radius: 0;
+    color: white !important;
+    padding: 1.5rem 1.5rem 1.25rem;
     text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    display: flex;
-    flex-direction: column;
-    min-height: 200px;
+    transition: opacity 0.12s, transform 0.12s;
+    display: grid;
+    grid-template-areas:
+      "glyph meta"
+      "name name"
+      "desc desc"
+      "chev chev";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto auto;
+    min-height: 220px;
     position: relative;
     overflow: hidden;
   }
-  .tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
-  .tile-count {
-    font-family: var(--display);
-    font-size: 3.5rem;
-    font-weight: 700;
+  .tile:hover { color: white !important; opacity: 0.92; transform: translateY(-2px); }
+  .tile-glyph {
+    grid-area: glyph;
+    font-size: 2.5rem;
     line-height: 1;
-    letter-spacing: -0.02em;
+    opacity: 0.95;
   }
-  .tile-pieces {
-    font-family: var(--meta);
+  .tile-meta {
+    grid-area: meta;
+    text-align: right;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    justify-self: end;
+  }
+  .tile-count {
+    font-family: var(--sans);
+    font-size: 3rem;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .tile-of {
+    font-family: var(--sans);
     font-size: 0.75rem;
+    opacity: 0.7;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    opacity: 0.85;
-    margin-top: 0.25rem;
   }
   .tile-name {
+    grid-area: name;
     font-family: var(--serif-zh);
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: auto;
-    padding-top: 1rem;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin: 1rem 0 0.25rem;
+    line-height: 1.2;
   }
   .tile-desc {
-    font-family: var(--serif-en);
+    grid-area: desc;
+    font-family: var(--sans), var(--sans-zh);
     font-size: 0.8125rem;
     line-height: 1.5;
     opacity: 0.88;
+  }
+  .tile-chev {
+    grid-area: chev;
+    text-align: right;
+    font-family: var(--sans);
+    font-size: 1.5rem;
+    line-height: 1;
     margin-top: 0.5rem;
+    opacity: 0.7;
   }
 
-  @media (max-width: 540px) {
-    .tile-grid { grid-template-columns: 1fr 1fr; }
-    .tile { min-height: 140px; padding: 1rem; }
-    .tile-count { font-size: 2.5rem; }
+  @media (max-width: 640px) {
+    .hero { padding: 2.5rem 1.5rem 2.5rem; }
+    .hero-title { font-size: 3.5rem; }
+    .tile-grid { grid-template-columns: 1fr; }
+    .tile { min-height: 160px; }
   }
 </style>
