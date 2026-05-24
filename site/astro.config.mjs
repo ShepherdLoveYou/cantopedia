@@ -4,6 +4,10 @@ export default defineConfig({
   site: 'https://shepherdloveyou.github.io',
   base: '/cantopedia',
   trailingSlash: 'never',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   i18n: {
     defaultLocale: 'zh',
     locales: ['zh', 'en', 'yue'],

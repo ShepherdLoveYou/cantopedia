@@ -89,56 +89,64 @@ const dict = {
 <style>
   main { max-width: 980px !important; }
 
+  /* Category hero — color band kept as morph target from homepage tile, flattened. */
   .cat-hero {
     color: white;
-    padding: 2.5rem 2rem;
-    margin: 1rem 0 2.5rem;
+    padding: 2rem 2rem 1.75rem;
+    margin: 0.5rem 0 2.5rem;
+    position: relative;
   }
   .cat-no {
-    font-family: var(--display);
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
+    font-family: var(--sans);
+    font-size: 3.5rem;
+    font-weight: 200;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
   }
   .cat-name {
-    font-family: var(--serif-zh);
-    font-size: 2.25rem;
-    margin: 0.5rem 0 0.5rem;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 2rem;
+    font-weight: 200;
+    letter-spacing: -0.01em;
+    margin: 0.25rem 0 0.5rem;
     color: white;
   }
-  .cat-desc { font-family: var(--serif-en); font-size: 1rem; margin: 0.5rem 0; opacity: 0.92; }
-  .cat-langs { font-family: var(--meta); font-size: 0.875rem; opacity: 0.85; margin-top: 0.5rem; }
+  .cat-desc { font-family: var(--sans), var(--sans-zh); font-size: 0.95rem; font-weight: 300; margin: 0.5rem 0 0; opacity: 0.92; max-width: 60ch; }
+  .cat-langs { font-family: var(--meta); font-size: 0.8rem; opacity: 0.8; margin-top: 0.75rem; letter-spacing: 0.04em; }
 
   .dish-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 8px;
+    gap: 6px;
   }
+  /* Panorama dish-card — no fill bg, only a 6px top stripe (morph anchor), thin row rule. */
   .dish-card {
-    background: var(--plate);
-    color: var(--ink);
-    padding: 1.25rem 1.5rem;
+    background: transparent;
+    color: var(--t-ink);
+    padding: 1rem 1.25rem 1.125rem;
     text-decoration: none;
-    border: 1px solid transparent;
     border-top: 6px solid var(--cat-color);
-    border-bottom: 1px solid var(--rule);
-    transition: background 0.15s, transform 0.15s;
+    border-bottom: 1px solid var(--t-rule);
+    transition: background var(--fluent-duration-fast) ease;
     display: flex;
     flex-direction: column;
   }
-  .dish-card:hover { background: #F3EAD3; transform: translateY(-1px); }
+  .dish-card:hover { background: var(--t-plate); color: var(--t-ink) !important; }
   .card-no {
-    font-family: var(--meta);
-    font-size: 0.6875rem;
-    letter-spacing: 0.15em;
-    color: var(--seal);
-    font-weight: 600;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    color: var(--cat-color);
+    font-weight: 500;
+    text-transform: uppercase;
   }
   .card-name {
-    font-family: var(--serif-zh);
-    font-size: 1.375rem;
-    font-weight: 600;
-    margin: 0.25rem 0 0.25rem;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.005em;
+    margin: 0.35rem 0 0.25rem;
+    color: var(--t-ink);
   }
   .card-jyut {
     font-family: var(--mono);

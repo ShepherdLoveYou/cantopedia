@@ -142,6 +142,21 @@ const dict = {
         });
       }
 
+      // Direction-aware Continuum cascade — flag forward vs. back navigation
+      // so the children cascade slides up (forward) or down (back).
+      (function setupNavDirection() {
+        let isBack = false;
+        window.addEventListener('popstate', () => { isBack = true; });
+        document.addEventListener('astro:before-preparation', () => {
+          document.documentElement.dataset.nav = isBack ? 'back' : 'forward';
+          isBack = false;
+        });
+        // Initial load: forward by default; respect already-set value if any.
+        if (!document.documentElement.dataset.nav) {
+          document.documentElement.dataset.nav = 'forward';
+        }
+      })();
+
       // 3D tilt press — directional rotation toward press point (max 3deg + scale 0.96).
       // Released on pointerup/cancel/leave. Doc-level delegation; per-tile setProperty.
       (function setupTiltPress() {
@@ -440,21 +455,18 @@ const dict = {
         100% { transform: translateX(400%); }
       }
 
-      /* ===== View Transitions (WP10 hub-slide / pane-pan feel) ===== */
-      @keyframes wp-slide-in-right {
-        from { transform: translateX(40px); opacity: 0; }
-        to   { transform: translateX(0); opacity: 1; }
-      }
-      @keyframes wp-slide-out-left {
-        from { transform: translateX(0); opacity: 1; }
-        to   { transform: translateX(-40px); opacity: 0; }
-      }
+      /* ===== View Transitions (WP10 hub-slide / pane-pan feel) =====
+         Root cross-fade ONLY; per-tile shared-element morph + Continuum
+         children cascade do the visible work. Layered slide-out + cascade
+         used to fight each other and felt jerky. */
       ::view-transition-old(root) {
-        animation: wp-slide-out-left 0.22s ease-out forwards;
+        animation: vt-fade-out 180ms var(--fluent-curve-accelerate-mid) forwards;
       }
       ::view-transition-new(root) {
-        animation: wp-slide-in-right 0.28s ease-out forwards;
+        animation: vt-fade-in 220ms var(--fluent-curve-decelerate-mid) forwards;
       }
+      @keyframes vt-fade-out { to { opacity: 0; } }
+      @keyframes vt-fade-in  { from { opacity: 0; } }
 
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
       .wp-tile {
@@ -612,19 +624,28 @@ const dict = {
       .drawer-foot { margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.7; }
       .drawer-foot a { color: var(--t-drawer-ink); }
 
-      /* ===== Continuum domino — staggered children-in on every page ===== */
+      /* ===== Continuum domino — staggered children-in on every page.
+         Direction-aware: forward nav slides up from below; back nav slides
+         down from above so popstate "feels" like reversing. */
       main > * {
-        animation: continuum-in var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+        animation: continuum-in-forward var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+      }
+      html[data-nav="back"] main > * {
+        animation-name: continuum-in-back;
       }
       main > *:nth-child(1) { animation-delay: 0ms; }
-      main > *:nth-child(2) { animation-delay: 50ms; }
-      main > *:nth-child(3) { animation-delay: 100ms; }
-      main > *:nth-child(4) { animation-delay: 150ms; }
-      main > *:nth-child(5) { animation-delay: 200ms; }
-      main > *:nth-child(6) { animation-delay: 250ms; }
-      main > *:nth-child(n+7) { animation-delay: 300ms; }
-      @keyframes continuum-in {
-        from { transform: translateY(18px); opacity: 0; }
+      main > *:nth-child(2) { animation-delay: 45ms; }
+      main > *:nth-child(3) { animation-delay: 90ms; }
+      main > *:nth-child(4) { animation-delay: 135ms; }
+      main > *:nth-child(5) { animation-delay: 180ms; }
+      main > *:nth-child(6) { animation-delay: 225ms; }
+      main > *:nth-child(n+7) { animation-delay: 270ms; }
+      @keyframes continuum-in-forward {
+        from { transform: translateY(20px); opacity: 0; }
+        to   { transform: none; opacity: 1; }
+      }
+      @keyframes continuum-in-back {
+        from { transform: translateY(-14px); opacity: 0; }
         to   { transform: none; opacity: 1; }
       }
 

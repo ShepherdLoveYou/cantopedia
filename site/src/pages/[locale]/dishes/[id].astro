@@ -307,19 +307,20 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   .hero-no {
     font-family: var(--sans);
-    font-size: 0.8125rem;
-    letter-spacing: 0.15em;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
     opacity: 0.7;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
   }
   .hero-name {
-    font-family: var(--serif-zh);
+    font-family: var(--sans), var(--sans-zh);
     font-size: 3rem;
-    font-weight: 500;
+    font-weight: 200;
+    letter-spacing: -0.015em;
     color: white;
     margin: 0.25rem 0 0.25rem;
-    line-height: 1.1;
+    line-height: 1.05;
   }
   .hero-jyut {
     font-family: var(--mono);
@@ -351,29 +352,34 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     gap: 2rem;
   }
   .dish-aside { font-size: 0.875rem; }
-  .aside-card { background: var(--t-card); padding: 1rem 1.25rem; margin-bottom: 8px; border-left: 3px solid var(--m-blue); }
-  .aside-card h3 { margin: 0 0 0.5rem; font-size: 0.75rem; }
-  .aside-val { font-family: var(--sans); font-weight: 600; font-size: 1.125rem; color: var(--ink); }
+  /* Panorama aside — no bg fill, just an uppercase letter-spaced label + value. */
+  .aside-card { background: transparent; padding: 0.5rem 0 1rem; margin-bottom: 0; border: 0; border-bottom: 1px solid var(--t-rule); }
+  .aside-card:last-child { border-bottom: 0; }
+  .aside-card h3 { margin: 0 0 0.25rem; font-size: 0.65rem; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 500; }
+  .aside-val { font-family: var(--sans); font-weight: 200; font-size: 1.25rem; color: var(--t-ink); letter-spacing: -0.01em; }
 
-  .alert { padding: 1rem 1.25rem; margin: 1rem 0 2rem; }
-  .alert-warn { background: #FFF6D6; border-left: 4px solid var(--m-yellow); color: #4a3800; }
+  .alert { padding: 0.75rem 0 0.75rem 0.875rem; margin: 1rem 0 2rem; }
+  .alert-warn { background: transparent; border-left: 3px solid var(--m-yellow); color: var(--t-ink-dim); }
 
-  .ing-table { background: var(--t-card); }
-  .ing-table th { background: var(--plate); }
+  .ing-table { background: transparent; }
+  .ing-table th { background: transparent; border-bottom: 1px solid var(--t-rule); }
 
+  /* Panorama sauce row — no card, just a clickable underlined row with chevron. */
   .sauce-card {
     display: flex;
     align-items: center;
-    background: var(--t-card);
-    padding: 1rem 1.25rem;
+    background: transparent;
+    padding: 0.625rem 0;
     margin: 1.5rem 0;
-    color: var(--ink) !important;
-    border-left: 4px solid var(--m-blue);
+    color: var(--t-ink) !important;
+    border: 0;
+    border-bottom: 1px solid var(--t-rule);
+    border-top: 1px solid var(--t-rule);
   }
-  .sauce-card:hover { background: var(--plate); }
-  .sauce-label { font-family: var(--sans); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-dim); margin-right: 0.75rem; font-weight: 600; }
-  .sauce-name { font-family: var(--serif-zh); font-size: 1.125rem; font-weight: 600; flex: 1; }
-  .sauce-chev { font-size: 1.5rem; color: var(--m-blue); }
+  .sauce-card:hover { background: var(--t-plate); }
+  .sauce-label { font-family: var(--sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); margin-right: 0.75rem; font-weight: 500; }
+  .sauce-name { font-family: var(--sans), var(--sans-zh); font-size: 1.125rem; font-weight: 300; flex: 1; color: var(--t-ink); }
+  .sauce-chev { font-size: 1.5rem; color: var(--t-ink-dim); }
 
   .method-list { list-style: none; padding: 0; counter-reset: step; }
   .method-step { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
@@ -393,10 +399,10 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   .step-cite { margin-top: 0.5rem; }
   .step-cite a { font-family: var(--mono); font-size: 0.75rem; margin-right: 0.5rem; color: var(--m-blue); }
 
-  .tips { background: var(--t-card); padding: 1rem 1rem 1rem 2.5rem; }
+  .tips { background: transparent; padding: 0.5rem 0 0.5rem 1.5rem; }
   .tips li { margin: 0.5rem 0; }
 
-  .history { background: var(--t-card); padding: 1.25rem 1.5rem; line-height: 1.75; font-family: var(--serif-en), var(--serif-zh); font-size: 1.0625rem; }
+  .history { background: transparent; padding: 0.5rem 0 0.5rem 0.875rem; border-left: 3px solid var(--m-red); line-height: 1.75; font-family: var(--serif-en), var(--serif-zh); font-size: 1.0625rem; }
 
   .sources { padding-left: 0; list-style: none; }
   .sources li { padding: 0.625rem 0; border-bottom: 1px dashed var(--rule); }
