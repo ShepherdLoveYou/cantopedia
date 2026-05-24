@@ -58,6 +58,28 @@ const dict = {
           bar.classList.remove('loading');
         });
       }
+
+      // 3D tilt press — directional rotation toward press point (max 3deg + scale 0.96).
+      // Released on pointerup/cancel/leave. Doc-level delegation; per-tile setProperty.
+      (function setupTiltPress() {
+        const MAX = 3;
+        function press(tile: HTMLElement, x: number, y: number) {
+          const r = tile.getBoundingClientRect();
+          const dx = (x - r.left - r.width / 2) / (r.width / 2);
+          const dy = (y - r.top - r.height / 2) / (r.height / 2);
+          tile.style.setProperty('--tilt-x', (-dy * MAX).toFixed(2) + 'deg');
+          tile.style.setProperty('--tilt-y', (dx * MAX).toFixed(2) + 'deg');
+          tile.classList.add('pressing');
+        }
+        function release() {
+          document.querySelectorAll('.wp-tile.pressing').forEach((t) => t.classList.remove('pressing'));
+        }
+        document.addEventListener('pointerdown', (e) => {
+          const t = (e.target as Element | null)?.closest('.wp-tile') as HTMLElement | null;
+          if (t) press(t, e.clientX, e.clientY);
+        });
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => document.addEventListener(ev, release));
+      })();
     </script>
     <style is:global>
       :root {
@@ -226,22 +248,27 @@ const dict = {
         animation: wp-slide-in-right 0.28s ease-out forwards;
       }
 
-      /* ===== WP10 tile press effect (tap → squish → bounce back) ===== */
+      /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
       .wp-tile {
-        transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: transform var(--fluent-duration-normal, 200ms) var(--fluent-curve-decelerate-mid, ease-out);
         will-change: transform;
         user-select: none;
         -webkit-tap-highlight-color: transparent;
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
       }
-      .wp-tile:active {
-        transform: scale(0.96) !important;
-        transition: transform 0.08s ease-out;
+      .wp-tile.pressing {
+        transform: perspective(800px)
+                   rotateX(var(--tilt-x))
+                   rotateY(var(--tilt-y))
+                   scale(0.96);
+        transition: transform 80ms var(--fluent-curve-accelerate-mid, ease-in);
       }
 
       /* Reduce motion friendly */
       @media (prefers-reduced-motion: reduce) {
         ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-        .wp-tile:active { transform: none !important; }
+        .wp-tile.pressing { transform: scale(0.97); }
         .loading-bar.loading::before { animation: none; opacity: 0.5; }
       }
 
