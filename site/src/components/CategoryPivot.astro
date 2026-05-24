@@ -54,3 +54,46 @@ const nameOf = (c: typeof curr) =>
     .pivot--dim { font-size: 0.875rem; }
   }
 </style>
+
+<script>
+  // ClientRouter keeps document-level listeners across navigations, so each
+  // handler bails fast on pages where the pivot strip isn't present.
+  const hasPivot = () => !!document.querySelector('.pivot-strip');
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (!hasPivot()) return;
+    const tag = (e.target as HTMLElement)?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.key === 'ArrowLeft')
+      document.querySelector<HTMLAnchorElement>('.pivot[data-dir="prev"]')?.click();
+    if (e.key === 'ArrowRight')
+      document.querySelector<HTMLAnchorElement>('.pivot[data-dir="next"]')?.click();
+  });
+
+  // Touch swipe — horizontal only, threshold 60px and 2x more horizontal than vertical
+  let sx = 0, sy = 0;
+  document.addEventListener('touchstart', (e) => {
+    if (!hasPivot()) return;
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (!hasPivot()) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < 2 * Math.abs(dy)) return;
+    const dir = dx < 0 ? 'next' : 'prev';
+    document.querySelector<HTMLAnchorElement>(`.pivot[data-dir="${dir}"]`)?.click();
+  }, { passive: true });
+
+  // Tag direction onto <html> for CSS-driven slide (capture phase so it runs
+  // before ClientRouter intercepts the click). No hasPivot bail needed —
+  // the selector itself only matches pivot anchors.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('.pivot[data-dir]');
+    if (!a) return;
+    document.documentElement.classList.remove('nav-prev', 'nav-next');
+    document.documentElement.classList.add(a.dataset.dir === 'prev' ? 'nav-prev' : 'nav-next');
+  }, true);
+</script>
