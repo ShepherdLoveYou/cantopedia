@@ -26,86 +26,226 @@ for (const arr of dishesByCategory.values()) {
   arr.sort((a, b) => a.data.menu_no - b.data.menu_no);
 }
 
+// Live-tile colours per category (Metro / 印章紅 palette)
+const tileColors: Record<string, string> = {
+  appetizer:   '#B71C1C',  // 印章紅
+  'soup-wonton': '#1565C0', // 深藍
+  rice:        '#E65100',   // 橙
+  noodle:      '#2E7D32',   // 翠
+  'soup-noodle': '#00838F', // 青
+  'baked-rice': '#6D4C41',  // 焙茶
+  congee:      '#6A1B9A',   // 紫
+  main:        '#263238',   // 墨
+};
+
+const total = dishes.length;
+const complete = dishes.filter(d => d.data.method_status === 'complete').length;
+const draft = dishes.filter(d => d.data.method_status === 'draft').length;
+
 const dict = {
   zh: {
+    seal_label: '粵 · CANTOPEDIA',
     hero_title: '粵食典',
-    hero_subtitle: '六張港式茶餐廳水牌、66 道菜、三語可溯源的開源典籍',
-    counts: (n: number) => `共 ${n} 道菜`,
+    hero_sub: '六張港式茶餐廳水牌 · 66 道菜 · 三語可溯源開源典籍',
+    browse: '按類別瀏覽',
+    progress: '進度',
+    complete: '已完成', draft: '草稿', stub: '配料表',
     other_locales: { en: 'English', yue: '粵' },
-    complete: '已完成',
-    draft: '草稿',
-    stub: '配料表',
+    pieces: '道',
   },
   en: {
+    seal_label: '粵 · CANTOPEDIA',
     hero_title: 'Cantopedia',
-    hero_subtitle: 'Six hand-written 港式茶餐廳 menus · 66 dishes · tri-lingual, citation-traceable, open source',
-    counts: (n: number) => `${n} dishes`,
+    hero_sub: 'Six hand-written 港式茶餐廳 menus · 66 dishes · tri-lingual, citation-traceable, open source',
+    browse: 'Browse by category',
+    progress: 'Progress',
+    complete: 'complete', draft: 'draft', stub: 'ingredients only',
     other_locales: { zh: '中文', yue: '粵' },
-    complete: 'complete',
-    draft: 'draft',
-    stub: 'ingredients only',
+    pieces: 'dishes',
   },
   yue: {
+    seal_label: '粵 · CANTOPEDIA',
     hero_title: '粵食典',
-    hero_subtitle: '六張茶餐廳水牌、66 道菜、三語可溯源嘅開源典籍',
-    counts: (n: number) => `共 ${n} 道菜`,
+    hero_sub: '六張茶餐廳水牌 · 66 道菜 · 三語可溯源嘅開源典籍',
+    browse: '按類別瀏覽',
+    progress: '進度',
+    complete: '已完成', draft: '草稿', stub: '配料表',
     other_locales: { zh: '中文', en: 'English' },
-    complete: '已完成',
-    draft: '草稿',
-    stub: '配料表',
+    pieces: '道',
   },
 }[locale];
 ---
-<BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_subtitle}>
-  <header style="text-align:center; margin-bottom: 3rem;">
-    <div style="font-family: var(--display); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--seal); text-transform: uppercase; margin-bottom: 0.5rem;">粵 · CANTOPEDIA</div>
-    <h1 style="font-size: 3.5rem; margin: 0.5rem 0;">{dict.hero_title}</h1>
-    <p class="meta" style="font-size: 1rem; max-width: 480px; margin: 1rem auto;">{dict.hero_subtitle}</p>
-    <div style="margin-top: 1.5rem;">
-      <span class="meta">{dict.counts(dishes.length)}</span>
-      <span style="margin: 0 0.5rem; color: var(--rule);">·</span>
+<BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_sub}>
+  <header style="text-align: center; margin: -2rem auto 3rem; max-width: 720px;">
+    <div class="seal" aria-label="seal logo">
+      <span>粵</span>
+    </div>
+    <h1 style="font-size: 4rem; margin: 1rem 0 0.25rem; letter-spacing: 0.05em;">{dict.hero_title}</h1>
+    <p class="meta" style="font-size: 1rem; margin: 0.5rem auto 1.25rem; max-width: 540px;">{dict.hero_sub}</p>
+    <div class="locale-switch">
+      <strong>{locale === 'en' ? 'English' : locale === 'yue' ? '粵' : '中文'}</strong>
+      <span class="sep">·</span>
       {Object.entries(dict.other_locales).map(([loc, label]) => (
-        <a href={`${base}/${loc}`} class="meta" style="margin: 0 0.5rem;">{label}</a>
+        <a href={`${base}/${loc}`}>{label}</a>
       ))}
     </div>
   </header>
 
-  <hr />
+  <section class="progress-bar">
+    <div class="prog-label">{dict.progress}</div>
+    <div class="prog-track">
+      <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
+      <div class="prog-seg prog-draft" style={`width: ${(draft / total) * 100}%`}></div>
+    </div>
+    <div class="prog-stats">
+      <span><b>{complete}</b> {dict.complete}</span>
+      <span><b>{draft}</b> {dict.draft}</span>
+      <span><b>{total - complete - draft}</b> {dict.stub}</span>
+    </div>
+  </section>
 
-  {sortedCategories.map((cat) => {
-    const inCat = dishesByCategory.get(cat.id) ?? [];
-    if (inCat.length === 0) return null;
-    const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
-    const catDesc = locale === 'en' ? (cat.data.description.en ?? cat.data.description.zh) : cat.data.description.zh;
-    return (
-      <section style="margin-bottom: 2.5rem;">
-        <h2>{catName} <span class="meta" style="font-weight: 400; font-size: 0.875rem; margin-left: 0.5rem;">{inCat.length}</span></h2>
-        <p class="meta" style="margin-top: -0.5rem;">{catDesc}</p>
-        <ul style="list-style: none; padding: 0; margin: 1rem 0 0; columns: 2; column-gap: 2rem;">
-          {inCat.map((dish) => {
-            const name = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
-            const statusBadge =
-              dish.data.method_status === 'complete' ? 'badge--seal' :
-              dish.data.method_status === 'draft' ? 'badge--warn' : '';
-            return (
-              <li style="break-inside: avoid; padding: 0.375rem 0;">
-                <a href={`${base}/${locale}/dishes/${dish.id}`}>
-                  <span class="meta" style="color: var(--ink-dim); margin-right: 0.5rem;">{String(dish.data.menu_no).padStart(2, '0')}</span>
-                  {name}
-                </a>
-                {dish.data.method_status === 'complete' && (
-                  <span class={`badge ${statusBadge}`} style="margin-left: 0.5rem; font-size: 0.6875rem;">{dict.complete}</span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-    );
-  })}
+  <h2 style="margin-top: 4rem;">{dict.browse}</h2>
+
+  <div class="tile-grid">
+    {sortedCategories.map((cat) => {
+      const inCat = dishesByCategory.get(cat.id) ?? [];
+      if (inCat.length === 0) return null;
+      const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
+      const desc = locale === 'en'
+        ? (cat.data.description.en ?? cat.data.description.zh)
+        : locale === 'yue'
+          ? (cat.data.description.yue ?? cat.data.description.zh)
+          : cat.data.description.zh;
+      const tileColor = tileColors[cat.id] || '#37474F';
+      return (
+        <a class="tile" href={`${base}/${locale}/browse/${cat.id}`} style={`--tile: ${tileColor}`}>
+          <div class="tile-count">{inCat.length}</div>
+          <div class="tile-pieces">{dict.pieces}</div>
+          <div class="tile-name">{catName}</div>
+          <div class="tile-desc">{desc}</div>
+        </a>
+      );
+    })}
+  </div>
 
   <footer>
     粵食典 · Cantopedia · v0.1-alpha · Code MIT, Content CC BY-SA 4.0 ·
     <a href="https://github.com/ShepherdLoveYou/cantopedia">GitHub</a>
   </footer>
 </BaseLayout>
+
+<style>
+  main { max-width: 980px !important; }
+
+  .seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    background: var(--seal);
+    color: var(--bg);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 56px;
+    border-radius: 6px;
+    line-height: 1;
+  }
+
+  .locale-switch { font-family: var(--meta); font-size: 0.875rem; color: var(--ink-dim); }
+  .locale-switch strong { color: var(--ink); }
+  .locale-switch .sep { margin: 0 0.5rem; color: var(--rule); }
+  .locale-switch a { margin: 0 0.5rem; border-bottom: none; }
+  .locale-switch a:hover { border-bottom: 1px solid var(--seal); }
+
+  .progress-bar {
+    background: var(--plate);
+    padding: 1.25rem 1.5rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+  .prog-label {
+    font-family: var(--meta);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    margin-bottom: 0.5rem;
+  }
+  .prog-track {
+    height: 8px;
+    background: var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+  }
+  .prog-seg { height: 100%; }
+  .prog-complete { background: var(--seal); }
+  .prog-draft    { background: #E8C46C; }
+  .prog-stats {
+    font-family: var(--meta);
+    font-size: 0.8125rem;
+    color: var(--ink-dim);
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+  .prog-stats b { color: var(--ink); margin-right: 0.25rem; }
+
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+  .tile {
+    background: var(--tile);
+    color: white;
+    padding: 1.5rem;
+    border: none;
+    border-radius: 0;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+  .tile-count {
+    font-family: var(--display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .tile-pieces {
+    font-family: var(--meta);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    margin-top: 0.25rem;
+  }
+  .tile-name {
+    font-family: var(--serif-zh);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+  .tile-desc {
+    font-family: var(--serif-en);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    opacity: 0.88;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 540px) {
+    .tile-grid { grid-template-columns: 1fr 1fr; }
+    .tile { min-height: 140px; padding: 1rem; }
+    .tile-count { font-size: 2.5rem; }
+  }
+</style>

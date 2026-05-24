@@ -34,6 +34,7 @@ method_status: complete
 method:
   - order: 1
     body:
+      yue: 叉燒自家整嘅話，要先用五香粉、紹興酒、海鮮醬、老抽、糖同蒜茸醃梅頭肉，最少醃 4 個鐘，過夜更佳。
       zh: 叉烧如自家做，需先以五香粉、绍兴酒、海鲜酱、老抽、糖、蒜茸腌梅头肉至少 4 小时（隔夜更佳）。
       en: For homemade char siu, marinate pork shoulder in five-spice, Shaoxing wine, hoisin, dark soy, sugar, and minced garlic for at least 4 hours (overnight is better).
     time_seconds: 14400
@@ -41,6 +42,7 @@ method:
       - wikipedia-en-char-siu
   - order: 2
     body:
+      yue: 焗爐預熱到 220°C。醃好嘅肉條掛上烤架，下面墊個接油盤，先焗 15 分鐘。
       zh: 烤箱预热到 220°C。腌好的肉条挂烤架上，下接接油盘，先烤 15 分钟。
       en: Preheat oven to 220°C / 425°F. Hang marinated pork on a rack with a drip pan below; roast 15 minutes.
     temperature_c: 220
@@ -49,6 +51,7 @@ method:
       - wikipedia-en-char-siu
   - order: 3
     body:
+      yue: 校細火到 200°C，掃上蜜汁醬（睇關聯醬料頁），再焗 10 分鐘。掃醬同再焗，重複 2 次，總共 30 分鐘。表面應該呈深紅光亮、邊位焦糖化。
       zh: 调低到 200°C，刷上蜜汁酱（见关联酱料页），再烤 10 分钟。重复刷酱与烤 2 次，共 30 分钟。表面应呈深红光亮、边缘焦糖化。
       en: Reduce to 200°C / 400°F. Brush with the honey glaze (see linked sauce page) and roast 10 minutes more. Repeat brushing-and-roasting twice (30 minutes total). The surface should be deep red, glossy, with caramelised edges.
     temperature_c: 200
@@ -57,11 +60,13 @@ method:
       - wikipedia-en-char-siu
   - order: 4
     body:
+      yue: 攞出叉燒，靜置 5 分鐘（等肉汁回流），逆紋切 ~5 mm 厚嘅片。
       zh: 取出叉烧静置 5 分钟（让肉汁回流），逆纹切 ~5 mm 厚片。
       en: Rest the char siu 5 minutes off the heat, letting juices redistribute, then slice ~5 mm thick against the grain.
     time_seconds: 300
   - order: 5
     body:
+      yue: 芥蘭整條飛水。水入面落少少油同鹽，落芥蘭灼 60 秒，到莖部斷生、葉部翠綠，撈起瀝乾水。
       zh: 芥兰整条飞水。水中加少许油与盐，下芥兰汆 60 秒至茎部断生、叶部翠绿，捞出沥水。
       en: Blanch whole gai lan stems in salted, lightly oiled water for 60 seconds — stems just tender, leaves bright green — then drain.
     time_seconds: 60
@@ -69,14 +74,18 @@ method:
       - wikipedia-en-kai-lan
   - order: 6
     body:
+      yue: 上碟——白飯一碗倒扣喺碟中間，叉燒片半月形覆喺飯上面，芥蘭圍一邊。鍾意嘅話可以再淋一匙蜜汁。
       zh: 装盘——白饭一碗倒扣在碟中央，叉烧片半月形覆于饭上，芥兰围一侧。可再淋一勺蜜汁。
       en: Plate up — invert the bowl of rice in the middle of a plate, fan the char siu slices over it in a half-moon, arrange the gai lan on one side. Drizzle with extra glaze if desired.
 tips:
-  - zh: 红色不是色素而是腌料中糖与海鲜酱的美拉德反应；商家常加红麴米粉强化颜色，自家可省。
+  - yue: 紅色唔係色素，係醃料入面嘅糖同海鮮醬發生美拉德反應出嚟嘅顏色。店舖會落紅麴米粉令顏色更搶眼，自己整可以慳呢一步。
+    zh: 红色不是色素而是腌料中糖与海鲜酱的美拉德反应；商家常加红麴米粉强化颜色，自家可省。
     en: That signature red colour is not food dye — it comes from Maillard browning of the sugar and hoisin in the marinade. Restaurants often boost it with red yeast rice powder; you can skip this at home.
-  - zh: 蜜汁要在肉七成熟之后才刷，否则糖会在高温下焦化发苦。
+  - yue: 蜜汁要等肉七成熟先掃落去，唔係嘅話糖會喺高溫底下焦掉變苦。
+    zh: 蜜汁要在肉七成熟之后才刷，否则糖会在高温下焦化发苦。
     en: Brush the glaze only after the meat is ~70 percent done — sugar burns and turns bitter under prolonged high heat.
 history:
+  yue: 叉燒（caa1 siu1）字面就係「叉住嚟燒」——古時候將醃好嘅肉用叉叉住、掛喺窯爐裡面燒。蜜汁叉燒飯喺 1960 年代港式茶餐廳定型，係介乎快餐同正餐之間嘅中價主食。
   zh: 叉烧（caa1 siu1）字面意思是「叉著烧」——古时把腌好的肉用叉子叉著、悬挂在窑炉里烧。蜜汁叉烧饭是港式茶餐厅 1960 年代固化的招牌，作为快餐与正餐之间的中价主食。
   en: Char siu literally means fork-roasted — historically, marinated meat skewered on long forks and hung inside a clay oven. Char siu rice solidified as a Hong Kong tea-restaurant staple in the 1960s, occupying the middle ground between fast food and a sit-down meal.
 allergens:
@@ -86,7 +95,7 @@ allergens:
 sources:
   - source_id: menu-2025-handwritten
     accessed: 2026-05-24
-    note: Item #16 on the source menu
+    note: "Item #16 on the source menu"
   - source_id: wikipedia-en-char-siu
     url: https://en.wikipedia.org/wiki/Char_siu
     accessed: 2026-05-24
