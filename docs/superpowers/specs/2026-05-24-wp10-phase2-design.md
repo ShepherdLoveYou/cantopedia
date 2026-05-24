@@ -23,6 +23,7 @@ Items explicitly out of scope: live-tile flip, segmented back/forward arrows, ri
 | 3 | Shared element pairing = **whole card → whole hero band** | Name-only morph (visually lonely); name + menu-no two-pair (less dramatic than full card) |
 | 4 | Pivot navigation interactions: **click peek + keyboard ←/→ + touch swipe** | Mouse wheel rejected (vertical scroll conflict, accidental triggers) |
 | 5 | Hand-roll the pivot CSS + JS (≈ 60 LOC) | Pulling in [olton/metroui](https://github.com/olton/metroui) — checked, library has 166 components but no pivot/hub/panorama. Keep metroui in our back pocket for live-tile flip later (`flip-card` component). |
+| 6 | Borrow named animation tokens (curves, durations) from [@fluentui/tokens](https://github.com/microsoft/fluentui/tree/master/packages/tokens) — copy 4-6 values into our existing `<style is:global>` block under MIT attribution | Pulling the whole `@fluentui/tokens` npm package (designed for React FluentProvider; pulls extra deps for ~5 constants we want). Also rejected: Fluent UI `<fluent-tablist>` web-component — visually it's flat-tabs, conflicts with the 3-peek decision in #2. |
 
 ## Architecture
 
@@ -37,7 +38,7 @@ Items explicitly out of scope: live-tile flip, segmented back/forward arrows, ri
 
 | File | Change |
 |---|---|
-| `site/src/layouts/BaseLayout.astro` | Add global `@media (prefers-reduced-motion: reduce)` CSS guard that disables all view-transition animations. Add `nav-prev`/`nav-next` class toggling on `<html>` so CSS can pick directional slide keyframes. |
+| `site/src/layouts/BaseLayout.astro` | (a) Append 6 named animation tokens (`--fluent-*`) borrowed from `@fluentui/tokens` to the existing `<style is:global>` block, with MIT attribution comment. (b) Add global `@media (prefers-reduced-motion: reduce)` CSS guard that disables all view-transition animations. (c) Add `nav-prev`/`nav-next` class toggling on `<html>` so CSS can pick directional slide keyframes. |
 | `site/src/pages/[locale]/browse/[category].astro` | (a) Render `<CategoryPivot>` above the cat-hero. (b) Inject `--cat-color` CSS variable and a `border-top: 6px solid var(--cat-color)` on each `.dish-card`. (c) Add `style="view-transition-name: dish-{dish.id}"` to each `.dish-card`. |
 | `site/src/pages/[locale]/dishes/[id].astro` | Add `view-transition-name: dish-{dish.id}` to the `hero-band` element. |
 
@@ -183,16 +184,44 @@ CSS addition:
 <header class="hero-band" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
 ```
 
+### Design tokens (borrowed from `@fluentui/tokens`, MIT)
+
+Append to the existing `:root { ... }` block in `BaseLayout.astro` `<style is:global>`. Values are lifted verbatim from `packages/tokens/src/global/curves.ts` and `durations.ts` (Microsoft, MIT). Attribution comment required on the block.
+
+```css
+:root {
+  /* ... existing Metro palette unchanged ... */
+
+  /* Borrowed from @fluentui/tokens (MIT, https://github.com/microsoft/fluentui) */
+  --fluent-curve-decelerate-mid: cubic-bezier(0, 0, 0, 1);     /* enter / morph */
+  --fluent-curve-accelerate-mid: cubic-bezier(1, 0, 1, 1);     /* exit */
+  --fluent-curve-easy-ease:      cubic-bezier(0.33, 0, 0.67, 1); /* crossfade */
+  --fluent-duration-fast:        150ms;
+  --fluent-duration-normal:      200ms;
+  --fluent-duration-gentle:      250ms;
+}
+```
+
+Rationale: Fluent's `curveDecelerateMid` (0,0,0,1) is exactly the WP10/Metro "ease-out into rest" curve. Reusing named tokens lets us tweak feel globally later instead of hunting magic numbers.
+
 ### Directional slide CSS (in `BaseLayout.astro`)
 
 ```css
 /* Default ClientRouter cross-fade unchanged for vertical paths */
 
 /* Pivot horizontal slide — only when <html> has nav-next / nav-prev */
-html.nav-next::view-transition-old(root) { animation: slide-out-left  .28s ease both; }
-html.nav-next::view-transition-new(root) { animation: slide-in-right  .28s ease both; }
-html.nav-prev::view-transition-old(root) { animation: slide-out-right .28s ease both; }
-html.nav-prev::view-transition-new(root) { animation: slide-in-left   .28s ease both; }
+html.nav-next::view-transition-old(root) {
+  animation: slide-out-left var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
+}
+html.nav-next::view-transition-new(root) {
+  animation: slide-in-right var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+}
+html.nav-prev::view-transition-old(root) {
+  animation: slide-out-right var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
+}
+html.nav-prev::view-transition-new(root) {
+  animation: slide-in-left var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+}
 
 @keyframes slide-out-left  { to { transform: translateX(-12%); opacity: 0; } }
 @keyframes slide-in-right  { from { transform: translateX(12%);  opacity: 0; } }
@@ -206,6 +235,8 @@ html.nav-prev::view-transition-new(root) { animation: slide-in-left   .28s ease 
   }
 }
 ```
+
+Asymmetric easing (`accelerate` for the leaving page, `decelerate` for the entering page) is the Fluent/Metro motion grammar — the leaving page snaps out, the entering page settles in.
 
 Note: `nav-next`/`nav-prev` class set on `<html>` BEFORE click is captured (ClientRouter starts the transition synchronously on click). Class is cleared at the start of the next pageload by removing both classes in the same click-handler (next click resets).
 
