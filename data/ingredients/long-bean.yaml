@@ -1,0 +1,11 @@
+id: long-bean
+names:
+  yue_hant: 豆仔
+  jyutping: dau6 zai2
+  zh: 豆仔
+  en: Yard-long bean
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

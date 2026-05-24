@@ -1,0 +1,11 @@
+id: pineapple
+names:
+  yue_hant: 菠蘿
+  jyutping: bo1 lo4
+  zh: 菠萝
+  en: Pineapple
+category: fruit
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

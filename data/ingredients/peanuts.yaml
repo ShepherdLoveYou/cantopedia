@@ -1,0 +1,11 @@
+id: peanuts
+names:
+  yue_hant: 花生
+  jyutping: faa1 sang1
+  zh: 花生
+  en: Peanuts
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

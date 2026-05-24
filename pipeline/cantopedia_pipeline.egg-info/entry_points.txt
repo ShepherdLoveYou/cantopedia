@@ -1,0 +1,2 @@
+[console_scripts]
+cantopedia-pipeline = pipeline.cli:cli

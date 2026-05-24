@@ -1,0 +1,28 @@
+id: 032-caa1-siu1-laat6-saa1-mai5-sin3
+menu_no: 32
+names:
+  yue_hant: 叉燒喇沙米線
+  jyutping: caa1 siu1 laat6 saa1 mai5 sin3
+  zh: 叉烧喇沙米线
+  en: Char-siu Laksa Vermicelli
+category: soup-noodle
+ingredients:
+  - ref: cha-siu
+    qty: 8
+    unit: 片
+  - ref: rice-noodle
+    qty: 6
+    unit: 兩
+  - ref: laksa-paste
+    qty: 2
+    unit: 匙
+  - ref: coconut-milk
+    qty: 0.2
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #32 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

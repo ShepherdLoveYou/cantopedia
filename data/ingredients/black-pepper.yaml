@@ -1,0 +1,11 @@
+id: black-pepper
+names:
+  yue_hant: 黑椒粉
+  jyutping: hak1 ziu1 fan2
+  zh: 黑椒粉
+  en: Ground black pepper
+category: spice
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

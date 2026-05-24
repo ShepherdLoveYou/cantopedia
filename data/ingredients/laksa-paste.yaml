@@ -1,0 +1,11 @@
+id: laksa-paste
+names:
+  yue_hant: 喇沙醬
+  jyutping: laat6 saa1 zoeng3
+  zh: 喇沙酱
+  en: Laksa paste
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

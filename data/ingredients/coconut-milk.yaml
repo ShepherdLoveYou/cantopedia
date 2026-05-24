@@ -1,0 +1,11 @@
+id: coconut-milk
+names:
+  yue_hant: 椰汁
+  jyutping: je4 zap1
+  zh: 椰汁
+  en: Coconut milk
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

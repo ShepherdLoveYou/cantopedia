@@ -1,0 +1,42 @@
+id: 047-si6-zap1-ngau4
+menu_no: 47
+names:
+  yue_hant: 豉汁牛
+  jyutping: si6 zap1 ngau4
+  zh: 豉汁牛
+  en: Beef in Black Bean Sauce
+category: main
+ingredients:
+  - ref: beef-slices
+    qty: 8
+    unit: 件
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+  - ref: mushroom
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: large-shrimp
+    qty: 6
+    unit: 件
+  - ref: spring-rolls-veg
+    qty: 1
+    unit: 條
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #47 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 047b-si6-zap1-gai1
+  - 047c-si6-zap1-haa1
+tips:
+  - zh: 另有雞、蝦兩個版本

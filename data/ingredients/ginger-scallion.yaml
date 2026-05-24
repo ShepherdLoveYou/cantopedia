@@ -1,0 +1,11 @@
+id: ginger-scallion
+names:
+  yue_hant: 薑蔥料
+  jyutping: goeng1 cung1 liu2
+  zh: 姜葱料
+  en: Ginger-scallion mixture
+category: spice
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

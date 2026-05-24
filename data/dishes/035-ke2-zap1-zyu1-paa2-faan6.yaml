@@ -1,0 +1,39 @@
+id: 035-ke2-zap1-zyu1-paa2-faan6
+menu_no: 35
+names:
+  yue_hant: 茄汁豬扒飯
+  jyutping: ke2 zap1 zyu1 paa2 faan6
+  zh: 茄汁猪扒饭
+  en: Tomato Sauce Pork Chop Baked Rice
+category: baked-rice
+ingredients:
+  - ref: pork-chop
+    qty: 2
+    unit: 件
+  - ref: tomato
+    qty: 1
+    unit: 份
+  - ref: green-peas
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: tomato-sauce
+    qty: 3
+    unit: 兩
+  - ref: cheese-topping
+    qty: 1
+    unit: 份
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #35 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 灑芝士焗 10 分鐘；另有意粉版

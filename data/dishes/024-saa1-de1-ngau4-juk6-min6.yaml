@@ -1,0 +1,37 @@
+id: 024-saa1-de1-ngau4-juk6-min6
+menu_no: 24
+names:
+  yue_hant: 沙爹牛肉麵
+  jyutping: saa1 de1 ngau4 juk6 min6
+  zh: 沙爹牛肉面
+  en: Satay Beef Noodles
+category: noodle
+ingredients:
+  - ref: bell-pepper
+    qty: 4
+    unit: 兩
+  - ref: carrot
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: beef-slices
+    qty: 10
+    unit: 件
+  - ref: satay-sauce
+    qty: 1
+    unit: 份
+  - ref: oyster-sauce
+    qty: 1
+    unit: 份
+  - ref: pan-fried-noodle
+    qty: 6
+    unit: 兩
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #24 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

@@ -1,0 +1,11 @@
+id: lemon
+names:
+  yue_hant: 檸檬
+  jyutping: ning4 mung1
+  zh: 柠檬
+  en: Lemon
+category: fruit
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

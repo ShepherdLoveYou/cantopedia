@@ -1,0 +1,31 @@
+id: 044-haa1-kau4-waat6-gai1-zuk1
+menu_no: 44
+names:
+  yue_hant: 蝦球滑雞粥
+  jyutping: haa1 kau4 waat6 gai1 zuk1
+  zh: 虾球滑鸡粥
+  en: Shrimp & Velveted-chicken Congee
+category: congee
+ingredients:
+  - ref: shrimp-balls
+    qty: 4
+    unit: 件
+  - ref: chicken-balls
+    qty: 4
+    unit: 件
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+  - ref: congee-base
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #44 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

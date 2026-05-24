@@ -1,0 +1,24 @@
+id: 059-ziu1-jim4-sin1-jau4
+menu_no: 59
+names:
+  yue_hant: 椒鹽鮮尤
+  jyutping: ziu1 jim4 sin1 jau4
+  zh: 椒盐鲜鱿
+  en: Salt-and-pepper Squid
+category: main
+ingredients:
+  - ref: squid
+    qty: 6
+    unit: 兩
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #59 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 15 件

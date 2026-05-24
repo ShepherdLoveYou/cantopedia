@@ -1,0 +1,31 @@
+id: 066-bo1-lo4-gu1-lou1-juk6
+menu_no: 66
+names:
+  yue_hant: 菠蘿咕嚕肉
+  jyutping: bo1 lo4 gu1 lou1 juk6
+  zh: 菠萝咕咾肉
+  en: Sweet-and-sour Pork with Pineapple
+category: main
+ingredients:
+  - ref: sweet-sour-pork
+    qty: 1
+    unit: 磅
+  - ref: pineapple
+    qty: 1
+    unit: 兩
+  - ref: sweet-sour-sauce
+    qty: 4
+    unit: 兩
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #66 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

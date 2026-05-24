@@ -1,0 +1,11 @@
+id: pan-fried-noodle
+names:
+  yue_hant: 煎麵
+  jyutping: zin1 min6
+  zh: 煎面
+  en: Pan-fried egg noodle nest
+category: noodle
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

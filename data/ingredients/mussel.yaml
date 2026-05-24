@@ -1,0 +1,11 @@
+id: mussel
+names:
+  yue_hant: 青口
+  jyutping: ceng1 hau2
+  zh: 青口
+  en: Green-lipped mussel
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

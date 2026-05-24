@@ -1,0 +1,11 @@
+id: sweet-chicken-sauce
+names:
+  yue_hant: 甜雞醬
+  jyutping: tim4 gai1 zoeng3
+  zh: 甜鸡酱
+  en: Sweet chicken sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

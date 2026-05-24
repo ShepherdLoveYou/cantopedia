@@ -1,0 +1,11 @@
+id: garlic-glaze
+names:
+  yue_hant: 蒜汁
+  jyutping: syun3 zap1
+  zh: 蒜汁
+  en: Garlic glaze
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

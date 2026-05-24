@@ -1,0 +1,11 @@
+id: ginger-dip
+names:
+  yue_hant: 薑蓉
+  jyutping: goeng1 jung4
+  zh: 姜蓉
+  en: Ginger paste dip
+category: spice
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

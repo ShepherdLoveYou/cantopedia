@@ -1,0 +1,11 @@
+id: chicken-slices
+names:
+  yue_hant: 雞片
+  jyutping: gai1 pin2
+  zh: 鸡片
+  en: Sliced chicken
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

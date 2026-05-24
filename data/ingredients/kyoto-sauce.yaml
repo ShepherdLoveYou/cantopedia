@@ -1,0 +1,11 @@
+id: kyoto-sauce
+names:
+  yue_hant: 京都汁
+  jyutping: ging1 dou1 zap1
+  zh: 京都汁
+  en: Kyoto sauce (sweet pork glaze)
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

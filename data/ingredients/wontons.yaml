@@ -1,0 +1,11 @@
+id: wontons
+names:
+  yue_hant: 雲吞
+  jyutping: wan4 tan1
+  zh: 云吞
+  en: Wontons
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

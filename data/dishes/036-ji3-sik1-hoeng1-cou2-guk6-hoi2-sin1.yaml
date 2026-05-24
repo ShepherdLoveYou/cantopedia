@@ -1,0 +1,52 @@
+id: 036-ji3-sik1-hoeng1-cou2-guk6-hoi2-sin1
+menu_no: 36
+names:
+  yue_hant: 意式香草焗海鮮
+  jyutping: ji3 sik1 hoeng1 cou2 guk6 hoi2 sin1
+  zh: 意式香草焗海鲜
+  en: Italian Herb Baked Seafood
+category: baked-rice
+ingredients:
+  - ref: shrimp-balls
+    qty: 3
+    unit: 件
+  - ref: squid
+    qty: 3
+    unit: 件
+  - ref: fish-fillet
+    qty: 2
+    unit: 件
+  - ref: crab-stick
+    qty: 3
+    unit: 件
+  - ref: fish-cake-balls
+    qty: 0.5
+    unit: 件
+  - ref: mussel
+    qty: 2
+    unit: 件
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: green-peas
+    qty: 1
+    unit: 份
+  - ref: mushroom
+    qty: 1
+    unit: 份
+  - ref: bechamel-white
+    qty: 1
+    unit: 份
+  - ref: herbs
+    qty: 1
+    unit: 份
+  - ref: cheese-topping
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #36 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

@@ -1,0 +1,11 @@
+id: chicken-chop
+names:
+  yue_hant: 雞扒
+  jyutping: gai1 paa2
+  zh: 鸡扒
+  en: Chicken chop (boneless thigh)
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

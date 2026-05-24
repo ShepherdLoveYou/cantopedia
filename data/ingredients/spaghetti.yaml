@@ -1,0 +1,11 @@
+id: spaghetti
+names:
+  yue_hant: 意粉
+  jyutping: ji3 fan2
+  zh: 意粉
+  en: Spaghetti
+category: noodle
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

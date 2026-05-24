@@ -1,0 +1,21 @@
+id: 002-ging1-sik1-zin1-wo1-tip3
+menu_no: 2
+names:
+  yue_hant: 京式煎鍋貼
+  jyutping: ging1 sik1 zin1 wo1 tip3
+  zh: 京式煎锅贴
+  en: Beijing Pan-fried Dumplings (Guotie)
+category: appetizer
+ingredients:
+  - ref: potstickers
+    qty: 8
+    unit: 件
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #2 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 伴浙醋

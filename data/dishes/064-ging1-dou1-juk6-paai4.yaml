@@ -1,0 +1,28 @@
+id: 064-ging1-dou1-juk6-paai4
+menu_no: 64
+names:
+  yue_hant: 京都肉排
+  jyutping: ging1 dou1 juk6 paai4
+  zh: 京都肉排
+  en: Kyoto Pork Ribs
+category: main
+ingredients:
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: kyoto-ribs
+    qty: 8
+    unit: 件
+  - ref: kyoto-sauce
+    qty: 1
+    unit: 份
+  - ref: sesame
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #64 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

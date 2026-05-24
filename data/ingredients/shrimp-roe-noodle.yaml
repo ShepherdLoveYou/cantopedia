@@ -1,0 +1,11 @@
+id: shrimp-roe-noodle
+names:
+  yue_hant: 炸瑤柱面
+  jyutping: zaa3 jiu4 cyu5 min6
+  zh: 炸瑶柱面
+  en: Fried dried-scallop topping
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

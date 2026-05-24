@@ -1,0 +1,11 @@
+id: chicken-wing
+names:
+  yue_hant: 雞翼
+  jyutping: gai1 jik6
+  zh: 鸡翼
+  en: Chicken wing
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

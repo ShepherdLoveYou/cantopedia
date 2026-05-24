@@ -1,0 +1,26 @@
+id: 016-mat6-zap1-caa1-siu1-faan6
+menu_no: 16
+names:
+  yue_hant: 蜜汁叉燒飯
+  jyutping: mat6 zap1 caa1 siu1 faan6
+  zh: 蜜汁叉烧饭
+  en: BBQ Pork Rice with Honey Glaze
+category: rice
+ingredients:
+  - ref: cha-siu
+    qty: 12
+    unit: 件
+  - ref: gai-laan
+    qty: 6
+    unit: 件
+  - ref: jasmine-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #16 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+sauce: honey-glaze

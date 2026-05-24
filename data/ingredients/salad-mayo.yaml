@@ -1,0 +1,11 @@
+id: salad-mayo
+names:
+  yue_hant: 沙律醬
+  jyutping: saa1 leot6 zoeng3
+  zh: 沙律酱
+  en: Salad (mayo-based) sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

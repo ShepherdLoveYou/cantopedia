@@ -1,0 +1,19 @@
+id: 021-si1-miu4-baak6-faan6
+menu_no: 21
+names:
+  yue_hant: 絲苗白飯
+  jyutping: si1 miu4 baak6 faan6
+  zh: 丝苗白饭
+  en: Plain Jasmine Rice
+category: rice
+ingredients:
+  - ref: jasmine-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #21 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

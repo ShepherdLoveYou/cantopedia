@@ -1,0 +1,11 @@
+id: chu-hou-sauce
+names:
+  yue_hant: 柱侯醬
+  jyutping: cyu5 hau4 zoeng3
+  zh: 柱侯酱
+  en: Chu Hou sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

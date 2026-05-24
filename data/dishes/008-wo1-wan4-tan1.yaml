@@ -1,0 +1,43 @@
+id: 008-wo1-wan4-tan1
+menu_no: 8
+names:
+  yue_hant: 窩雲吞
+  jyutping: wo1 wan4 tan1
+  zh: 窝云吞
+  en: Wonton Pot (with Mixed Toppings)
+category: soup-wonton
+ingredients:
+  - ref: wontons
+    qty: 6
+    unit: 粒
+  - ref: large-shrimp
+    qty: 2
+    unit: 件
+  - ref: chicken-slices
+    qty: 3
+    unit: 件
+  - ref: cha-siu
+    qty: 3
+    unit: 件
+  - ref: broccoli
+    qty: 3
+    unit: 件
+  - ref: cauliflower
+    qty: 3
+    unit: 件
+  - ref: mushroom
+    qty: 3
+    unit: 件
+  - ref: carrot
+    qty: 3
+    unit: 件
+  - ref: corn
+    qty: 3
+    unit: 件
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #8 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

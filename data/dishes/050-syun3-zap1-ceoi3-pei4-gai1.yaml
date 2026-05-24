@@ -1,0 +1,30 @@
+id: 050-syun3-zap1-ceoi3-pei4-gai1
+menu_no: 50
+names:
+  yue_hant: 蒜汁脆皮雞
+  jyutping: syun3 zap1 ceoi3 pei4 gai1
+  zh: 蒜汁脆皮鸡
+  en: Garlic Crispy-skin Chicken
+category: main
+ingredients:
+  - ref: chicken-balls
+    qty: 0.5
+    unit: 件
+  - ref: garlic-glaze
+    qty: 1
+    unit: 份
+  - ref: dry-fried-onion
+    qty: 1
+    unit: 份
+  - ref: lettuce
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #50 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 脆炸雞半隻

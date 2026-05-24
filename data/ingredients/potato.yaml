@@ -1,0 +1,11 @@
+id: potato
+names:
+  yue_hant: 薯仔
+  jyutping: syu4 zai2
+  zh: 薯仔
+  en: Potato
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

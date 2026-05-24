@@ -1,0 +1,11 @@
+id: sichuan-wonton
+names:
+  yue_hant: 抄手
+  jyutping: caau1 sau2
+  zh: 抄手
+  en: Sichuan wonton
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: carrot
+names:
+  yue_hant: 紅蘿蔔
+  jyutping: hung4 lo4 baak6
+  zh: 红萝卜
+  en: Carrot
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

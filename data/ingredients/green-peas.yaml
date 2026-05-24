@@ -1,0 +1,11 @@
+id: green-peas
+names:
+  yue_hant: 青豆
+  jyutping: ceng1 dau2
+  zh: 青豆
+  en: Green peas
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

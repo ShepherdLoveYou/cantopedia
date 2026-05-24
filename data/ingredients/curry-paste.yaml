@@ -1,0 +1,11 @@
+id: curry-paste
+names:
+  yue_hant: 咖喱
+  jyutping: gaa3 lei1
+  zh: 咖喱
+  en: Curry paste
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

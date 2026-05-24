@@ -1,0 +1,11 @@
+id: tomato
+names:
+  yue_hant: 番茄
+  jyutping: faan1 ke2
+  zh: 番茄
+  en: Tomato
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

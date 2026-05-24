@@ -1,0 +1,31 @@
+id: 027-gon1-caau2-ngau4-ho2
+menu_no: 27
+names:
+  yue_hant: 干炒牛河
+  jyutping: gon1 caau2 ngau4 ho2
+  zh: 干炒牛河
+  en: Dry-fried Beef Hor Fun
+category: noodle
+ingredients:
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: bean-sprouts
+    qty: 3
+    unit: 兩
+  - ref: beef-slices
+    qty: 8
+    unit: 件
+  - ref: scallion
+    qty: 1
+    unit: 份
+  - ref: hor-fun
+    qty: 1
+    unit: 磅
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #27 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

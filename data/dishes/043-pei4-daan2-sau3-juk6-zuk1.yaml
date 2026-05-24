@@ -1,0 +1,28 @@
+id: 043-pei4-daan2-sau3-juk6-zuk1
+menu_no: 43
+names:
+  yue_hant: 皮蛋瘦肉粥
+  jyutping: pei4 daan2 sau3 juk6 zuk1
+  zh: 皮蛋瘦肉粥
+  en: Century-egg & Lean Pork Congee
+category: congee
+ingredients:
+  - ref: pork-strips
+    qty: 1
+    unit: 兩
+  - ref: century-egg
+    qty: 1
+    unit: 個
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+  - ref: congee-base
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #43 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

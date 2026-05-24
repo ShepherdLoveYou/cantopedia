@@ -1,0 +1,11 @@
+id: celery
+names:
+  yue_hant: 西芹
+  jyutping: sai1 kan4
+  zh: 西芹
+  en: Celery
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

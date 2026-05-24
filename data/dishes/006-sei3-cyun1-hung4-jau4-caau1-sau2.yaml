@@ -1,0 +1,31 @@
+id: 006-sei3-cyun1-hung4-jau4-caau1-sau2
+menu_no: 6
+names:
+  yue_hant: 四川紅油抄手
+  jyutping: sei3 cyun1 hung4 jau4 caau1 sau2
+  zh: 四川红油抄手
+  en: Sichuan Chili-oil Wontons
+category: appetizer
+ingredients:
+  - ref: sichuan-wonton
+    qty: 8
+    unit: 件
+  - ref: wonton-broth
+    qty: 1
+    unit: 份
+  - ref: chili-oil
+    qty: 1
+    unit: 份
+  - ref: sesame
+    qty: 1
+    unit: 份
+  - ref: scallion
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #6 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

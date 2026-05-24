@@ -1,0 +1,11 @@
+id: shrimp-fritter
+names:
+  yue_hant: 炸蝦角
+  jyutping: zaa3 haa1 gok3
+  zh: 炸虾角
+  en: Fried shrimp dumpling
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

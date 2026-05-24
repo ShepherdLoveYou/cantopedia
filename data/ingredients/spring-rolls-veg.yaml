@@ -1,0 +1,11 @@
+id: spring-rolls-veg
+names:
+  yue_hant: 脆皮齋春捲
+  jyutping: ceoi3 pei4 zaai1 ceon1 gyun2
+  zh: 脆皮斋春卷
+  en: Crispy vegetable spring rolls
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: hainanese-chicken
+names:
+  yue_hant: 海南雞
+  jyutping: hoi2 naam4 gai1
+  zh: 海南鸡
+  en: Hainanese poached chicken
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

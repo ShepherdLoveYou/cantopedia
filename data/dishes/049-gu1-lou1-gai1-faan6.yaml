@@ -1,0 +1,33 @@
+id: 049-gu1-lou1-gai1-faan6
+menu_no: 49
+names:
+  yue_hant: 咕嚕雞飯
+  jyutping: gu1 lou1 gai1 faan6
+  zh: 咕咾鸡饭
+  en: Sweet-and-sour Chicken Rice
+category: main
+ingredients:
+  - ref: chicken-balls
+    qty: 5
+    unit: 兩
+  - ref: fried-rice-base
+    qty: 1
+    unit: 碗
+  - ref: sweet-sour-sauce
+    qty: 1
+    unit: 份
+  - ref: spring-rolls-veg
+    qty: 1
+    unit: 條
+  - ref: white-rice
+    qty: 2
+    unit: 兩
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #49 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 049b-gu1-lou1-zyu1-faan6

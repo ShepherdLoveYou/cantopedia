@@ -1,0 +1,11 @@
+id: corn
+names:
+  yue_hant: 粟米
+  jyutping: suk1 mai5
+  zh: 粟米
+  en: Sweet corn
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,35 @@
+id: 018-faan1-ke2-joeng4-cung1-zyu1-paa2-faan6
+menu_no: 18
+names:
+  yue_hant: 番茄洋蔥豬扒飯
+  jyutping: faan1 ke2 joeng4 cung1 zyu1 paa2 faan6
+  zh: 番茄洋葱猪扒饭
+  en: Tomato Onion Pork Chop Rice
+category: rice
+ingredients:
+  - ref: tomato
+    qty: 1.5
+    unit: 個
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: pork-chop
+    qty: 2
+    unit: 件
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+  - ref: sweet-sour-sauce
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #18 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 018b-faan1-ke2-joeng4-cung1-gai1-paa2-faan6
+tips:
+  - zh: 另有雞扒版

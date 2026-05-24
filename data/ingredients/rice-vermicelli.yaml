@@ -1,0 +1,11 @@
+id: rice-vermicelli
+names:
+  yue_hant: 米粉
+  jyutping: mai5 fan2
+  zh: 米粉
+  en: Rice vermicelli
+category: noodle
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

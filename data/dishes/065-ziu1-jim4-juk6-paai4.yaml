@@ -1,0 +1,28 @@
+id: 065-ziu1-jim4-juk6-paai4
+menu_no: 65
+names:
+  yue_hant: 椒鹽肉排
+  jyutping: ziu1 jim4 juk6 paai4
+  zh: 椒盐肉排
+  en: Salt-and-pepper Pork Ribs
+category: main
+ingredients:
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+  - ref: kyoto-ribs
+    qty: 8
+    unit: 件
+  - ref: huai-salt
+    qty: 1
+    unit: 份
+  - ref: chili-paste
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #65 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

@@ -1,0 +1,11 @@
+id: black-bean-sauce
+names:
+  yue_hant: 豉汁
+  jyutping: si6 zap1
+  zh: 豉汁
+  en: Fermented black bean sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

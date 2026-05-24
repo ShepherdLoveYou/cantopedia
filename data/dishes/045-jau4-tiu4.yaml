@@ -1,0 +1,19 @@
+id: 045-jau4-tiu4
+menu_no: 45
+names:
+  yue_hant: 油條
+  jyutping: jau4 tiu4
+  zh: 油条
+  en: Fried Cruller (Youtiao)
+category: main
+ingredients:
+  - ref: youtiao
+    qty: 1
+    unit: 條
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #45 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

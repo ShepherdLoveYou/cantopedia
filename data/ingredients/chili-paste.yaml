@@ -1,0 +1,11 @@
+id: chili-paste
+names:
+  yue_hant: 辣椒醬
+  jyutping: laat6 ziu1 zoeng3
+  zh: 辣椒酱
+  en: Chili paste
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

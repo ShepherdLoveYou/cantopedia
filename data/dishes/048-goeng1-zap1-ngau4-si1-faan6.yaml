@@ -1,0 +1,30 @@
+id: 048-goeng1-zap1-ngau4-si1-faan6
+menu_no: 48
+names:
+  yue_hant: 薑汁牛絲飯
+  jyutping: goeng1 zap1 ngau4 si1 faan6
+  zh: 姜汁牛丝饭
+  en: Ginger Sauce Shredded-beef Rice
+category: main
+ingredients:
+  - ref: beef-strips
+    qty: 5
+    unit: 兩
+  - ref: fried-rice-base
+    qty: 1
+    unit: 碗
+  - ref: white-rice
+    qty: 2
+    unit: 兩
+  - ref: spring-rolls-veg
+    qty: 1
+    unit: 條
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #48 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 048b-goeng1-zap1-gai1-si1-faan6

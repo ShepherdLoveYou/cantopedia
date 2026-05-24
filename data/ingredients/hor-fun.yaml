@@ -1,0 +1,11 @@
+id: hor-fun
+names:
+  yue_hant: 河粉
+  jyutping: ho2 fan2
+  zh: 河粉
+  en: Hor fun (flat rice noodle)
+category: noodle
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

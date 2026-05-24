@@ -1,0 +1,11 @@
+id: spare-ribs-dry
+names:
+  yue_hant: 乾骨
+  jyutping: gon1 gwat1
+  zh: 干骨
+  en: Dry-roasted spare ribs
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

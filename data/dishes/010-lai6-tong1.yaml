@@ -1,0 +1,21 @@
+id: 010-lai6-tong1
+menu_no: 10
+names:
+  yue_hant: 例湯
+  jyutping: lai6 tong1
+  zh: 例汤
+  en: Soup of the Day
+category: soup-wonton
+ingredients:
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #10 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 湯底每日變換

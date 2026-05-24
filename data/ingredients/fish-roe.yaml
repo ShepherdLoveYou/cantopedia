@@ -1,0 +1,11 @@
+id: fish-roe
+names:
+  yue_hant: 魚籽
+  jyutping: jyu4 zi2
+  zh: 鱼籽
+  en: Fish roe
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

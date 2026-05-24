@@ -1,0 +1,33 @@
+id: 062-gaai3-laan2-caau2-ngau4-juk6
+menu_no: 62
+names:
+  yue_hant: 芥蘭炒牛肉
+  jyutping: gaai3 laan2 caau2 ngau4 juk6
+  zh: 芥兰炒牛肉
+  en: Gai Lan Stir-fried Beef
+category: main
+ingredients:
+  - ref: garlic
+    qty: 1
+    unit: 份
+  - ref: gai-laan
+    qty: 1
+    unit: 磅
+  - ref: oyster-sauce
+    qty: 1
+    unit: 份
+  - ref: beef-slices
+    qty: 4
+    unit: 兩
+  - ref: oil-poach-mix
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #62 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 062b-gaai3-laan2-caau2-gai1-pin2

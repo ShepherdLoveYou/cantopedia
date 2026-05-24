@@ -1,0 +1,31 @@
+id: 028-cyu5-hau4-ngau4-naam5-caau2-ho2
+menu_no: 28
+names:
+  yue_hant: 柱侯牛腩炒河
+  jyutping: cyu5 hau4 ngau4 naam5 caau2 ho2
+  zh: 柱侯牛腩炒河
+  en: Chu Hou Beef-brisket Hor Fun
+category: noodle
+ingredients:
+  - ref: hor-fun
+    qty: 1
+    unit: 磅
+  - ref: long-bean
+    qty: 3
+    unit: 兩
+  - ref: beef-brisket
+    qty: 9
+    unit: 件
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: chu-hou-sauce
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #28 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

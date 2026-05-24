@@ -1,0 +1,11 @@
+id: oyster-sauce
+names:
+  yue_hant: 蠔油
+  jyutping: hou4 jau4
+  zh: 蚝油
+  en: Oyster sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,40 @@
+id: 026-sing1-zau1-caau2-mai5
+menu_no: 26
+names:
+  yue_hant: 星洲炒米
+  jyutping: sing1 zau1 caau2 mai5
+  zh: 星洲炒米
+  en: Singapore Fried Rice Vermicelli
+category: noodle
+ingredients:
+  - ref: bell-pepper
+    qty: 4
+    unit: 兩
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: bean-sprouts
+    qty: 1
+    unit: 份
+  - ref: shrimp-meat
+    qty: 1
+    unit: 兩
+  - ref: cha-siu
+    qty: 1
+    unit: 兩
+  - ref: egg
+    qty: 1
+    unit: 個
+  - ref: curry-powder
+    qty: 1
+    unit: 份
+  - ref: rice-vermicelli
+    qty: 6
+    unit: 兩
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #26 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

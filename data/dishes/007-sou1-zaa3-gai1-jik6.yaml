@@ -1,0 +1,34 @@
+id: 007-sou1-zaa3-gai1-jik6
+menu_no: 7
+names:
+  yue_hant: 酥炸雞翼
+  jyutping: sou1 zaa3 gai1 jik6
+  zh: 酥炸鸡翼
+  en: Crispy Fried Chicken Wings
+category: appetizer
+ingredients:
+  - ref: chicken-wing
+    qty: 8
+    unit: 件
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+  - ref: sweet-chicken-sauce
+    qty: 1
+    unit: 份
+  - ref: honey-garlic-sauce
+    qty: 1
+    unit: 份
+  - ref: lettuce
+    qty: 1
+    unit: 份
+  - ref: sesame
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #7 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

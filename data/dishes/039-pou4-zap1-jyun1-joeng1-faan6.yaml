@@ -1,0 +1,37 @@
+id: 039-pou4-zap1-jyun1-joeng1-faan6
+menu_no: 39
+names:
+  yue_hant: 葡汁鴛鴦飯
+  jyutping: pou4 zap1 jyun1 joeng1 faan6
+  zh: 葡汁鸳鸯饭
+  en: Portuguese-sauce Twin Chop Rice
+category: baked-rice
+ingredients:
+  - ref: pork-chop
+    qty: 1
+    unit: 件
+  - ref: chicken-chop
+    qty: 1
+    unit: 件
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: mushroom
+    qty: 1
+    unit: 份
+  - ref: portuguese-sauce
+    qty: 4
+    unit: 兩
+  - ref: cheese-topping
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #39 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

@@ -1,0 +1,40 @@
+id: 034-syut3-coi3-juk6-si1-tong1-mai5-sin3
+menu_no: 34
+names:
+  yue_hant: 雪菜肉絲湯米線
+  jyutping: syut3 coi3 juk6 si1 tong1 mai5 sin3
+  zh: 雪菜肉丝汤米线
+  en: Pickled-mustard Pork Vermicelli Soup
+category: soup-noodle
+ingredients:
+  - ref: snow-vegetable
+    qty: 1
+    unit: 份
+  - ref: pork-strips
+    qty: 1
+    unit: 份
+  - ref: bean-sprouts
+    qty: 1
+    unit: 份
+  - ref: turnip
+    qty: 1
+    unit: 份
+  - ref: egg
+    qty: 0.5
+    unit: 個
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+  - ref: peanuts
+    qty: 1
+    unit: 份
+  - ref: rice-noodle
+    qty: 6
+    unit: 兩
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #34 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

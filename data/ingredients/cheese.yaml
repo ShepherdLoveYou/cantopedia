@@ -1,0 +1,11 @@
+id: cheese
+names:
+  yue_hant: 芝士
+  jyutping: zi1 si6
+  zh: 芝士
+  en: Cheese (mozzarella/blend)
+category: dairy
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: shrimp-meat
+names:
+  yue_hant: 蝦仁
+  jyutping: haa1 jan4
+  zh: 虾仁
+  en: Peeled shrimp
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: sesame
+names:
+  yue_hant: 芝麻
+  jyutping: zi1 maa4
+  zh: 芝麻
+  en: Sesame seed
+category: spice
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

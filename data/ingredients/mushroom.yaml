@@ -1,0 +1,11 @@
+id: mushroom
+names:
+  yue_hant: 蘑菇
+  jyutping: mo4 gu1
+  zh: 蘑菇
+  en: Button mushroom
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

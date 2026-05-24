@@ -1,0 +1,22 @@
+id: 004-ziu1-jim4-zaa3-jyu4-daan2
+menu_no: 4
+names:
+  yue_hant: 椒鹽炸魚蛋
+  jyutping: ziu1 jim4 zaa3 jyu4 daan2
+  zh: 椒盐炸鱼蛋
+  en: Salt-and-pepper Fried Fish Balls
+category: appetizer
+ingredients:
+  - ref: fish-cake-balls
+    qty: 12
+    unit: 件
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #4 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

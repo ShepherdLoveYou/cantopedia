@@ -1,0 +1,11 @@
+id: sole-balls
+names:
+  yue_hant: 龍利球
+  jyutping: lung4 lei6 kau4
+  zh: 龙利球
+  en: Sole balls
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,30 @@
+id: 060-si6-ziu1-caau2-ngau4-juk6
+menu_no: 60
+names:
+  yue_hant: 豉椒炒牛肉
+  jyutping: si6 ziu1 caau2 ngau4 juk6
+  zh: 豉椒炒牛肉
+  en: Black-bean Chili Stir-fried Beef
+category: main
+ingredients:
+  - ref: beef-slices
+    qty: 4
+    unit: 兩
+  - ref: bell-pepper
+    qty: 6
+    unit: 兩
+  - ref: preserved-tofu
+    qty: 1
+    unit: 份
+  - ref: chili-paste
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #60 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 060b-si6-ziu1-caau2-gai1-pin2

@@ -1,0 +1,11 @@
+id: congee-base
+names:
+  yue_hant: 粥底
+  jyutping: zuk1 dai2
+  zh: 粥底
+  en: Plain congee base
+category: grain
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

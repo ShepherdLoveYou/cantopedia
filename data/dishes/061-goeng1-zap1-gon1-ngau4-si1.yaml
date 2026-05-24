@@ -1,0 +1,27 @@
+id: 061-goeng1-zap1-gon1-ngau4-si1
+menu_no: 61
+names:
+  yue_hant: 薑汁干牛絲
+  jyutping: goeng1 zap1 gon1 ngau4 si1
+  zh: 姜汁干牛丝
+  en: Ginger-juice Fried Beef Strips
+category: main
+ingredients:
+  - ref: beef-strips
+    qty: 1
+    unit: 磅
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+  - ref: onion
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #61 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 061b-goeng1-zap1-gon1-gai1-si1

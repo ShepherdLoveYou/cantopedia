@@ -1,0 +1,59 @@
+Metadata-Version: 2.4
+Name: cantopedia-pipeline
+Version: 0.1.0a0
+Summary: Research and content pipeline for 粵食典 · Cantopedia
+Author: Cantopedia contributors
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: click>=8.1
+Requires-Dist: pydantic>=2.5
+Requires-Dist: ruamel.yaml>=0.18
+Requires-Dist: httpx>=0.27
+Requires-Dist: requests>=2.32
+Requires-Dist: pillow>=10.0
+Requires-Dist: pillow-heif>=0.16
+Requires-Dist: rich>=13.7
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+
+# Cantopedia Pipeline
+
+The Python research pipeline for 粵食典 · Cantopedia.
+
+Reads the menu transcription and license-clean upstream sources
+(Wikipedia, Wikimedia Commons, USDA, HK gov terminology), produces validated
+YAML under `data/`, fetched into the Astro site at build time.
+
+## Setup
+
+```bash
+conda activate cantopedia          # see ../pipeline/environment.yml
+pip install -e ./pipeline
+```
+
+## Commands
+
+```bash
+# v0.1-alpha commands
+python -m pipeline init             # generate 66 stub dishes from transcription
+python -m pipeline validate         # full schema check (pydantic mirror of Zod)
+python -m pipeline status           # progress: stub/draft/complete counts
+
+# planned for v0.1-beta (need API keys)
+python -m pipeline fetch dish <id>          # Wikipedia/USDA/etc fetch
+python -m pipeline synthesize dish <id>     # Claude API → draft method
+python -m pipeline images dish <id>         # Wikimedia/Unsplash/AI image
+```
+
+## Architecture
+
+Five layers — see [`../docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md`](../docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md) §7.
+
+- `pipeline/sources/` — adapters for upstream APIs
+- `pipeline/models.py` — pydantic models, kept in parity with `site/src/content.config.ts`
+- `pipeline/transcription.py` — the 66-dish source data from menu sheets
+- `pipeline/cli.py` — Click CLI entry points
+- `pipeline/cache/` — fetched payload cache (gitignored)

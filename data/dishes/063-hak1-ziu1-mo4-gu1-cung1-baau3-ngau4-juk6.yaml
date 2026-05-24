@@ -1,0 +1,33 @@
+id: 063-hak1-ziu1-mo4-gu1-cung1-baau3-ngau4-juk6
+menu_no: 63
+names:
+  yue_hant: 黑椒蘑菇蔥爆牛肉
+  jyutping: hak1 ziu1 mo4 gu1 cung1 baau3 ngau4 juk6
+  zh: 黑椒蘑菇葱爆牛肉
+  en: Black-pepper Mushroom Scallion Beef
+category: main
+ingredients:
+  - ref: mushroom
+    qty: 4
+    unit: 兩
+  - ref: onion
+    qty: 4
+    unit: 兩
+  - ref: beef-slices
+    qty: 4
+    unit: 兩
+  - ref: ginger
+    qty: 1
+    unit: 份
+  - ref: black-pepper
+    qty: 1
+    unit: 茶匙
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #63 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 063b-hak1-ziu1-mo4-gu1-cung1-baau3-gai1-pin2

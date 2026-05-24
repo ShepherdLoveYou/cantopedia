@@ -1,0 +1,33 @@
+id: 051-si6-zap1-dau6-zai2-gai1-pin2
+menu_no: 51
+names:
+  yue_hant: 豉汁豆仔雞片
+  jyutping: si6 zap1 dau6 zai2 gai1 pin2
+  zh: 豉汁豆仔鸡片
+  en: Black-bean Yard-long Bean Chicken
+category: main
+ingredients:
+  - ref: chicken-slices
+    qty: 4
+    unit: 兩
+  - ref: long-bean
+    qty: 6
+    unit: 兩
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+  - ref: black-bean-sauce
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #51 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+variants:
+  - 051b-si6-zap1-dau6-zai2-ngau4-pin2

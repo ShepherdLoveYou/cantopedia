@@ -1,0 +1,30 @@
+id: 019-gaa3-lei1-syu4-zai2-ngau4-naam5-faan6
+menu_no: 19
+names:
+  yue_hant: 咖喱薯仔牛腩飯
+  jyutping: gaa3 lei1 syu4 zai2 ngau4 naam5 faan6
+  zh: 咖喱薯仔牛腩饭
+  en: Curry Potato Beef Brisket Rice
+category: rice
+ingredients:
+  - ref: beef-brisket
+    qty: 1
+    unit: 份
+  - ref: potato
+    qty: 1
+    unit: 份
+  - ref: curry-paste
+    qty: 1
+    unit: 份
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #19 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 微波 2-3 分鐘打熱

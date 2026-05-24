@@ -1,0 +1,11 @@
+id: dry-fried-onion
+names:
+  yue_hant: 炸幹蔥
+  jyutping: zaa3 gon1 cung1
+  zh: 炸干葱
+  en: Fried shallot
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: youtiao
+names:
+  yue_hant: 油條
+  jyutping: jau4 tiu4
+  zh: 油条
+  en: Chinese fried cruller (youtiao)
+category: other
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

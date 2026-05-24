@@ -1,0 +1,11 @@
+id: white-rice
+names:
+  yue_hant: 白飯
+  jyutping: baak6 faan6
+  zh: 白饭
+  en: Cooked white rice
+category: grain
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

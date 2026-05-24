@@ -1,0 +1,11 @@
+id: portuguese-sauce
+names:
+  yue_hant: 葡汁
+  jyutping: pou4 zap1
+  zh: 葡汁
+  en: Portuguese sauce (curry-coconut)
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

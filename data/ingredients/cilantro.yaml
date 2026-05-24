@@ -1,0 +1,11 @@
+id: cilantro
+names:
+  yue_hant: 芫茜
+  jyutping: jyun4 sai1
+  zh: 芫荽
+  en: Cilantro
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,11 @@
+id: tomato-sauce
+names:
+  yue_hant: 茄汁
+  jyutping: ke2 zap1
+  zh: 茄汁
+  en: Cantonese tomato sauce
+category: sauce
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

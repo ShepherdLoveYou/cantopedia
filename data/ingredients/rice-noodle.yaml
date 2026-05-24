@@ -1,0 +1,11 @@
+id: rice-noodle
+names:
+  yue_hant: 米線
+  jyutping: mai5 sin3
+  zh: 米线
+  en: Round rice noodle
+category: noodle
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

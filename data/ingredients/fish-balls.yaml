@@ -1,0 +1,11 @@
+id: fish-balls
+names:
+  yue_hant: 魚球
+  jyutping: jyu4 kau4
+  zh: 鱼球
+  en: Fish balls
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

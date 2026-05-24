@@ -1,0 +1,21 @@
+id: 001-ceoi3-pei4-zaai1-ceon1-gyun2
+menu_no: 1
+names:
+  yue_hant: 脆皮齋春捲
+  jyutping: ceoi3 pei4 zaai1 ceon1 gyun2
+  zh: 脆皮斋春卷
+  en: Crispy Vegetable Spring Rolls
+category: appetizer
+ingredients:
+  - ref: spring-rolls-veg
+    qty: 3
+    unit: 條
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #1 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
+tips:
+  - zh: 伴酸梅醬

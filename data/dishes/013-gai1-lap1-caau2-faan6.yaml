@@ -1,0 +1,28 @@
+id: 013-gai1-lap1-caau2-faan6
+menu_no: 13
+names:
+  yue_hant: 雞粒炒飯
+  jyutping: gai1 lap1 caau2 faan6
+  zh: 鸡粒炒饭
+  en: Diced Chicken Fried Rice
+category: rice
+ingredients:
+  - ref: chicken-balls
+    qty: 2
+    unit: 兩
+  - ref: green-peas
+    qty: 1
+    unit: 份
+  - ref: scallion
+    qty: 1
+    unit: 份
+  - ref: fried-rice-base
+    qty: 2
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #13 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

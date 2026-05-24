@@ -1,0 +1,28 @@
+id: 052-gung1-bou2-gai1
+menu_no: 52
+names:
+  yue_hant: 宮保雞
+  jyutping: gung1 bou2 gai1
+  zh: 宫保鸡
+  en: Kung Pao Chicken
+category: main
+ingredients:
+  - ref: chicken-balls
+    qty: 1
+    unit: 磅
+  - ref: bell-pepper
+    qty: 6
+    unit: 件
+  - ref: chili-paste
+    qty: 1
+    unit: 份
+  - ref: sweet-sour-sauce
+    qty: 4
+    unit: 兩
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #52 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

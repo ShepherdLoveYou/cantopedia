@@ -1,0 +1,11 @@
+id: fish-fillet
+names:
+  yue_hant: 魚柳
+  jyutping: jyu4 lau5
+  zh: 鱼柳
+  en: Fish fillet
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

@@ -1,0 +1,28 @@
+id: 014-haa1-jan4-caau2-faan6
+menu_no: 14
+names:
+  yue_hant: 蝦仁炒飯
+  jyutping: haa1 jan4 caau2 faan6
+  zh: 虾仁炒饭
+  en: Shrimp Fried Rice
+category: rice
+ingredients:
+  - ref: shrimp-meat
+    qty: 2
+    unit: 兩
+  - ref: green-peas
+    qty: 1
+    unit: 份
+  - ref: scallion
+    qty: 1
+    unit: 份
+  - ref: fried-rice-base
+    qty: 2
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #14 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

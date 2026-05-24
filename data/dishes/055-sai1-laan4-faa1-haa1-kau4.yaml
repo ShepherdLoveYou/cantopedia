@@ -1,0 +1,25 @@
+id: 055-sai1-laan4-faa1-haa1-kau4
+menu_no: 55
+names:
+  yue_hant: 西蘭花蝦球
+  jyutping: sai1 laan4 faa1 haa1 kau4
+  zh: 西兰花虾球
+  en: Broccoli Shrimp Balls
+category: main
+ingredients:
+  - ref: shrimp-balls
+    qty: 12
+    unit: 件
+  - ref: broccoli
+    qty: 6
+    unit: 兩
+  - ref: oil-poach-mix
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #55 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

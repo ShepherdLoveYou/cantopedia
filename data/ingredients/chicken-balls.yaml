@@ -1,0 +1,11 @@
+id: chicken-balls
+names:
+  yue_hant: 雞球
+  jyutping: gai1 kau4
+  zh: 鸡球
+  en: Chicken balls
+category: meat
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

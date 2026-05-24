@@ -1,0 +1,11 @@
+id: fried-rice-base
+names:
+  yue_hant: 炒飯底
+  jyutping: caau2 faan6 dai2
+  zh: 炒饭底
+  en: Fried-rice base
+category: grain
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

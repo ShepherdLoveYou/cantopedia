@@ -1,0 +1,11 @@
+id: fish-cake-balls
+names:
+  yue_hant: 魚蛋
+  jyutping: jyu4 daan2
+  zh: 鱼蛋
+  en: Hong Kong fish cake balls
+category: seafood
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

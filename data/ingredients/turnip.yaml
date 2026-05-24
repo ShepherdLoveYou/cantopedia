@@ -1,0 +1,11 @@
+id: turnip
+names:
+  yue_hant: 豆卜
+  jyutping: dau6 buk1
+  zh: 豆卜
+  en: Tofu puff (or daikon)
+category: vegetable
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: first attested in source menu transcription

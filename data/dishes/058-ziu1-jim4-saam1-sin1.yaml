@@ -1,0 +1,28 @@
+id: 058-ziu1-jim4-saam1-sin1
+menu_no: 58
+names:
+  yue_hant: 椒鹽三鮮
+  jyutping: ziu1 jim4 saam1 sin1
+  zh: 椒盐三鲜
+  en: Salt-and-pepper Three-Fresh Trio
+category: main
+ingredients:
+  - ref: shrimp-balls
+    qty: 5
+    unit: 件
+  - ref: sole-balls
+    qty: 5
+    unit: 件
+  - ref: squid
+    qty: 5
+    unit: 件
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #58 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'

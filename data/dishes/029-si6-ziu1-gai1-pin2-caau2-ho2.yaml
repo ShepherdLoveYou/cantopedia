@@ -1,0 +1,31 @@
+id: 029-si6-ziu1-gai1-pin2-caau2-ho2
+menu_no: 29
+names:
+  yue_hant: 豉椒雞片炒河
+  jyutping: si6 ziu1 gai1 pin2 caau2 ho2
+  zh: 豉椒鸡片炒河
+  en: Black-bean Chili Chicken Hor Fun
+category: noodle
+ingredients:
+  - ref: bell-pepper
+    qty: 3
+    unit: 兩
+  - ref: onion
+    qty: 1
+    unit: 份
+  - ref: chicken-slices
+    qty: 8
+    unit: 件
+  - ref: hor-fun
+    qty: 1
+    unit: 磅
+  - ref: black-bean-sauce
+    qty: 1
+    unit: 份
+method_status: stub
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: '2026-05-24'
+    note: 'Item #29 on the source menu'
+created: '2026-05-24'
+updated: '2026-05-24'
