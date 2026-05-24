@@ -248,6 +248,32 @@ const dict = {
       /* Sharper typography hierarchy — more WP10 (extreme weight contrast) */
       h1 { font-weight: 200; letter-spacing: -0.025em; }
       h2 { font-weight: 200; letter-spacing: -0.015em; }
+
+      /* Pivot horizontal slide — only when <html> has nav-prev / nav-next */
+      html.nav-next::view-transition-old(root) {
+        animation: slide-out-left var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
+      }
+      html.nav-next::view-transition-new(root) {
+        animation: slide-in-right var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+      }
+      html.nav-prev::view-transition-old(root) {
+        animation: slide-out-right var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
+      }
+      html.nav-prev::view-transition-new(root) {
+        animation: slide-in-left var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+      }
+
+      @keyframes slide-out-left  { to   { transform: translateX(-12%); opacity: 0; } }
+      @keyframes slide-in-right  { from { transform: translateX( 12%); opacity: 0; } }
+      @keyframes slide-out-right { to   { transform: translateX( 12%); opacity: 0; } }
+      @keyframes slide-in-left   { from { transform: translateX(-12%); opacity: 0; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(*),
+        ::view-transition-new(*) {
+          animation: none !important;
+        }
+      }
     </style>
   </body>
 </html>
