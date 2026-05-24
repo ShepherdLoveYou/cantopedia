@@ -10,10 +10,63 @@ ingredients:
   - ref: youtiao
     qty: 1
     unit: 條
-method_status: stub
+    prep:
+      yue: 油條 1 條（自家做：中筋麵粉 300 g + 鹽 1/2 茶匙 + 泡打粉 1.5 茶匙 + 小蘇打 1/2 茶匙 + 雞蛋 1 隻 + 水 170 ml + 油 1 匙）
+      zh: 油条 1 条（自家做：中筋面粉 300 g + 盐 1/2 茶匙 + 泡打粉 1.5 茶匙 + 小苏打 1/2 茶匙 + 鸡蛋 1 个 + 水 170 ml + 油 1 勺）
+      en: 1 fried cruller (homemade — 300 g all-purpose flour + ½ tsp salt + 1½ tsp baking powder + ½ tsp baking soda + 1 egg + 170 ml water + 1 Tbsp oil)
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 45
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 麵粉、鹽、泡打粉、小蘇打過篩；加蛋、油、水搓成軟身光滑麵糰，蓋上保鮮膜室溫休息 30 分鐘——休息令麵筋鬆弛、油條炸時先會脹大。
+      zh: 面粉、盐、泡打粉、小苏打过筛；加蛋、油、水揉成软光滑面团，盖上保鲜膜室温静置 30 分钟——静置让面筋松弛、油条炸时才会膨胀。
+      en: Sift flour, salt, baking powder, and baking soda. Add egg, oil, and water; knead into a soft smooth dough. Cover and rest 30 min at room temperature — the rest relaxes gluten so the cruller will puff in oil.
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 麵糰擀成 1 cm 厚、約 6 cm 寬嘅長條，再切成 2 cm 寬嘅小段。兩段疊埋，用筷子喺中央壓一條痕（令兩段黏合但唔完全結合）。
+      zh: 面团擀成 1 cm 厚、约 6 cm 宽的长条，再切成 2 cm 宽的小段。两段叠在一起，用筷子在中央压一道痕（令两段黏合但不完全结合）。
+      en: Roll the dough into a 1 cm-thick, 6 cm-wide strip, cut into 2 cm-wide pieces. Stack two pieces, press a chopstick down the centre to bind them without fully merging — this gap is what lets the cruller puff into the iconic twin tube shape.
+    time_seconds: 600
+  - order: 3
+    body:
+      yue: 油溫燒到 190°C（油溫一定要夠高），將疊好嘅麵段拎住兩端輕輕拉長，落油即刻會脹大；用筷子翻動 1-2 次令均勻金黃酥脆，撈起瀝油。
+      zh: 油温烧至 190°C（油温必须够高），将叠好的面段抓住两端轻轻拉长，下油即刻膨胀；用筷子翻动 1-2 次令均匀金黄酥脆，捞起沥油。
+      en: Heat oil to 190°C / 375°F (must be very hot). Pick up a stacked piece by both ends, stretch slightly, drop into the oil. It will balloon instantly. Flip 1-2 times with chopsticks until evenly golden and crisp; drain.
+    temperature_c: 190
+    time_seconds: 120
+  - order: 4
+    body:
+      yue: 油條斜切兩段排碟。可以單食、或者夾喺粥碗裡浸軟食、或者配豆漿。茶餐廳通常配皮蛋瘦肉粥（#43）一齊賣。
+      zh: 油条斜切两段摆盘。可单食、或夹在粥碗里浸软食、或配豆浆。茶餐厅通常配皮蛋瘦肉粥（#43）一同卖。
+      en: Cut diagonally into two pieces and plate. Eat plain, or dunk into congee until soft, or pair with soy milk. HK tea-restaurants typically pair it with century-egg-and-pork congee (dish #43).
+tips:
+  - yue: 油溫一定要夠高（190°C 以上）——溫度低油條唔脹反而會油膩。油溫太低嘅徵兆係油條落油後唔即刻浮起。
+    zh: 油温必须够高（190°C 以上）——温度低油条不胀反而会油腻。油温太低的征兆是油条下油后不立即浮起。
+    en: Oil must be hot — above 190°C / 375°F. Too cool and the dough won't puff, just absorb oil. The diagnostic — a properly hot oil makes the dough float and balloon within 1 second.
+  - yue: 油條疊兩段嘅原因——中間留條空隙俾蒸氣膨脹，先得到中空嘅雙管結構。淨炸一段就會係實心、唔脆。
+    zh: 油条叠两段的原因——中间留空隙让蒸气膨胀，才得到中空的双管结构。单炸一段会是实心、不脆。
+    en: Stacking two pieces leaves a gap for steam to expand into, creating the hollow twin-tube structure. A single piece fries solid, not crisp.
+  - yue: 油條傳統食法（廣東早茶）——「油條伴粥」係極流行嘅食法。皮蛋瘦肉粥、海皇粥、艇仔粥都配。日式食法可以食「油條腸粉」（將油條包腸粉皮）。
+    zh: 油条传统食法（广东早茶）——「油条伴粥」是极流行的食法。皮蛋瘦肉粥、海皇粥、艇仔粥都配。日式食法可吃「油条肠粉」（将油条包在肠粉皮里）。
+    en: The Cantonese dim-sum convention is "油條伴粥" — youtiao alongside congee. Pairs with century-egg-pork (#43), seafood (#41), sampan-style. There's also 油條腸粉, a youtiao wrapped in rice-noodle sheet, another dim sum classic.
+history:
+  yue: 油條源自南宋——傳說同奸臣秦檜有關，「油炸檜」（炸秦檜）變成「油炸鬼」、再簡化成「油條」。粵菜入面油條係早茶經典配料，香港茶餐廳將之搬入西式早餐結構（油條 + 粥 + 奶茶）成為三件套。
+  zh: 油条源自南宋——传说与奸臣秦桧有关，「油炸桧」（炸秦桧）变成「油炸鬼」、再简化成「油条」。粤菜中油条是早茶经典配料，香港茶餐厅将之搬入西式早餐结构（油条 + 粥 + 奶茶）成为三件套。
+  en: Youtiao traces to the Southern Song dynasty — folklore links it to the corrupt minister Qin Hui (秦檜); "油炸檜" (frying Qin Hui in oil) became "油炸鬼" (fried devil) and finally "油條" (oil stick). In Cantonese cuisine youtiao is a classic dim-sum accompaniment; HK tea-restaurants integrated it into the Western breakfast format (youtiao + congee + milk tea) as a three-piece set.
+allergens:
+  - egg
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #45 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #45 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

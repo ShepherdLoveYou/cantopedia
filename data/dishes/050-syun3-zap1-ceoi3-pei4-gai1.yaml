@@ -10,21 +10,84 @@ ingredients:
   - ref: chicken-balls
     qty: 0.5
     unit: 件
+    prep:
+      yue: 半隻雞約 800 g，去除多餘脂肪、外皮用 1 茶匙白醋同 2 匙麥芽糖混合刷勻、風乾 6 小時令皮乾爽
+      zh: 半只鸡约 800 g，去除多余脂肪、外皮用 1 茶匙白醋与 2 勺麦芽糖混合刷匀、风干 6 小时令皮干爽
+      en: half a chicken (~800 g); fat trimmed, skin brushed with a mixture of 1 tsp white vinegar and 2 Tbsp maltose, air-dried 6 hours until tacky-dry
   - ref: garlic-glaze
     qty: 1
     unit: 份
+    prep:
+      yue: 蒜汁——蒜茸 4 匙 + 紅蔥頭茸 1 匙 + 鹽 1/2 茶匙 + 糖 1/2 茶匙 + 麻油 1 茶匙；落 180°C 嘅熱油令香味爆出
+      zh: 蒜汁——蒜茸 4 勺 + 红葱头茸 1 勺 + 盐 1/2 茶匙 + 糖 1/2 茶匙 + 麻油 1 茶匙；下 180°C 热油令香味爆出
+      en: garlic dip — 4 Tbsp minced garlic + 1 Tbsp minced shallot + ½ tsp salt + ½ tsp sugar + 1 tsp sesame oil; finished by pouring 180°C / 355°F hot oil over to bloom
   - ref: dry-fried-onion
     qty: 1
     unit: 份
+    prep:
+      yue: 炸幹蔥少少裝飾
+      zh: 炸干葱少许装饰
+      en: a sprinkle of crispy fried shallot, garnish
   - ref: lettuce
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 唐生菜切絲鋪底
+      zh: 唐生菜切丝铺底
+      en: shredded lettuce as bed
+servings: 3
+difficulty: hard
+time_minutes:
+  prep: 420
+  cook: 15
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞要先處理——清洗、抹乾、用麥芽糖 + 白醋混合刷勻全身（特別係皮面）。掛喺通風處風乾 6 小時或者隔夜（皮要乾燥到摸上去黐手但唔濕），呢個係皮酥嘅關鍵。
+      zh: 鸡先处理——清洗、抹干、用麦芽糖 + 白醋混合刷匀全身（特别是皮面）。挂在通风处风干 6 小时或隔夜（皮要干燥到摸上去黏手但不湿），这是皮酥的关键。
+      en: Prep the chicken — wash, pat dry, brush all over (especially the skin) with the maltose-vinegar mixture. Hang in a well-ventilated spot for 6 hours or overnight — the skin should feel tacky but dry. This is the key step for crispy skin.
+    time_seconds: 21600
+  - order: 2
+    body:
+      yue: 油溫燒到 180-190°C，將雞用湯勺淋熱油 — 「淋油炸法」係粵菜傳統，唔係將雞浸入油中，而係用大勺舀油不斷淋喺雞皮上，10-15 分鐘到皮金黃酥脆、肉熟。
+      zh: 油温烧至 180-190°C，将鸡用汤勺淋热油 — 「淋油炸法」是粤菜传统，不是将鸡浸入油中，而是用大勺舀油不断淋在鸡皮上，10-15 分钟至皮金黄酥脆、肉熟。
+      en: Heat oil to 180-190°C / 355-375°F. Use the traditional Cantonese ladle-fry technique — rather than immersing, scoop hot oil and pour continuously over the skin for 10-15 minutes until the skin is golden and crisp and the meat is cooked through.
+    temperature_c: 185
+    time_seconds: 900
+  - order: 3
+    body:
+      yue: 同時做蒜汁——蒜茸同紅蔥頭茸鋪喺耐熱碗中央，灑鹽糖；另起油鑊燒到 180°C，將熱油淋落蒜茸上面（會即刻啫啫聲、香氣爆發）；加少少麻油拌勻。
+      zh: 同时做蒜汁——蒜茸与红葱头茸铺在耐热碗中央，撒盐糖；另起油锅烧至 180°C，将热油淋在蒜茸上（会立即「啫啫」作响、香气爆发）；加少许麻油拌匀。
+      en: Meanwhile make the garlic dip — pile minced garlic and shallot in a heat-proof bowl, season with salt and sugar. Heat oil separately to 180°C, then pour over the pile — it should hiss and bloom with aroma. Stir in sesame oil.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 雞撈起靜置 3 分鐘令汁回流，斬大件（連骨）——粵菜傳統用「刀背斬」嘅手法保持肉汁。大碟鋪生菜絲、擺雞件、灑炸幹蔥裝飾，蒜汁另上一碟蘸食。
+      zh: 鸡捞出静置 3 分钟让汁回流，斩大块（连骨）——粤菜传统用「刀背斩」手法保持肉汁。大盘铺生菜丝、摆鸡块、撒炸干葱装饰，蒜汁另上一碟蘸食。
+      en: Rest the chicken 3 minutes for juices to redistribute, then chop through the bone with a heavy cleaver — Cantonese tradition uses the cleaver's spine to preserve juiciness. Bed a plate with lettuce, fan the chicken, garnish with crispy shallot, and serve the garlic dip alongside.
+    time_seconds: 180
+tips:
+  - yue: 「淋油炸雞」係粵菜「四大廚法」之一（蒸、炒、油泡、淋油）——用熱油不斷淋喺雞皮上，控制溫度、保持雞肉嫩、令皮夠脆。新手可以用浸炸（160°C 浸 8 分鐘 + 190°C 複炸 1 分鐘）但效果差啲。
+    zh: 「淋油炸鸡」是粤菜「四大厨法」之一（蒸、炒、油泡、淋油）——用热油不断淋在鸡皮上，控制温度、保持鸡肉嫩、令皮够脆。新手可用浸炸（160°C 浸 8 分钟 + 190°C 复炸 1 分钟）但效果差些。
+    en: Ladle-frying is one of the four canonical Cantonese chef techniques (steam, stir-fry, oil-poach, ladle-fry). Continuously pouring hot oil over the skin controls temperature, keeps the meat tender, crisps the skin. Beginners can substitute immersion (160°C for 8 min then 190°C re-fry for 1 min) — same idea, weaker effect.
+  - yue: 皮要乾——傳統做法用麥芽糖刷皮、風乾 6 小時甚至隔夜。麥芽糖中嘅還原糖喺高溫下會發生美拉德反應，產生琥珀色同特殊香氣。
+    zh: 皮要干——传统做法用麦芽糖刷皮、风干 6 小时甚至隔夜。麦芽糖中的还原糖在高温下会发生美拉德反应，产生琥珀色与特殊香气。
+    en: Skin must be dry — the maltose brush plus 6 hours of air-drying (or overnight) is essential. Maltose contains reducing sugars that undergo Maillard reaction at high heat, producing the signature amber colour and characteristic crispy-skin aroma.
+  - yue: 蒜汁醬用「淋油啫啫」手法——熱油接觸生蒜茸會即刻釋放硫化物香氣，呢個係粵菜「點睛」技巧。油溫過高（>200°C）蒜會苦，過低（<160°C）香氣出唔晒。
+    zh: 蒜汁酱用「淋油啫啫」手法——热油接触生蒜茸会立即释放硫化物香气，这是粤菜「点睛」技巧。油温过高（>200°C）蒜会苦，过低（<160°C）香气出不来。
+    en: The garlic dip uses the Cantonese "啫啫" (zē zē, hissing) hot-oil bloom — hot oil hitting raw garlic instantly releases sulphur aromatics. Oil too hot (>200°C) makes garlic bitter; too cool (<160°C) and aromatics stay locked in.
+history:
+  yue: 蒜汁脆皮雞係粵菜「燒臘」嘅變體——傳統燒臘店嘅燒鴨、白切雞、叉燒都用麥芽糖刷皮、風乾、淋油炸嘅手法。蒜汁脆皮雞由廣州燒臘店傳入香港茶餐廳，1970 年代成為茶餐廳「招牌雞」之一。同海南雞飯（#46）係相反風格——海南雞係浸熟保住嫩滑，呢個係炸脆求香口。
+  zh: 蒜汁脆皮鸡是粤菜「烧腊」的变体——传统烧腊店的烧鸭、白切鸡、叉烧都用麦芽糖刷皮、风干、淋油炸的手法。蒜汁脆皮鸡由广州烧腊店传入香港茶餐厅，1970 年代成为茶餐厅「招牌鸡」之一。与海南鸡饭（#46）是相反风格——海南鸡是浸熟保住嫩滑，此菜是炸脆求香口。
+  en: Garlic crispy-skin chicken is a variant of Cantonese 燒臘 (siu laap, roast-meats) — roast duck, white-cut chicken, char siu all use the maltose-brush + air-dry + ladle-fry technique. The dish migrated from Canton roast-meat shops to HK tea-restaurants in the 1970s and became one of the "signature chickens." Opposite-in-philosophy to Hainanese chicken (#46) — Hainanese poaches for silkiness; this dish ladle-fries for crisp-skin aromatics.
+allergens:
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #50 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 脆炸雞半隻
+    accessed: 2026-05-24
+    note: "Item #50 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

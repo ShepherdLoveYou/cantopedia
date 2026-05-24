@@ -7,22 +7,88 @@ names:
   en: Diced Chicken Fried Rice
 category: rice
 ingredients:
-  - ref: chicken-balls
-    qty: 2
-    unit: 兩
-  - ref: green-peas
-    qty: 1
-    unit: 份
-  - ref: scallion
-    qty: 1
-    unit: 份
   - ref: fried-rice-base
     qty: 2
     unit: 份
-method_status: stub
+    prep:
+      yue: 隔夜冷飯 2 碗
+      zh: 隔夜冷饭 2 碗
+      en: 2 bowls day-old cold cooked rice
+  - ref: chicken-balls
+    qty: 2
+    unit: 兩
+    prep:
+      yue: 雞髀肉切粒、用蛋白同生粉抓勻
+      zh: 鸡腿肉切粒、用蛋白与生粉抓匀
+      en: chicken thigh diced, velveted with egg white and cornstarch
+  - ref: green-peas
+    qty: 1
+    unit: 份
+    prep:
+      yue: 飛水
+      zh: 飞水
+      en: blanched
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: thinly sliced
+  - ref: egg
+    qty: 2
+    unit: 個
+    prep:
+      yue: 打散加少少鹽
+      zh: 打散加少许盐
+      en: beaten with a pinch of salt
+servings: 2
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒熱落 1 匙油，落雞粒攤平煎 20 秒到底面焦香、撥散快炒到變色撈起。
+      zh: 锅烧热下 1 勺油，下鸡粒摊平煎 20 秒至底面焦香、拨散快炒至变色捞起。
+      en: Heat 1 Tbsp oil, lay the chicken flat, sear 20 seconds for crust, break apart, stir-fry just until coloured; remove.
+    time_seconds: 45
+  - order: 2
+    body:
+      yue: 鑊再落 2 匙油，倒入蛋液晃成蛋皮，半熟即落冷飯，快手翻炒成「金包銀」。加 1 茶匙鹽、半茶匙糖、少少胡椒粉。
+      zh: 锅再下 2 勺油，倒入蛋液晃成蛋皮，半熟即下冷饭，快手翻炒成「金包银」。加 1 茶匙盐、半茶匙糖、少许胡椒粉。
+      en: Add 2 Tbsp oil, swirl in egg, dump in rice while egg is half-set, toss into "金包銀" coating. Season with salt, sugar, white pepper.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 落番雞粒、青豆、蔥花，鑊邊淋少少生抽，再翻 20 秒到所有食材均勻，即上碟。
+      zh: 倒回鸡粒、青豆、葱花，锅边淋少许生抽，再翻 20 秒至所有食材均匀，即出锅。
+      en: Return chicken, peas, scallion. Drizzle a touch of light soy around the rim, toss 20 seconds and plate.
+    time_seconds: 20
+tips:
+  - yue: 「雞粒炒飯」係粵菜入面最簡單嘅炒飯——同蝦仁炒飯（#14）對應，唔同係用雞肉。比揚州炒飯少咗叉燒同蝦仁，比白飯多咗雞肉，價錢適中。
+    zh: 「鸡粒炒饭」是粤菜中最简单的炒饭——与虾仁炒饭（#14）对应，区别是用鸡肉。比扬州炒饭少了叉烧与虾仁，比白饭多了鸡肉，价格适中。
+    en: Diced chicken fried rice is one of the simplest Cantonese fried rices — parallel to shrimp fried rice (#14) but with chicken instead. Less elaborate than Yangzhou (no char siu or shrimp), more substantial than plain rice. Mid-priced.
+  - yue: 雞粒醃要薄薄一層蛋白同生粉——醃過量會結團、味淡會冇雞香。
+    zh: 鸡粒腌要薄薄一层蛋白与生粉——腌过量会结块、味淡会无鸡香。
+    en: Velvet the chicken with a light egg-white-and-cornstarch coat — too thick clumps, too light loses the chicken flavour.
+  - yue: 茶餐廳通常用雞髀肉，唔用雞胸——雞髀肉嫩滑、有油分，炒飯入面唔會乾。
+    zh: 茶餐厅常用鸡腿肉，不用鸡胸——鸡腿肉嫩滑、有油分，炒饭中不会干。
+    en: Tea-restaurants use chicken thigh rather than breast — thigh is silkier and has fat that keeps the cubes juicy through stir-frying. Breast goes dry.
+history:
+  yue: 雞粒炒飯係粵菜炒飯系列入面最「家常」嘅版本——配料少、成本低、雞肉提供蛋白同香氣。1950 年代喺香港茶餐廳發展成「平民版炒飯」，比揚州炒飯平 30%，係學生同打工仔嘅日常選擇。
+  zh: 鸡粒炒饭是粤菜炒饭系列中最「家常」的版本——配料少、成本低、鸡肉提供蛋白与香气。1950 年代在香港茶餐厅发展为「平民版炒饭」，比扬州炒饭便宜 30%，是学生与打工族的日常选择。
+  en: Diced chicken fried rice is the "home-style" Cantonese fried rice — minimal ingredients, low cost, chicken for the protein and aroma. Standardised in 1950s HK tea-restaurants as the "everyman's fried rice," priced ~30% lower than Yangzhou. A staple for students and workers.
+allergens:
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #13 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #13 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

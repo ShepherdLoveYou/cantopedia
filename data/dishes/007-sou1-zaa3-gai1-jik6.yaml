@@ -10,25 +10,94 @@ ingredients:
   - ref: chicken-wing
     qty: 8
     unit: 件
+    prep:
+      yue: 雞中翼或全翼，醃 4-12 小時（生抽 + 紹興酒 + 蒜茸 + 薑汁 + 五香粉 + 鹽 + 糖 + 蛋液）
+      zh: 鸡中翼或全翼，腌 4-12 小时（生抽+绍兴酒+蒜茸+姜汁+五香粉+盐+糖+蛋液）
+      en: 8 chicken wing midsections or whole wings; marinated 4-12 hours with soy + Shaoxing + garlic + ginger juice + five-spice + salt + sugar + egg
   - ref: salt-pepper-mix
     qty: 1
     unit: 份
+    prep:
+      yue: 椒鹽粉 1 份（蘸料）
+      zh: 椒盐粉 1 份（蘸料）
+      en: 1 portion salt-and-pepper dipping mix
   - ref: sweet-chicken-sauce
     qty: 1
     unit: 份
+    prep:
+      yue: 甜雞醬 1 碟（蘸料）
+      zh: 甜鸡酱 1 碟（蘸料）
+      en: 1 dish sweet chicken sauce (dip)
   - ref: honey-garlic-sauce
     qty: 1
     unit: 份
+    prep:
+      yue: 蜜蒜汁 1 碟（蘸料）
+      zh: 蜜蒜汁 1 碟（蘸料）
+      en: 1 dish honey-garlic dip
   - ref: lettuce
     qty: 1
     unit: 份
+    prep:
+      yue: 唐生菜切絲鋪底
+      zh: 唐生菜切丝铺底
+      en: shredded lettuce as bed
   - ref: sesame
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 炒香芝麻少少裝飾
+      zh: 炒香芝麻少许装饰
+      en: a pinch of toasted sesame, garnish
+servings: 4
+difficulty: easy
+time_minutes:
+  prep: 240
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞翼醃 4-12 小時（隔夜最好）。落鍋前撈起瀝乾汁液，均勻拍上薄薄一層生粉同少少粟粉。
+      zh: 鸡翼腌 4-12 小时（隔夜最好）。下锅前捞起沥干汁液，均匀拍上薄薄一层生粉与少许粟粉。
+      en: Marinate the wings 4-12 hours (overnight is best). Just before frying, drain and coat in a thin even layer of cornstarch with a touch of potato starch.
+    time_seconds: 14400
+  - order: 2
+    body:
+      yue: 油溫 160°C，落雞翼炸第一次 5 分鐘到肉熟、表面金黃，撈起瀝油；油溫升 190°C，落番去複炸 60 秒到外皮酥脆，撈起瀝油。
+      zh: 油温 160°C，下鸡翼炸第一次 5 分钟至肉熟、表面金黄，捞出沥油；油温升 190°C，复炸 60 秒至外皮酥脆，捞出沥油。
+      en: Heat oil to 160°C / 320°F. Deep-fry the wings 5 minutes — cooked through, golden. Remove. Heat oil to 190°C / 375°F and re-fry 60 seconds until shatteringly crisp.
+    temperature_c: 190
+    time_seconds: 360
+  - order: 3
+    body:
+      yue: 大碟鋪上生菜絲，雞翼擺喺上面，灑芝麻裝飾，配三碟蘸料（椒鹽、甜雞醬、蜜蒜汁）即上枱。
+      zh: 大盘铺上生菜丝，鸡翼摆在上面，撒芝麻装饰，配三碟蘸料（椒盐、甜鸡酱、蜜蒜汁）即上桌。
+      en: Bed a serving plate with shredded lettuce, arrange the wings on top, sprinkle with sesame, and serve with three small dishes of dips (salt-pepper, sweet chicken sauce, honey-garlic).
+tips:
+  - yue: 醃料中嘅蛋液係雞翼酥脆嘅關鍵——蛋白凝固後形成一層薄膜，鎖住肉汁，外面拍生粉就會炸出脆殼。
+    zh: 腌料中的蛋液是鸡翼酥脆的关键——蛋白凝固后形成一层薄膜，锁住肉汁，外面拍生粉就会炸出脆壳。
+    en: Egg in the marinade is key — when it sets, it forms a thin film that locks in juices. The cornstarch coat then fries into a crisp shell.
+  - yue: 兩次油炸係必須——第一次低溫煮熟、第二次高溫起脆。淨炸一次得唔到「外酥內嫩」嘅效果。
+    zh: 两次油炸是必须——第一次低温煮熟、第二次高温起脆。只炸一次得不到「外酥内嫩」的效果。
+    en: Double-frying is essential — first at low temp cooks through, second at high temp crisps the surface. Single-frying gives soggy crust.
+  - yue: 三碟蘸料係茶餐廳「畀客自選」嘅做法——椒鹽偏鹹、甜雞醬偏甜、蜜蒜汁偏酸甜辣。每人對應一款。
+    zh: 三碟蘸料是茶餐厅「让客自选」的做法——椒盐偏咸、甜鸡酱偏甜、蜜蒜汁偏酸甜辣。每人对应一款。
+    en: Three dips is the HK tea-restaurant convention — salt-pepper for savoury, sweet chicken sauce for sweet, honey-garlic for tangy-spicy. Different palates pick different dips.
+history:
+  yue: 酥炸雞翼係粵菜「炸味」嘅基本款——源自 1960 年代香港大排檔，當時雞翼係便宜部位（雞胸雞髀價更貴），廚師用醃料同雙重油炸技術將之變成獨立菜式。今日全球粵菜館都有，亦係茶餐廳開胃菜常客。
+  zh: 酥炸鸡翼是粤菜「炸味」的基本款——源自 1960 年代香港大排档，当时鸡翼是便宜部位（鸡胸鸡腿价更贵），厨师用腌料与双重油炸技术将之变成独立菜式。今日全球粤菜馆都有，也是茶餐厅开胃菜常客。
+  en: Crispy chicken wings are a Cantonese deep-fry basic — originated in 1960s Hong Kong dai pai dong (street stalls) when wings were the cheap cut (breast and thigh cost more). Cooks elevated them into a dish via marinade plus double-fry. Today every Cantonese restaurant has them, and they remain a tea-restaurant appetiser staple.
+allergens:
+  - egg
+  - soy
+  - gluten
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #7 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #7 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

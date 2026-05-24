@@ -10,6 +10,10 @@ ingredients:
   - ref: wontons
     qty: 6
     unit: 粒
+    prep:
+      yue: 鮮蝦豬肉雲吞 6 粒
+      zh: 鲜虾猪肉云吞 6 颗
+      en: 6 fresh shrimp-and-pork wontons
   - ref: broccoli
     qty: 3
     unit: 件
@@ -25,10 +29,61 @@ ingredients:
   - ref: corn
     qty: 3
     unit: 件
-method_status: stub
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: chopped scallion
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 大鍋燒水至滾，落配菜（西蘭花、椰菜花、冬菇、紅蘿蔔、粟米段）煮 2 分鐘到斷生即撈起。
+      zh: 大锅烧水至沸，下配菜（西兰花、椰菜花、冬菇、红萝卜、粟米段）煮 2 分钟至断生即捞起。
+      en: Bring a large pot of water to a boil. Blanch vegetables 2 minutes until just tender; remove.
+    time_seconds: 120
+  - order: 2
+    body:
+      yue: 落雲吞煮 3 分鐘到皮浮起且半透明、餡熟透。
+      zh: 下云吞煮 3 分钟至皮浮起且半透明、馅熟透。
+      en: Add wontons, simmer 3 minutes until they float and the wrapper is translucent.
+    time_seconds: 180
+  - order: 3
+    body:
+      yue: 深碗一隻：雲吞墊底、配菜圍邊。淋上熱湯（雞湯 + 少少蝦頭油 + 鹽 + 白胡椒），灑蔥花，即上枱。
+      zh: 深碗一只：云吞垫底、配菜围边。淋上热汤（鸡汤 + 少许虾头油 + 盐 + 白胡椒），撒葱花，即上桌。
+      en: In a deep bowl, wontons at the bottom, vegetables around the rim. Ladle over hot broth (chicken stock + a touch of shrimp-head oil + salt + white pepper), top with scallion, serve.
+    time_seconds: 60
+tips:
+  - yue: 雲吞湯同窩雲吞（#8）嘅最大分別係冇大蝦、雞片、叉燒——所以價格大概係窩雲吞嘅 60%。簡樸版反而體現雲吞本身嘅鮮味。
+    zh: 云吞汤与窝云吞（#8）的最大区别是无大虾、鸡片、叉烧——所以价格约为窝云吞的 60%。简朴版反而体现云吞本身的鲜味。
+    en: Wonton soup differs from 窩雲吞 (dish #8) by lacking the additional prawns, chicken, and char siu — typically priced at 60% of the 窩 version. The simpler bowl actually showcases the wonton's own flavour better.
+  - yue: 「正宗」香港雲吞嘅特徵——皮薄如紙、餡係 70% 鮮蝦 + 30% 豬肉、湯底用大地魚同蝦頭熬。茶餐廳通常用機械皮，但鮮蝦同蝦頭油不可或缺。
+    zh: 「正宗」香港云吞的特征——皮薄如纸、馅是 70% 鲜虾 + 30% 猪肉、汤底用大地鱼与虾头熬。茶餐厅通常用机械皮，但鲜虾与虾头油不可或缺。
+    en: '"Authentic" HK wontons share three traits — paper-thin wrappers, 70% shrimp / 30% pork filling, and a stock built on dried plaice and shrimp heads. Tea-restaurants use machine wrappers but never compromise on fresh shrimp and shrimp-head oil.'
+  - yue: 配菜要新鮮飛水——飛水時間過短會生青味、過長會出黃。每樣 2 分鐘剛剛好，水裡加少少鹽同油保持翠綠。
+    zh: 配菜要新鲜飞水——飞水时间过短会有生青味、过长会发黄。每样 2 分钟刚好，水里加少许盐与油保持翠绿。
+    en: Blanch the vegetables fresh — too brief gives a raw vegetal note, too long yellows them. 2 minutes is the sweet spot. Salted oily water keeps them emerald.
+history:
+  yue: 雲吞源自唐代「餛飩」（混沌），廣州人將之發展成「雲吞」——「吞雲吐霧」嘅形象描述皮薄如雲。1950 年代從廣州傳入香港，成為茶餐廳必備湯品同麵食配料。「雲吞」呢個粵語名喺香港特別流行，喺台灣同新加坡反而叫「餛飩」。
+  zh: 云吞源自唐代「馄饨」（混沌），广州人将之发展为「云吞」——「吞云吐雾」的形象描述皮薄如云。1950 年代由广州传入香港，成为茶餐厅必备汤品与面食配料。「云吞」这个粤语名在香港特别流行，台湾与新加坡反而叫「馄饨」。
+  en: Wontons trace to the Tang-dynasty 餛飩 (huntun, "chaos"). Cantonese diners renamed them 雲吞 (wan tan, "swallowing clouds") to describe the wrapper's lightness. The form spread from Canton to Hong Kong in the 1950s and became canonical in HK tea-restaurants. The 雲吞 name dominates in HK; Taiwan and Singapore retain the older 餛飩.
+allergens:
+  - shellfish
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #9 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #9 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
