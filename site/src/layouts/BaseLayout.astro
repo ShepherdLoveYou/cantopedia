@@ -37,7 +37,7 @@ const dict = {
           <span class="brand-seal">粵</span>
           <span class="brand-name">食典 · Cantopedia</span>
         </a>
-        <div class="pivot">
+        <div class="locale-switcher">
           {(['zh', 'yue', 'en'] as const).map((loc) => (
             <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} href={`${base}/${loc}`}>{dict[loc]}</a>
           ))}
@@ -161,7 +161,7 @@ const dict = {
         font-family: var(--serif-zh);
       }
       .brand-name { font-family: var(--sans), var(--sans-zh); font-weight: 300; font-size: 1.125rem; letter-spacing: 0.02em; }
-      .pivot { display: flex; gap: 0.25rem; }
+      .locale-switcher { display: flex; gap: 0.25rem; }
       .pivot-tab {
         font-family: var(--sans), var(--sans-zh);
         font-size: 0.875rem;

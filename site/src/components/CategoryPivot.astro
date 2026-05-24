@@ -96,4 +96,10 @@ const nameOf = (c: typeof curr) =>
     document.documentElement.classList.remove('nav-prev', 'nav-next');
     document.documentElement.classList.add(a.dataset.dir === 'prev' ? 'nav-prev' : 'nav-next');
   }, true);
+
+  // After every navigation completes, clear the direction class so non-pivot
+  // navigations that follow don't accidentally inherit the horizontal slide.
+  document.addEventListener('astro:page-load', () => {
+    document.documentElement.classList.remove('nav-prev', 'nav-next');
+  });
 </script>
