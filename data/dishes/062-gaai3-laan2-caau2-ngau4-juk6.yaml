@@ -7,27 +7,103 @@ names:
   en: Gai Lan Stir-fried Beef
 category: main
 ingredients:
-  - ref: garlic
-    qty: 1
-    unit: 份
   - ref: gai-laan
     qty: 1
     unit: 磅
-  - ref: oyster-sauce
-    qty: 1
-    unit: 份
+    prep:
+      yue: 芥蘭花、菜葉、菜莖分開——莖斜切薄片，葉同花連住一截莖
+      zh: 芥兰花、菜叶、菜茎分开——茎斜切薄片，叶与花连一小段茎
+      en: separate stems, leaves, and flowers; slice stems diagonally into thin pieces; keep leaves attached to a short stem section
   - ref: beef-slices
     qty: 4
     unit: 兩
+    prep:
+      yue: 逆紋切薄片，醃 15 分鐘（生抽 + 蠔油 + 糖 + 紹興酒 + 蛋白 + 生粉 + 油，最後拌入 1 茶匙小蘇打令肉嫩）
+      zh: 逆纹切薄片，腌 15 分钟（生抽+蠔油+糖+绍兴酒+蛋白+生粉+油，最后拌入 1 茶匙小苏打令肉嫩）
+      en: sliced thinly against the grain; marinated 15 min with soy + oyster + sugar + Shaoxing + egg white + cornstarch + oil + 1 tsp baking soda for tenderising
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 拍碎切粒
+      zh: 拍碎切粒
+      en: smashed and minced
+  - ref: ginger
+    qty: 2
+    unit: 片
+    prep:
+      yue: 切薑絲
+      zh: 切姜丝
+      en: julienned
+  - ref: oyster-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蠔油 1 匙 + 生抽 1 茶匙 + 糖 1 茶匙 + 雞湯或水 3 匙 + 生粉 1 茶匙
+      zh: 蠔油 1 勺 + 生抽 1 茶匙 + 糖 1 茶匙 + 鸡汤或水 3 勺 + 生粉 1 茶匙
+      en: 1 Tbsp oyster sauce + 1 tsp light soy + 1 tsp sugar + 3 Tbsp chicken stock or water + 1 tsp cornstarch
   - ref: oil-poach-mix
     qty: 1
     unit: 份
-method_status: stub
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 大鍋燒水，水滾後落少少鹽同一茶匙油，落芥蘭莖灼 60 秒，再落葉同花灼 30 秒，撈起過冷河瀝乾——「飛水」過咗會出黃。
+      zh: 大锅烧水，水沸后下少许盐与一茶匙油，下芥兰茎灼 60 秒，再下叶与花灼 30 秒，捞出过冷水沥干——「飞水」过头会发黄。
+      en: Bring a large pot of water to a boil with a pinch of salt and 1 tsp oil. Blanch the stems 60 seconds, then add leaves and flowers for 30 seconds. Shock in cold water and drain — overcooked gai lan turns yellow.
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落醃好嘅牛肉攤平煎 30 秒到底面焦香，再撥散快炒到牛肉剛剛變色，撈起——餘溫會繼續煮熟。
+      zh: 锅烧至大热，下 2 勺油，下腌好的牛肉摊平煎 30 秒至底面焦香，再拨散快炒至刚变色，捞出——余温会继续煮熟。
+      en: Heat the wok until smoking. Add 2 Tbsp oil. Lay the marinated beef flat, sear 30 seconds for a bottom crust, then stir-fry just until colour changes. Remove — residual heat finishes the cooking.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 鑊留 1 匙油，落薑絲同蒜粒爆 10 秒香氣出嚟，落芥蘭翻炒 30 秒令食材升溫。
+      zh: 锅留 1 勺油，下姜丝与蒜粒爆 10 秒出香气，下芥兰翻炒 30 秒使食材升温。
+      en: Keep 1 Tbsp oil. Stir-fry the ginger and garlic 10 seconds, add the gai lan and toss 30 seconds to reheat.
+    time_seconds: 40
+  - order: 4
+    body:
+      yue: 落番牛肉，倒入蠔油芡，快手翻炒 20 秒到芡汁掛勻、起膠光亮，即上碟。
+      zh: 倒回牛肉，倒入蚝油芡，快手翻炒 20 秒至芡汁挂匀、起胶光亮，即出锅。
+      en: Return the beef. Pour in the oyster sauce mixture and toss for 20 seconds until the sauce glosses and coats everything evenly. Plate immediately.
+    time_seconds: 20
+tips:
+  - yue: 牛肉嫩唔嫩睇兩樣嘢——切要逆紋切薄、要落小蘇打鬆筋。但小蘇打唔可以過量（1 茶匙對 4 兩肉），多咗會苦同有滑膩感。
+    zh: 牛肉嫩不嫩看两点——切要逆纹切薄、要加小苏打松筋。但小苏打不能过量（1 茶匙对 4 两肉），多了会苦且口感发滑。
+    en: Beef tenderness depends on two things: slicing thinly against the grain, and a touch of baking soda to break down sinew. Don't overdo the soda — 1 tsp per 150 g max; more turns the meat bitter and weirdly slick.
+  - yue: 芥蘭一定要分莖、葉、花分批落鍋——莖最厚要先煮，葉最薄要最後落，先得均勻熟度同翠綠色澤。
+    zh: 芥兰必须分茎、叶、花分批下锅——茎最厚要先煮，叶最薄要最后下，才能均匀熟度与翠绿色泽。
+    en: Stagger your gai lan: thick stems first, leaves and flowers last. Dumping it all in at once gives you raw stems alongside overcooked leaves.
+  - yue: 飛水嘅時候水加少少油同鹽——油令菜葉表面光亮唔失色、鹽防止葉黃。
+    zh: 飞水时水中加少许油与盐——油令叶面光亮不褪色、盐防止叶黄。
+    en: Salted oily blanching water keeps the gai lan glossy and green — a chef's trick that works for any Chinese green.
+history:
+  yue: 「蠔油芥蘭炒牛肉」係粵菜最基本嘅鑊氣考核——簡單三樣材料但要做到「肉嫩、菜翠、芡亮」非常考功夫。茶餐廳通常將呢個菜放喺午市套餐中位，配白飯做「飯餸」。「芥蘭」（Chinese broccoli）係粵菜獨有蔬菜，海外華埠 supermarket 一定有售。
+  zh: 「蠔油芥兰炒牛肉」是粤菜最基本的镬气考核——三样简单食材却要做到「肉嫩、菜翠、芡亮」非常考功夫。茶餐厅常将此菜置于午市套餐中位，配白饭做「饭餸」。「芥兰」（Chinese broccoli）是粤菜独有蔬菜，海外华人超市必有售。
+  en: Oyster-sauce gai lan with beef is the Cantonese stir-fry's most basic exam — three ingredients but the holy trinity of "tender beef + emerald greens + glossy sauce" is the diagnostic of wok-cook competence. HK tea-restaurants slot it into the lunch-set offerings as a rice companion. Gai lan (Chinese broccoli) is uniquely Cantonese; every Asian grocer worldwide stocks it.
+allergens:
+  - shellfish
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #62 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #62 on the source menu"
+  - source_id: wikipedia-en-kai-lan
+    url: https://en.wikipedia.org/wiki/Kai-lan
+    accessed: 2026-05-24
 variants:
   - 062b-gaai3-laan2-caau2-gai1-pin2
+created: 2026-05-24
+updated: 2026-05-24

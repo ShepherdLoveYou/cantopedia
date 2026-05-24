@@ -10,19 +10,121 @@ ingredients:
   - ref: chicken-balls
     qty: 1
     unit: 磅
+    prep:
+      yue: 雞髀肉切 2 cm 方粒，醃 15 分鐘（生抽 + 紹興酒 + 生粉 + 蛋白 + 油）
+      zh: 鸡腿肉切 2 cm 方粒，腌 15 分钟（生抽+绍兴酒+生粉+蛋白+油）
+      en: boneless chicken thigh cut into 2 cm cubes; marinated 15 min in soy + Shaoxing wine + cornstarch + egg white + oil
   - ref: bell-pepper
     qty: 6
     unit: 件
+    prep:
+      yue: 切菱角形
+      zh: 切菱形片
+      en: cut into diamond shapes
+  - ref: peanuts
+    qty: 2
+    unit: 兩
+    prep:
+      yue: 油炸花生（130°C 慢炸到金黃）
+      zh: 油炸花生（130°C 慢炸至金黄）
+      en: peanuts deep-fried at 130°C / 265°F until pale gold (or use roasted, unsalted)
   - ref: chili-paste
     qty: 1
     unit: 份
+    prep:
+      yue: 干辣椒 8 條剪段去籽 + 花椒 1 茶匙
+      zh: 干辣椒 8 条剪段去籽 + 花椒 1 茶匙
+      en: 8 dried red chilies snipped into segments + 1 tsp Sichuan peppercorn
   - ref: sweet-sour-sauce
     qty: 4
     unit: 兩
-method_status: stub
+    prep:
+      yue: 鎮江醋 2 匙 + 老抽 1 匙 + 生抽 2 匙 + 糖 2 匙 + 紹興酒 1 匙 + 雞湯 4 匙 + 生粉 1 茶匙
+      zh: 镇江醋 2 勺 + 老抽 1 勺 + 生抽 2 勺 + 糖 2 勺 + 绍兴酒 1 勺 + 鸡汤 4 勺 + 生粉 1 茶匙
+      en: 2 Tbsp Chinkiang vinegar + 1 Tbsp dark soy + 2 Tbsp light soy + 2 Tbsp sugar + 1 Tbsp Shaoxing wine + 4 Tbsp chicken stock + 1 tsp cornstarch
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥白切粒
+      zh: 葱白切粒
+      en: scallion whites diced
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎切粒
+      zh: 拍碎切粒
+      en: smashed and minced
+  - ref: ginger
+    qty: 1
+    unit: 片
+    prep:
+      yue: 切薑粒
+      zh: 切姜粒
+      en: minced
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞粒落鑊嘅時候用「半煎炸」手法——油溫 160°C，落雞粒攤平炸 45 秒到表面金黃定型，撈起瀝油。鑊留 1 匙油。
+      zh: 鸡粒下锅用「半煎炸」手法——油温 160°C，下鸡粒摊平炸 45 秒至表面金黄定型，捞出沥油。锅留 1 勺油。
+      en: Velvet-fry the chicken: heat oil to 160°C / 320°F, spread the cubes in a single layer, fry 45 seconds until the surface is golden and set; remove and drain. Reserve 1 Tbsp oil.
+    temperature_c: 160
+    time_seconds: 45
+  - order: 2
+    body:
+      yue: 留底油，落干辣椒同花椒，用中火慢慢爆——直到辣椒由鮮紅變深紅（但唔好變黑），花椒爆出麻香，先落薑蒜蔥白爆 10 秒。
+      zh: 留底油，下干辣椒与花椒，用中火慢慢爆——直到辣椒由鲜红变深红（但勿变黑），花椒爆出麻香，再下姜蒜葱白爆 10 秒。
+      en: With the reserved oil, lower to medium. Add the dried chilies and Sichuan peppercorn. Toast slowly — chilies should darken from bright to deep red without burning. Add ginger, garlic, and scallion whites for 10 seconds.
+    time_seconds: 30
+  - order: 3
+    body:
+      yue: 落番雞粒同青紅椒，大火快炒 30 秒。
+      zh: 倒回鸡粒与青红椒，大火快炒 30 秒。
+      en: Crank the heat. Return the chicken and add the bell peppers; stir-fry 30 seconds.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 倒入糖醋汁，邊倒邊翻，等汁滾起、起膠掛勻所有食材——「明油亮芡」係佳作標準。
+      zh: 倒入糖醋汁，边倒边翻，待汁沸腾、起胶挂匀所有食材——「明油亮芡」是上品标准。
+      en: Pour in the seasoning sauce. Toss continuously as it bubbles and glosses, coating every piece. The Sichuan benchmark is "明油亮芡" — sheen of oil over a glossy sauce.
+    time_seconds: 30
+  - order: 5
+    body:
+      yue: 最後落炸花生，再翻 5 下即上碟——花生最後落係避免變腍失脆。
+      zh: 最后倒入炸花生，再翻 5 下即出锅——花生最后下是为避免变软失脆。
+      en: Toss in the peanuts last, give 5 final tosses, and plate. Peanuts go in at the end to keep their crunch.
+    time_seconds: 10
+tips:
+  - yue: 茶餐廳版宮保雞用青紅椒（粵化），川菜原版只用蒜苗同蔥白——茶餐廳改良係為咗顏色更搶眼。
+    zh: 茶餐厅版宫保鸡用青红椒（粤化），川菜原版只用蒜苗与葱白——茶餐厅改良是为让色彩更鲜明。
+    en: HK tea-restaurant kung pao adds bell peppers for colour, a Cantonese adaptation. The Sichuan original uses only garlic shoots and scallion whites.
+  - yue: 「煳辣味」係宮保雞嘅靈魂——干辣椒要爆到表面有少少深紅油亮，但唔可以變黑、變黑就苦。火力收細啲、慢慢嚟。
+    zh: 「煳辣味」是宫保鸡的灵魂——干辣椒要爆到表面深红油亮，但不可变黑、变黑就苦。火力收小一些、慢慢炒。
+    en: "Húlàwèi" — toasty-spicy — is the dish's defining note. Toast the chilies on medium heat until darkened but not blackened; black chilies are bitter and ruin the dish.
+  - yue: 「宮保」名字來自清代官員丁寶楨（諡號「文正」、加銜「太子少保」、簡稱「宮保」）。佢喺四川任職時鍾意呢個菜，廚師後來以佢嘅銜頭命名。
+    zh: 「宫保」之名来自清代官员丁宝桢（谥号「文正」、加衔「太子少保」、简称「宫保」）。他在四川任职时酷爱此菜，厨师后来以其衔头命名。
+    en: "Kung Pao" (宮保) comes from Ding Baozhen, a Qing-dynasty official whose honorary title was Crown Prince's Grand Tutor (太子少保, abbreviated 宮保). He loved this dish while governing Sichuan, and cooks named it after him.
+history:
+  yue: 宮保雞源自 19 世紀末四川官府菜，由四川入廣州、再傳入香港。粵化版本添加青紅椒同調糖醋汁，口味比川菜版更甜更溫和，係粵菜「川菜本地化」嘅典型例子。香港茶餐廳普遍提供，係下飯極品。
+  zh: 宫保鸡源自 19 世纪末四川官府菜，由四川传入广州、再入香港。粤化版本添加青红椒并调以糖醋汁，口味比川菜版更甜更温和，是粤菜「川菜本地化」的典型。香港茶餐厅普遍提供，下饭极品。
+  en: Kung Pao chicken originated as a late-Qing Sichuan officials' dish, spreading to Canton and then Hong Kong. The Cantonised version adds bell peppers and rounds the sauce sweeter — a classic case of Cantonese adaptation of Sichuan cuisine. Now ubiquitous on HK tea-restaurant menus and a top rice companion.
+allergens:
+  - peanut
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #52 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #52 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

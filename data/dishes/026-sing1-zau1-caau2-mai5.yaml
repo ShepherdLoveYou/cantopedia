@@ -7,34 +7,123 @@ names:
   en: Singapore Fried Rice Vermicelli
 category: noodle
 ingredients:
-  - ref: bell-pepper
-    qty: 4
-    unit: 兩
-  - ref: onion
-    qty: 1
-    unit: 份
-  - ref: bean-sprouts
-    qty: 1
-    unit: 份
-  - ref: shrimp-meat
-    qty: 1
-    unit: 兩
-  - ref: cha-siu
-    qty: 1
-    unit: 兩
-  - ref: egg
-    qty: 1
-    unit: 個
-  - ref: curry-powder
-    qty: 1
-    unit: 份
   - ref: rice-vermicelli
     qty: 6
     unit: 兩
-method_status: stub
+    prep:
+      yue: 溫水浸軟、瀝乾備用
+      zh: 温水浸软、沥干备用
+      en: soaked in warm water until pliable, drained
+  - ref: shrimp-meat
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 去殼去腸、用少少鹽生粉抓勻
+      zh: 去壳去肠、用少许盐生粉抓匀
+      en: peeled, deveined, salted and tossed with cornstarch
+  - ref: cha-siu
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: egg
+    qty: 1
+    unit: 個
+    prep:
+      yue: 打散
+      zh: 打散
+      en: beaten
+  - ref: bell-pepper
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 青紅各半、切細絲
+      zh: 青红各半、切细丝
+      en: red and green, julienned
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: bean-sprouts
+    qty: 1
+    unit: 份
+    prep:
+      yue: 摘走尾根
+      zh: 掐去尾根
+      en: tails trimmed
+  - ref: curry-powder
+    qty: 1
+    unit: 份
+    prep:
+      yue: 印度或馬來咖喱粉 2 茶匙、用 2 匙水拌成糊
+      zh: 印度或马来咖喱粉 2 茶匙、用 2 勺水拌成糊
+      en: 2 tsp curry powder (Indian or Malay) mixed with 2 Tbsp water into a paste
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 米粉用溫水（約 40°C）浸 10 分鐘到軟身但唔糊，瀝乾。剪短到合適長度，加 1 匙油拌散防黐。
+      zh: 米粉用温水（约 40°C）浸 10 分钟至软身但不糊烂，沥干。剪短至合适长度，加 1 勺油拌散防粘。
+      en: Soak the rice vermicelli in 40°C / 105°F water for 10 minutes until pliable but not mushy. Drain, snip into shorter lengths, toss with 1 Tbsp oil to keep strands separate.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 鑊燒熱落 1 匙油，倒入蛋液晃成蛋皮，半熟時撥碎撈起；再起鑊落少少油，落蝦仁炒到變色撈起。
+      zh: 锅烧热下 1 勺油，倒入蛋液晃成蛋皮，半熟时拨碎捞起；再起锅下少量油，下虾仁炒至变色捞起。
+      en: Heat the wok with 1 Tbsp oil, scramble the egg into loose curds and remove. Reheat with another touch of oil and sear the shrimp until just opaque; remove.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 鑊燒到大滾，落 2 匙油爆香洋蔥同青紅椒絲 30 秒，加入咖喱糊炒香 20 秒（咖喱粉同油接觸先會釋放香氣）。
+      zh: 锅烧至大热，下 2 勺油爆香洋葱与青红椒丝 30 秒，加入咖喱糊炒香 20 秒（咖喱粉需与油接触才会释放香气）。
+      en: Crank the heat. Add 2 Tbsp oil, stir-fry the onion and peppers 30 seconds, then add the curry paste and toast for 20 seconds — curry needs to bloom in fat to develop its aroma.
+    time_seconds: 50
+  - order: 4
+    body:
+      yue: 落瀝乾嘅米粉，用筷子同鏟一齊「拋」勻，令每條粉都裹上咖喱色——目標係均勻金黃，唔可以局部白局部黃。
+      zh: 下沥干的米粉，用筷子与铲一同「抛」匀，令每条粉都裹上咖喱色——目标是均匀金黄，不能局部白局部黄。
+      en: Add the drained vermicelli. Toss with chopsticks in one hand and spatula in the other until every strand is evenly golden — no white patches, no curry clumps.
+    time_seconds: 120
+  - order: 5
+    body:
+      yue: 落番蝦仁、叉燒絲、蛋粒、芽菜，加 1 茶匙生抽、半茶匙糖、少少胡椒粉，再快手翻 20 秒到芽菜剛剛斷生，即上碟。
+      zh: 倒回虾仁、叉烧丝、蛋粒、芽菜，加 1 茶匙生抽、半茶匙糖、少许胡椒粉，再快手翻 20 秒至芽菜刚断生，即可出锅。
+      en: Return the shrimp, char siu, scrambled egg, and bean sprouts. Season with 1 tsp light soy, ½ tsp sugar, white pepper. Toss 20 seconds — sprouts should still crunch — and plate immediately.
+    time_seconds: 20
+tips:
+  - yue: 「星洲炒米」唔係嚟自新加坡，新加坡冇呢個菜——係 1950 年代香港茶餐廳廚師發明，借「星洲」呢個地名突出咖喱味嘅異域風情。
+    zh: 「星洲炒米」并非来自新加坡，新加坡也没有此菜——是 1950 年代香港茶餐厅厨师发明，借「星洲」之名突出咖喱风味的异域感。
+    en: Despite the name, "Singapore noodles" do not exist in Singapore. The dish was invented by Hong Kong cooks in the 1950s — "Singapore" simply evoked the exotic curry of the British Straits Settlements.
+  - yue: 咖喱粉一定要先用油炒香——干咗炒會苦同無香氣。茶餐廳通常用「Baba's」或「Cheung Sun Tat」品牌嘅馬來咖喱粉。
+    zh: 咖喱粉必须先以油炒香——干炒会发苦且无香气。茶餐厅常用「Baba's」或「祥森达」品牌的马来咖喱粉。
+    en: The curry powder must be bloomed in oil — dry-toasted it burns and turns bitter. HK tea-restaurants typically use Malaysian brands like Baba's or jaffrey-style mild curry powders.
+  - yue: 米粉浸太耐就會變糊——10 分鐘上限。如果係台灣米粉就 5 分鐘就夠，唔同產地嘅米粉吸水率好唔同。
+    zh: 米粉浸太久就会糊——10 分钟为上限。台湾米粉只需 5 分钟，不同产地的米粉吸水率差异较大。
+    en: Don't oversoak the vermicelli — 10 minutes max. Taiwanese rice vermicelli only needs 5 minutes. Different brands and origins absorb water at very different rates.
+history:
+  yue: 星洲炒米嘅出現反映咗 20 世紀中葉香港同新馬之間嘅人口流動——大量香港廚師到南洋打工，將咖喱用法帶返香港；同時粵菜入面亦借用咗南洋嘅辣椒同咖喱概念。今日香港茶餐廳幾乎家家都有，但喺新加坡反而要去香港餐廳先食得到。
+  zh: 星洲炒米的出现反映了 20 世纪中叶香港与新马间的人口流动——大量香港厨师赴南洋打工，将咖喱用法带回香港；同时粤菜也借鉴了南洋的辣椒与咖喱概念。今天香港茶餐厅几乎家家都有此菜，但在新加坡反而要去香港餐厅才能吃到。
+  en: Singapore fried rice vermicelli embodies mid-20th-century population flow between Hong Kong and Southeast Asia — HK cooks worked in the Straits Settlements, brought curry technique home, and integrated it into Cantonese repertoire. Today nearly every HK tea-restaurant has it; in Singapore, you'd have to find a Hong Kong restaurant to order one.
+allergens:
+  - egg
+  - shellfish
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #26 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #26 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

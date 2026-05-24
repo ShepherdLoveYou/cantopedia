@@ -7,16 +7,94 @@ names:
   en: Salt-and-pepper Shrimp
 category: main
 ingredients:
-  - ref: salt-pepper-mix
-    qty: 1
-    unit: 份
   - ref: large-shrimp
     qty: 12
     unit: 件
-method_status: stub
+    prep:
+      yue: 連殼帶頭、剪走鬚同腳、開背去腸
+      zh: 带壳带头、剪去须脚、开背去肠
+      en: head-on, shell-on; trim antennae and legs, slit the back and remove the vein
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+    prep:
+      yue: 椒鹽粉（鹽 1 茶匙 + 白胡椒粉 0.5 茶匙 + 五香粉少少 + 白糖少少）
+      zh: 椒盐粉（盐 1 茶匙 + 白胡椒粉 0.5 茶匙 + 五香粉少许 + 白糖少许）
+      en: salt-and-pepper mix (1 tsp salt + ½ tsp white pepper + pinch of five-spice + pinch of sugar)
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 拍碎切粒
+      zh: 拍碎切粒
+      en: smashed and minced
+  - ref: bell-pepper
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 紅辣椒 1 條切粒（裝飾、亦增辣度）
+      zh: 红辣椒 1 条切粒（装饰，亦增辣度）
+      en: 1 fresh red chili minced (garnish and lift of heat)
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥粒
+      zh: 葱粒
+      en: scallion green, sliced
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 處理蝦——剪走鬚同蝦腳、剪開蝦背去腸，用廚房紙吸乾水份。沾上薄薄一層生粉同少少粟粉。
+      zh: 处理虾——剪去须脚、剪开虾背去肠，用厨房纸吸干水分。沾上薄薄一层生粉与少许粟粉。
+      en: Trim antennae and legs, slit the back and remove the vein. Pat completely dry with paper towels. Dust with a thin layer of cornstarch and a touch of potato starch.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 油溫 170°C，落蝦炸第一次 30 秒到蝦殼變橙紅，撈起；油溫升到 190°C，落番去複炸 15 秒到蝦殼酥脆，撈起瀝油。
+      zh: 油温 170°C，下虾炸第一次 30 秒至虾壳变橙红，捞出；油温升至 190°C，复炸 15 秒至虾壳酥脆，捞出沥油。
+      en: First fry at 170°C / 340°F for 30 seconds — shells turn orange-pink. Remove. Heat oil to 190°C / 375°F and second-fry for 15 seconds until the shells are paper-crisp. Drain.
+    temperature_c: 190
+    time_seconds: 45
+  - order: 3
+    body:
+      yue: 鑊留 1 茶匙油，落蒜粒同紅辣椒粒，用中火爆 15 秒到蒜茸金黃。
+      zh: 锅留 1 茶匙油，下蒜粒与红辣椒粒，中火爆 15 秒至蒜茸金黄。
+      en: Keep 1 tsp oil in the wok. On medium heat, fry the minced garlic and chili 15 seconds until the garlic is golden and fragrant.
+    time_seconds: 15
+  - order: 4
+    body:
+      yue: 落炸好嘅蝦，灑上椒鹽粉，快手翻 10 下令椒鹽均勻分佈喺每隻蝦上面；最後落蔥粒，再翻 3 下，即上碟。
+      zh: 倒入炸好的虾，撒上椒盐粉，快手翻 10 下令椒盐均匀分布在每只虾上；最后下葱粒，再翻 3 下，即上碟。
+      en: Toss in the fried shrimp, scatter the salt-pepper mix, and toss vigorously for 10 motions so every shrimp is coated. Add scallion, three more tosses, and plate.
+    time_seconds: 20
+tips:
+  - yue: 蝦殼一定要炸到酥脆——茶餐廳食椒鹽蝦係連殼整隻食嘅，蝦殼脆過薯片。蝦殼上面嘅椒鹽係風味精華所在。
+    zh: 虾壳必须炸到酥脆——茶餐厅吃椒盐虾是连壳整只吃的，虾壳脆过薯片。虾壳上的椒盐是风味精华。
+    en: Eat the shells. This dish is designed for that — the shells fry crisper than potato chips and carry most of the salt-and-pepper seasoning. Discarding them is missing the point.
+  - yue: 鮮蝦處理完一定要吸乾水份——濕嘅蝦落油會劇烈濺油，又會令蝦殼唔脆。
+    zh: 鲜虾处理完务必吸干水分——湿虾下油会剧烈溅油，又使虾壳不脆。
+    en: Dry the shrimp thoroughly — wet shrimp cause violent oil spatter and prevent the shells from crisping. A 5-minute rest on paper towels is non-negotiable.
+  - yue: 椒鹽粉可以一次調多啲入樽，用嚟整椒鹽魷魚、椒鹽肉排、椒鹽豆腐都得，調味比例都一樣。
+    zh: 椒盐粉可一次多调一些入瓶，用来做椒盐鱿鱼、椒盐肉排、椒盐豆腐皆可，调味比例相同。
+    en: Mix the salt-pepper seasoning in batch and jar it — the exact same mix powders salt-and-pepper squid, ribs, and tofu (see dishes 65, 59).
+history:
+  yue: 椒鹽手法源自川菜，但喺粵菜入面廣泛應用喺海鮮——尤其係蝦、魷魚、軟殼蟹。茶餐廳版用整隻帶殼蝦炸到酥脆，係宴會菜「平民化」嘅典型——一個本來係酒樓鎮場嘅菜式，喺茶餐廳變成普通家庭都食得起嘅小炒。
+  zh: 椒盐手法源自川菜，但在粤菜中广泛应用于海鲜——尤其是虾、鱿鱼、软壳蟹。茶餐厅版用整只带壳虾炸至酥脆，是「宴会菜平民化」的典型——本来是酒楼镇场的菜式，在茶餐厅变成寻常家庭也吃得起的小炒。
+  en: Salt-and-pepper technique originated in Sichuan cooking but became widely applied to Cantonese seafood — shrimp, squid, soft-shell crab. The HK tea-restaurant version, fried whole with shells on, is the democratisation of a former banquet dish — what was once a high-end restaurant centerpiece is now an everyday stir-fry.
+allergens:
+  - shellfish
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #54 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #54 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
