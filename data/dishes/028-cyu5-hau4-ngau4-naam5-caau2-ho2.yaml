@@ -10,22 +10,106 @@ ingredients:
   - ref: hor-fun
     qty: 1
     unit: 磅
-  - ref: long-bean
-    qty: 3
-    unit: 兩
+    prep:
+      yue: 新鮮河粉、用手撕散
+      zh: 新鲜河粉、用手撕散
+      en: fresh hor fun, separated by hand
   - ref: beef-brisket
     qty: 9
     unit: 件
+    prep:
+      yue: 預先用柱侯醬炆好嘅牛腩塊（約 9 件、每件 3 cm 方）
+      zh: 预先用柱侯酱炖好的牛腩块（约 9 件、每件 3 cm 方）
+      en: pre-braised brisket cubes in chu hou sauce (~9 cubes, each 3 cm)
+  - ref: long-bean
+    qty: 3
+    unit: 兩
+    prep:
+      yue: 切 5 cm 段、飛水 60 秒
+      zh: 切 5 cm 段、飞水 60 秒
+      en: cut into 5 cm segments, blanched 60 seconds
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
   - ref: chu-hou-sauce
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 牛腩本身嘅柱侯炆汁 4 匙
+      zh: 牛腩本身的柱侯炖汁 4 勺
+      en: 4 Tbsp of the chu hou braising liquid the brisket cooked in
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切 5 cm 段
+      zh: 切 5 cm 段
+      en: cut into 5 cm segments
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎
+      zh: 拍碎
+      en: smashed
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 20
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 河粉室溫回溫後加 1 匙油拌散、唔好結團。柱侯牛腩用微波打熱、留住牛腩塊同少少汁。
+      zh: 河粉室温回温后加 1 勺油拌散、不要结团。柱侯牛腩用微波加热、保留牛腩块与少量汁。
+      en: Bring hor fun to room temperature; toss with 1 Tbsp oil to loosen. Microwave the braised brisket briefly to warm, keeping the cubes intact with a little sauce.
+    time_seconds: 120
+  - order: 2
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落蒜頭爆 10 秒，落洋蔥絲爆 30 秒；落河粉，用筷子同鏟「拋」起，唔可以用力壓爛。
+      zh: 锅烧至大热，下 2 勺油，下蒜头爆 10 秒，下洋葱丝爆 30 秒；下河粉，用筷子与铲「抛」起，不可用力压烂。
+      en: Crank the wok hot. Add 2 Tbsp oil, fry garlic 10 seconds, onion 30 seconds. Add the hor fun and toss using the wok's curve — never press the ribbons flat or they will tear.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 鑊邊淋老抽（上色用）、生抽、柱侯汁，繼續快炒 60 秒到河粉均勻上色、邊邊微焦帶鑊氣。
+      zh: 锅边淋老抽（上色用）、生抽、柱侯汁，继续快炒 60 秒至河粉均匀上色、边缘微焦带镬气。
+      en: Drizzle dark soy (for colour only), light soy, and the chu hou braising liquid around the rim of the wok. Toss continuously for 60 seconds — edges should char slightly for wok hei.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 落番牛腩塊、豆仔、蔥段，輕輕翻 30 秒（避免將牛腩攪散），即上碟。
+      zh: 倒回牛腩块、豆仔、葱段，轻轻翻 30 秒（避免将牛腩搅散），即上碟。
+      en: Return the brisket, add the long beans and scallion. Toss gently for 30 seconds — don't break the brisket cubes — and plate immediately.
+    time_seconds: 30
+tips:
+  - yue: 柱侯醬係南海西樵柱侯酒店嘅特產，主要成份係黃豆醬、蒜蓉、薑、片糖、麻油——同海鮮醬唔同，味道更醇厚、唔甜。「柱侯」係 19 世紀店主梁柱侯嘅名字。
+    zh: 柱侯酱是南海西樵柱侯酒店的特产，主要成分是黄豆酱、蒜蓉、姜、片糖、麻油——与海鲜酱不同，味道更醇厚、不甜。「柱侯」是 19 世纪店主梁柱侯之名。
+    en: Chu Hou sauce comes from the Chu Hou inn at Xiqiao in Nanhai county. Its base is fermented soybean paste, garlic, ginger, slab sugar, and sesame oil. Distinct from hoisin — more umami, less sweet. "Chu Hou" was the name of the 19th-century innkeeper Liang Zhuhou.
+  - yue: 牛腩要分兩段做——先柱侯炆 90 分鐘成「半成品」，落單之後再快炒——茶餐廳營運嘅標準做法。家裡可以炆一鍋分批冷藏。
+    zh: 牛腩要分两段做——先柱侯炖 90 分钟成「半成品」，下单后再快炒——茶餐厅运营的标准做法。家里可炖一锅分批冷藏。
+    en: The brisket is made in two stages — slow-braise 90 min into a "mise" stage, then quick-fry on order. This is standard HK tea-restaurant economics; at home, batch-braise once and refrigerate for the week.
+  - yue: 河粉炒爛係呢個菜嘅最大失敗——一磅河粉至少要落 2 匙油同有合適嘅鑊溫。新手可以分兩批炒、減量。
+    zh: 河粉炒烂是这道菜的最大失败——一磅河粉至少要 2 勺油与合适锅温。新手可分两批炒、减量。
+    en: Mangled noodles are the most common failure. One pound of hor fun needs at least 2 Tbsp oil and the right wok temperature. Beginners should halve the portion and cook in two batches.
+history:
+  yue: 柱侯醬係粵菜獨有嘅複合醬料，源自 1860 年代廣東南海西樵。柱侯牛腩係粵菜經典——傳統喺粵式酒樓會以「砂煲」形式上枱，後來茶餐廳簡化為「炒河」版本，講求 wok hei + 醬汁滲透河粉嘅雙重效果。
+  zh: 柱侯酱是粤菜独有的复合酱料，源自 1860 年代广东南海西樵。柱侯牛腩是粤菜经典——传统粤式酒楼以「砂煲」形式上桌，后茶餐厅简化为「炒河」版本，讲究 wok hei + 酱汁渗透河粉的双重效果。
+  en: Chu Hou sauce is uniquely Cantonese, born in 1860s Nanhai county. Chu hou brisket is a Cantonese classic — restaurant versions arrive in a clay pot, while tea-restaurants simplified it into the hor-fun stir-fry. The dish is judged by two criteria — wok hei char on the noodles, and how thoroughly the chu hou sauce has soaked into them.
+allergens:
+  - soy
+  - gluten
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #28 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #28 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

@@ -10,21 +10,91 @@ ingredients:
   - ref: beef-brisket
     qty: 1
     unit: 份
+    prep:
+      yue: 連筋牛腩 1 磅，切 3 cm 方塊
+      zh: 带筋牛腩 1 磅，切 3 cm 方块
+      en: 1 lb beef brisket with tendon, cut into 3 cm cubes
   - ref: potato
     qty: 1
     unit: 份
+    prep:
+      yue: 馬鈴薯 2 個去皮切塊
+      zh: 马铃薯 2 个去皮切块
+      en: 2 medium potatoes, peeled and cut into chunks
   - ref: curry-paste
     qty: 1
     unit: 份
+    prep:
+      yue: 馬來咖喱膏 2 匙 + 椰漿 100 ml + 椰糖 1 匙
+      zh: 马来咖喱膏 2 勺 + 椰浆 100 ml + 椰糖 1 勺
+      en: 2 Tbsp Malay curry paste + 100 ml coconut cream + 1 Tbsp palm sugar
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
+  - ref: ginger
+    qty: 3
+    unit: 片
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+servings: 4
+difficulty: easy
+time_minutes:
+  prep: 20
+  cook: 120
+equipment:
+  - pressure_cooker
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 牛腩用滾水汆 3 分鐘出血沫，撈起用清水沖淨。鑊燒熱落 2 匙油，落薑片、洋蔥、咖喱膏中火炒 90 秒到出紅油（紅色辣椒油浮面）。
+      zh: 牛腩用沸水汆 3 分钟出血沫，捞出清水冲净。锅烧热下 2 勺油，下姜片、洋葱、咖喱膏中火炒 90 秒至出红油（红色辣椒油浮面）。
+      en: Parboil the brisket for 3 minutes to skim off blood scum; drain and rinse. In a wok, heat 2 Tbsp oil and stir-fry ginger, onion, and curry paste over medium for 90 seconds until red curry oil rises to the surface.
+    time_seconds: 360
+  - order: 2
+    body:
+      yue: 落牛腩翻炒到表面均勻沾上咖喱色，加 800 ml 水蓋過食材，落椰糖、生抽 1 匙、紹興酒 1 匙、八角 1 粒、桂皮 1 段。煲滾後轉細火炆 60-90 分鐘到牛腩軟身。
+      zh: 下牛腩翻炒至表面均匀沾上咖喱色，加 800 ml 水盖过食材，加椰糖、生抽 1 勺、绍兴酒 1 勺、八角 1 颗、桂皮 1 段。煮沸后转小火炖 60-90 分钟至牛腩软身。
+      en: Add the brisket, tossing until every cube is curry-stained. Pour in 800 ml water to cover, with palm sugar, 1 Tbsp light soy, 1 Tbsp Shaoxing, 1 star anise, and a cinnamon stick. Bring to a boil and simmer covered for 60-90 min until tender. (A pressure cooker takes ~30 min on high.)
+    temperature_c: 100
+    time_seconds: 5400
+  - order: 3
+    body:
+      yue: 落馬鈴薯塊，再炆 20 分鐘到薯仔粉軟、汁濃稠。試味，加鹽調整。
+      zh: 加入马铃薯块，再炖 20 分钟至薯仔粉软、汁浓稠。试味，加盐调整。
+      en: Add the potatoes and simmer 20 more minutes until floury-soft and the gravy has thickened. Taste and adjust salt.
+    time_seconds: 1200
+  - order: 4
+    body:
+      yue: 最後加椰漿，攪勻、煮 2 分鐘到汁掛得住，熄火。白飯一碗鋪喺碟中央，淋上咖喱牛腩同薯仔，加少少汁，即上枱。
+      zh: 最后加椰浆，搅匀、煮 2 分钟至汁挂得住，熄火。白饭一碗铺在碟中央，淋上咖喱牛腩与薯仔，加些许汁，即可上桌。
+      en: Stir in the coconut cream and simmer 2 minutes until glossy and clinging. Plate a bowl of rice on a dish, ladle the curry generously on top, and serve.
+    time_seconds: 120
+tips:
+  - yue: 牛腩煮 60 分鐘係軟身，90 分鐘係化身。鐘意有咬口就 60，鐘意入口即化就 90。電壓力煲 30 分鐘高壓 = 90 分鐘明火。
+    zh: 牛腩煮 60 分钟是软身，90 分钟是化身。喜欢有口感就 60，喜欢入口即化就 90。电压力锅 30 分钟高压 = 90 分钟明火。
+    en: 60 minutes gives tender beef with chew; 90 minutes gives melt-in-mouth. Choose by preference. A pressure cooker compresses 90 min on the stove into 30 min on high.
+  - yue: 椰漿要最後落、唔可以早落同牛腩一齊炆——椰漿煮過耐會油水分離、變晒味。
+    zh: 椰浆要最后下、不可早早跟牛腩一同炖——椰浆煮太久会油水分离、变味。
+    en: Add coconut cream at the very end. Simmer it for too long and the fat will break out, turning the sauce greasy and grainy.
+  - yue: 香港茶餐廳通常一次煲一大鍋牛腩，分批冷藏；點咗就微波打熱配白飯——所以菜單會寫「微波 2-3 分鐘打熱」。
+    zh: 香港茶餐厅常一次煲一大锅牛腩，分批冷藏；点单后微波加热配白饭——所以菜单写「微波 2-3 分钟打热」。
+    en: HK tea-restaurants batch-cook a large pot of curry, refrigerate, and microwave on order — hence the menu's "microwave 2-3 minutes" note. The flavour actually improves overnight.
+history:
+  yue: 港式咖喱牛腩飯源自 1930 年代香港咖喱「茶記」（咖喱檔），印度、馬來咖喱由南洋華僑帶入。加椰漿係新馬款風格，加椰糖係泰式款，香港版係呢三者嘅混合本地化，特色係汁多、辣度溫和、配白飯就食得到飽。
+  zh: 港式咖喱牛腩饭源自 1930 年代香港咖喱「茶记」（咖喱档），印度、马来咖喱由南洋华侨带入。加椰浆是新马款风格，加椰糖是泰式款，香港版是三者混合本地化，特色是汁多、辣度温和、配白饭就能吃饱。
+  en: "HK curry-brisket rice traces to 1930s Hong Kong curry stalls. Indian and Malay curry came via Southeast Asian Chinese migrants — coconut cream is the Nyonya influence, palm sugar is Thai. The HK version is a blended adaptation — heavily gravied, only mildly spicy, sized to a single bowl of rice. The microwaving practice on the menu is itself documentation of HK's pre-cook + reheat tea-restaurant economics."
+allergens:
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #19 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 微波 2-3 分鐘打熱
+    accessed: 2026-05-24
+    note: "Item #19 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

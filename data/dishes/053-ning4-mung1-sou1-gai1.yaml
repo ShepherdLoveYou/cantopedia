@@ -10,21 +10,86 @@ ingredients:
   - ref: chicken-balls
     qty: 4
     unit: 件
-  - ref: lemon
-    qty: 1
-    unit: 碗
+    prep:
+      yue: 雞髀肉去骨拍鬆、開邊兩件，醃 30 分鐘（蛋黃 + 生抽 + 紹興酒 + 五香粉 + 生粉）
+      zh: 鸡腿肉去骨拍松、开边两块，腌 30 分钟（蛋黄+生抽+绍兴酒+五香粉+生粉）
+      en: 4 boneless chicken thigh fillets, butterflied and pounded thin; marinated 30 min with egg yolk + light soy + Shaoxing + five-spice + cornstarch
   - ref: lemon
     qty: 2
     unit: 件
+    prep:
+      yue: 新鮮檸檬 2 個——1 個榨汁、1 個切薄片裝飾
+      zh: 新鲜柠檬 2 个——1 个榨汁、1 个切薄片装饰
+      en: 2 fresh lemons — 1 juiced (~60 ml), 1 sliced thin for garnish
   - ref: lettuce
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 唐生菜或羅生菜，切絲鋪底
+      zh: 唐生菜或罗生菜，切丝铺底
+      en: round lettuce, shredded for the plate's base
+  - ref: sweet-sour-sauce
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 檸檬汁 60 ml + 砂糖 4 匙 + 雞湯 100 ml + 白醋 1 匙 + 生粉水（生粉 1 茶匙 + 水 2 匙）
+      zh: 柠檬汁 60 ml + 砂糖 4 勺 + 鸡汤 100 ml + 白醋 1 勺 + 生粉水（生粉 1 茶匙 + 水 2 勺）
+      en: 60 ml lemon juice + 4 Tbsp sugar + 100 ml chicken stock + 1 Tbsp white vinegar + slurry (1 tsp cornstarch + 2 Tbsp water)
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 40
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞髀拍鬆、開邊，醃 30 分鐘。落鍋前再均勻拍上厚厚一層生粉（粟米粉混合更脆）。
+      zh: 鸡腿肉拍松、开边，腌 30 分钟。下锅前均匀拍上厚厚一层生粉（粟米粉混合更脆）。
+      en: Marinate the butterflied thighs for 30 min. Just before frying, coat thickly in cornstarch (mix with potato starch for extra crunch).
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 油溫 170°C，落雞髀炸第一次 4 分鐘到表面金黃、肉熟，撈起；油溫升 190°C，落番去複炸 30 秒到外殼酥脆，撈起瀝油。
+      zh: 油温 170°C，下鸡腿炸第一次 4 分钟至表面金黄、肉熟，捞出；油温升 190°C，复炸 30 秒至外壳酥脆，捞出沥油。
+      en: Heat oil to 170°C / 340°F. First fry 4 minutes until golden and cooked through; remove. Heat oil to 190°C / 375°F and second fry for 30 seconds until shatteringly crisp; drain.
+    temperature_c: 190
+    time_seconds: 270
+  - order: 3
+    body:
+      yue: 鑊預留少少油，倒入糖、雞湯、檸檬汁、白醋煮滾，加生粉水推稠到掛得住——汁要透明帶光澤、唔可以渾濁。
+      zh: 锅留少量油，倒入糖、鸡汤、柠檬汁、白醋煮沸，加生粉水推稠至挂得住——汁要透明带光泽、不可浑浊。
+      en: With a touch of oil in the wok, combine sugar, stock, lemon juice, and vinegar. Bring to a boil and thicken with the slurry — the sauce should be clear and glossy, not cloudy.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 雞髀斬件（每件 2 cm 寬）擺喺生菜絲上面，淋上檸檬芡，用檸檬片圍邊裝飾，即上枱。
+      zh: 鸡腿斩件（每件 2 cm 宽）摆在生菜丝上，淋上柠檬芡，柠檬片围边装饰，即可上桌。
+      en: Slice the fried chicken across into 2 cm-wide strips, fan over the shredded lettuce, ladle the lemon sauce on top, and ring the plate with lemon slices.
+    time_seconds: 30
+tips:
+  - yue: 「淋芡」一定要食前先淋——淋早咗雞皮會即時變腍，失去脆口；可以將芡汁同雞分開上枱、由食客自己淋。
+    zh: 「淋芡」务必食前再淋——淋早了鸡皮立即变软、失去脆口；可将芡汁与鸡分开上桌，由食客自己淋。
+    en: Sauce just before serving — even 30 seconds early softens the crust. For a banquet, plate the chicken and bring the lemon sauce in a small jug for guests to pour at table.
+  - yue: 檸檬汁同糖嘅比例係 1:1（按容量）——少糖會太酸刺激，多糖會掩蓋檸檬清香。可以試吓 60 ml 汁 + 4 匙糖嘅比例。
+    zh: 柠檬汁与糖的比例是 1:1（按体积）——少糖会太酸刺激，多糖会掩盖柠檬清香。可试 60 ml 汁 + 4 勺糖的比例。
+    en: Lemon-to-sugar by volume is roughly 1:1 — too little sugar and the sauce is teeth-clenching, too much and the lemon disappears. Start with 60 ml juice + 4 Tbsp sugar.
+  - yue: 用新鮮檸檬，唔好用瓶裝檸檬汁——瓶裝果汁帶罐頭味，會令呢個菜失分。
+    zh: 用新鲜柠檬，不要用瓶装柠檬汁——瓶装果汁带罐头味，会令此菜失分。
+    en: Use fresh lemons only. Bottled juice has a tinny, preserved note that ruins the brightness this dish depends on.
+history:
+  yue: 檸檬酥雞係 1970 年代香港粵菜廚師創製，靈感來自西方「lemon chicken」但用粵式糖醋手法重新演繹。當時為咗迎合海外華僑食客（特別係澳洲同英國），廚師將傳統糖醋雞嘅醋換成檸檬汁，得出更清爽、唔咁濃稠嘅版本。今日已經成為港式茶餐廳同海外中餐館嘅標配。
+  zh: 柠檬酥鸡是 1970 年代香港粤菜厨师创制，灵感来自西方「lemon chicken」但用粤式糖醋手法重新演绎。当时为迎合海外华侨食客（尤其澳洲与英国），厨师将传统糖醋鸡的醋换成柠檬汁，得出更清爽、不那么浓稠的版本。今天已成为港式茶餐厅与海外中餐馆的标配。
+  en: Lemon chicken was created by 1970s Hong Kong cooks reinterpreting Western "lemon chicken" through the Cantonese sweet-and-sour template. Aimed at overseas Chinese diners (especially in Australia and the UK), chefs swapped the vinegar of traditional sweet-and-sour for lemon juice, yielding a brighter, thinner sauce. Today it is standard at HK tea-restaurants and a fixture of overseas Cantonese-Western fusion menus.
+allergens:
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #53 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 伴檸檬與檸花
+    accessed: 2026-05-24
+    note: "Item #53 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

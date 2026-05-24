@@ -10,16 +10,85 @@ ingredients:
   - ref: spare-ribs-dry
     qty: 1
     unit: 磅
+    prep:
+      yue: 一字排（baby back）剁段，每段約 4 cm
+      zh: 一字排（baby back）剁段，每段约 4 cm
+      en: baby back ribs, separated into ~4 cm bone segments
   - ref: garlic
     qty: 1
     unit: 份
+    prep:
+      yue: 蒜頭一個剝皮拍碎，分成蒜粒同蒜片兩部分
+      zh: 蒜头一个剥皮拍碎，分成蒜粒与蒜片两部分
+      en: one whole head, peeled; smashed and split into minced and sliced portions
   - ref: huai-salt
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 淮鹽 1 茶匙 + 白糖少少
+      zh: 淮盐 1 茶匙 + 白糖少许
+      en: 1 tsp huai salt (five-spice salt) + pinch of sugar
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥粒
+      zh: 葱粒
+      en: chopped
+servings: 2
+difficulty: easy
+time_minutes:
+  prep: 20
+  cook: 30
+equipment:
+  - oven
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 排骨用清水浸 30 分鐘出血水，瀝乾用廚紙吸乾。落醃料——半個蒜茸、1 匙生抽、1 茶匙糖、1 茶匙紹興酒、1/4 茶匙五香粉、少少胡椒粉，醃 30 分鐘。
+      zh: 排骨清水浸 30 分钟出血水，沥干用厨纸吸干。下腌料——半个蒜茸、1 勺生抽、1 茶匙糖、1 茶匙绍兴酒、1/4 茶匙五香粉、少许胡椒粉，腌 30 分钟。
+      en: Soak the ribs in cold water for 30 min to draw out blood; drain and pat dry. Marinate 30 min with half the garlic (minced), 1 Tbsp light soy, 1 tsp sugar, 1 tsp Shaoxing wine, ¼ tsp five-spice, and white pepper.
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 焗爐預熱 200°C。排骨單層擺喺鋪咗錫紙嘅烤盤，焗 15 分鐘。攞出來翻面、淋少少油，再焗 10 分鐘到表面金黃。
+      zh: 烤箱预热 200°C。排骨单层摆在铺锡纸的烤盘，烤 15 分钟。取出翻面、刷少许油，再烤 10 分钟至表面金黄。
+      en: Preheat the oven to 200°C / 400°F. Lay the ribs in a single layer on a foil-lined sheet pan. Roast 15 minutes, flip, brush with a touch of oil, and roast another 10 minutes until golden.
+    temperature_c: 200
+    time_seconds: 1500
+  - order: 3
+    body:
+      yue: 取出排骨後，鑊燒熱落 1 匙油，剩低嘅蒜粒中火慢炸到金黃酥脆——大概 90 秒，撈起瀝油。
+      zh: 取出排骨后，锅烧热下 1 勺油，剩下的蒜粒中火慢炸至金黄酥脆——约 90 秒，捞出沥油。
+      en: While the ribs rest, heat 1 Tbsp oil in a wok. Slow-fry the remaining minced garlic over medium heat until pale gold and crisp — about 90 seconds. Drain.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 鑊餘油落番排骨，灑上淮鹽同糖，快手翻 10 下令排骨均勻沾調味；最後落酥脆蒜茸同蔥粒，再翻 3 下即上碟。
+      zh: 锅留余油下回排骨，撒上淮盐与糖，快手翻 10 下令排骨均匀沾调味；最后下酥脆蒜茸与葱粒，再翻 3 下即上碟。
+      en: Return the ribs to the wok. Sprinkle the salt mixture, toss vigorously 10 times to coat. Add the crispy garlic and scallion, toss three more times, and plate.
+    time_seconds: 30
+tips:
+  - yue: 「乾骨」字面意思係炸到乾身——傳統做法係油炸，茶餐廳改用焗爐慳油又健康，但要焗夠時間令水份完全蒸發。
+    zh: 「干骨」字面意思是炸到干身——传统做法是油炸，茶餐厅改用烤箱省油又健康，但要烤足时间令水分完全蒸发。
+    en: '"Dry" here means actually dehydrated — the traditional method deep-fries the ribs. Tea-restaurants switched to oven-roasting for less oil and labour; just make sure to cook long enough that surface moisture is gone.'
+  - yue: 蒜要分兩次落——醃用嘅蒜茸提供基礎味道，最後撒嘅炸蒜茸提供脆香口感同視覺。
+    zh: 蒜要分两次下——腌制用的蒜茸提供基础味道，最后撒的炸蒜茸提供脆香口感与视觉。
+    en: Use garlic twice — minced in the marinade for foundational flavour, crisped at the end for crunch and presentation.
+  - yue: 淮鹽即係炒香嘅鹽加五香粉。自己整：將 50 g 鹽落白鑊中火乾炒到微微金黃，加 1 茶匙五香粉、半茶匙白胡椒粉拌勻，放涼入樽。
+    zh: 淮盐即炒香的盐加五香粉。自家做法：50 g 盐入白锅中火干炒至微金黄，加 1 茶匙五香粉、半茶匙白胡椒粉拌匀，放凉入瓶。
+    en: Huai salt is toasted salt blended with five-spice. Make your own — dry-toast 50 g of salt in a pan over medium until faintly golden, then stir in 1 tsp five-spice and ½ tsp white pepper. Jar it for any salt-and-pepper dish.
+history:
+  yue: 「蒜香乾骨」係粵菜典型「燒臘」邊菜——本來係燒臘檔口處理乾骨頭嘅手法，後來茶餐廳化簡為焗爐製作。淮鹽係江淮地區傳入嘅調料，喺粵菜入面通常配炸物、燒物。呢個菜由 1960 年代起就係茶餐廳開胃菜常客。
+  zh: 「蒜香干骨」是粤菜典型的「烧腊」配菜——本是烧腊摊处理干骨头的手法，后被茶餐厅简化为烤箱制作。淮盐是江淮地区传入的调料，在粤菜中常配炸物、烧物。此菜从 1960 年代起就是茶餐厅开胃菜常客。
+  en: Garlic dry ribs originated in the 燒臘 (siu laap) roast-meat stalls as a way to use up rib trimmings; tea-restaurants adapted the recipe for ovens. Huai salt came south from the Jiangsu-Huai region and is now the canonical Cantonese seasoning for fried and roasted small plates. The dish has been a tea-restaurant appetiser staple since the 1960s.
+allergens:
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #5 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #5 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

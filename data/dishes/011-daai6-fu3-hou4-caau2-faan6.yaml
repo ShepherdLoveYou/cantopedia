@@ -7,28 +7,110 @@ names:
   en: Dafuhao Deluxe Fried Rice
 category: rice
 ingredients:
-  - ref: shrimp-balls
-    qty: 5
-    unit: 件
-  - ref: seafood-mix
-    qty: 1.5
-    unit: 兩
   - ref: fried-rice-base
     qty: 2
     unit: 份
+    prep:
+      yue: 隔夜冷飯 2 碗，用手揉散
+      zh: 隔夜冷饭 2 碗，用手揉散
+      en: 2 bowls day-old cold cooked rice, broken up by hand
+  - ref: shrimp-balls
+    qty: 5
+    unit: 件
+    prep:
+      yue: 大蝦球，去殼去腸、薄薄拍一層生粉
+      zh: 大虾球，去壳去肠、薄拍一层生粉
+      en: large shrimp, shelled and deveined, lightly dusted with cornstarch
+  - ref: seafood-mix
+    qty: 1.5
+    unit: 兩
+    prep:
+      yue: 蟹柳、鮮魷、青口肉、瑤柱絲混合
+      zh: 蟹柳、鲜鱿、青口肉、瑶柱丝混合
+      en: mixed crab stick, fresh squid, mussel meat, and shredded dried scallop
   - ref: fish-roe
     qty: 1
     unit: 份
+    prep:
+      yue: 飛魚籽（蝦籽亦可）1 茶匙
+      zh: 飞鱼籽（虾籽亦可）1 茶匙
+      en: 1 tsp flying-fish roe (or dried shrimp roe)
   - ref: scallion
     qty: 1
     unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: thinly sliced
   - ref: shrimp-roe-noodle
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 炸瑤柱絲少少（裝飾）
+      zh: 炸瑶柱丝少许（装饰）
+      en: a sprinkle of crispy fried dried-scallop strands (garnish)
+  - ref: egg
+    qty: 2
+    unit: 個
+    prep:
+      yue: 打散加少少鹽
+      zh: 打散加少许盐
+      en: beaten with a pinch of salt
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 20
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾，落 1 匙油，落蝦球攤平煎 30 秒至底面定型，撥散快炒到變色撈起；再起鑊落少少油，落海鮮粒爆 30 秒撈起。
+      zh: 锅烧至大热，下 1 勺油，下虾球摊平煎 30 秒至底面定型，拨散快炒至变色捞起；再起锅下少量油，下海鲜粒爆 30 秒捞起。
+      en: Crank the wok to smoking. Add 1 Tbsp oil, lay the shrimp flat, sear 30 seconds, break apart and stir-fry just until coloured; remove. Reheat with a touch of oil, sear the mixed seafood for 30 seconds; remove.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 鑊再落 2 匙油，倒入蛋液晃成蛋皮，半熟時即刻落冷飯，快手撥散——令每粒米裹住蛋汁（金包銀手法）。
+      zh: 锅再下 2 勺油，倒入蛋液晃成蛋皮，半熟时立即下冷饭，快手拨散——令每粒米裹上蛋汁（金包银手法）。
+      en: Add 2 Tbsp oil. Swirl in the egg, and just before set, dump in the cold rice. Toss aggressively so each grain is egg-coated — the 金包銀 (gold-wrapping-silver) technique.
+    time_seconds: 120
+  - order: 3
+    body:
+      yue: 落番蝦球、海鮮粒，加 1 茶匙鹽、半茶匙糖、少少胡椒粉、半茶匙魚露增鮮，鑊邊淋少少生抽炒勻。
+      zh: 倒回虾球、海鲜粒，加 1 茶匙盐、半茶匙糖、少许胡椒粉、半茶匙鱼露提鲜，锅边淋少许生抽炒匀。
+      en: Return the shrimp and seafood. Season with 1 tsp salt, ½ tsp sugar, white pepper, and ½ tsp fish sauce for depth; drizzle a touch of light soy around the rim of the wok.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 落飛魚籽同蔥花，再翻 15 秒到蔥花斷生、魚籽均勻分佈。上碟之後再灑一層炸瑤柱絲做頂部裝飾。
+      zh: 撒入飞鱼籽与葱花，再翻 15 秒至葱花断生、鱼籽均匀分布。出锅后再撒一层炸瑶柱丝作顶部装饰。
+      en: Add the fish roe and scallion, toss 15 seconds. Plate and crown with a final sprinkle of crispy scallop strands.
+    time_seconds: 15
+tips:
+  - yue: 「大富豪」係 1980 年代香港某高檔茶餐廳嘅招牌名，後來成為「豪華版海鮮炒飯」嘅統稱——基本配方係蝦球、海鮮、魚籽、瑤柱嘅組合。
+    zh: 「大富豪」是 1980 年代香港某高档茶餐厅的招牌名，后来成为「豪华版海鲜炒饭」的统称——基本配方是虾球、海鲜、鱼籽、瑶柱的组合。
+    en: '"Dafuhao" (literally "tycoon") was the brand of a 1980s upscale HK tea-restaurant; the name became shorthand for "deluxe seafood fried rice" — typically shrimp, mixed seafood, roe, and dried scallop.'
+  - yue: 飛魚籽（橙色 tobiko）係日本壽司食材，香港 1990 年代輸入後成為粵菜豪華炒飯嘅標配——口感爆漿、視覺亦搶眼。
+    zh: 飞鱼籽（橙色 tobiko）是日本寿司食材，香港 1990 年代输入后成为粤菜豪华炒饭的标配——口感爆浆、视觉亮眼。
+    en: Tobiko (flying-fish roe), imported from Japan in the 1990s, became standard in HK upscale fried rice — both for the pop-pop mouthfeel and the bright orange visual.
+  - yue: 瑤柱絲一定要炸到金黃酥脆，唔可以發黑——160°C 中火慢炸 90 秒即可。可以一次整多啲入樽，整海鮮粥、炒飯、撈麵都派得上用場。
+    zh: 瑶柱丝必须炸至金黄酥脆，不可发黑——160°C 中火慢炸 90 秒即可。可一次多做入瓶，做海鲜粥、炒饭、捞面都能用。
+    en: Crisp the dried scallop strands to pale gold, not dark brown — 160°C medium heat for 90 seconds. Make a jar at a time; they keep a month and crown any seafood congee, fried rice, or noodle.
+history:
+  yue: 「大富豪炒飯」屬於 1980 年代香港經濟起飛之後出現嘅「炫富式」茶餐廳菜——將原本平民嘅炒飯加入飛魚籽、瑤柱、海鮮等高端食材，反映當時嘅消費文化。今日佢已經成為茶餐廳「豪華版」嘅代名詞。
+  zh: 「大富豪炒饭」属于 1980 年代香港经济起飞后出现的「炫富式」茶餐厅菜——将本是平民食物的炒饭加入飞鱼籽、瑶柱、海鲜等高端食材，反映当时的消费文化。今日已成为茶餐厅「豪华版」的代名词。
+  en: '"Dafuhao" fried rice exemplifies the "conspicuous-consumption" cuisine that emerged in 1980s Hong Kong as the economy boomed — taking humble fried rice and crowning it with tobiko, dried scallop, and mixed seafood. Today the name is shorthand for the deluxe tier of any HK tea-restaurant rice dish.'
+allergens:
+  - egg
+  - shellfish
+  - soy
+  - fish
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #11 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #11 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

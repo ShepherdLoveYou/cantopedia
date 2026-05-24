@@ -98,7 +98,7 @@ const dish = defineCollection({
     allergens: z
       .array(
         z.enum([
-          'gluten', 'peanut', 'tree_nut', 'shellfish', 'dairy',
+          'gluten', 'peanut', 'tree_nut', 'shellfish', 'fish', 'dairy',
           'egg', 'soy', 'sesame', 'sulfite',
         ])
       )
