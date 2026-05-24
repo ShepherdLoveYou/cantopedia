@@ -10,19 +10,107 @@ ingredients:
   - ref: shrimp-balls
     qty: 5
     unit: 件
+    prep:
+      yue: 大蝦球 5 隻、去殼留尾
+      zh: 大虾球 5 只、去壳留尾
+      en: 5 large prawns, peeled tail-on
   - ref: sole-balls
     qty: 5
     unit: 件
+    prep:
+      yue: 龍利柳 5 件
+      zh: 龙利柳 5 件
+      en: 5 pieces sole fillet
   - ref: squid
     qty: 5
     unit: 件
+    prep:
+      yue: 鮮魷 5 件、切花刀
+      zh: 鲜鱿 5 件、切花刀
+      en: 5 pieces fresh squid, scored
   - ref: salt-pepper-mix
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 椒鹽粉（鹽 + 白胡椒粉 + 五香粉少少 + 糖少少）
+      zh: 椒盐粉（盐 + 白胡椒粉 + 五香粉少许 + 糖少许）
+      en: salt-and-pepper mix (salt + white pepper + pinch five-spice + pinch sugar)
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 拍碎切粒
+      zh: 拍碎切粒
+      en: smashed and minced
+  - ref: bell-pepper
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 紅辣椒 1 條切粒
+      zh: 红辣椒 1 条切粒
+      en: 1 fresh red chili, minced
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥粒
+      zh: 葱粒
+      en: scallion green, sliced
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 三鮮各自處理——蝦球去殼留尾、魚柳切大件、鮮魷切花刀。用廚紙吸乾水份。三樣分別拍上薄薄一層生粉同粟粉。
+      zh: 三鲜各自处理——虾球去壳留尾、鱼柳切大块、鲜鱿切花刀。用厨纸吸干水分。三样分别拍上薄薄一层生粉与粟粉。
+      en: Prep each protein separately — prawns peeled tail-on, sole cut into pieces, squid scored. Dry thoroughly with paper towels. Lightly dust each with cornstarch and a touch of potato starch.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 油溫 170°C，分批落三鮮炸（蝦球先、魷魚次、魚柳尾）——每種大概炸 60-90 秒到金黃酥脆，撈起瀝油。
+      zh: 油温 170°C，分批下三鲜炸（虾球先、鱿鱼次、鱼柳末）——每种约炸 60-90 秒至金黄酥脆，捞起沥油。
+      en: Heat oil to 170°C / 340°F. Fry the three proteins in batches (prawns first, then squid, then sole) — each takes 60-90 seconds to crisp. Drain.
+    temperature_c: 170
+    time_seconds: 270
+  - order: 3
+    body:
+      yue: 鑊留 1 茶匙油，落蒜粒同紅辣椒粒中火爆 15 秒到蒜茸金黃。
+      zh: 锅留 1 茶匙油，下蒜粒与红辣椒粒中火爆 15 秒至蒜茸金黄。
+      en: Keep 1 tsp oil. On medium heat, fry the minced garlic and chili 15 seconds until the garlic is golden.
+    time_seconds: 15
+  - order: 4
+    body:
+      yue: 落三鮮，灑椒鹽粉，快手翻 10 下令每樣食材都裹上椒鹽；最後落蔥粒再翻 3 下，即上碟。
+      zh: 倒入三鲜，撒椒盐粉，快手翻 10 下令每样食材都裹上椒盐；最后下葱粒再翻 3 下，即上碟。
+      en: Toss in all three proteins, scatter the salt-pepper mix, toss 10 times to coat. Add scallion, three more tosses, and plate.
+    time_seconds: 20
+tips:
+  - yue: 「三鮮」嘅選材可以靈活——傳統用蝦、魷、魚柳；亦有師傅用蝦、蟹柳、雞片。重點係三種嘢顏色同質感要有對比。
+    zh: 「三鲜」选材可灵活——传统用虾、鱿、鱼柳；亦有师傅用虾、蟹柳、鸡片。重点是三种食材颜色与质感要有对比。
+    en: The "three-fresh" trio can vary — classic is shrimp + squid + sole, but some cooks swap in crab stick or chicken. The point is contrast in colour and texture across the three.
+  - yue: 分批炸係必須——三種食材熟度時間唔同，蝦最快、魚柳最久。一次落落會出現「蝦過熟、魚生」嘅問題。
+    zh: 分批炸是必须——三种食材熟度时间不同，虾最快、鱼柳最久。一次落下会出现「虾过熟、鱼生」的问题。
+    en: Frying in batches is essential — the three proteins have different cook times. Doing them together gives you overcooked prawns and undercooked fish.
+  - yue: 椒鹽粉一次調多啲入樽，可以用喺所有椒鹽菜：椒鹽蝦（#54）、椒鹽魷（#59）、椒鹽肉排（#65）、椒鹽豆腐都用呢個比例。
+    zh: 椒盐粉一次多调一些入瓶，可用于所有椒盐菜：椒盐虾（#54）、椒盐鱿（#59）、椒盐肉排（#65）、椒盐豆腐都用此比例。
+    en: Make the salt-pepper mix in batch — same ratio works for dish #54 salt-pepper shrimp, #59 squid, #65 ribs, and any salt-pepper tofu.
+history:
+  yue: 椒鹽三鮮係粵菜「三拼」菜式嘅代表——將三種高價海鮮組合在一碟，用椒鹽手法統一風味。源自 1950 年代廣州酒樓，後傳入香港茶餐廳。茶餐廳版本將三種海鮮分量調至「半隻」，使中產家庭都負擔得起。
+  zh: 椒盐三鲜是粤菜「三拼」菜式的代表——将三种高价海鲜组合在一盘，以椒盐手法统一风味。源自 1950 年代广州酒楼，后传入香港茶餐厅。茶餐厅版将三种海鲜调至「半份」，使中产家庭也能负担。
+  en: Salt-and-pepper three-fresh exemplifies Cantonese "trio" dishes — three premium seafoods on one plate, unified by the salt-pepper treatment. Born in 1950s Canton restaurants and adopted by HK tea-restaurants, which scaled portions to "half-each" so middle-class families could afford it.
+allergens:
+  - shellfish
+  - fish
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #58 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #58 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

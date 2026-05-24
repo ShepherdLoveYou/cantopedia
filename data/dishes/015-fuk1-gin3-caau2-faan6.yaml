@@ -10,36 +10,126 @@ ingredients:
   - ref: fried-rice-base
     qty: 2
     unit: 份
+    prep:
+      yue: 隔夜冷飯 2 碗、用手揉散
+      zh: 隔夜冷饭 2 碗、用手揉散
+      en: 2 bowls day-old cold cooked rice, broken up by hand
   - ref: shrimp-meat
     qty: 1
     unit: 份
+    prep:
+      yue: 蝦仁去殼去腸
+      zh: 虾仁去壳去肠
+      en: peeled, deveined shrimp
   - ref: seafood-mix
     qty: 1
     unit: 份
+    prep:
+      yue: 鮮魷、青口、蟹柳混合
+      zh: 鲜鱿、青口、蟹柳混合
+      en: mix of squid, mussel, crab stick
   - ref: chicken-balls
     qty: 1
     unit: 份
+    prep:
+      yue: 切粒
+      zh: 切粒
+      en: diced
   - ref: green-peas
     qty: 1
     unit: 份
+    prep:
+      yue: 飛水 30 秒
+      zh: 飞水 30 秒
+      en: blanched 30 sec
   - ref: carrot
     qty: 1
     unit: 份
+    prep:
+      yue: 切粒、飛水
+      zh: 切粒、飞水
+      en: diced and blanched
   - ref: mushroom
     qty: 1
     unit: 份
+    prep:
+      yue: 鮮冬菇切粒
+      zh: 鲜冬菇切粒
+      en: fresh shiitake diced
   - ref: oyster-sauce
     qty: 1
     unit: 份
+    prep:
+      yue: 上湯芡——蠔油 1 匙 + 生抽 1 茶匙 + 糖 1 茶匙 + 雞湯 200 ml + 生粉水 2 匙
+      zh: 上汤芡——蚝油 1 勺 + 生抽 1 茶匙 + 糖 1 茶匙 + 鸡汤 200 ml + 生粉水 2 勺
+      en: gravy — 1 Tbsp oyster sauce + 1 tsp light soy + 1 tsp sugar + 200 ml chicken stock + 2 Tbsp cornstarch slurry
   - ref: shrimp-roe-noodle
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 炸瑤柱絲少少裝飾
+      zh: 炸瑶柱丝少许装饰
+      en: a sprinkle of crispy fried dried-scallop strands
+  - ref: egg
+    qty: 2
+    unit: 個
+    prep:
+      yue: 打散加少少鹽
+      zh: 打散加少许盐
+      en: beaten with a pinch of salt
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 12
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒熱落 1 匙油，分批爆熟所有蛋白食材（雞粒、蝦仁、海鮮粒）撈起。
+      zh: 锅烧热下 1 勺油，分批爆熟所有蛋白食材（鸡粒、虾仁、海鲜粒）捞起。
+      en: Heat 1 Tbsp oil and sear all proteins in batches (chicken, shrimp, seafood). Remove.
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 鑊再落 1 匙油，倒入蛋液晃成蛋皮，半熟即落冷飯，快手翻炒成「金包銀」——加 1 茶匙鹽、半茶匙糖、白胡椒粉調味，盛入大碟做底。
+      zh: 锅再下 1 勺油，倒入蛋液晃成蛋皮，半熟即下冷饭，快手翻炒成「金包银」——加 1 茶匙盐、半茶匙糖、白胡椒粉调味，盛入大盘做底。
+      en: Add 1 Tbsp oil, swirl in egg, dump in cold rice while egg is half-set, toss into "金包銀." Season with salt, sugar, and white pepper, then plate as the base on a large dish.
+    time_seconds: 120
+  - order: 3
+    body:
+      yue: 另起鑊落 1 匙油，落冬菇粒爆 30 秒，加入上湯料煮滾，落番所有蛋白食材同青豆、紅蘿蔔粒，最後加生粉水推稠到濃稠掛得住嘅芡。
+      zh: 另起锅下 1 勺油，下冬菇粒爆 30 秒，加入上汤料煮沸，倒回所有蛋白食材与青豆、红萝卜粒，最后加生粉水勾芡至浓稠挂得住。
+      en: In a fresh wok, fry the mushroom 30 seconds, add the gravy mixture and bring to a boil. Return all proteins, peas, and carrots; thicken with the cornstarch slurry to a clinging gravy.
+    time_seconds: 120
+  - order: 4
+    body:
+      yue: 將湯料連湯汁淋喺炒飯上面（淋一半、留一半同上），灑少少炸瑤柱絲做裝飾，即上枱。
+      zh: 将汤料连汤汁淋在炒饭上（淋一半、留一半同上），撒少许炸瑶柱丝装饰，即上桌。
+      en: Pour the gravy over the fried rice (cover about half the surface, leave the rest visible), scatter the crispy scallop strands, and serve.
+tips:
+  - yue: 福建炒飯嘅關鍵係「炒飯做底 + 上湯芡蓋面」——炒飯要乾爽分明，上湯芡要稠到「掛得住」唔流走。芡汁太稀會浸壞炒飯。
+    zh: 福建炒饭的关键是「炒饭做底 + 上汤芡盖面」——炒饭要干爽分明，上汤芡要稠到「挂得住」不流走。芡汁太稀会浸坏炒饭。
+    en: Fujian fried rice depends on two contrasting textures — dry, separate grains beneath, glossy gravy on top. The gravy must be thick enough to cling — too thin and it floods the rice into mush.
+  - yue: 同「揚州炒飯」唔同——揚州炒飯係配料炒入米中、淨食冇芡；福建炒飯係炒飯墊底、配料煮成芡澆面。
+    zh: 与「扬州炒饭」不同——扬州炒饭是配料炒入米中、净食无芡；福建炒饭是炒饭垫底、配料煮成芡浇面。
+    en: Distinct from Yangzhou fried rice — Yangzhou has the toppings stir-fried into the rice (eaten dry); Fujian has plain fried rice as the base with the toppings as a gravy ladled on top.
+  - yue: 「福建炒飯」其實同福建省冇直接關係——係 1950 年代香港茶餐廳廚師創製、以「福建」呢個地名命名突出「南洋風味」（福建移民帶入南洋技法）嘅意思。
+    zh: 「福建炒饭」其实与福建省无直接关系——是 1950 年代香港茶餐厅厨师创制、以「福建」之名突出「南洋风味」（福建移民带入南洋技法）的意思。
+    en: Despite the name, "Fujian fried rice" has no direct origin in Fujian province — it was invented by 1950s Hong Kong tea-restaurant cooks, the name evoking the South-East Asian technique brought back by Fujianese migrants who had worked in Southeast Asia.
+history:
+  yue: 福建炒飯反映 20 世紀香港同南洋（特別係新馬）之間嘅人口流動——大量福建移民先去南洋、再轉香港，將「澆芡」風格嘅米食帶入廣州菜。今日係茶餐廳「升級版炒飯」嘅代表，比平凡嘅揚州炒飯貴 1.5-2 倍。
+  zh: 福建炒饭反映 20 世纪香港与南洋（尤其新马）之间的人口流动——大量福建移民先去南洋、再到香港，将「浇芡」风格的米食带入广州菜。今日是茶餐厅「升级版炒饭」的代表，比平价的扬州炒饭贵 1.5-2 倍。
+  en: Fujian fried rice reflects 20th-century migration between Hong Kong and South-East Asia — many Fujianese migrants moved first to Malaya then to Hong Kong, bringing back the "gravy-topped" rice style and grafting it onto Cantonese cooking. Today it is the "deluxe" fried rice on tea-restaurant menus, priced 1.5-2× the standard Yangzhou.
+allergens:
+  - shellfish
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #15 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 材料合共三兩
+    accessed: 2026-05-24
+    note: "Item #15 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

@@ -7,25 +7,92 @@ names:
   en: Shrimp & Velveted-chicken Congee
 category: congee
 ingredients:
-  - ref: shrimp-balls
-    qty: 4
-    unit: 件
-  - ref: chicken-balls
-    qty: 4
-    unit: 件
-  - ref: shiitake-dry
-    qty: 1
-    unit: 份
-  - ref: ginger-scallion
-    qty: 1
-    unit: 份
   - ref: congee-base
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 預先熬好嘅粥底
+      zh: 预先熬好的粥底
+      en: pre-cooked plain congee base
+  - ref: shrimp-balls
+    qty: 4
+    unit: 件
+    prep:
+      yue: 大蝦球 4 隻、去殼留尾、開背取腸
+      zh: 大虾球 4 只、去壳留尾、开背取肠
+      en: 4 large prawns, peeled tail-on, deveined
+  - ref: chicken-balls
+    qty: 4
+    unit: 件
+    prep:
+      yue: 雞髀肉切粒（每粒 1.5 cm 方），用蛋白同生粉漿薄薄一層——「滑雞」嘅關鍵
+      zh: 鸡腿肉切粒（每粒 1.5 cm 方），用蛋白与生粉浆薄薄一层——「滑鸡」的关键
+      en: chicken thigh cut into 1.5 cm cubes; lightly coated with egg-white-and-cornstarch slurry — the secret to "velvet chicken"
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+    prep:
+      yue: 冬菇 3 件、預先泡發、切粒
+      zh: 冬菇 3 件、预先泡发、切粒
+      en: 3 dried shiitake, pre-soaked and diced
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 薑絲 + 蔥花
+      zh: 姜丝 + 葱花
+      en: julienned ginger + chopped scallion
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 7
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 粥底加熱到滾，落薑絲同冬菇粒，煮 2 分鐘讓冬菇香氣散入粥裡。
+      zh: 粥底加热至沸，下姜丝与冬菇粒，煮 2 分钟让冬菇香气散入粥中。
+      en: Bring the congee base to a boil. Add the ginger and shiitake, simmer 2 minutes to release the mushroom aroma into the congee.
+    time_seconds: 120
+  - order: 2
+    body:
+      yue: 落雞粒——「滑雞」嘅關鍵係用筷子撥散，唔可以結團，煮 90 秒到雞粒外面變白。
+      zh: 下鸡粒——「滑鸡」的关键是用筷子拨散，不可结块，煮 90 秒至鸡粒外面变白。
+      en: Add the chicken — the "velvet" technique requires you to use chopsticks to disperse the cubes immediately, no clumping. Cook 90 seconds until the outside turns white.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 最後落蝦球，輕推散，煮 90 秒到蝦變紅、剛剛熟即收火——蝦不可過熟，否則彈牙感變橡皮。
+      zh: 最后下虾球，轻推散，煮 90 秒至虾变红、刚刚熟即关火——虾不可过熟，否则弹牙感变橡皮。
+      en: Add the prawns last, push apart gently, cook 90 seconds to pink-just-cooked. Don't overcook — overdone prawns turn rubbery instead of bouncy.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 試味，加少少鹽、雞粉、白胡椒粉、麻油調味。盛入大碗，灑蔥花同少少炸幹蔥，即上枱。
+      zh: 试味，加少许盐、鸡粉、白胡椒粉、麻油调味。盛入大碗，撒葱花与少许炸干葱，即上桌。
+      en: Taste and adjust with salt, chicken bouillon, white pepper, and sesame oil. Ladle into a bowl, top with scallion and crispy fried shallot. Serve.
+tips:
+  - yue: 「滑雞」嘅秘訣係——雞粒切細、用蛋白同生粉漿包裹、煮粥嘅時候用筷子撥散唔結團。呢三樣做好，雞粒會「滑」到入口即化。
+    zh: 「滑鸡」的秘诀是——鸡粒切细、用蛋白与生粉浆包裹、煮粥时用筷子拨散不结块。三样做好，鸡粒会「滑」至入口即化。
+    en: The "velvet" technique has three parts — dice small, coat with egg-white-cornstarch slurry, disperse with chopsticks as it enters the congee. Get all three right and the chicken melts on the tongue.
+  - yue: 蝦同雞嘅落鍋順序好重要——雞需要 90 秒、蝦只需要 60-90 秒。一齊落會出現「雞剛熟、蝦過熟」或者「蝦剛熟、雞夾生」嘅問題。
+    zh: 虾与鸡的下锅顺序很重要——鸡需要 90 秒、虾只需 60-90 秒。一同下会出现「鸡刚熟、虾过熟」或「虾刚熟、鸡夹生」的问题。
+    en: Timing matters — chicken needs 90 sec, prawns 60-90 sec. Adding them together gives you either over-cooked prawns or under-cooked chicken.
+  - yue: 「蝦球滑雞粥」係粵菜「雙拼粥」嘅例子——同時用兩種主蛋白增加豐富度。同類有「魚球瘦肉粥」、「蝦球艇仔粥」等。
+    zh: 「虾球滑鸡粥」是粤菜「双拼粥」的例子——同时用两种主蛋白增加丰富度。同类有「鱼球瘦肉粥」、「虾球艇仔粥」等。
+    en: This is a Cantonese "two-protein" congee — combining shrimp and chicken for textural depth. Related dishes — fish-and-pork congee, shrimp-with-sampan congee, etc.
+history:
+  yue: 「滑雞」係粵菜手法經典——用蛋白同生粉令雞肉嫩滑如絲，源自 19 世紀廣州茶居「白切雞」嘅變體。同蝦球組合喺 1960 年代香港茶餐廳定型，作為「升級版」粥品比基本嘅皮蛋瘦肉粥貴 1.5 倍。
+  zh: 「滑鸡」是粤菜手法经典——用蛋白与生粉令鸡肉嫩滑如丝，源自 19 世纪广州茶居「白切鸡」的变体。与虾球组合在 1960 年代香港茶餐厅定型，作为「升级版」粥品比基本的皮蛋瘦肉粥贵 1.5 倍。
+  en: '"Velveting" is canonical Cantonese technique — egg white and cornstarch render chicken silky as ribbons, descended from 19th-century Canton tea-house poached chicken. The pairing with shrimp was standardised by 1960s Hong Kong tea-restaurants as a "premium" congee, priced 1.5× the basic century-egg-and-pork bowl.'
+allergens:
+  - shellfish
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #44 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #44 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

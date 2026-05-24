@@ -7,27 +7,104 @@ names:
   en: Black-pepper Mushroom Scallion Beef
 category: main
 ingredients:
-  - ref: mushroom
-    qty: 4
-    unit: 兩
-  - ref: onion
-    qty: 4
-    unit: 兩
   - ref: beef-slices
     qty: 4
     unit: 兩
+    prep:
+      yue: 牛肉逆紋切薄片，醃 15 分鐘（生抽 + 蠔油 + 糖 + 紹興酒 + 黑椒粉少少 + 生粉 + 油 + 1 茶匙小蘇打）
+      zh: 牛肉逆纹切薄片，腌 15 分钟（生抽+蠔油+糖+绍兴酒+黑椒粉少许+生粉+油+1 茶匙小苏打）
+      en: beef thinly sliced against the grain; marinated 15 min with soy + oyster + sugar + Shaoxing + a touch of black pepper + cornstarch + oil + 1 tsp baking soda
+  - ref: mushroom
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 鮮冬菇切厚片
+      zh: 鲜冬菇切厚片
+      en: fresh shiitake, thickly sliced
+  - ref: onion
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 切大塊（每塊約 3 cm）
+      zh: 切大块（每块约 3 cm）
+      en: cut into large chunks (~3 cm)
   - ref: ginger
+    qty: 3
+    unit: 片
+    prep:
+      yue: 切薑絲
+      zh: 切姜丝
+      en: julienned
+  - ref: scallion
     qty: 1
     unit: 份
+    prep:
+      yue: 蔥白切 5 cm 段、蔥綠切細粒
+      zh: 葱白切 5 cm 段、葱绿切细粒
+      en: scallion whites in 5 cm segments, greens chopped
   - ref: black-pepper
     qty: 1
     unit: 茶匙
-method_status: stub
+    prep:
+      yue: 黑椒粉 1 茶匙——分兩次落，醃肉用半茶匙，最後撒上半茶匙
+      zh: 黑椒粉 1 茶匙——分两次下，腌肉用半茶匙，最后撒上半茶匙
+      en: 1 tsp ground black pepper — used twice, ½ tsp in marinade, ½ tsp sprinkled at the end
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎
+      zh: 拍碎
+      en: smashed
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落醃好嘅牛肉攤平煎 30 秒到底面焦香，撥散快炒到剛變色撈起。
+      zh: 锅烧至大热，下 2 勺油，下腌好的牛肉摊平煎 30 秒至底面焦香，拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear the marinated beef flat for 30 seconds for crust, break apart, stir-fry just until coloured, remove.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落薑絲、蒜頭、蔥白爆 15 秒香氣出嚟，落洋蔥同冬菇片爆 60 秒到洋蔥透明帶焦邊、冬菇出菇香。
+      zh: 锅留 1 勺油，下姜丝、蒜头、葱白爆 15 秒出香气，下洋葱与冬菇片爆 60 秒至洋葱透明带焦边、冬菇出菇香。
+      en: Keep 1 Tbsp oil. Fry ginger, garlic, and scallion whites 15 seconds, then add onion and mushroom; stir-fry 60 seconds until the onion turns translucent with charred edges and the mushroom releases aroma.
+    time_seconds: 75
+  - order: 3
+    body:
+      yue: 落番牛肉，沿鑊邊淋 1 茶匙生抽、1 茶匙蠔油、半茶匙糖、1 茶匙紹興酒，再灑半茶匙黑椒粉，快手翻 30 秒——蔥綠最後落，再翻 5 下即上碟。
+      zh: 倒回牛肉，沿锅边淋 1 茶匙生抽、1 茶匙蚝油、半茶匙糖、1 茶匙绍兴酒，再撒半茶匙黑椒粉，快手翻 30 秒——葱绿最后下，再翻 5 下即出锅。
+      en: Return the beef. Drizzle around the rim — 1 tsp light soy + 1 tsp oyster sauce + ½ tsp sugar + 1 tsp Shaoxing. Sprinkle ½ tsp black pepper. Toss 30 seconds. Add the scallion greens last, toss 5 more times, plate.
+    time_seconds: 30
+tips:
+  - yue: 「爆」字嘅手法重點係火力夠猛、時間夠短——食材入鑊唔超過 2 分鐘，每一個動作都係 5-30 秒以內。同「炆」截然相反。
+    zh: 「爆」的手法重点是火力够猛、时间够短——食材入锅不超过 2 分钟，每一个动作都在 5-30 秒之内。与「炖」截然相反。
+    en: 「爆」 (bao, "explosive stir-fry") demands maximum heat and minimum time — ingredients spend under 2 minutes in the wok, each step measured in 5-30 seconds. The opposite of 「炆」 (slow-braise).
+  - yue: 黑椒分兩次落——醃肉用淨係滲入肉裡；最後撒嘅黑椒提供撲鼻嘅香氣。淨用醃料嘅黑椒會「啞」。
+    zh: 黑椒分两次下——腌肉用只渗入肉里；最后撒的黑椒提供扑鼻香气。光用腌料的黑椒会「哑」。
+    en: Use black pepper twice — in the marinade it penetrates the meat; sprinkled at the end it gives the nose-prickling aroma. Marinade only gives a "muffled" pepper note.
+  - yue: 變體 #063b 用雞片代替牛肉——手法相同，只係將牛肉醃料嘅小蘇打換成蛋白同少少醃汁。雞肉一炒就熟，動作要再快啲。
+    zh: 变体 #063b 用鸡片代替牛肉——手法相同，只是将牛肉腌料中的小苏打换成蛋白与少许腌汁。鸡肉一炒就熟，动作要更快。
+    en: Variant #063b uses chicken instead of beef — same technique but swap the baking soda for egg white in the marinade. Chicken cooks faster, so move quicker.
+history:
+  yue: 「黑椒蘑菇蔥爆牛肉」屬於粵菜「西菜中做」風格——黑椒源自西方香料，1930 年代由廣州西菜廚師引入粵菜重做。傳統粵菜唔用黑椒，呢個菜代表咗 20 世紀粵菜對西方香料嘅吸收同改造。茶餐廳今日普遍提供。
+  zh: 「黑椒蘑菇葱爆牛肉」属于粤菜「西菜中做」风格——黑椒源自西方香料，1930 年代由广州西菜厨师引入粤菜重做。传统粤菜不用黑椒，此菜代表了 20 世纪粤菜对西方香料的吸收与改造。茶餐厅今日普遍提供。
+  en: Black-pepper beef is a "Western-spice in Cantonese form" dish — black pepper is a Western import, brought into Cantonese cooking by 1930s Canton chefs working in Western restaurants. Traditional Cantonese cuisine doesn't use black pepper; this dish represents the 20th-century absorption and adaptation of Western spices. Now universal on HK tea-restaurant menus.
+allergens:
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #63 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #63 on the source menu"
 variants:
   - 063b-hak1-ziu1-mo4-gu1-cung1-baau3-gai1-pin2
+created: 2026-05-24
+updated: 2026-05-24

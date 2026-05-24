@@ -7,25 +7,101 @@ names:
   en: Black-bean Chili Chicken Hor Fun
 category: noodle
 ingredients:
-  - ref: bell-pepper
-    qty: 3
-    unit: 兩
-  - ref: onion
-    qty: 1
-    unit: 份
-  - ref: chicken-slices
-    qty: 8
-    unit: 件
   - ref: hor-fun
     qty: 1
     unit: 磅
+    prep:
+      yue: 新鮮河粉、室溫回溫、加 1 匙油拌散
+      zh: 新鲜河粉、室温回温、加 1 勺油拌散
+      en: fresh hor fun at room temperature, tossed with 1 Tbsp oil
+  - ref: chicken-slices
+    qty: 8
+    unit: 件
+    prep:
+      yue: 雞片醃 15 分鐘（生抽 + 紹興酒 + 糖 + 生粉 + 蛋白 + 油）
+      zh: 鸡片腌 15 分钟（生抽+绍兴酒+糖+生粉+蛋白+油）
+      en: chicken slices marinated 15 min with soy + Shaoxing + sugar + cornstarch + egg white + oil
+  - ref: bell-pepper
+    qty: 3
+    unit: 兩
+    prep:
+      yue: 青紅各半、切菱角形
+      zh: 青红各半、切菱形片
+      en: red and green, cut into diamond shapes
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
   - ref: black-bean-sauce
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 豆豉 1.5 匙浸軟剁碎 + 蒜茸 1 匙 + 薑茸 1 茶匙 + 辣椒粒少少
+      zh: 豆豉 1.5 勺浸软剁碎 + 蒜茸 1 勺 + 姜茸 1 茶匙 + 辣椒粒少许
+      en: 1.5 Tbsp soaked dried black beans, chopped; 1 Tbsp minced garlic; 1 tsp minced ginger; a touch of chili
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 20
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落雞片攤平煎 20 秒到底面定型，撥散快炒到剛變色撈起。
+      zh: 锅烧至大热，下 2 勺油，下鸡片摊平煎 20 秒至底面定型，拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear the chicken flat for 20 seconds, break apart, stir-fry to just-cooked, remove.
+    time_seconds: 30
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落豉汁料中火爆 30 秒到極香，再落洋蔥同青紅椒炒 30 秒。
+      zh: 锅留 1 勺油，下豉汁料中火爆 30 秒至极香，再下洋葱与青红椒炒 30 秒。
+      en: Keep 1 Tbsp oil, lower to medium and stir-fry the black bean mixture 30 seconds until intensely fragrant. Add onion and peppers; stir-fry 30 seconds.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 落河粉，用筷子同鏟「拋」起來令河粉均勻同豉汁混合——靠鑊邊嘅拋起手法，唔可以用鏟壓爛。
+      zh: 下河粉，用筷子与铲「抛」起令河粉均匀与豉汁混合——靠锅边的抛起手法，不可用铲压烂。
+      en: Add the hor fun. Toss using the wok's curve so the noodles mix with the black bean sauce — never press with a spatula.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 鑊邊淋老抽（少少上色）、生抽、半茶匙糖、1 茶匙生粉水推稠，再翻炒 30 秒令河粉邊邊微焦帶鑊氣。
+      zh: 锅边淋老抽（少许上色）、生抽、半茶匙糖、1 茶匙生粉水勾芡，再翻炒 30 秒令河粉边缘微焦带镬气。
+      en: Drizzle dark soy (for colour), light soy, ½ tsp sugar, and 1 tsp cornstarch slurry around the rim. Toss 30 seconds to char the edges and develop wok hei.
+    time_seconds: 30
+  - order: 5
+    body:
+      yue: 落番雞片，輕輕翻 15 秒令所有食材均勻、芡汁掛勻，即上碟。
+      zh: 倒回鸡片，轻轻翻 15 秒令所有食材均匀、芡汁挂匀，即出锅。
+      en: Return the chicken, toss 15 seconds to combine evenly with the sauce, and plate.
+    time_seconds: 15
+tips:
+  - yue: 「豉椒炒河」嘅靈魂係豉汁——豆豉一定要先浸軟再剁碎，唔可以乾豉直接落鑊（會有沙感同苦味）。蒜茸同薑茸係豉汁嘅黃金三角。
+    zh: 「豉椒炒河」的灵魂是豉汁——豆豉必须先浸软再剁碎，不可干豉直接下锅（会有沙感与苦味）。蒜茸与姜茸是豉汁的黄金三角。
+    en: Black bean sauce is the soul — dried beans must be soaked and chopped, never used dry (sandy + bitter). Garlic and ginger form the golden trio with the black bean.
+  - yue: 河粉炒爛係呢個菜嘅最大失敗——1 磅河粉至少要落 2 匙油、火力要夠猛、唔可以用力壓。新手可以分兩批炒、減量。
+    zh: 河粉炒烂是这道菜的最大失败——1 磅河粉至少要 2 勺油、火力要够猛、不可用力压。新手可分两批炒、减量。
+    en: Mangled noodles are the most common failure. 1 lb of hor fun needs at least 2 Tbsp oil and a screaming wok. Don't compress with the spatula. Beginners should halve and cook in two batches.
+  - yue: 同 #27 干炒牛河 比較——干炒牛河淨炒不加豉汁、靠老抽同鑊氣調味；豉椒雞片炒河有豉汁多咗一層豆豉香，但其他手法相同。
+    zh: 与 #27 干炒牛河比较——干炒牛河净炒不加豉汁、靠老抽与镬气调味；豉椒鸡片炒河有豉汁多了一层豆豉香，但其他手法相同。
+    en: Compare with dish #27 dry-fried beef hor fun — that version uses only dark soy and wok hei, no black bean. This dish adds black bean for an extra dimension, but technique is otherwise identical.
+history:
+  yue: 豉椒系列係粵菜獨特嘅複合醬手法——「豉椒」即豆豉同青紅椒嘅組合，源自 1920 年代廣州大排檔。豆豉提供發酵豆嘅鮮味、青紅椒提供辣同色彩。「豉椒炒河」係茶餐廳午市套餐嘅基本選擇之一。
+  zh: 豉椒系列是粤菜独特的复合酱手法——「豉椒」即豆豉与青红椒的组合，源自 1920 年代广州大排档。豆豉提供发酵豆的鲜味、青红椒提供辣度与色彩。「豉椒炒河」是茶餐厅午市套餐的基本选项之一。
+  en: The "black bean and pepper" combination is uniquely Cantonese — fermented black beans for umami and bell peppers for heat and colour. It originated in 1920s Canton dai pai dong (street food stalls) and entered the HK tea-restaurant repertoire as a standard lunch-set option.
+allergens:
+  - soy
+  - egg
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #29 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #29 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
