@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<!--
+  粵食典 · Cantopedia — UWP Start Screen Prototype
+  Single-file standalone design mock, NOT a production replacement for the Astro site.
+  Demonstrates: Start Screen tile matrix (1 WIDE + 3 MEDIUM + 4 SMALL), 3D tilt press,
+  Live Tile flip (WIDE main, 8s), acrylic hamburger drawer, dark/light dual mode,
+  3-color accent picker. Pure HTML5 + CSS3 + Vanilla JS. Zero radius enforced.
+  Date: 2026-05-24
+-->
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <title>粵食典 · UWP Prototype</title>
+
+  <style>
+    /* =========================================================================
+       Reset + zero-radius directive (WP10 / UWP visual rule)
+       Exception: AppBar circular buttons override below.
+       ========================================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* =========================================================================
+       Theme tokens — dark default, light override via [data-theme="light"]
+       Borrowed from Fluent UI motion grammar (MIT, microsoft/fluentui).
+       ========================================================================= */
+    :root {
+      /* Dark mode (default) */
+      --bg:     #000000;
+      --fg:     #ffffff;
+      --subfg:  #888888;
+      --border: rgba(255, 255, 255, 0.12);
+      --drawer-bg: rgba(0, 0, 0, 0.65);
+      --overlay-bg: rgba(0, 0, 0, 0.45);
+
+      /* Accent (cycles via AppBar button: Windows Blue → Lumia Green → Crimson Red) */
+      --accent: #0078d7;
+
+      /* Sizing */
+      --tile-unit: clamp(72px, 18vw, 200px);
+      --gap: 6px;
+
+      /* Motion tokens */
+      --duration-fast:   150ms;
+      --duration-normal: 220ms;
+      --duration-gentle: 280ms;
+      --curve-decelerate: cubic-bezier(0, 0, 0, 1);
+      --curve-accelerate: cubic-bezier(1, 0, 1, 1);
+      --curve-easy:       cubic-bezier(0.33, 0, 0.67, 1);
+    }
+
+    [data-theme="light"] {
+      --bg:     #ffffff;
+      --fg:     #000000;
+      --subfg:  #555555;
+      --border: rgba(0, 0, 0, 0.12);
+      --drawer-bg: rgba(255, 255, 255, 0.65);
+      --overlay-bg: rgba(0, 0, 0, 0.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+                   'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+      font-weight: 300;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: calc(64px + env(safe-area-inset-bottom)); /* room for AppBar */
+      touch-action: manipulation; /* eliminate 300ms tap delay, block double-tap zoom */
+      -webkit-text-size-adjust: 100%;
+      transition: background var(--duration-gentle) var(--curve-easy),
+                  color var(--duration-gentle) var(--curve-easy);
+    }
+
+    /* =========================================================================
+       Status bar (mock, top of viewport)
+       ========================================================================= */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--subfg);
+    }
+    .status-bar .left { font-variant-numeric: tabular-nums; color: var(--fg); }
+    .status-bar .right { display: flex; gap: 6px; align-items: center; }
+    .status-bar svg { width: 14px; height: 14px; opacity: 0.85; }
+
+    /* =========================================================================
+       Hamburger button (overlay, top-left, opens acrylic drawer)
+       ========================================================================= */
+    .hamburger {
+      position: fixed;
+      top: calc(34px + env(safe-area-inset-top));
+      left: 14px;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--fg);
+      cursor: pointer;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--duration-fast) var(--curve-easy);
+    }
+    .hamburger:hover, .hamburger:focus-visible { background: var(--border); outline: none; }
+
+    /* =========================================================================
+       Page header — giant thin Segoe title with accent sub-label
+       ========================================================================= */
+    .header {
+      padding: 36px 24px 12px 64px; /* left padding clears hamburger */
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header h1 {
+      font-size: clamp(40px, 9vw, 64px);
+      font-weight: 200;
+      line-height: 1;
+      letter-spacing: -0.025em;
+    }
+    .header .subtitle {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      margin-top: 10px;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color var(--duration-fast) var(--curve-easy);
+    }
+
+    /* =========================================================================
+       Start Screen — 4-column × 6-row CSS Grid with explicit spans
+       Layout:
+         W W W W   (WIDE main 4×2)
+         W W W W
+         R R N N   (rice + noodle, each 2×2)
+         R R N N
+         D D s s   (dessert 2×2 + 2 smalls)
+         D D s s   (dessert 2×2 + 2 more smalls)
+       ========================================================================= */
+    .start-screen {
+      padding: 8px 24px 24px;
+      max-width: calc(var(--tile-unit) * 4 + var(--gap) * 3 + 48px);
+      margin: 0 auto;
+    }
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(4, var(--tile-unit));
+      grid-auto-rows: var(--tile-unit);
+      gap: var(--gap);
+      justify-content: center;
+    }
+
+    /* =========================================================================
+       Tile base — shared by all 3 sizes
+       ========================================================================= */
+    .tile {
+      position: relative;
+      display: block;
+      color: #ffffff;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform var(--duration-normal) var(--curve-decelerate);
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+    }
+    .tile.pressing {
+      transform: perspective(800px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(0.96);
+      transition: transform 80ms var(--curve-accelerate);
+    }
+
+    /* Tile sizes */
+    .tile.size-w { grid-column: span 4; grid-row: span 2; }
+    .tile.size-m { grid-column: span 2; grid-row: span 2; }
+    .tile.size-s { grid-column: span 1; grid-row: span 1; }
+
+    /* Per-category background colors. WIDE (main) tracks --accent so accent picker
+       has a visible primary effect; others keep Metro palette for visual variety. */
+    .tile[data-cat="main"]        { background: var(--accent); transition: background var(--duration-normal) var(--curve-easy), transform var(--duration-normal) var(--curve-decelerate); }
+    .tile[data-cat="rice"]        { background: #f09609; } /* Metro orange */
+    .tile[data-cat="noodle"]      { background: #008a00; } /* Metro green */
+    .tile[data-cat="dessert"]     { background: #e3008c; } /* Metro magenta */
+    .tile[data-cat="soup-wonton"] { background: #2d89ef; } /* Metro blue */
+    .tile[data-cat="congee"]      { background: #9f00a7; } /* Metro purple */
+    .tile[data-cat="appetizer"]   { background: #e51400; } /* Metro red */
+    .tile[data-cat="about"]       { background: #1d1d1d; border: 1px solid var(--border); } /* near-black */
+
+    /* Tile icon (top-left for M/W, center for S) */
+    .tile-icon {
+      position: absolute;
+      top: 12px; left: 12px;
+      width: 26px; height: 26px;
+      color: rgba(255, 255, 255, 0.95);
+      pointer-events: none;
+    }
+    .tile.size-s .tile-icon {
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px; height: 30px;
+    }
+
+    /* Bottom-left label (M/W only) — 11px Segoe UI */
+    .tile-name {
+      position: absolute;
+      bottom: 8px; left: 12px;
+      right: 12px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+    }
+    .tile.size-s .tile-name { display: none; }
+    .tile.size-w .tile-name { display: none; } /* WIDE uses flip face instead */
+
+    /* Top-right transparent count badge (M only) */
+    .tile-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      padding: 2px 7px;
+      background: rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+    }
+    .tile.size-s .tile-badge { display: none; }
+    .tile.size-w .tile-badge { display: none; }
+
+    /* =========================================================================
+       Live Tile — WIDE main, flips around X axis every 8s
+       Front face: icon + name + count
+       Back face: pure dictionary metrics (no daily recommendations per spec)
+       ========================================================================= */
+    .tile.size-w { perspective: 1200px; }
+    .tile.size-w .face {
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transition: transform 0.8s cubic-bezier(0.6, 0, 0.2, 1);
+    }
+    .tile.size-w .face.back { transform: rotateX(180deg); }
+    .tile.size-w.flipped .face.front { transform: rotateX(180deg); }
+    .tile.size-w.flipped .face.back { transform: rotateX(360deg); }
+
+    .tile.size-w .face.front .big-icon {
+      width: 56px; height: 56px;
+      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .tile.size-w .face.front .big-name {
+      font-size: 26px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+    .tile.size-w .face.front .big-count {
+      font-size: 13px;
+      margin-top: 6px;
+      opacity: 0.82;
+      letter-spacing: 0.08em;
+    }
+
+    .tile.size-w .face.back h3 {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      opacity: 0.75;
+      font-weight: 500;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .tile.size-w .face.back p {
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 360px;
+      font-weight: 300;
+    }
+    .tile.size-w .face.back .metric {
+      font-size: 32px;
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      margin: 8px 0 4px;
+    }
+
+    /* =========================================================================
+       Bottom AppBar — theme toggle + accent cycle
+       Buttons are the ONLY circular elements (UWP system AppBar exception).
+       ========================================================================= */
+    .app-bar {
+      position: fixed;
+      left: 0; right: 0;
+      bottom: 0;
+      padding: 10px 24px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      z-index: 40;
+      transition: background var(--duration-gentle) var(--curve-easy);
+    }
+    .appbar-btn {
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--fg);
+      border-radius: 50%; /* exception to zero-radius rule */
+      color: var(--fg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--duration-fast) var(--curve-easy),
+                  background var(--duration-fast) var(--curve-easy);
+    }
+    .appbar-btn:hover, .appbar-btn:focus-visible {
+      background: var(--fg);
+      color: var(--bg);
+      outline: none;
+    }
+    .appbar-btn:active { transform: scale(0.92); }
+    .appbar-btn svg { width: 20px; height: 20px; }
+    .appbar-btn .accent-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      transition: background var(--duration-fast) var(--curve-easy);
+    }
+    .appbar-btn[data-action="accent"]:hover .accent-dot { background: var(--bg); }
+
+    /* =========================================================================
+       Acrylic drawer (hamburger menu)
+       backdrop-filter: blur(25px) saturate(140%) at 0.65 opacity per spec
+       ========================================================================= */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay-bg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--duration-gentle) var(--curve-easy);
+      z-index: 99;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .drawer {
+      position: fixed;
+      top: 0; bottom: 0;
+      left: 0;
+      width: 280px;
+      max-width: 80vw;
+      background: var(--drawer-bg);
+      backdrop-filter: blur(25px) saturate(140%);
+      -webkit-backdrop-filter: blur(25px) saturate(140%);
+      transform: translateX(-100%);
+      transition: transform var(--duration-gentle) var(--curve-decelerate);
+      z-index: 100;
+      padding: calc(36px + env(safe-area-inset-top)) 24px 24px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer h2 {
+      font-size: 22px;
+      font-weight: 200;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .drawer .sub {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+    .drawer ul { list-style: none; }
+    .drawer li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 300;
+      border-bottom: 1px solid var(--border);
+      transition: color var(--duration-fast) var(--curve-easy),
+                  padding-left var(--duration-fast) var(--curve-easy);
+    }
+    .drawer li a:hover {
+      color: var(--accent);
+      padding-left: 6px;
+    }
+    .drawer li a svg { width: 18px; height: 18px; opacity: 0.85; flex-shrink: 0; }
+    .drawer li a .item-count {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--subfg);
+      letter-spacing: 0.06em;
+    }
+
+    /* Accessibility: reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .tile, .tile.size-w .face, .drawer, .drawer-overlay,
+      body, .header .subtitle, .appbar-btn, .app-bar {
+        transition: none !important;
+      }
+      .tile.size-w.flipped .face.front,
+      .tile.size-w.flipped .face.back { transition: none !important; }
+    }
+
+    /* Tablet+ tweaks */
+    @media (min-width: 768px) {
+      :root { --gap: 8px; }
+      .header { padding-left: 80px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Mock status bar -->
+  <div class="status-bar" role="presentation">
+    <span class="left">14:23</span>
+    <span class="right">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <rect x="2" y="11" width="1.8" height="3"/>
+        <rect x="5" y="9" width="1.8" height="5"/>
+        <rect x="8" y="6" width="1.8" height="8"/>
+        <rect x="11" y="3" width="1.8" height="11"/>
+      </svg>
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 4c-2.4 0-4.6.9-6.3 2.4l1.1 1.1C4.3 6.2 6.1 5.5 8 5.5s3.7.7 5.2 2l1.1-1.1C12.6 4.9 10.4 4 8 4z"/>
+        <path d="M8 8c-1.4 0-2.7.5-3.7 1.5l1.1 1.1c.7-.7 1.6-1 2.6-1s1.9.3 2.6 1l1.1-1.1C10.7 8.5 9.4 8 8 8z"/>
+        <circle cx="8" cy="13" r="1"/>
+      </svg>
+      <svg viewBox="0 0 22 16" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <rect x="1" y="3" width="18" height="10"/>
+        <rect x="3" y="5" width="14" height="6" fill="currentColor"/>
+        <rect x="20" y="6" width="1.5" height="4" fill="currentColor"/>
+      </svg>
+    </span>
+  </div>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="drawer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <line x1="4" y1="7" x2="20" y2="7"/>
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <line x1="4" y1="17" x2="20" y2="17"/>
+    </svg>
+  </button>
+
+  <!-- Title block -->
+  <header class="header">
+    <h1>粵食典</h1>
+    <div class="subtitle">CANTOPEDIA · START</div>
+  </header>
+
+  <!-- Start Screen tile matrix -->
+  <main class="start-screen">
+    <div class="tile-grid" role="grid">
+
+      <!-- WIDE: 主菜类 main course (flip every 8s) -->
+      <a class="tile size-w" data-cat="main" href="#main" aria-label="主菜类，22 道菜">
+        <div class="face front">
+          <svg class="big-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <!-- Serving dome -->
+            <path d="M6 44 Q32 8 58 44"/>
+            <line x1="3" y1="44" x2="61" y2="44"/>
+            <line x1="32" y1="8" x2="32" y2="2"/>
+            <circle cx="32" cy="2" r="1.4" fill="currentColor"/>
+            <line x1="14" y1="48" x2="50" y2="48"/>
+          </svg>
+          <div class="big-name">主菜类</div>
+          <div class="big-count">22 道菜 · MAIN COURSE</div>
+        </div>
+        <div class="face back" aria-hidden="true">
+          <h3>粵食典 數據統計</h3>
+          <div class="metric">22</div>
+          <p>已收錄精選粵式主要菜餚<br>點擊進入完整字典清單</p>
+        </div>
+      </a>
+
+      <!-- MEDIUM: 炒飯类 fried rice -->
+      <a class="tile size-m" data-cat="rice" href="#rice" aria-label="炒飯类，11 道菜">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <!-- Rice bowl with grain marks -->
+          <path d="M4 16 Q4 24 16 26 Q28 24 28 16 Z"/>
+          <line x1="3" y1="16" x2="29" y2="16"/>
+          <circle cx="10" cy="20" r="0.6" fill="currentColor"/>
+          <circle cx="16" cy="22" r="0.6" fill="currentColor"/>
+          <circle cx="22" cy="20" r="0.6" fill="currentColor"/>
+          <circle cx="13" cy="18" r="0.6" fill="currentColor"/>
+          <circle cx="19" cy="18" r="0.6" fill="currentColor"/>
+        </svg>
+        <span class="tile-badge">11</span>
+        <div class="tile-name">炒飯类</div>
+      </a>
+
+      <!-- MEDIUM: 炒麵类 fried noodles -->
+      <a class="tile size-m" data-cat="noodle" href="#noodle" aria-label="炒麵类，8 道菜">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <!-- Noodle wavy strands -->
+          <path d="M4 10 Q10 6 16 10 T28 10"/>
+          <path d="M4 16 Q10 12 16 16 T28 16"/>
+          <path d="M4 22 Q10 18 16 22 T28 22"/>
+        </svg>
+        <span class="tile-badge">8</span>
+        <div class="tile-name">炒麵 / 米 / 河类</div>
+      </a>
+
+      <!-- MEDIUM: 甜品糖水类 desserts -->
+      <a class="tile size-m" data-cat="dessert" href="#dessert" aria-label="甜品糖水类">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <!-- Teacup with steam -->
+          <path d="M8 14 H22 V22 Q22 26 16 26 Q10 26 10 22 Z" style="fill: none;"/>
+          <line x1="22" y1="16" x2="26" y2="16"/>
+          <path d="M26 16 Q28 18 26 20"/>
+          <path d="M13 8 Q13 12 14 12" />
+          <path d="M16 8 Q16 12 17 12" />
+          <path d="M19 8 Q19 12 20 12" />
+        </svg>
+        <span class="tile-badge">--</span>
+        <div class="tile-name">甜品糖水类</div>
+      </a>
+
+      <!-- SMALL: 汤云吞品类 -->
+      <a class="tile size-s" data-cat="soup-wonton" href="#soup-wonton" aria-label="汤云吞品类，3 道菜">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <!-- Bowl with steam -->
+          <path d="M5 18 Q5 26 16 26 Q27 26 27 18 Z"/>
+          <line x1="4" y1="18" x2="28" y2="18"/>
+          <path d="M11 14 Q11 10 13 10 Q13 14 11 14"/>
+          <path d="M16 13 Q16 8 18 8 Q18 13 16 13"/>
+          <path d="M21 14 Q21 10 23 10 Q23 14 21 14"/>
+        </svg>
+      </a>
+
+      <!-- SMALL: 粥品类 congee -->
+      <a class="tile size-s" data-cat="congee" href="#congee" aria-label="粥品类，5 道菜">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <!-- Bowl with spoon -->
+          <path d="M6 18 Q6 26 16 26 Q26 26 26 18 Z"/>
+          <line x1="5" y1="18" x2="27" y2="18"/>
+          <line x1="20" y1="6" x2="14" y2="20"/>
+          <ellipse cx="13" cy="21" rx="3" ry="1.5" transform="rotate(-25 13 21)"/>
+        </svg>
+      </a>
+
+      <!-- SMALL: 头盘小食类 appetizer -->
+      <a class="tile size-s" data-cat="appetizer" href="#appetizer" aria-label="头盘小食类，7 道菜">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <!-- Small plate with fork -->
+          <ellipse cx="16" cy="20" rx="11" ry="3"/>
+          <ellipse cx="16" cy="18" rx="11" ry="3"/>
+          <line x1="22" y1="6" x2="22" y2="16"/>
+          <line x1="20" y1="6" x2="20" y2="10"/>
+          <line x1="24" y1="6" x2="24" y2="10"/>
+        </svg>
+      </a>
+
+      <!-- SMALL: 关于/设置 about/settings -->
+      <a class="tile size-s" data-cat="about" href="#about" aria-label="关于 / 设置">
+        <svg class="tile-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">
+          <!-- Gear -->
+          <circle cx="16" cy="16" r="4"/>
+          <path d="M16 4 v3 M16 25 v3 M4 16 h3 M25 16 h3
+                   M7.5 7.5 l2.1 2.1 M22.4 22.4 l2.1 2.1
+                   M7.5 24.5 l2.1 -2.1 M22.4 9.6 l2.1 -2.1"/>
+        </svg>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Bottom AppBar -->
+  <nav class="app-bar" aria-label="System actions">
+    <button class="appbar-btn" id="themeBtn" data-action="theme" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <!-- Crescent moon (toggles to sun when in light mode via JS) -->
+        <path d="M19 14 A8 8 0 1 1 10 5 A6 6 0 0 0 19 14 Z" id="themeIcon"/>
+      </svg>
+    </button>
+    <button class="appbar-btn" id="accentBtn" data-action="accent" aria-label="Cycle accent color">
+      <span class="accent-dot" aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <!-- Drawer overlay -->
+  <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
+
+  <!-- Acrylic drawer -->
+  <aside class="drawer" id="drawer" aria-label="Category navigation" aria-hidden="true">
+    <div class="sub">CANTOPEDIA · MENU</div>
+    <h2>瀏覽分類</h2>
+    <ul>
+      <li><a href="#main">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 17 Q12 5 21 17"/><line x1="2" y1="17" x2="22" y2="17"/></svg>
+        主菜类<span class="item-count">22</span></a></li>
+      <li><a href="#rice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12 Q3 19 12 20 Q21 19 21 12 Z"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        炒飯类<span class="item-count">11</span></a></li>
+      <li><a href="#noodle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 8 Q8 5 12 8 T21 8"/><path d="M3 13 Q8 10 12 13 T21 13"/><path d="M3 18 Q8 15 12 18 T21 18"/></svg>
+        炒麵 / 米 / 河类<span class="item-count">8</span></a></li>
+      <li><a href="#dessert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 11 H17 V17 Q17 21 12 21 Q7 21 7 17 Z"/><line x1="17" y1="13" x2="20" y2="13"/></svg>
+        甜品糖水类<span class="item-count">--</span></a></li>
+      <li><a href="#soup-wonton">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 14 Q4 20 12 20 Q20 20 20 14 Z"/></svg>
+        汤云吞品类<span class="item-count">3</span></a></li>
+      <li><a href="#congee">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 14 Q5 20 12 20 Q19 20 19 14 Z"/><line x1="15" y1="5" x2="11" y2="16"/></svg>
+        粥品类<span class="item-count">5</span></a></li>
+      <li><a href="#appetizer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="12" cy="15" rx="8" ry="2.2"/></svg>
+        头盘小食类<span class="item-count">7</span></a></li>
+      <li><a href="#about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M12 5 v2 M12 17 v2 M5 12 h2 M17 12 h2"/></svg>
+        關於 / 設置</a></li>
+    </ul>
+  </aside>
+
+  <script>
+    /* =========================================================================
+       1) 3D Tilt Press — directional rotation toward the press point.
+       Listener is delegated to document for both pointer and touch events.
+       The press point's offset from tile center maps to rotateX / rotateY (max 3°),
+       combined with scale(0.96). Released on pointerup / cancel / leave.
+       ========================================================================= */
+    (function setupTiltPress() {
+      const MAX_TILT_DEG = 3;
+      const SCALE = 0.96;
+
+      function press(tile, x, y) {
+        const rect = tile.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (x - cx) / (rect.width / 2);   // -1 to 1, right positive
+        const dy = (y - cy) / (rect.height / 2);  // -1 to 1, down positive
+
+        // rotateX positive = top recedes; we want the press point to recede,
+        // so a press above center (dy<0) gives rotateX = -dy * MAX = positive.
+        const tiltX =  -dy * MAX_TILT_DEG;
+        const tiltY =   dx * MAX_TILT_DEG;
+
+        tile.style.setProperty('--tilt-x', tiltX.toFixed(2) + 'deg');
+        tile.style.setProperty('--tilt-y', tiltY.toFixed(2) + 'deg');
+        tile.classList.add('pressing');
+      }
+
+      function release() {
+        document.querySelectorAll('.tile.pressing').forEach((t) => t.classList.remove('pressing'));
+      }
+
+      document.addEventListener('pointerdown', (e) => {
+        const tile = e.target.closest('.tile');
+        if (!tile) return;
+        press(tile, e.clientX, e.clientY);
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => {
+        document.addEventListener(ev, release);
+      });
+
+      // Touch fallback (older mobile Safari may not fire pointer events reliably)
+      document.addEventListener('touchstart', (e) => {
+        const tile = e.target.closest('.tile');
+        if (!tile) return;
+        const t = e.touches[0];
+        press(tile, t.clientX, t.clientY);
+      }, { passive: true });
+      ['touchend', 'touchcancel'].forEach((ev) => document.addEventListener(ev, release));
+    })();
+
+    /* =========================================================================
+       2) Live Tile flip — WIDE main tile flips along X axis every 8 seconds.
+       Pause flipping when the tab is hidden or the tile is being pressed.
+       ========================================================================= */
+    (function setupLiveTile() {
+      const wide = document.querySelector('.tile.size-w');
+      if (!wide) return;
+      const interval = 8000;
+      let timer = setInterval(flip, interval);
+
+      function flip() {
+        if (document.hidden) return;
+        if (wide.classList.contains('pressing')) return;
+        wide.classList.toggle('flipped');
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          clearInterval(timer);
+        } else {
+          timer = setInterval(flip, interval);
+        }
+      });
+    })();
+
+    /* =========================================================================
+       3) Acrylic drawer — hamburger toggle with overlay close.
+       Esc key closes too.
+       ========================================================================= */
+    (function setupDrawer() {
+      const drawer = document.getElementById('drawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const ham = document.getElementById('hamburger');
+
+      function open() {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+      function close() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      ham.addEventListener('click', open);
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) close();
+      });
+      // Edge-swipe from left opens drawer (mobile gesture)
+      let touchStartX = null;
+      document.addEventListener('touchstart', (e) => {
+        if (e.touches[0].clientX < 20) touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        if (touchStartX === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (dx > 60) open();
+        touchStartX = null;
+      });
+    })();
+
+    /* =========================================================================
+       4) Theme toggle — flips data-theme attribute between dark / light.
+       Sun-vs-moon icon swap is handled by replacing the SVG path.
+       ========================================================================= */
+    (function setupTheme() {
+      const btn = document.getElementById('themeBtn');
+      const iconPath = document.getElementById('themeIcon');
+      const MOON_D = 'M19 14 A8 8 0 1 1 10 5 A6 6 0 0 0 19 14 Z';
+      const SUN_D  = 'M12 7 A5 5 0 1 1 12 17 A5 5 0 0 1 12 7 Z';
+
+      btn.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        iconPath.setAttribute('d', next === 'dark' ? MOON_D : SUN_D);
+        document.querySelector('meta[name="theme-color"]').setAttribute(
+          'content', next === 'dark' ? '#000000' : '#ffffff'
+        );
+      });
+    })();
+
+    /* =========================================================================
+       5) Accent cycle — three iconic Windows Phone accent colors.
+       Updates --accent CSS variable; tiles and subtitle pick it up via cascade.
+       ========================================================================= */
+    (function setupAccent() {
+      const accents = [
+        { name: 'Windows Blue',  value: '#0078d7' },
+        { name: 'Lumia Green',   value: '#107c41' },
+        { name: 'Crimson Red',   value: '#d13438' }
+      ];
+      let idx = 0;
+      const btn = document.getElementById('accentBtn');
+      btn.addEventListener('click', () => {
+        idx = (idx + 1) % accents.length;
+        document.documentElement.style.setProperty('--accent', accents[idx].value);
+        btn.setAttribute('aria-label', 'Accent: ' + accents[idx].name);
+      });
+    })();
+  </script>
+</body>
+</html>
