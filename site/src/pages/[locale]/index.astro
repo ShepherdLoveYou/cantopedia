@@ -122,7 +122,7 @@ const dict = {
       const tileColor = tileColors[cat.id] || '#37474F';
       const glyph = tileGlyphs[cat.id] ?? '·';
       return (
-        <a class="tile" href={`${base}/${locale}/browse/${cat.id}`} style={`--tile: ${tileColor}`}>
+        <a class="tile wp-tile" href={`${base}/${locale}/browse/${cat.id}`} style={`--tile: ${tileColor}; view-transition-name: tile-${cat.id};`}>
           <div class="tile-glyph" aria-hidden="true">{glyph}</div>
           <div class="tile-meta">
             <span class="tile-count">{inCat.length}</span>

@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
   locale?: 'zh' | 'en' | 'yue';
@@ -24,11 +26,13 @@ const dict = {
     {description && <meta name="description" content={description} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600&family=Noto+Sans+SC:wght@200;300;400;500;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Open+Sans:wght@200;300;400;600;700&display=swap" />
+    <ClientRouter />
   </head>
   <body>
+    <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="metro-nav">
+      <nav class="metro-nav" transition:persist>
         <a class="brand" href={`${base}/${locale}`}>
           <span class="brand-seal">粵</span>
           <span class="brand-name">食典 · Cantopedia</span>
@@ -43,6 +47,18 @@ const dict = {
     <main>
       <slot />
     </main>
+    <script>
+      // WP10-style top loading bar — animates during page transitions
+      const bar = document.getElementById('loading-bar');
+      if (bar) {
+        document.addEventListener('astro:before-preparation', () => {
+          bar.classList.add('loading');
+        });
+        document.addEventListener('astro:page-load', () => {
+          bar.classList.remove('loading');
+        });
+      }
+    </script>
     <style is:global>
       :root {
         /* Metro / W3CSS Metro palette */
@@ -152,6 +168,78 @@ const dict = {
       .pivot-tab.active { color: white !important; border-bottom: 2px solid var(--m-red); }
 
       .plate { background: var(--plate); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-left: 3px solid var(--m-blue); }
+
+      /* ===== WP10-style top loading bar ===== */
+      .loading-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        z-index: 100;
+        pointer-events: none;
+        background: transparent;
+        overflow: hidden;
+      }
+      .loading-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, var(--m-red), transparent);
+        animation: none;
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+      .loading-bar.loading::before {
+        opacity: 1;
+        animation: wp-loading 1.4s ease-in-out infinite;
+      }
+      @keyframes wp-loading {
+        0%   { transform: translateX(-100%); }
+        100% { transform: translateX(400%); }
+      }
+
+      /* ===== View Transitions (WP10 hub-slide / pane-pan feel) ===== */
+      @keyframes wp-slide-in-right {
+        from { transform: translateX(40px); opacity: 0; }
+        to   { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes wp-slide-out-left {
+        from { transform: translateX(0); opacity: 1; }
+        to   { transform: translateX(-40px); opacity: 0; }
+      }
+      ::view-transition-old(root) {
+        animation: wp-slide-out-left 0.22s ease-out forwards;
+      }
+      ::view-transition-new(root) {
+        animation: wp-slide-in-right 0.28s ease-out forwards;
+      }
+
+      /* ===== WP10 tile press effect (tap → squish → bounce back) ===== */
+      .wp-tile {
+        transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: transform;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .wp-tile:active {
+        transform: scale(0.96) !important;
+        transition: transform 0.08s ease-out;
+      }
+
+      /* Reduce motion friendly */
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+        .wp-tile:active { transform: none !important; }
+        .loading-bar.loading::before { animation: none; opacity: 0.5; }
+      }
+
+      /* Sharper typography hierarchy — more WP10 (extreme weight contrast) */
+      h1 { font-weight: 200; letter-spacing: -0.025em; }
+      h2 { font-weight: 200; letter-spacing: -0.015em; }
     </style>
   </body>
 </html>

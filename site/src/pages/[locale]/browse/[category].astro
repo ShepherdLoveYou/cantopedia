@@ -45,7 +45,7 @@ const dict = {
 <BaseLayout title={catName} locale={locale}>
   <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
 
-  <header class="cat-hero" style={`background: ${tileColor};`}>
+  <header class="cat-hero" style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}>
     <div class="cat-no">{dishes.length}</div>
     <h1 class="cat-name">{catName}</h1>
     <p class="cat-desc">{catDesc}</p>
@@ -64,7 +64,7 @@ const dict = {
         dish.data.method_status === 'complete' ? dict.complete :
         dish.data.method_status === 'draft' ? dict.draft : dict.stub;
       return (
-        <a class="dish-card" href={`${base}/${locale}/dishes/${dish.id}`}>
+        <a class="dish-card wp-tile" href={`${base}/${locale}/dishes/${dish.id}`}>
           <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
           <div class="card-name">{dishName}</div>
           <div class="card-jyut">{dish.data.names.jyutping}</div>
