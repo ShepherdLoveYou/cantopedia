@@ -142,16 +142,35 @@ const dict = {
         });
       }
 
-      // Direction-aware Continuum cascade — flag forward vs. back navigation
-      // so the children cascade slides up (forward) or down (back).
-      (function setupNavDirection() {
+      // Direction-aware Continuum cascade + cascade play gate.
+      // - Direction: popstate => "back", else "forward".
+      // - Play gate: pause cascade during nav so it doesn't burn cycles
+      //   behind the VT snapshot; resume on page-load so user sees it fresh.
+      (function setupNavCascade() {
         let isBack = false;
         window.addEventListener('popstate', () => { isBack = true; });
         document.addEventListener('astro:before-preparation', () => {
           document.documentElement.dataset.nav = isBack ? 'back' : 'forward';
           isBack = false;
+          // Pause cascade so the new page's <main> children sit at the
+          // "from" keyframe (translateY 28px, opacity 0, blur 3px) and
+          // don't play behind the VT snapshot.
+          document.documentElement.dataset.cascade = 'pause';
         });
-        // Initial load: forward by default; respect already-set value if any.
+        document.addEventListener('astro:page-load', () => {
+          if (!document.documentElement.dataset.nav) {
+            document.documentElement.dataset.nav = 'forward';
+          }
+          // Force reflow so the paused animation restarts from frame 0
+          // when we flip to "go".
+          void document.documentElement.offsetHeight;
+          document.documentElement.dataset.cascade = 'go';
+        });
+        // Initial load — also fire once before astro:page-load in case it
+        // arrives late, so first render's cascade plays.
+        if (!document.documentElement.dataset.cascade) {
+          document.documentElement.dataset.cascade = 'go';
+        }
         if (!document.documentElement.dataset.nav) {
           document.documentElement.dataset.nav = 'forward';
         }
@@ -465,14 +484,33 @@ const dict = {
          Root cross-fade ONLY; per-tile shared-element morph + Continuum
          children cascade do the visible work. Layered slide-out + cascade
          used to fight each other and felt jerky. */
+      /* SEQUENTIAL nav: old <main> slides/blurs/fades AWAY first (380ms),
+         then new pseudo briefly fades in (180ms w/ 320ms delay). The
+         crossfade overlap is intentionally tiny so the user sees old
+         leave THEN new arrive — WP10 Continuum dominos pattern. The
+         per-child Continuum cascade is paused during this and resumed
+         on astro:page-load so it plays fresh and visible. */
       ::view-transition-old(root) {
-        animation: vt-fade-out 280ms var(--fluent-curve-accelerate-mid) forwards;
+        animation: vt-exit-forward 380ms cubic-bezier(0.55, 0, 0.9, 0.3) forwards;
       }
       ::view-transition-new(root) {
-        animation: vt-fade-in 360ms var(--fluent-curve-decelerate-mid) forwards;
+        animation: vt-enter 180ms 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
       }
-      @keyframes vt-fade-out { from { opacity: 1; filter: blur(0); } to { opacity: 0; filter: blur(4px); } }
-      @keyframes vt-fade-in  { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
+      html[data-nav="back"] ::view-transition-old(root) {
+        animation-name: vt-exit-back;
+      }
+      @keyframes vt-exit-forward {
+        0%   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+        100% { transform: translateY(-36px) scale(0.97); opacity: 0; filter: blur(10px); }
+      }
+      @keyframes vt-exit-back {
+        0%   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+        100% { transform: translateY(36px) scale(0.97); opacity: 0; filter: blur(10px); }
+      }
+      @keyframes vt-enter {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
 
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
       .wp-tile {
@@ -632,12 +670,16 @@ const dict = {
 
       /* ===== Continuum domino — staggered children-in on every page.
          Damped: 560ms duration + 80ms stagger + blur(3px->0) racking focus
-         + subtle scale (0.97->1) so each child eases in instead of
-         snapping. Direction-aware (popstate vs. forward). */
+         + subtle scale (0.97->1). Direction-aware (popstate vs. forward).
+         Paused until <html data-cascade="go"> so the cascade plays AFTER
+         the VT old/new sequence completes — otherwise the snapshot
+         occludes it. */
       main > * {
         animation: continuum-in-forward var(--fluent-duration-rich) var(--fluent-curve-decelerate-mid) both;
+        animation-play-state: paused;
         transform-origin: center top;
       }
+      html[data-cascade="go"] main > * { animation-play-state: running; }
       html[data-nav="back"] main > * {
         animation-name: continuum-in-back;
       }
