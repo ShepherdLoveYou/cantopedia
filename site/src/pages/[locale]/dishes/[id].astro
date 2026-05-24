@@ -101,7 +101,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     <span class="meta">#{String(dish.data.menu_no).padStart(2, '0')}</span>
   </nav>
 
-  <header class="hero-band" style={`--cat-color: ${catColor}; view-transition-name: dish-${dish.id};`}>
+  <header class="hero-band" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
     <div class="hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
     <h1 class="hero-name">{dish.data.names.yue_hant}</h1>
     <div class="hero-jyut">{dish.data.names.jyutping}</div>
@@ -290,80 +290,61 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
 </BaseLayout>
 
 <style>
-  /* WP10 Panorama breadcrumbs — uppercase, letter-spaced, dim. */
   .crumbs {
     font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    margin: -0.5rem 0 1rem;
-    color: var(--t-ink-dim);
-    font-weight: 500;
+    font-size: 0.8125rem;
+    margin: -0.5rem 0 1.5rem;
+    color: var(--ink-dim);
   }
-  .crumbs a { color: var(--t-ink-dim); }
+  .crumbs a { color: var(--ink-dim); }
   .crumbs a:hover { color: var(--m-red); }
-  .crumbs .sep { margin: 0 0.5rem; opacity: 0.45; }
+  .crumbs .sep { margin: 0 0.5rem; opacity: 0.5; }
 
-  /* WP10 Panorama dish header — no colored slab. 6px cat-color top stripe
-     acts as the morph anchor from the dish-card. Title content sits
-     directly on the page background. */
   .hero-band {
-    color: var(--t-ink);
-    background: transparent !important;
-    padding: 1.5rem 0 1.75rem;
-    margin: 0 0 2.5rem;
-    border-top: 6px solid var(--cat-color, currentColor);
-    position: relative;
+    color: white;
+    padding: 2rem 2rem 2rem;
+    margin: 0 -1.5rem 2rem;
   }
   .hero-no {
     font-family: var(--sans);
     font-size: 0.7rem;
     letter-spacing: 0.22em;
-    color: var(--cat-color, var(--t-ink-dim));
+    opacity: 0.7;
     text-transform: uppercase;
     font-weight: 500;
-    margin-top: 1.25rem;
   }
   .hero-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-size: 3rem;
     font-weight: 200;
-    letter-spacing: -0.02em;
-    color: var(--t-ink);
+    letter-spacing: -0.015em;
+    color: white;
     margin: 0.25rem 0 0.25rem;
-    line-height: 0.95;
+    line-height: 1.05;
   }
   .hero-jyut {
     font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--t-ink-dim);
+    font-size: 0.875rem;
+    opacity: 0.85;
   }
   .hero-alt {
     margin-top: 0.5rem;
     font-family: var(--sans), var(--sans-zh);
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: var(--t-ink-dim);
+    font-size: 1rem;
+    opacity: 0.95;
   }
-  .alt-sep { margin: 0 0.5rem; opacity: 0.5; }
+  .alt-sep { margin: 0 0.5rem; opacity: 0.6; }
 
-  /* WP10 thin uppercase metadata chips — no fill, divided by thin rule. */
-  .hero-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+  .hero-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .htag {
-    background: transparent;
-    color: var(--t-ink-dim);
-    padding: 0.3rem 0.875rem 0.35rem 0;
-    margin-right: 0.875rem;
+    background: rgba(255,255,255,0.18);
+    padding: 0.25rem 0.75rem;
     font-family: var(--sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-right: 1px solid var(--t-rule);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
   }
-  .htag:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
-  .htag-on   { color: var(--m-green); }
-  .htag-warn { color: var(--m-orange); }
+  .htag-on   { background: rgba(255,255,255,0.95); color: var(--ink); font-weight: 600; }
+  .htag-warn { background: var(--m-yellow); color: #4a3800; font-weight: 600; }
 
   .dish-grid {
     display: grid;
