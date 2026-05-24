@@ -303,13 +303,19 @@ const dict = {
         --mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
         --meta: var(--sans);
 
-        /* Borrowed from @fluentui/tokens (MIT, https://github.com/microsoft/fluentui) */
-        --fluent-curve-decelerate-mid: cubic-bezier(0, 0, 0, 1);
-        --fluent-curve-accelerate-mid: cubic-bezier(1, 0, 1, 1);
-        --fluent-curve-easy-ease:      cubic-bezier(0.33, 0, 0.67, 1);
-        --fluent-duration-fast:        150ms;
-        --fluent-duration-normal:      200ms;
-        --fluent-duration-gentle:      250ms;
+        /* Damped, WP10-mobile-feel easing — softer than @fluentui/tokens' Office-app curves.
+           - decelerate: slow start, soft glide-to-stop (no wall)
+           - accelerate: gentle start, builds momentum
+           - spring: slight overshoot then settle, for press release
+           - easy-ease: symmetric in/out for flips & cross-fades */
+        --fluent-curve-decelerate-mid: cubic-bezier(0.16, 1, 0.3, 1);
+        --fluent-curve-accelerate-mid: cubic-bezier(0.55, 0, 0.9, 0.3);
+        --fluent-curve-easy-ease:      cubic-bezier(0.4, 0, 0.2, 1);
+        --fluent-curve-spring:         cubic-bezier(0.34, 1.4, 0.55, 1);
+        --fluent-duration-fast:        180ms;
+        --fluent-duration-normal:      280ms;
+        --fluent-duration-gentle:      420ms;
+        --fluent-duration-rich:        560ms;
       }
 
       html[data-theme="dark"] {
@@ -460,17 +466,17 @@ const dict = {
          children cascade do the visible work. Layered slide-out + cascade
          used to fight each other and felt jerky. */
       ::view-transition-old(root) {
-        animation: vt-fade-out 180ms var(--fluent-curve-accelerate-mid) forwards;
+        animation: vt-fade-out 280ms var(--fluent-curve-accelerate-mid) forwards;
       }
       ::view-transition-new(root) {
-        animation: vt-fade-in 220ms var(--fluent-curve-decelerate-mid) forwards;
+        animation: vt-fade-in 360ms var(--fluent-curve-decelerate-mid) forwards;
       }
-      @keyframes vt-fade-out { to { opacity: 0; } }
-      @keyframes vt-fade-in  { from { opacity: 0; } }
+      @keyframes vt-fade-out { from { opacity: 1; filter: blur(0); } to { opacity: 0; filter: blur(4px); } }
+      @keyframes vt-fade-in  { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
 
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
       .wp-tile {
-        transition: transform var(--fluent-duration-normal, 200ms) var(--fluent-curve-decelerate-mid, ease-out);
+        transition: transform 380ms var(--fluent-curve-spring);
         will-change: transform;
         user-select: none;
         -webkit-tap-highlight-color: transparent;
@@ -482,7 +488,7 @@ const dict = {
                    rotateX(var(--tilt-x))
                    rotateY(var(--tilt-y))
                    scale(0.96);
-        transition: transform 80ms var(--fluent-curve-accelerate-mid, ease-in);
+        transition: transform 140ms cubic-bezier(0.4, 0.05, 0.6, 0.95);
       }
 
       /* Reduce motion friendly */
@@ -625,28 +631,32 @@ const dict = {
       .drawer-foot a { color: var(--t-drawer-ink); }
 
       /* ===== Continuum domino — staggered children-in on every page.
-         Direction-aware: forward nav slides up from below; back nav slides
-         down from above so popstate "feels" like reversing. */
+         Damped: 560ms duration + 80ms stagger + blur(3px->0) racking focus
+         + subtle scale (0.97->1) so each child eases in instead of
+         snapping. Direction-aware (popstate vs. forward). */
       main > * {
-        animation: continuum-in-forward var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+        animation: continuum-in-forward var(--fluent-duration-rich) var(--fluent-curve-decelerate-mid) both;
+        transform-origin: center top;
       }
       html[data-nav="back"] main > * {
         animation-name: continuum-in-back;
       }
       main > *:nth-child(1) { animation-delay: 0ms; }
-      main > *:nth-child(2) { animation-delay: 45ms; }
-      main > *:nth-child(3) { animation-delay: 90ms; }
-      main > *:nth-child(4) { animation-delay: 135ms; }
-      main > *:nth-child(5) { animation-delay: 180ms; }
-      main > *:nth-child(6) { animation-delay: 225ms; }
-      main > *:nth-child(n+7) { animation-delay: 270ms; }
+      main > *:nth-child(2) { animation-delay: 80ms; }
+      main > *:nth-child(3) { animation-delay: 160ms; }
+      main > *:nth-child(4) { animation-delay: 240ms; }
+      main > *:nth-child(5) { animation-delay: 320ms; }
+      main > *:nth-child(6) { animation-delay: 380ms; }
+      main > *:nth-child(n+7) { animation-delay: 420ms; }
       @keyframes continuum-in-forward {
-        from { transform: translateY(20px); opacity: 0; }
-        to   { transform: none; opacity: 1; }
+        0%   { transform: translateY(28px) scale(0.97); opacity: 0; filter: blur(3px); }
+        60%  { opacity: 1; filter: blur(0); }
+        100% { transform: none; opacity: 1; filter: none; }
       }
       @keyframes continuum-in-back {
-        from { transform: translateY(-14px); opacity: 0; }
-        to   { transform: none; opacity: 1; }
+        0%   { transform: translateY(-18px) scale(0.985); opacity: 0; filter: blur(2px); }
+        60%  { opacity: 1; filter: blur(0); }
+        100% { transform: none; opacity: 1; filter: none; }
       }
 
       @media (prefers-reduced-motion: reduce) {
