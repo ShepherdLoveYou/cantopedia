@@ -10,13 +10,86 @@ ingredients:
   - ref: fish-cake-balls
     qty: 12
     unit: 件
+    prep:
+      yue: 港式魚蛋（咖喱魚蛋用嘅黃色魚蛋亦可）12 粒，用廚紙吸乾外面水份
+      zh: 港式鱼蛋（咖喱鱼蛋用的黄色鱼蛋亦可）12 颗，用厨纸吸干外面水分
+      en: 12 HK-style fish cake balls (the yellow ones used in curry fish balls work too); patted dry with paper towels
   - ref: salt-pepper-mix
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 椒鹽粉（鹽 1 茶匙 + 白胡椒粉 1/2 茶匙 + 五香粉少少 + 糖少少）
+      zh: 椒盐粉（盐 1 茶匙 + 白胡椒粉 1/2 茶匙 + 五香粉少许 + 糖少许）
+      en: salt-and-pepper mix (1 tsp salt + ½ tsp white pepper + pinch five-spice + pinch sugar)
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 蒜茸 1 茶匙
+      zh: 蒜茸 1 茶匙
+      en: 1 tsp minced garlic
+  - ref: bell-pepper
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 紅椒切粒少少
+      zh: 红椒切粒少许
+      en: red bell pepper, finely diced
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥粒
+      zh: 葱粒
+      en: scallion green, sliced
+servings: 2
+difficulty: easy
+time_minutes:
+  prep: 5
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 油溫 180°C，魚蛋落鑊炸 90 秒到表面金黃微脆、內裡熱透——魚蛋本身已熟，炸係為咗起脆殼。
+      zh: 油温 180°C，鱼蛋下锅炸 90 秒至表面金黄微脆、内里热透——鱼蛋本身已熟，炸是为了起脆壳。
+      en: Heat oil to 180°C / 355°F. Deep-fry the fish balls 90 seconds — surface golden and slightly crisp, inside heated through. The fish balls are already cooked; frying is for the crispy shell.
+    temperature_c: 180
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 鑊留 1 茶匙油，落蒜茸同紅椒粒中火爆 15 秒。
+      zh: 锅留 1 茶匙油，下蒜茸与红椒粒中火爆 15 秒。
+      en: Keep 1 tsp oil. Fry minced garlic and red pepper on medium for 15 seconds.
+    time_seconds: 15
+  - order: 3
+    body:
+      yue: 落炸好嘅魚蛋，灑椒鹽粉，快手翻 10 下令椒鹽均勻分佈；最後落蔥粒再翻 3 下即上碟。
+      zh: 倒入炸好的鱼蛋，撒椒盐粉，快手翻 10 下令椒盐均匀分布；最后下葱粒再翻 3 下即上碟。
+      en: Toss in the fried fish balls, scatter the salt-pepper mix, toss 10 times to coat. Add scallion, three more tosses, and plate.
+    time_seconds: 20
+tips:
+  - yue: 香港人最熟悉嘅「咖喱魚蛋」係用同一款魚蛋——可以將椒鹽魚蛋同咖喱魚蛋同時整、用兩種不同手法演繹同一種食材。
+    zh: 香港人最熟悉的「咖喱鱼蛋」是用同款鱼蛋——可同时做椒盐鱼蛋与咖喱鱼蛋、用两种不同手法演绎同一食材。
+    en: HK's iconic "curry fish balls" use the same fish cake balls — you can make curry fish balls and salt-pepper fish balls side-by-side, two interpretations of the same ingredient.
+  - yue: 魚蛋一定要乾——濕嘅魚蛋落油會劇烈濺油，又會令外面唔脆。落鑊前用廚紙仔細吸乾。
+    zh: 鱼蛋必须干——湿鱼蛋下油会剧烈溅油，又会令外面不脆。下锅前用厨纸仔细吸干。
+    en: Fish balls must be dry — wet ones cause violent oil spatter and won't crisp. Pat thoroughly with paper towels.
+  - yue: 「椒鹽」粉一次調多啲入樽——可以用於椒鹽蝦（#54）、椒鹽魷（#59）、椒鹽肉排（#65）、椒鹽三鮮（#58）。
+    zh: 「椒盐」粉一次多调一些入瓶——可用于椒盐虾（#54）、椒盐鱿（#59）、椒盐肉排（#65）、椒盐三鲜（#58）。
+    en: Batch the salt-pepper mix — works across dishes #54 prawns, #59 squid, #65 ribs, #58 three-fresh trio.
+history:
+  yue: 港式魚蛋係 1950 年代香港街頭小食嘅代表——當時九龍碼頭工人喺中環、油尖旺地區流動，廚師用平價魚漿整魚蛋串賣。1970 年代茶餐廳將之搬入餐桌，用椒鹽手法炸出比街邊咖喱魚蛋更精緻嘅版本。今日茶餐廳同街邊小食檔同時提供，但風味同處理唔同。
+  zh: 港式鱼蛋是 1950 年代香港街头小食的代表——当时九龙码头工人在中环、油尖旺地区流动，厨师用平价鱼浆做鱼蛋串卖。1970 年代茶餐厅将之搬入餐桌，用椒盐手法炸出比街边咖喱鱼蛋更精致的版本。今天茶餐厅与街边小食档同时提供，但风味与处理不同。
+  en: HK fish balls trace to 1950s street food — Kowloon dockworkers wandering Central and Yau Tsim Mong districts ate cheap fish-paste balls on skewers. 1970s tea-restaurants brought the snack indoors, using salt-and-pepper frying to elevate it above the street-side curry-ball version. Today both formats coexist with different treatments.
+allergens:
+  - fish
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #4 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #4 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

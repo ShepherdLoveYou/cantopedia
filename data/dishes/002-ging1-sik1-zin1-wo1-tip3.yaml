@@ -10,12 +10,83 @@ ingredients:
   - ref: potstickers
     qty: 8
     unit: 件
-method_status: stub
+    prep:
+      yue: 鍋貼皮 8 張、自家整餡：豬肉茸 200 g + 大白菜碎 100 g + 韭菜碎 20 g + 薑茸 + 蔥末 + 鹽 + 糖 + 麻油 + 紹興酒 + 生粉，順時針攪到起膠
+      zh: 锅贴皮 8 张、自家做馅：猪肉茸 200 g + 大白菜碎 100 g + 韭菜碎 20 g + 姜茸 + 葱末 + 盐 + 糖 + 麻油 + 绍兴酒 + 生粉，顺时针搅至起胶
+      en: 8 dumpling wrappers; filling — 200 g minced pork + 100 g Napa cabbage minced + 20 g chives + minced ginger + scallion + salt + sugar + sesame oil + Shaoxing + cornstarch, stirred until tacky and bouncy
+  - ref: zhejiang-vinegar
+    qty: 1
+    unit: 份
+    prep:
+      yue: 浙醋 1 碟（蘸料）
+      zh: 浙醋 1 碟（蘸料）
+      en: 1 dish Zhenjiang vinegar (dip)
+  - ref: ginger
+    qty: 2
+    unit: 片
+    prep:
+      yue: 切薑絲（佐浙醋）
+      zh: 切姜丝（佐浙醋）
+      en: julienned ginger (to accompany the vinegar)
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 40
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 整餡——豬肉茸放大碗，加生抽 1 茶匙、糖 1/4 茶匙、麻油 1 茶匙、薑汁 1 茶匙、紹興酒 1 茶匙、白胡椒粉少少。加大白菜碎（白菜先用鹽抓 5 分鐘出水、瀝乾）、韭菜碎、蔥末。順時針攪 2 分鐘到起膠。
+      zh: 做馅——猪肉茸放大碗，加生抽 1 茶匙、糖 1/4 茶匙、麻油 1 茶匙、姜汁 1 茶匙、绍兴酒 1 茶匙、白胡椒粉少许。加大白菜碎（白菜先用盐抓 5 分钟出水、沥干）、韭菜碎、葱末。顺时针搅 2 分钟至起胶。
+      en: Filling — combine minced pork with 1 tsp light soy, ¼ tsp sugar, 1 tsp sesame oil, 1 tsp ginger juice, 1 tsp Shaoxing, white pepper. Add the Napa cabbage (pre-salted 5 minutes, squeezed dry), chives, and scallion. Stir clockwise 2 minutes until tacky and bouncy.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 包鍋貼——鍋貼皮一張，中央放 1 茶匙餡，皮對摺成半月形，邊位用手指打褶或者直接捏緊。8 隻包好。
+      zh: 包锅贴——锅贴皮一张，中央放 1 茶匙馅，皮对折成半月形，边位用手指捏褶或直接捏紧。8 只包好。
+      en: Wrap — place 1 tsp filling on each wrapper. Fold over into a half-moon, pleat or pinch the edges. Make 8.
+    time_seconds: 600
+  - order: 3
+    body:
+      yue: 平底鑊燒熱落 2 匙油，將鍋貼排成一列（褶位朝上）。中火煎 90 秒到底面金黃。
+      zh: 平底锅烧热下 2 勺油，将锅贴排成一列（褶位朝上）。中火煎 90 秒至底面金黄。
+      en: Heat 2 Tbsp oil in a flat pan. Arrange the dumplings in a row (pleats up). Pan-fry on medium for 90 seconds until the bottoms are golden.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 加 100 ml 水入鑊（會即刻蒸氣爆出，小心熱油），蓋上鍋蓋，中火蒸 5 分鐘到水分蒸發、底面再次酥脆。
+      zh: 加 100 ml 水入锅（会立即蒸气爆出，小心热油），盖上锅盖，中火蒸 5 分钟至水分蒸发、底面再次酥脆。
+      en: Pour in 100 ml water (steam will burst out — be careful of hot oil). Cover and steam on medium for 5 minutes — the water evaporates and the bottoms re-crisp.
+    time_seconds: 300
+  - order: 5
+    body:
+      yue: 揭蓋確認底面金黃酥脆。用鏟將鍋貼整批反扣喺大碟，金黃面向上。配浙醋同薑絲即上枱。
+      zh: 揭盖确认底面金黄酥脆。用铲将锅贴整批反扣在大盘，金黄面朝上。配浙醋与姜丝即上桌。
+      en: Uncover and confirm the bottoms are golden and crisp. Slide the dumplings together and flip the whole batch out onto a plate, golden side up. Serve with Zhenjiang vinegar and ginger julienne.
+tips:
+  - yue: 鍋貼同水餃嘅最大分別——水餃水煮、鍋貼煎+蒸。鍋貼底面金黃酥脆、頂部因蒸氣熟透柔軟，「一菜兩口感」係鍋貼嘅靈魂。
+    zh: 锅贴与水饺的最大区别——水饺水煮、锅贴煎+蒸。锅贴底面金黄酥脆、顶部因蒸气熟透柔软，「一菜两口感」是锅贴的灵魂。
+    en: Potstickers differ from boiled dumplings — boiled are uniform, potstickers have a golden crisp bottom and a soft steamed top. This dual texture is the dish's defining feature.
+  - yue: 「先煎後蒸」嘅順序唔可以倒轉——必須先煎令底面結焦，再加水蒸熟。倒轉會出現「水餃 + 焦底」嘅怪異口感。
+    zh: 「先煎后蒸」的顺序不可颠倒——必须先煎令底面结焦，再加水蒸熟。颠倒会出现「水饺 + 焦底」的怪异口感。
+    en: The "pan-fry first, then steam" order is non-negotiable. The bottom must sear first; then water turns to steam to cook the top. Reversing gives boiled dumplings with a weirdly charred underside.
+  - yue: 點解茶餐廳菜單寫「京式」？因為呢個係北方手法（北京、東北）。粵菜傳統用蒸或煮餃子，唔煎。「京式」係 1950 年代北方移民帶到香港嘅手法，後被茶餐廳吸收成為小食。
+    zh: 为什么茶餐厅菜单写「京式」？因为这是北方手法（北京、东北）。粤菜传统用蒸或煮饺子，不煎。「京式」是 1950 年代北方移民带到香港的手法，后被茶餐厅吸收为小食。
+    en: Why "京式" (Beijing-style) on a Cantonese menu? Pan-frying dumplings is a northern technique (Beijing, Dongbei); traditional Cantonese cuisine steams or boils dumplings instead. "京式" arrived in Hong Kong with 1950s northern migrants and was adopted by tea-restaurants as an appetiser format.
+history:
+  yue: 鍋貼（guotie）相傳源自宋代——一說係慈禧太后嘅御膳房廚師將剩餘嘅水餃用鑊煎熱再蒸所得，意外創造出嶄新口感。「京式」嘅命名指 19 世紀後北京同東北流行嘅版本。1950 年代北方移民將之帶入香港，茶餐廳將之納入「小食類」開胃菜選項。
+  zh: 锅贴（guotie）相传源自宋代——一说是慈禧太后御膳房厨师将剩余的水饺用锅煎热再蒸所得，意外创造出新的口感。「京式」之名指 19 世纪后北京与东北流行的版本。1950 年代北方移民将之带入香港，茶餐厅将之纳入「小食类」开胃菜选项。
+  en: Potstickers are traced to the Song dynasty — one story attributes them to the chef of Empress Dowager Cixi, who reheated leftover boiled dumplings by pan-frying and accidentally invented a new texture. The "京式" name denotes the version popular in 19th-century Beijing and Dongbei. 1950s northern migrants brought the dish south to Hong Kong, where tea-restaurants adopted it as an appetiser format.
+allergens:
+  - soy
+  - gluten
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #2 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 伴浙醋
+    accessed: 2026-05-24
+    note: "Item #2 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

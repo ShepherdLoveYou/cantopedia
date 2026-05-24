@@ -7,29 +7,92 @@ names:
   en: Tomato Onion Pork Chop Rice
 category: rice
 ingredients:
-  - ref: tomato
-    qty: 1.5
-    unit: 個
-  - ref: onion
-    qty: 1
-    unit: 份
   - ref: pork-chop
     qty: 2
     unit: 件
-  - ref: white-rice
+    prep:
+      yue: 豬扒拍鬆、醃 20 分鐘（生抽 + 紹興酒 + 蒜茸 + 糖 + 蛋液 + 生粉）
+      zh: 猪扒拍松、腌 20 分钟（生抽+绍兴酒+蒜茸+糖+蛋液+生粉）
+      en: pork chops pounded thin; marinated 20 min with soy + Shaoxing + garlic + sugar + egg + cornstarch
+  - ref: tomato
+    qty: 1.5
+    unit: 個
+    prep:
+      yue: 新鮮番茄切件
+      zh: 新鲜番茄切块
+      en: fresh tomatoes, cut into chunks
+  - ref: onion
     qty: 1
-    unit: 碗
+    unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
   - ref: sweet-sour-sauce
     qty: 1
     unit: 份
-method_status: stub
-sources:
-  - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #18 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    prep:
+      yue: 茄汁 4 匙 + 喼汁 1 匙 + 糖 2 匙 + 雞湯 200 ml + 生粉水 1 匙
+      zh: 茄汁 4 勺 + 喼汁 1 勺 + 糖 2 勺 + 鸡汤 200 ml + 生粉水 1 勺
+      en: 4 Tbsp ketchup + 1 Tbsp Worcestershire + 2 Tbsp sugar + 200 ml chicken stock + 1 Tbsp cornstarch slurry
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 12
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 豬扒醃完掛上薄薄一層生粉。鑊燒熱落 2 匙油，落豬扒煎 2-3 分鐘每面到金黃熟透，撈起切條保溫。
+      zh: 猪扒腌完拍上薄薄一层生粉。锅烧热下 2 勺油，下猪扒煎 2-3 分钟每面至金黄熟透，捞出切条保温。
+      en: After marinating, dust the chops with cornstarch. Heat 2 Tbsp oil, pan-fry chops 2-3 minutes per side until golden and cooked through. Remove and slice into strips; keep warm.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 鑊餘油落洋蔥絲爆 60 秒到開始焦邊，落番茄件翻 60 秒到出汁。
+      zh: 锅余油下洋葱丝爆 60 秒至开始焦边，下番茄块翻 60 秒至出汁。
+      en: With remaining oil, stir-fry the onion 60 seconds until edges char, add tomato and stir 60 seconds until juicy.
+    time_seconds: 120
+  - order: 3
+    body:
+      yue: 倒入茄汁料煮滾，加生粉水推稠到「掛得住」濃度。落番豬扒條，翻 10 秒令豬扒裹勻茄汁。
+      zh: 倒入茄汁料煮沸，加生粉水勾芡至「挂得住」浓度。倒回猪扒条，翻 10 秒令猪扒裹匀茄汁。
+      en: Pour in the sauce mixture, boil and thicken with slurry. Return the pork chops and toss 10 seconds to coat.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 白飯一碗倒扣喺碟中央，淋上番茄洋蔥豬扒，茄汁淋滿白飯邊上，即上枱。
+      zh: 白饭一碗倒扣在碟中央，淋上番茄洋葱猪扒，茄汁淋满白饭边上，即上桌。
+      en: Invert a bowl of rice on a plate, ladle the pork and tomato sauce over, drizzle extra sauce around the rice. Serve.
+tips:
+  - yue: 用「梅頭豬扒」（pork shoulder chop）肉嫩、有少少肥；用「淨豬扒」（loin chop）肉緊但易乾。茶餐廳通常用梅頭。
+    zh: 用「梅头猪扒」（pork shoulder chop）肉嫩、有少少肥；用「净猪扒」（loin chop）肉紧但易干。茶餐厅常用梅头。
+    en: Pork shoulder chops are tender with marbling; loin chops are firmer but dry out. HK tea-restaurants use shoulder for this dish.
+  - yue: 喼汁係呢個菜嘅秘密武器——同茄汁配搭可以模擬五香味嘅深度。用 Lea & Perrins 經典款，1/2 茶匙就夠。
+    zh: 喼汁是这道菜的秘密武器——与茄汁搭配可模拟五香味的深度。用 Lea & Perrins 经典款，1/2 茶匙就够。
+    en: Worcestershire sauce is the secret weapon — paired with ketchup it simulates a five-spice depth. Use classic Lea & Perrins; ½ tsp is enough.
+  - yue: 變體 #018b 用雞扒（chicken thigh）代替豬扒——做法相同，只係雞扒煎時間短啲（每面 90 秒）。雞扒版口感較嫩、豬扒版較紮實。
+    zh: 变体 #018b 用鸡扒（chicken thigh）代替猪扒——做法相同，只是鸡扒煎时间较短（每面 90 秒）。鸡扒版口感较嫩、猪扒版较扎实。
+    en: Variant #018b uses chicken thigh instead of pork — same technique but shorter pan-fry (90 sec per side). The chicken version is silkier, the pork firmer.
+history:
+  yue: 番茄洋蔥豬扒飯係 1950 年代香港冰室時期嘅創造——將意大利番茄醬同中國豬扒結合，創造「中西合璧」嘅碟頭飯。同 #35 茄汁豬扒飯（焗版）係兩種變體：呢個係炒版（即叫即整）、#35 係焗版（先做好淋茄汁焗）。
+  zh: 番茄洋葱猪扒饭是 1950 年代香港冰室时期的创造——将意大利番茄酱与中国猪扒结合，创造「中西合璧」碟头饭。与 #35 茄汁猪扒饭（焗版）是两种变体：此乃炒版（即叫即做）、#35 是焗版（先做好淋茄汁烤）。
+  en: Tomato onion pork chop rice was created in the 1950s Hong Kong ice-house era — pairing Italian tomato sauce with Chinese pork chops as a "East-meets-West" one-plate meal. The companion dish #35 (tomato pork chop baked rice) is the baked variant; this one is the stir-fry version (made to order).
+allergens:
+  - egg
+  - soy
+  - gluten
 variants:
   - 018b-faan1-ke2-joeng4-cung1-gai1-paa2-faan6
-tips:
-  - zh: 另有雞扒版
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: 2026-05-24
+    note: "Item #18 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

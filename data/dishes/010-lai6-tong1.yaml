@@ -7,15 +7,88 @@ names:
   en: Soup of the Day
 category: soup-wonton
 ingredients:
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+    prep:
+      yue: 冬菇 4 件、預先泡發
+      zh: 冬菇 4 件、预先泡发
+      en: 4 dried shiitake, pre-soaked
+  - ref: carrot
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大件
+      zh: 切大块
+      en: cut into chunks
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+    notes: "配饭一份"
+  - ref: pork-strips
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 瘦肉切片或者用排骨（按當日湯款）
+      zh: 瘦肉切片或排骨（按当日汤款）
+      en: lean pork slices or pork ribs (depending on the day's soup)
+  - ref: ginger
+    qty: 3
+    unit: 片
+    prep:
+      yue: 拍裂幾下
+      zh: 拍裂几下
+      en: lightly bruised
+servings: 4
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 120
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 排骨或瘦肉用滾水汆 3 分鐘去血沫、撈起沖淨。同時將乾貨（冬菇）預先浸軟。
+      zh: 排骨或瘦肉用沸水汆 3 分钟去血沫、捞出冲净。同时将干货（冬菇）预先浸软。
+      en: Blanch the pork in boiling water for 3 minutes to release blood scum; rinse. Pre-soak the dried mushrooms.
+    time_seconds: 180
+  - order: 2
+    body:
+      yue: 深湯鍋落 2 公升清水（或者一半清水一半雞湯），落已汆肉、薑片、冬菇、紅蘿蔔——其他配料按當日湯款而定（粟米、雪耳、蓮藕、節瓜、無花果、南北杏、瑤柱等等）。
+      zh: 深汤锅下 2 升清水（或一半清水一半鸡汤），下已汆肉、姜片、冬菇、红萝卜——其他配料按当日汤款而定（粟米、雪耳、莲藕、节瓜、无花果、南北杏、瑶柱等）。
+      en: In a deep pot, add 2 L water (or half water half chicken stock). Add the blanched pork, ginger, mushroom, carrot — additional ingredients vary by the day's theme (sweet corn, snow fungus, lotus root, hairy melon, dried figs, almonds, dried scallop, etc.).
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 大火煮滾後，轉細火細炆 90-120 分鐘——傳統粵式靚湯要慢火煲足 2 小時，先得汁色變奶白、味道濃郁。中途唔好開蓋。
+      zh: 大火煮沸后，转小火细炖 90-120 分钟——传统粤式靓汤要慢火煲足 2 小时，才能汤色变奶白、味道浓郁。中途不要开盖。
+      en: Bring to a boil, then reduce to low and simmer 90-120 minutes — traditional Cantonese "lou fo tong" (slow-fire soup) needs the full 2 hours to develop a milky body and deep flavour. Don't lift the lid.
+    temperature_c: 95
+    time_seconds: 6300
+  - order: 4
+    body:
+      yue: 試味，加少少鹽調味。粵菜傳統認為「湯飲清湯食料」——湯先飲幾口品味，再食湯料。配白飯一碗即上枱。
+      zh: 试味，加少许盐调味。粤菜传统「汤喝清汤吃料」——汤先喝几口品味，再吃汤料。配白饭一碗即上桌。
+      en: Taste and add salt to finish. The Cantonese convention is "drink the broth then eat the solids" — sip the clear broth first to appreciate, then chew the meat and vegetables. Serve with a bowl of rice.
+    time_seconds: 60
+tips:
+  - yue: 「例湯」意思係「每日例牌」——每間茶餐廳每日早上煲一鍋大湯，套餐自動配一碗。常見湯款：粟米紅蘿蔔豬骨湯、節瓜雞腳湯、青紅蘿蔔豬骨湯、蓮藕排骨湯、雪耳南北杏湯。
+    zh: 「例汤」意为「每日例牌」——每家茶餐厅每早煲一锅大汤，套餐自动配一碗。常见汤款：粟米红萝卜猪骨汤、节瓜鸡脚汤、青红萝卜猪骨汤、莲藕排骨汤、雪耳南北杏汤。
+    en: '"Lai tong" (例湯) means "the daily standard" — every HK tea-restaurant brews one large pot each morning, automatically served with set meals. Common rotations — sweet corn + carrot + pork bone; hairy melon + chicken feet; green-and-red carrot + pork bone; lotus root + spare ribs; snow fungus + apricot kernels.'
+  - yue: 粵式靚湯嘅功效——粵人相信不同食材組合可以調理身體：青紅蘿蔔湯解燥熱、節瓜雞腳湯滋陰、無花果南北杏湯潤喉、蓮藕湯清補。茶餐廳例湯一般係調理型，溫和滋補。
+    zh: 粤式靓汤的功效——粤人相信不同食材组合可调理身体：青红萝卜汤解燥热、节瓜鸡脚汤滋阴、无花果南北杏汤润喉、莲藕汤清补。茶餐厅例汤一般是调理型，温和滋补。
+    en: Cantonese "lou fo tong" follows folk-medicine logic — different combinations target body states. Green-and-red carrot for "heat," hairy melon and chicken feet for yin nourishment, fig and apricot kernels for the throat, lotus root for general restoration. Tea-restaurant lai tong leans gentle and restorative.
+  - yue: 慢火係粵湯嘅靈魂——大火滾湯會將湯料煮爛、湯水唔奶白；細火慢炆 2 小時令膠原蛋白逐漸釋放，湯色變奶白、味道層次豐富。
+    zh: 慢火是粤汤的灵魂——大火滚汤会将汤料煮烂、汤水不奶白；小火慢炖 2 小时令胶原蛋白逐渐释放，汤色变奶白、味道层次丰富。
+    en: Slow heat is the soul — boiling hard breaks the solids and yields a thin, unsatisfying broth. Two hours of gentle simmer extracts collagen progressively, producing the signature milky body and layered flavour.
+history:
+  yue: 「例湯」係粵菜「以湯佐餐」傳統嘅延續——粵人每餐必須有湯，「飯前湯」係家常規矩。茶餐廳將呢個傳統移植：早上煲大鍋湯，午晚市套餐免費配一碗。呢個習慣令茶餐廳同其他菜系（如川菜、湘菜）區別開——飯有湯，係粵式茶餐廳獨有嘅。
+  zh: 「例汤」是粤菜「以汤佐餐」传统的延续——粤人每餐必有汤，「饭前汤」是家常规矩。茶餐厅将这传统移植：早上煲大锅汤，午晚市套餐免费配一碗。这习惯使茶餐厅与其他菜系（如川菜、湘菜）有别——饭有汤，是粤式茶餐厅独有。
+  en: "Lai tong" continues the Cantonese tradition of "soup with the meal" — Cantonese homes always serve soup before rice. HK tea-restaurants transplanted this — a big pot brewed each morning, served free with lunch and dinner sets. This distinguishes Cantonese tea-restaurants from other regional cuisines (Sichuan, Hunan) — a daily included soup is uniquely Cantonese-Hong Kong.
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #10 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 湯底每日變換
+    accessed: 2026-05-24
+    note: "Item #10 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

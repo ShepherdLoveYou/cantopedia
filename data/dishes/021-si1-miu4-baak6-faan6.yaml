@@ -10,10 +10,54 @@ ingredients:
   - ref: jasmine-rice
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 絲苗米 1 杯（150 g）洗淨；水 1.2 杯
+      zh: 丝苗米 1 杯（150 g）洗净；水 1.2 杯
+      en: 1 cup (150 g) si miu jasmine rice, rinsed; 1.2 cups water
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 5
+  cook: 20
+equipment:
+  - rice_cooker
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 絲苗米用清水沖洗 3 次到水變清——洗走表面澱粉。瀝乾，靜置 10 分鐘令米粒吸水均勻。
+      zh: 丝苗米用清水冲洗 3 次至水变清——洗走表面淀粉。沥干，静置 10 分钟令米粒吸水均匀。
+      en: Rinse the rice 3 times until the water runs clear — removes surface starch. Drain, rest 10 minutes so the grains hydrate evenly.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 米同水按 1:1.2 比例落電飯煲（150 g 米 + 180 ml 水）。蓋上電飯煲蓋，按下開關，等到完成。
+      zh: 米与水按 1:1.2 比例下电饭煲（150 g 米 + 180 ml 水）。盖上电饭煲盖，按下开关，等到完成。
+      en: Combine rice and water in a rice cooker at 1:1.2 ratio (150 g rice + 180 ml water). Cover and start.
+    time_seconds: 1200
+  - order: 3
+    body:
+      yue: 飯熟後唔好即刻揭蓋，悶 10 分鐘令米粒進一步吸收剩餘水分。然後用飯勺輕輕翻鬆，盛入碗中。
+      zh: 饭熟后不要立即揭盖，焖 10 分钟令米粒进一步吸收剩余水分。然后用饭勺轻轻翻松，盛入碗中。
+      en: When the cooker switches to "warm," don't open it immediately — let it rest covered for 10 minutes. Fluff gently and scoop into bowls.
+    time_seconds: 600
+tips:
+  - yue: 絲苗米係粵菜傳統用米——長粒型、口感乾爽、香氣淡雅。粵人鍾意呢種米嘅原因——佢同各種粵菜醬汁配搭都唔搶味、米粒粒分明、撈芡時芡掛得住。
+    zh: 丝苗米是粤菜传统用米——长粒型、口感干爽、香气淡雅。粤人钟意此米的原因——与各种粤菜酱汁搭配都不抢味、米粒分明、撈芡时芡能挂得住。
+    en: Si miu is the traditional Cantonese rice — long-grain, dry-textured, mild fragrance. Cantonese cooks love it because it doesn't compete with any sauce, the grains stay separate, and gravies cling well.
+  - yue: 海外可以用泰國 jasmine 替代——口感類似，但米粒稍短、米香稍濃。比例可以調至 1:1.1。
+    zh: 海外可用泰国 jasmine 替代——口感类似，但米粒稍短、米香稍浓。比例可调至 1:1.1。
+    en: Overseas, Thai jasmine is the easiest substitute — similar texture, slightly shorter grain, more aromatic. Use 1:1.1 ratio.
+  - yue: 「絲苗白飯」係菜單上嘅獨立項目——體現「飯」喺粵菜入面嘅獨立地位。粵諺——「未有頭碗湯、先有白飯」，意思係主食米飯永遠在最先。
+    zh: 「丝苗白饭」是菜单上的独立项目——体现「饭」在粤菜中的独立地位。粤谚——「未有头碗汤、先有白饭」，意思是主食米饭永远在最先。
+    en: '"Plain rice" as a standalone menu item reflects rice''s primacy in Cantonese cuisine. The Cantonese saying "no first bowl of soup, but always first bowl of rice" expresses how rice anchors every meal.'
+history:
+  yue: 絲苗米原產廣東增城——增城絲苗米因為米粒細長如絲、外形像新苗，故得名「絲苗」。1950 年代後增城絲苗成為廣州、香港粵菜標準用米。今日海外華埠超市嘅「絲苗米」通常係泰國嘅替代品。
+  zh: 丝苗米原产广东增城——增城丝苗米因为米粒细长如丝、外形像新苗，故得名「丝苗」。1950 年代后增城丝苗成为广州、香港粤菜的标准用米。今天海外华人超市的「丝苗米」通常是泰国的替代品。
+  en: Si miu rice originated in Zengcheng (Guangdong) — named for its slender ("si," thread-like) grain and "miu" (sprout) appearance. From the 1950s it became the standard rice for Cantonese cuisine. Most "si miu rice" in overseas Chinese groceries today is actually Thai jasmine sold as a substitute.
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #21 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #21 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
