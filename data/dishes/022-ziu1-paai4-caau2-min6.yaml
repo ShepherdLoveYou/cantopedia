@@ -7,40 +7,139 @@ names:
   en: Signature Stir-fried Noodles
 category: noodle
 ingredients:
-  - ref: chicken-slices
-    qty: 3
-    unit: 件
-  - ref: cha-siu
-    qty: 3
-    unit: 件
-  - ref: shrimp-balls
-    qty: 2
-    unit: 件
-  - ref: squid
-    qty: 2
-    unit: 件
-  - ref: crab-stick
-    qty: 2
-    unit: 件
-  - ref: fish-cake-balls
-    qty: 1
-    unit: 件
-  - ref: broccoli
-    qty: 3
-    unit: 件
-  - ref: carrot
-    qty: 3
-    unit: 件
-  - ref: corn
-    qty: 3
-    unit: 件
   - ref: pan-fried-noodle
     qty: 6
     unit: 兩
-method_status: stub
+    prep:
+      yue: 港式蛋麵浸水撈散；先煎成「兩面黃」嘅麵餅墊底
+      zh: 港式蛋面浸水撕散；先煎成「两面黄」的面饼垫底
+      en: Hong Kong egg noodles, soaked and loosened, then pan-fried on both sides into a "two-sides-golden" disc base
+  - ref: chicken-slices
+    qty: 3
+    unit: 件
+    prep:
+      yue: 雞片醃 10 分鐘（生抽 + 糖 + 生粉 + 油）
+      zh: 鸡片腌 10 分钟（生抽+糖+生粉+油）
+      en: chicken slices, marinated 10 min with light soy + sugar + cornstarch + oil
+  - ref: cha-siu
+    qty: 3
+    unit: 件
+    prep:
+      yue: 切片
+      zh: 切片
+      en: sliced
+  - ref: shrimp-balls
+    qty: 2
+    unit: 件
+    prep:
+      yue: 蝦球 2 隻、薄拍生粉
+      zh: 虾球 2 只、薄拍生粉
+      en: 2 prawns, lightly dusted with cornstarch
+  - ref: squid
+    qty: 2
+    unit: 件
+    prep:
+      yue: 鮮魷切花刀
+      zh: 鲜鱿切花刀
+      en: fresh squid, scored
+  - ref: crab-stick
+    qty: 2
+    unit: 件
+    prep:
+      yue: 蟹柳撕絲
+      zh: 蟹柳撕丝
+      en: crab stick, shredded
+  - ref: fish-cake-balls
+    qty: 1
+    unit: 件
+    prep:
+      yue: 魚蛋 2 粒
+      zh: 鱼蛋 2 颗
+      en: 2 fish balls
+  - ref: broccoli
+    qty: 3
+    unit: 件
+    prep:
+      yue: 西蘭花切細件、飛水
+      zh: 西兰花切小块、飞水
+      en: broccoli, cut into small florets and blanched
+  - ref: carrot
+    qty: 3
+    unit: 件
+    prep:
+      yue: 切薄片飛水
+      zh: 切薄片飞水
+      en: carrot, thinly sliced and blanched
+  - ref: corn
+    qty: 3
+    unit: 件
+    prep:
+      yue: 粟米段 3 段
+      zh: 粟米段 3 段
+      en: 3 baby corn segments
+  - ref: oyster-sauce
+    qty: 1
+    unit: 匙
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 30
+  cook: 12
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 麵餅製作——煮熟蛋麵過冷河瀝乾；平底鑊燒 2 匙油，落麵攤平壓成餅形，中火煎 3 分鐘到底面金黃，反轉再煎 2 分鐘——形成「兩面黃」嘅脆麵餅墊底。
+      zh: 面饼制作——煮熟蛋面过冷水沥干；平底锅烧 2 勺油，下面摊平压成饼形，中火煎 3 分钟至底面金黄，翻面再煎 2 分钟——形成「两面黄」的脆面饼垫底。
+      en: Make the noodle disc — boil the egg noodles, shock and drain. In a flat pan with 2 Tbsp oil, press the noodles flat into a disc. Pan-fry on medium for 3 minutes until the bottom is golden, flip and fry another 2 minutes — the iconic "two-sides-golden" crispy noodle nest.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 麵餅擺喺大碟中央保溫。鑊燒到大滾，落 2 匙油，落雞片同蝦球煎 30 秒撈起；再落叉燒、鮮魷、蟹柳、魚蛋爆 30 秒撈起。
+      zh: 面饼摆在大盘中央保温。锅烧至大热，下 2 勺油，下鸡片与虾球煎 30 秒捞起；再下叉烧、鲜鱿、蟹柳、鱼蛋爆 30 秒捞起。
+      en: Park the noodle disc on a warm plate. Crank the wok hot. Add 2 Tbsp oil, sear the chicken and prawns for 30 seconds; remove. Sear the char siu, squid, crab stick, and fish balls for 30 seconds; remove.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 鑊餘油落西蘭花、紅蘿蔔、粟米段炒 30 秒，加 200 ml 雞湯、1 匙蠔油、1 茶匙生抽、半茶匙糖煮滾。
+      zh: 锅余油下西兰花、红萝卜、粟米段炒 30 秒，加 200 ml 鸡汤、1 勺蚝油、1 茶匙生抽、半茶匙糖煮沸。
+      en: With residual oil, stir-fry the broccoli, carrot, and baby corn for 30 seconds. Add 200 ml chicken stock, 1 Tbsp oyster sauce, 1 tsp light soy, ½ tsp sugar; bring to a boil.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 落番所有蛋白食材，落 1 茶匙生粉水推稠——芡要稠到可以掛喺食材上面、但仲流動。試味調整。
+      zh: 倒回所有蛋白食材，加 1 茶匙生粉水勾芡——芡汁要稠到可挂在食材上、但仍流动。试味调整。
+      en: Return all the proteins, thicken with 1 tsp cornstarch slurry — aim for a sauce that clings but still pours. Taste and adjust.
+    time_seconds: 60
+  - order: 5
+    body:
+      yue: 將湯料連湯汁淋喺脆麵餅上面，麵餅有部份保持脆口、有部份吸汁變軟——呢個就係「招牌炒麵」嘅雙重口感精髓。即上枱。
+      zh: 将汤料连汤汁淋在脆面饼上，面饼部分保持脆口、部分吸汁变软——这就是「招牌炒面」的双重口感精髓。即上桌。
+      en: Pour the topping and sauce over the noodle disc. Some of the noodle will stay crisp, some will absorb the sauce and soften — this dual texture is the soul of "signature stir-fried noodles." Serve at once.
+tips:
+  - yue: 「招牌炒麵」其實係「乾燒伊麵」嘅變體——粵菜入面「招牌」係指「店裡最具代表性」嘅菜式，每間茶餐廳嘅招牌炒麵餡料都有少少不同。
+    zh: 「招牌炒面」其实是「干烧伊面」的变体——粤菜中「招牌」指「店里最具代表性」的菜式，每家茶餐厅的招牌炒面馅料都略有不同。
+    en: "Signature stir-fried noodles" is a variant of "dry-braised yi mein." In Cantonese restaurants, 「招牌」 (signature) means "the dish most representative of the house," so the toppings vary between establishments.
+  - yue: 麵餅煎到「兩面黃」係技術重點——油量要夠（2 匙以上）、火力中等、按壓成餅後唔好頻繁翻動。新手可以用平底易潔鑊先得心應手。
+    zh: 面饼煎到「两面黄」是技术重点——油量要够（2 勺以上）、火力中等、按压成饼后不要频繁翻动。新手可用平底易洁锅先掌握。
+    en: The "two-sides-golden" noodle disc is the technical challenge — use enough oil (≥ 2 Tbsp), medium heat, and once pressed into a disc, don't disturb it. Beginners can use a non-stick pan to build the technique.
+  - yue: 茶餐廳廚師為求快——通常會用「半成品」麵餅，即冰箱備好嘅煎好麵餅，落單後翻熱配湯料即可上枱。家裡可以煎一打麵餅冷藏。
+    zh: 茶餐厅厨师为求快——常用「半成品」面饼，即冰箱备好煎好的面饼，下单后翻热配汤料即可上桌。家里可煎一打面饼冷藏。
+    en: Tea-restaurants pre-make noodle discs in batch — chilled, then re-crisped on order and topped à la minute. At home, fry a dozen discs and freeze them for quick weekday meals.
+history:
+  yue: 「兩面黃炒麵」係粵菜經典手法，傳統喺廣州茶居叫「煎麵」，廣州人移居香港後將之發展成「招牌炒麵」——以多種海陸食材澆喺麵餅上面，反映 1950 年代後香港食材供應嘅豐富多樣。今日係茶餐廳「鎮場菜式」之一。
+  zh: 「两面黄炒面」是粤菜经典手法，传统在广州茶居叫「煎面」，广州人移居香港后发展成「招牌炒面」——以多种海陆食材浇在面饼上，反映 1950 年代后香港食材供应的丰富多样。今天是茶餐厅「镇场菜式」之一。
+  en: The "two-sides-golden" noodle technique is a classic Cantonese form, originally called "煎麵" (jin mein, "pan-fried noodle") in Canton tea-houses. After 1950s migration to Hong Kong, it evolved into "signature stir-fried noodles" — a celebration of post-war Hong Kong's abundance, piling land-and-sea proteins on a single noodle disc. Today it is one of the centrepiece offerings of HK tea-restaurants.
+allergens:
+  - shellfish
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #22 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #22 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

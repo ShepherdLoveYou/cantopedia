@@ -7,22 +7,94 @@ names:
   en: Kyoto Pork Ribs
 category: main
 ingredients:
-  - ref: onion
-    qty: 1
-    unit: 份
   - ref: kyoto-ribs
     qty: 8
     unit: 件
+    prep:
+      yue: 一字排切短條（4 cm 長、帶骨），醃 30 分鐘（生抽 + 紹興酒 + 蛋白 + 生粉 + 蒜茸）
+      zh: 一字排切短条（4 cm 长、带骨），腌 30 分钟（生抽+绍兴酒+蛋白+生粉+蒜茸）
+      en: pork ribs cut into 4 cm bone-in segments; marinated 30 min with light soy + Shaoxing + egg white + cornstarch + garlic
   - ref: kyoto-sauce
     qty: 1
     unit: 份
+    prep:
+      yue: 京都汁——茄汁 3 匙 + 鎮江醋 2 匙 + 喼汁 1 匙 + 糖 3 匙 + 老抽 1 茶匙 + 雞湯 4 匙 + 生粉水 1 茶匙
+      zh: 京都汁——茄汁 3 勺 + 镇江醋 2 勺 + 喼汁 1 勺 + 糖 3 勺 + 老抽 1 茶匙 + 鸡汤 4 勺 + 生粉水 1 茶匙
+      en: Kyoto sauce — 3 Tbsp ketchup + 2 Tbsp Chinkiang vinegar + 1 Tbsp Worcestershire + 3 Tbsp sugar + 1 tsp dark soy + 4 Tbsp chicken stock + 1 tsp cornstarch slurry
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切細粒
+      zh: 切细粒
+      en: finely diced
   - ref: sesame
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 炒香芝麻 1 茶匙裝飾
+      zh: 炒香芝麻 1 茶匙装饰
+      en: 1 tsp toasted sesame seeds for garnish
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 40
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 排骨醃 30 分鐘後均勻拍上生粉同少少粟粉。
+      zh: 排骨腌 30 分钟后均匀拍上生粉与少许粟粉。
+      en: After 30 minutes of marination, coat the ribs evenly in cornstarch with a touch of potato starch.
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 油溫 170°C，落排骨炸第一次 3 分鐘到表面金黃、肉熟；撈起，油溫升 190°C，落番去複炸 30 秒到外殼酥脆。
+      zh: 油温 170°C，下排骨炸第一次 3 分钟至表面金黄、肉熟；捞出，油温升 190°C，复炸 30 秒至外壳酥脆。
+      en: First fry at 170°C / 340°F for 3 minutes until golden and cooked through; remove. Heat oil to 190°C / 375°F and second-fry for 30 seconds until shatteringly crisp.
+    temperature_c: 190
+    time_seconds: 210
+  - order: 3
+    body:
+      yue: 鑊預留 1 匙油，落洋蔥粒爆 30 秒；倒入京都汁，煮到滾、起膠光亮——汁要稠到「掛得住」。
+      zh: 锅留 1 勺油，下洋葱粒爆 30 秒；倒入京都汁，煮至沸腾、起胶光亮——汁要稠至「挂得住」。
+      en: Keep 1 Tbsp oil in the wok. Fry the diced onion 30 seconds. Pour in the Kyoto sauce, bring to a glossy bubble, and reduce until it coats the back of a spoon.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 落炸好嘅排骨，快速翻 8-10 下，令每件都裹勻芡汁——多翻炸殼會軟、少翻芡掛不住。
+      zh: 倒入炸好的排骨，快速翻 8-10 下，令每件都裹匀芡汁——多翻则脆壳变软、少翻则芡挂不住。
+      en: Add the fried ribs. Toss 8-10 times — any more and the crust softens, any fewer and the sauce won't coat evenly. Plate immediately.
+    time_seconds: 15
+  - order: 5
+    body:
+      yue: 上碟後灑芝麻裝飾，即上枱。
+      zh: 上盘后撒芝麻装饰，即上桌。
+      en: Plate, scatter the sesame seeds, and serve at once.
+tips:
+  - yue: 「京都」呢個名同日本京都冇關係——粵菜入面「京都」係指「京式糖醋」風味（北京風格嘅糖醋醬）。京都汁特色係茄汁同喼汁混合，比傳統糖醋更濃郁帶西式風味。
+    zh: 「京都」这个名与日本京都无关——粤菜中「京都」是指「京式糖醋」风味（北京风格的糖醋酱）。京都汁特色是茄汁与喼汁混合，比传统糖醋更浓郁带西式风味。
+    en: "Kyoto" here has nothing to do with Japan — in Cantonese cooking, "京都" denotes "Beijing-style sweet-and-sour," a sauce inspired by northern Chinese cooking. The signature is ketchup-plus-Worcestershire, which adds a richer, more Western-leaning depth than classic sweet-and-sour.
+  - yue: 喼汁（Worcestershire sauce）係呢個菜嘅秘密武器——同茄汁配搭可以模擬「五香味」嘅深度。茶餐廳通常用 Lea & Perrins。
+    zh: 喼汁（Worcestershire sauce）是这道菜的秘密武器——与茄汁搭配可模拟「五香味」的深度。茶餐厅常用 Lea & Perrins。
+    en: Worcestershire sauce is the secret weapon — paired with ketchup it simulates a five-spice depth without actually adding spices. HK tea-restaurants use Lea & Perrins.
+  - yue: 炸排骨可以提前完成、收喺密封盒入雪櫃，最多 4 個鐘——食前再翻炸 30 秒回脆。茶餐廳就係咁樣處理大量訂單。
+    zh: 炸排骨可提前完成、密封入冰箱，最多 4 小时——食前再翻炸 30 秒回脆。茶餐厅即如此处理大量订单。
+    en: The fried ribs can be made up to 4 hours ahead, refrigerated in a sealed container, and re-fried 30 seconds before serving to re-crisp. This is exactly how tea-restaurants handle the lunch rush.
+history:
+  yue: 京都肉排係粵菜「京式風味」嘅代表——「京式」嘅「京」指北京菜風格，粵菜廚師喺 1930 年代將北京嘅糖醋手法引入廣州，再加入西式喼汁變化，形成獨特嘅「京都味」。「京都」呢個叫法後來被誤解同日本京都有關，其實完全冇關係。今日係茶餐廳必備菜式之一。
+  zh: 京都肉排是粤菜「京式风味」的代表——「京式」的「京」指北京菜风格，粤菜厨师在 1930 年代将北京糖醋手法引入广州，再加入西式喼汁变化，形成独特的「京都味」。「京都」之名后来被误解为与日本京都有关，其实完全无关。今天是茶餐厅必备菜式之一。
+  en: Kyoto pork ribs exemplify the Cantonese "Beijing-style" repertoire — Cantonese chefs in the 1930s adopted northern Chinese sweet-and-sour technique and added Western Worcestershire to create a unique "Kyoto" flavour. The name was later misinterpreted as referring to Japan's Kyoto, but the connection is purely linguistic coincidence. Today it is a standard fixture of HK tea-restaurant menus.
+allergens:
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #64 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #64 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

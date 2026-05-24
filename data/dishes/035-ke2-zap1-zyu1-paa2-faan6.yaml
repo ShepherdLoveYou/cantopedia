@@ -10,30 +10,123 @@ ingredients:
   - ref: pork-chop
     qty: 2
     unit: 件
+    prep:
+      yue: 豬扒 2 件、拍鬆、醃 30 分鐘（生抽 + 紹興酒 + 蒜茸 + 糖 + 蛋液 + 麵包糠）
+      zh: 猪扒 2 件、拍松、腌 30 分钟（生抽+绍兴酒+蒜茸+糖+蛋液+面包糠）
+      en: 2 pork chops, pounded thin; marinated 30 min with light soy + Shaoxing + garlic + sugar + egg + breadcrumbs
   - ref: tomato
     qty: 1
     unit: 份
-  - ref: green-peas
-    qty: 1
-    unit: 份
-  - ref: onion
-    qty: 1
-    unit: 份
+    prep:
+      yue: 新鮮番茄 1 個切件
+      zh: 新鲜番茄 1 个切块
+      en: 1 fresh tomato, cut into chunks
   - ref: tomato-sauce
     qty: 3
     unit: 兩
-  - ref: cheese-topping
+    prep:
+      yue: 茄汁 4 匙 + 喼汁 1 匙 + 糖 2 匙 + 水 200 ml + 雞湯粉 1 茶匙 + 生粉水 1 匙
+      zh: 茄汁 4 勺 + 喼汁 1 勺 + 糖 2 勺 + 水 200 ml + 鸡汤粉 1 茶匙 + 生粉水 1 勺
+      en: 4 Tbsp ketchup + 1 Tbsp Worcestershire + 2 Tbsp sugar + 200 ml water + 1 tsp chicken bouillon + 1 Tbsp cornstarch slurry
+  - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: green-peas
+    qty: 1
+    unit: 份
+    prep:
+      yue: 飛水 30 秒
+      zh: 飞水 30 秒
+      en: blanched 30 seconds
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 冷飯，先炒香
+      zh: 冷饭，先炒香
+      en: cooked rice, ideally day-old; will be lightly fried first
+  - ref: cheese-topping
+    qty: 1
+    unit: 份
+    prep:
+      yue: Mozzarella 同 cheddar 混合絲 100 g
+      zh: Mozzarella 与 cheddar 混合丝 100 g
+      en: 100 g mozzarella + cheddar blend, shredded
+  - ref: egg
+    qty: 1
+    unit: 個
+    prep:
+      yue: 打散——用嚟掛漿
+      zh: 打散——用于挂浆
+      en: beaten — for the breading dredge
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 40
+  cook: 25
+equipment:
+  - oven
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 豬扒拍鬆、醃 30 分鐘。落鍋前依次掛蛋液、麵包糠（兩面均勻）。
+      zh: 猪扒拍松、腌 30 分钟。下锅前依次挂蛋液、面包糠（两面均匀）。
+      en: Pound and marinate the pork chops for 30 minutes. Just before frying, dredge in beaten egg, then breadcrumbs (both sides evenly).
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 油溫 170°C，落豬扒煎炸 4 分鐘到金黃酥脆，撈起瀝油備用。
+      zh: 油温 170°C，下猪扒煎炸 4 分钟至金黄酥脆，捞出沥油备用。
+      en: Heat oil to 170°C / 340°F. Pan-fry the pork chops for 4 minutes until golden and crisp; drain.
+    temperature_c: 170
+    time_seconds: 240
+  - order: 3
+    body:
+      yue: 鑊餘油落洋蔥絲爆香 30 秒，落新鮮番茄煮 60 秒到出汁；倒入茄汁料煮滾、加生粉水推稠到「掛得住」嘅濃度，落青豆翻 5 下熄火。
+      zh: 锅余油下洋葱丝爆香 30 秒，加入新鲜番茄煮 60 秒至出汁；倒入茄汁料煮沸、加生粉水勾芡至「挂得住」浓度，加青豆翻 5 下关火。
+      en: Stir-fry the onion 30 seconds, add the fresh tomato and cook 60 seconds until juicy. Pour in the ketchup mixture, boil and thicken with the slurry to a clinging consistency. Add peas and toss 5 times; turn off heat.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 焗碗底鋪白飯，淋少少茄汁滲入飯底；炸豬扒切條鋪喺飯面，再淋上大部分茄汁；灑芝士絲蓋面。
+      zh: 焗碗底铺白饭，淋少许茄汁渗入饭底；炸猪扒切条铺在饭面，再淋上大部分茄汁；撒芝士丝盖面。
+      en: In a baking dish, layer the rice on the bottom and drizzle a touch of sauce. Slice the fried pork chop into strips and lay over the rice; ladle most of the sauce over the top. Blanket with shredded cheese.
+    time_seconds: 60
+  - order: 5
+    body:
+      yue: 焗爐預熱 220°C，焗 10-12 分鐘到芝士金黃起小焦邊，即上枱。
+      zh: 烤箱预热 220°C，烤 10-12 分钟至芝士金黄起小焦边，即上桌。
+      en: Preheat the oven to 220°C / 425°F. Bake 10-12 minutes until the cheese is golden with browned edges, and serve immediately.
+    temperature_c: 220
+    time_seconds: 720
+tips:
+  - yue: 「灑芝士焗 10 分鐘」係菜單原文——呢個係茶餐廳「快上枱」標準操作。但芝士質素好重要，用 mozzarella 同 cheddar 混合最佳，淨用 mozzarella 缺色，淨用 cheddar 太重。
+    zh: 「洒芝士焗 10 分钟」是菜单原文——这是茶餐厅「快上桌」标准操作。但芝士品质很重要，用 mozzarella 与 cheddar 混合最佳，单用 mozzarella 缺色，单用 cheddar 太重。
+    en: "Bake with cheese on top for 10 minutes" is straight from the source menu — this is the tea-restaurant's quick-service protocol. Cheese quality matters; a mozzarella-cheddar blend is best. Pure mozzarella lacks colour; pure cheddar is too rich.
+  - yue: 茄汁要茄汁同新鮮番茄一齊用——茄汁提供統一嘅甜酸基調，新鮮番茄提供層次同果香。淨用茄汁過於單調。
+    zh: 茄汁要茄汁与新鲜番茄一同用——茄汁提供统一的甜酸基调，新鲜番茄提供层次与果香。单用茄汁过于单调。
+    en: Use both ketchup AND fresh tomato — ketchup gives the unified sweet-tang base, fresh tomato adds dimension and fruity aroma. Ketchup alone is too one-note.
+  - yue: 「另有意粉版」即係同樣茄汁醬可以澆喺煮熟嘅意粉上面焗，茶餐廳通常同價發售——配飯叫「茄汁豬扒飯」、配意粉叫「茄汁豬扒意粉」。
+    zh: 「另有意粉版」即同样的茄汁酱可浇在煮熟意粉上焗，茶餐厅常同价发售——配饭叫「茄汁猪扒饭」、配意粉叫「茄汁猪扒意粉」。
+    en: The "spaghetti version" — same sauce, but ladled over cooked spaghetti instead of rice — is sold at the same price in HK tea-restaurants. Tomato + cheese + pasta is closer to its Italian roots, while the rice version is the Cantonised hybrid.
+history:
+  yue: 港式茄汁豬扒飯係 1950 年代香港冰室（茶餐廳前身）受意大利菜啟發嘅創造——將意式 baked penne with tomato sauce 嘅概念用粵式食材改造：意大利番茄醬變港式茄汁、義大利香腸變炸豬扒、pasta 變白飯。今日已成為港式茶餐廳焗飯類嘅基本款，亦係海外港式茶餐廳必賣菜式。
+  zh: 港式茄汁猪扒饭是 1950 年代香港冰室（茶餐厅前身）受意大利菜启发的创造——将意式 baked penne with tomato sauce 的概念用粤式食材改造：意大利番茄酱变港式茄汁、意式香肠变炸猪扒、pasta 变白饭。今日已成为港式茶餐厅焗饭类的基本款，亦是海外港式茶餐厅必卖菜式。
+  en: HK tomato pork-chop rice originated in 1950s Hong Kong ice-houses (the predecessors of modern tea-restaurants) as a Cantonese reinterpretation of Italian baked pasta — Italian tomato sauce became Cantonese-style ketchup, Italian sausage became fried pork chop, pasta became white rice. Today it is the canonical HK baked-rice and a fixture of any Cantonese-style cafe overseas.
+allergens:
+  - dairy
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #35 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 灑芝士焗 10 分鐘；另有意粉版
+    accessed: 2026-05-24
+    note: "Item #35 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

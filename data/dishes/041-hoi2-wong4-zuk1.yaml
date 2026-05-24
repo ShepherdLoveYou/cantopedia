@@ -7,34 +7,118 @@ names:
   en: Imperial Seafood Congee
 category: congee
 ingredients:
-  - ref: shrimp-balls
-    qty: 2
-    unit: 件
-  - ref: crab-stick
-    qty: 2
-    unit: 件
-  - ref: fish-cake-balls
-    qty: 2
-    unit: 件
-  - ref: squid
-    qty: 2
-    unit: 件
-  - ref: fish-balls
-    qty: 2
-    unit: 件
-  - ref: mussel
-    qty: 2
-    unit: 件
-  - ref: ginger-scallion
-    qty: 1
-    unit: 份
   - ref: congee-base
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 預先熬好嘅生滾粥底（米水 1:12、慢火 90 分鐘）
+      zh: 预先熬好的生滚粥底（米水 1:12、慢火 90 分钟）
+      en: pre-cooked plain congee base (rice-to-water 1:12, simmered 90 minutes)
+  - ref: shrimp-balls
+    qty: 2
+    unit: 件
+    prep:
+      yue: 大蝦球 2 隻、去殼留尾
+      zh: 大虾球 2 只、去壳留尾
+      en: 2 large prawns, peeled with tail on
+  - ref: crab-stick
+    qty: 2
+    unit: 件
+    prep:
+      yue: 蟹柳 2 條撕絲
+      zh: 蟹柳 2 条撕丝
+      en: 2 crab sticks, shredded
+  - ref: fish-cake-balls
+    qty: 2
+    unit: 件
+    prep:
+      yue: 魚蛋 2 粒
+      zh: 鱼蛋 2 颗
+      en: 2 HK-style fish cake balls
+  - ref: squid
+    qty: 2
+    unit: 件
+    prep:
+      yue: 鮮魷 2 件、切花刀
+      zh: 鲜鱿 2 件、切花刀
+      en: 2 pieces fresh squid, scored
+  - ref: fish-balls
+    qty: 2
+    unit: 件
+    prep:
+      yue: 魚球 2 粒
+      zh: 鱼球 2 颗
+      en: 2 fish balls
+  - ref: mussel
+    qty: 2
+    unit: 件
+    prep:
+      yue: 青口肉 2 隻
+      zh: 青口肉 2 只
+      en: 2 mussel meats
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 薑絲 + 蔥花
+      zh: 姜丝 + 葱花
+      en: julienned ginger + chopped scallion
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 粥底攞出加熱到滾，期間用勺貼底攪兩下唔好黐底。
+      zh: 取出粥底加热至沸腾，期间用勺贴底搅两下防止粘底。
+      en: Bring the congee base to a rolling boil, stirring the bottom occasionally to prevent scorching.
+    time_seconds: 180
+  - order: 2
+    body:
+      yue: 落薑絲，再依次加入魚球、魚蛋、鮮魷花、青口、蟹柳（順序按熟度——耐煮嘅先落）。每樣煮 30 秒。
+      zh: 加入姜丝，再依次加入鱼球、鱼蛋、鲜鱿花、青口、蟹柳（顺序按熟度——耐煮的先下）。每样煮 30 秒。
+      en: Add the ginger, then layer in the seafood by cook-time — fish balls and cake first (longest), then squid and mussel, finally the crab stick. Give each about 30 seconds.
+    time_seconds: 150
+  - order: 3
+    body:
+      yue: 最後落蝦球——煮 90 秒到蝦變紅、剛熟即收。蝦過熟會發霉同口感變橡皮。
+      zh: 最后下虾球——煮 90 秒至虾变红、刚熟即关火。虾过熟会发霉且口感橡皮。
+      en: Add the prawns last — 90 seconds to pink-and-just-cooked. Overcooked prawns turn rubbery and watery.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 試味，加少少鹽、雞粉、白胡椒粉、麻油調味——粥底已經有底味，唔好加得多。
+      zh: 试味，加少许盐、鸡粉、白胡椒粉、麻油调味——粥底已有底味，不要加得多。
+      en: Taste and lightly adjust — the base already has flavour, so go easy on the salt, chicken bouillon, white pepper, and a touch of sesame oil.
+  - order: 5
+    body:
+      yue: 盛入大碗，灑上蔥花，配少少炸幹蔥或者花生增加口感對比，即上枱。
+      zh: 盛入大碗，撒上葱花，配少许炸干葱或花生增加口感对比，即可上桌。
+      en: Ladle into a large bowl, top with chopped scallion, and crown with crispy fried shallot or peanuts for textural contrast.
+tips:
+  - yue: 海鮮要新鮮——「海皇」係皇者標準，唔可以用冷凍貨。新鮮蝦球係靈魂，魚球魚蛋亦要選好品牌。
+    zh: 海鲜要新鲜——「海皇」是皇者标准，不可用冷冻货。新鲜虾球是灵魂，鱼球鱼蛋也要选好品牌。
+    en: Fresh seafood is non-negotiable — "海皇" (imperial) implies royal standards. Fresh prawns are the soul of this dish; choose good-quality fish balls (Tai O brand if you can find it) over generic supermarket versions.
+  - yue: 煮粥嘅順序好重要——耐煮嘅食材先落（魚球、魚蛋），易熟嘅後落（蝦、魷魚、蟹柳）。一齊落會出現「半熟半過熟」。
+    zh: 煮粥的顺序很重要——耐煮的食材先下（鱼球、鱼蛋），易熟的后下（虾、鱿鱼、蟹柳）。一同下会半熟半过熟。
+    en: Order of addition matters — long-cookers (fish balls, fish cake) go first; quick-cookers (prawn, squid, crab stick) go last. Dumping everything in at once gives uneven doneness.
+  - yue: 廣東話「粥底」即係 plain congee base——一鍋熬足 90 分鐘嘅米粥，米已完全開花。「生滾」嘅意思係新鮮食材臨食先煮、唔同食材分批落鍋。
+    zh: 广东话「粥底」即 plain congee base——一锅熬足 90 分钟的米粥，米已完全开花。「生滚」的意思是新鲜食材临食时再煮、不同食材分批下锅。
+    en: "粥底" (congee base) is the unflavoured porridge cooked separately for 90 minutes. "生滾" (sang gun, "fresh-tossed") is the technique of adding fresh ingredients to that base on demand, in stages by cook-time.
+history:
+  yue: 海皇粥源自 1980 年代香港高檔粥檔嘅「集合菜式」——將原本要分別點嘅海鮮粥、魷魚粥、蝦球粥混合成一碗，俾客人一次過享受多種海鮮。「海皇」呢個誇張字眼反映當時嘅消費升級——平民食物變成「皇者級」嘅炫耀式選擇。
+  zh: 海皇粥源自 1980 年代香港高档粥档的「集合菜式」——将本来要分别点的海鲜粥、鱿鱼粥、虾球粥合为一碗，让客人一次享受多种海鲜。「海皇」这个夸张字眼反映当时的消费升级——平民食物变成「皇者级」的炫耀式选择。
+  en: "Imperial seafood congee" emerged from 1980s upscale Hong Kong congee shops as a "combo" dish — bundling what were previously separate orders (shrimp congee, squid congee, etc.) into one bowl so diners could sample everything. The grandiose "imperial" name reflects the era's consumer upgrade — humble food rebranded as a "royal-tier" indulgence.
+allergens:
+  - shellfish
+  - fish
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #41 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #41 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

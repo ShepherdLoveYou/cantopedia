@@ -10,43 +10,146 @@ ingredients:
   - ref: hainanese-chicken
     qty: 6
     unit: 件
-  - ref: turnip
-    qty: 2
-    unit: 個
-  - ref: crab-stick
-    qty: 2
-    unit: 件
-  - ref: fish-cake-balls
-    qty: 0.5
-    unit: 件
-  - ref: bean-sprouts
-    qty: 1
-    unit: 兩
-  - ref: mushroom
-    qty: 3
-    unit: 件
-  - ref: egg
-    qty: 0.5
-    unit: 個
-  - ref: scallion
-    qty: 1
-    unit: 份
-  - ref: cilantro
-    qty: 1
-    unit: 份
+    prep:
+      yue: 預先白切嘅海南雞 6 片
+      zh: 预先白切的海南鸡 6 片
+      en: 6 slices pre-poached Hainanese chicken
   - ref: rice-noodle
     qty: 6
     unit: 兩
+    prep:
+      yue: 圓米線（laksa 米線）泡軟備用
+      zh: 圆米线（laksa 米线）泡软备用
+      en: round rice noodles (laksa-style), softened in cold water
   - ref: laksa-paste
     qty: 2
     unit: 匙
+    prep:
+      yue: 喇沙醬（馬來品牌如 Tean's Gourmet）2 匙
+      zh: 喇沙酱（马来品牌如 Tean's Gourmet）2 勺
+      en: 2 Tbsp laksa paste (Malaysian brand like Tean's Gourmet)
   - ref: coconut-milk
     qty: 0.2
     unit: 份
-method_status: stub
+    prep:
+      yue: 椰漿 100 ml
+      zh: 椰浆 100 ml
+      en: 100 ml coconut cream
+  - ref: turnip
+    qty: 2
+    unit: 個
+    prep:
+      yue: 豆卜（油豆腐）2 件、用熱水浸去油
+      zh: 豆卜（油豆腐）2 件、用热水浸去油
+      en: 2 tofu puffs, briefly soaked in hot water to remove excess oil
+  - ref: crab-stick
+    qty: 2
+    unit: 件
+    prep:
+      yue: 蟹柳 2 條
+      zh: 蟹柳 2 条
+      en: 2 imitation crab sticks
+  - ref: fish-cake-balls
+    qty: 0.5
+    unit: 件
+    prep:
+      yue: 魚蛋 4-5 粒
+      zh: 鱼蛋 4-5 颗
+      en: 4-5 HK-style fish cake balls
+  - ref: bean-sprouts
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 摘走尾根
+      zh: 掐去尾根
+      en: tails trimmed
+  - ref: mushroom
+    qty: 3
+    unit: 件
+    prep:
+      yue: 鮮冬菇切片
+      zh: 鲜冬菇切片
+      en: fresh shiitake, sliced
+  - ref: egg
+    qty: 0.5
+    unit: 個
+    prep:
+      yue: 半隻溏心蛋
+      zh: 半个溏心蛋
+      en: half a soft-boiled egg
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: thinly sliced
+  - ref: cilantro
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切段裝飾
+      zh: 切段装饰
+      en: roughly chopped for garnish
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 15
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 米線用凍水浸 30 分鐘到軟，瀝乾備用。配料（豆卜、魚蛋、蟹柳、冬菇）逐樣準備好。
+      zh: 米线用冷水浸 30 分钟至软，沥干备用。配料（豆卜、鱼蛋、蟹柳、冬菇）逐样准备好。
+      en: Soak the rice noodles in cold water for 30 minutes until pliable; drain. Prep all toppings (tofu puffs, fish balls, crab stick, mushroom).
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 大鍋燒熱落 1 匙油，落喇沙醬中火慢炒 90 秒到出紅油、香氣升騰。
+      zh: 大锅烧热下 1 勺油，下喇沙酱中火慢炒 90 秒至出红油、香气升腾。
+      en: In a large pot, heat 1 Tbsp oil and toast the laksa paste over medium for 90 seconds until red oil rises and the aroma blooms.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 加 600 ml 雞湯，大滾後落冬菇、魚蛋、豆卜，煮 5 分鐘等味滲入。
+      zh: 加 600 ml 鸡汤，大沸后下冬菇、鱼蛋、豆卜，煮 5 分钟让味渗入。
+      en: Add 600 ml chicken stock and bring to a rolling boil. Add the mushroom, fish balls, and tofu puffs; simmer 5 minutes to infuse.
+    time_seconds: 300
+  - order: 4
+    body:
+      yue: 落椰漿煮 60 秒到湯體變濃白；落瀝乾嘅米線、芽菜煮 30 秒；最後落白切雞片同蟹柳，60 秒到所有食材熱透。
+      zh: 加椰浆煮 60 秒至汤体变浓白；加沥干的米线、芽菜煮 30 秒；最后加白切鸡片与蟹柳，60 秒至所有食材热透。
+      en: Stir in the coconut cream and simmer 60 seconds — the soup turns cream-coloured. Add the noodles and bean sprouts, simmer 30 seconds, then add the chicken slices and crab stick for a final 60 seconds to heat through.
+    time_seconds: 150
+  - order: 5
+    body:
+      yue: 全部食材撈入大碗——米線打底、配料分佈四周、雞片擺中央，澆湯，最後放半個溏心蛋、灑蔥花同芫茜，即上枱。
+      zh: 全部食材捞入大碗——米线打底、配料分布四周、鸡片摆中央，浇汤，最后放半个溏心蛋、撒葱花与芫荽，即上桌。
+      en: Plate up — noodles at the bottom, toppings arranged around the rim, chicken in the centre. Pour the broth, top with the half soft egg, and garnish with scallion and cilantro.
+tips:
+  - yue: 「喇沙」（laksa）讀作 laat6 saa1，源自馬來文。香港版相對溫和——椰漿少、辣度低；新馬版濃烈、辣油浮面。
+    zh: 「喇沙」（laksa）读作 laat6 saa1，源自马来文。香港版相对温和——椰浆少、辣度低；新马版浓烈、辣油浮面。
+    en: "Laksa" comes from Malay. The HK version is mellower — less coconut, lower heat. The Malaysian or Singaporean original is intense, with a slick of chili oil floating on top.
+  - yue: 椰漿一定要喺最後階段加，唔可以同湯一齊煮太耐——椰漿煮過頭會油水分離、變味。
+    zh: 椰浆务必最后阶段加入，不能与汤一同久煮——椰浆煮过头会油水分离、变味。
+    en: Add coconut cream only at the final stage. Boil it too long and the fat will break out, leaving a greasy, off-flavoured broth.
+  - yue: 海南雞已經預先白切（見 #46），所以呢個菜屬於「組合菜」——茶餐廳廚師可以 5 分鐘內完成。家裡先做好海南雞、再做喇沙，最為有效率。
+    zh: 海南鸡已经预先白切（见 #46），所以这道菜属于「组合菜」——茶餐厅厨师可在 5 分钟内完成。家里先做好海南鸡、再做喇沙，最为有效率。
+    en: The Hainanese chicken is pre-poached (see dish #46), making this an assembly dish — tea-restaurant cooks plate it in 5 minutes. At home, batch-cook the chicken once and use it across multiple dishes throughout the week.
+history:
+  yue: 海南雞喇沙係香港茶餐廳「東南亞融合菜」嘅代表——將粵式白切雞（源自海南文昌雞）配上馬來喇沙湯底，呢種跨界做法源自 1970 年代香港同新馬之間嘅人口流動。茶餐廳廚師將兩個經典融合成新菜式，反映香港多元文化嘅飲食面貌。
+  zh: 海南鸡喇沙是香港茶餐厅「东南亚融合菜」的代表——将粤式白切鸡（源自海南文昌鸡）配上马来喇沙汤底，这种跨界做法源自 1970 年代香港与新马之间的人口流动。茶餐厅厨师将两个经典融合成新菜，反映香港多元文化的饮食面貌。
+  en: Hainanese-chicken laksa exemplifies the Hong Kong tea-restaurant's South-East Asian fusion sensibility — pairing Cantonese poached chicken (itself traced to Hainan's Wenchang chicken) with Malay laksa broth. This cross-cultural construction emerged from 1970s migration between Hong Kong and Malaysia/Singapore, where HK cooks brought back laksa technique and married it to their Cantonese repertoire.
+allergens:
+  - shellfish
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #30 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #30 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
