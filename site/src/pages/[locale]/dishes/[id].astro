@@ -19,11 +19,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const category = await getEntry('category', dish.data.category.id);
 const sauce = dish.data.sauce ? await getEntry('sauce', dish.data.sauce.id) : null;
-const sources = await Promise.all(
-  dish.data.sources.map((s: { source_id: string }) =>
-    getEntry('source', s.source_id).then((entry) => ({ ref: s, entry }))
-  )
-);
+type SourceRefData = { source_id: string; url?: string; accessed: string; note?: string };
+const sources: { ref: SourceRefData; entry: Awaited<ReturnType<typeof getEntry>> }[] = [];
+for (const s of dish.data.sources as SourceRefData[]) {
+  const entry = await getEntry('source', s.source_id);
+  if (entry) sources.push({ ref: s, entry });
+}
 const ingredientRefs = await Promise.all(
   dish.data.ingredients.map(async (i: { ref: { id: string }; qty: number; unit: string; prep?: any }) => ({
     ...i,
