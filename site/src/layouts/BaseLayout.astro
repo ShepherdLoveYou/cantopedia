@@ -99,6 +99,14 @@ const dict = {
         --serif-en: "Crimson Pro", "Iowan Old Style", Georgia, serif;
         --mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
         --meta: var(--sans);
+
+        /* Borrowed from @fluentui/tokens (MIT, https://github.com/microsoft/fluentui) */
+        --fluent-curve-decelerate-mid: cubic-bezier(0, 0, 0, 1);
+        --fluent-curve-accelerate-mid: cubic-bezier(1, 0, 1, 1);
+        --fluent-curve-easy-ease:      cubic-bezier(0.33, 0, 0.67, 1);
+        --fluent-duration-fast:        150ms;
+        --fluent-duration-normal:      200ms;
+        --fluent-duration-gentle:      250ms;
       }
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
