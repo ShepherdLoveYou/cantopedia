@@ -84,26 +84,23 @@ const dict = {
 }[locale];
 ---
 <BaseLayout title={dict.hero_title} locale={locale} description={dict.hero_sub_a}>
-  <section class="hero">
-    <div class="hero-inner">
-      <h1 class="hero-title">{dict.hero_title}</h1>
-      <p class="hero-sub">
-        <span>{dict.hero_sub_a}</span>
-        <span class="dot">·</span>
-        <span>{dict.hero_sub_b}</span>
-      </p>
-    </div>
+  <section class="panorama">
+    <div class="panorama-stripe" aria-hidden="true"></div>
+    <h1 class="panorama-title">{dict.hero_title}</h1>
+    <p class="panorama-sub">
+      <span>{dict.hero_sub_a}</span>
+      <span class="panorama-dot">·</span>
+      <span>{dict.hero_sub_b}</span>
+    </p>
   </section>
 
-  <section class="progress-section">
-    <div class="progress-head">
-      <h3 style="margin: 0;">{dict.progress}</h3>
-      <div class="progress-counts">
-        <span class="ct"><b style="color:var(--m-green)">{complete}</b> {dict.complete}</span>
-        <span class="ct"><b style="color:var(--m-orange)">{draft}</b> {dict.draft}</span>
-        <span class="ct"><b>{total - complete - draft}</b> {dict.stub}</span>
-        <span class="ct ct-total">{total} {dict.pieces}</span>
-      </div>
+  <section class="pivot-section">
+    <div class="pivot-label">{dict.progress}</div>
+    <div class="pivot-counts">
+      <span class="ct"><b style="color:var(--m-green)">{complete}</b> {dict.complete}</span>
+      <span class="ct"><b style="color:var(--m-orange)">{draft}</b> {dict.draft}</span>
+      <span class="ct"><b>{total - complete - draft}</b> {dict.stub}</span>
+      <span class="ct ct-total">{total} {dict.pieces}</span>
     </div>
     <div class="prog-track">
       <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
@@ -111,7 +108,7 @@ const dict = {
     </div>
   </section>
 
-  <h2 style="margin-top: 3rem;">{dict.browse}</h2>
+  <h2 class="pivot-h">{dict.browse}</h2>
 
   <div class="start-screen">
     {sortedCategories.map((cat) => {
@@ -172,51 +169,72 @@ const dict = {
 </BaseLayout>
 
 <style>
-  .hero {
-    margin: -1.5rem -1.5rem 2rem;
-    background: linear-gradient(135deg, var(--m-red) 0%, #c10e0e 100%);
-    color: white;
-    padding: 4rem 1.5rem 4rem;
+  /* WP10 Panorama header — title sits directly on page bg, no slab. */
+  .panorama {
+    position: relative;
+    padding: 3.5rem 0 2.5rem;
+    margin-bottom: 1.5rem;
   }
-  .hero-inner { max-width: 1200px; margin: 0 auto; }
-  .hero-title {
+  .panorama-stripe {
+    position: absolute;
+    left: -1.5rem;
+    top: 3.5rem;
+    width: 3px;
+    height: 5.5rem;
+    background: var(--m-red);
+  }
+  .panorama-title {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 200;
+    font-size: clamp(3.5rem, 9vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--t-ink);
+  }
+  .panorama-sub {
+    margin: 0.75rem 0 0;
     font-family: var(--sans), var(--sans-zh);
     font-weight: 300;
-    font-size: 5rem;
-    line-height: 1;
-    margin: 0;
-    letter-spacing: -0.02em;
+    font-size: 0.95rem;
+    color: var(--t-ink-dim);
+    letter-spacing: 0.02em;
   }
-  .hero-sub { font-size: 1.125rem; margin: 0.5rem 0 0; opacity: 0.92; font-weight: 300; }
-  .hero-sub .dot { margin: 0 0.5rem; opacity: 0.6; }
+  .panorama-dot { margin: 0 0.5rem; opacity: 0.5; }
 
-  .progress-section {
-    background: var(--t-card);
-    padding: 1.5rem;
-    border-left: 4px solid var(--m-blue);
-    margin-bottom: 1rem;
+  /* Pivot section — section label + content directly on bg, no card. */
+  .pivot-section { margin: 0 0 3rem; }
+  .pivot-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--t-ink-dim);
+    margin-bottom: 0.875rem;
+    font-weight: 500;
   }
-  .progress-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-  }
-  .progress-counts { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: 0.875rem; }
-  .ct { color: var(--ink-dim); }
-  .ct b { font-size: 1.25rem; color: var(--ink); margin-right: 0.25rem; font-weight: 700; }
+  .pivot-counts { display: flex; gap: 1.75rem; flex-wrap: wrap; font-family: var(--sans); font-size: 0.875rem; margin-bottom: 0.75rem; }
+  .ct { color: var(--t-ink-dim); }
+  .ct b { font-size: 1.5rem; color: var(--t-ink); margin-right: 0.35rem; font-weight: 200; letter-spacing: -0.02em; }
   .ct-total b { color: var(--m-red); }
   .prog-track {
-    height: 6px;
-    background: var(--rule);
+    height: 3px;
+    background: var(--t-rule);
     overflow: hidden;
     display: flex;
   }
   .prog-seg { height: 100%; }
   .prog-complete { background: var(--m-green); }
   .prog-draft { background: var(--m-orange); }
+
+  .pivot-h {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 200;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    margin: 0 0 1.25rem;
+    color: var(--t-ink);
+  }
 
   .start-screen {
     display: grid;
