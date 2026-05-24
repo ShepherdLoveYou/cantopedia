@@ -1,11 +1,11 @@
-# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24, end of v0.3.0 session)
+# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24, end of v0.4.0 session)
 
 ## Status snapshot
 
-- **Live**: <https://shepherdloveyou.github.io/cantopedia> — v0.3.0 (Phase 3: Start Screen + 3D tilt + monoline SVG icons + Live Tile flip)
+- **Live**: <https://shepherdloveyou.github.io/cantopedia> — v0.4.0 (Phase 4: hamburger drawer + acrylic blur + dark mode + Continuum cascade)
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Latest commit on main**: `89da338` (Phase 3 homepage Start Screen, pushed)
-- **Release tag**: `v0.3.0` (planned after this push)
+- **Release tag**: `v0.4.0` (planned after this push)
+- **New dep:** `focus-trap@8.2.1` (MIT, 4 KB) for drawer a11y. All other Phase 4 features hand-rolled.
 - **Dishes**: 66/66 method_status: complete, full tri-lingual (粵/中/En)
 - **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
 
@@ -53,6 +53,20 @@ Implemented per spec `docs/superpowers/specs/2026-05-24-uwp-phase3-abe-design.md
 - **Live Tile flip** — WIDE main tile flips X-axis every 8s; back face shows dictionary stats (`66` + `粵食典 · 數據` tagline). Pauses on `document.hidden` or `.pressing`.
 
 Files added: `site/src/components/CategoryIcon.astro`. Files modified: `BaseLayout.astro` (tilt CSS + script), `pages/[locale]/index.astro` (Start Screen layout + Live Tile flip).
+
+Build clean: 576 pages, vitest 5/5, `astro check` 0 errors.
+
+### UWP polish v4 — Phase 4 SHIPPED
+
+Spec: `docs/superpowers/specs/2026-05-24-uwp-phase4-design.md`.
+
+- **Hamburger drawer + acrylic blur nav** — left-slide drawer with the 8 categories (icons + counts), locale picker, theme toggle. Nav and drawer both use `backdrop-filter: blur(20-24px) saturate(180%)` with solid-rgba fallback. Hamburger animates into an ✕.
+- **Dark / Light / Auto theme** — `<html data-theme>` driven CSS custom properties. Inline pre-paint script avoids FOUC. Choice persisted in `localStorage`. "Auto" follows `prefers-color-scheme`.
+- **Continuum domino transitions** — every `<main>` child gets a 50ms-stagger `translateY(18px)+opacity` cascade on page load/navigation. Pure CSS, no JS.
+- **Drawer a11y** — uses `focus-trap` (MIT, 4 KB). Closes on Esc, scrim click, link click, and `astro:before-preparation`.
+- **Theme migration** — `body`, `.metro-nav`, all literal `white`/`#fff` backgrounds on `.progress-section`, `.aside-card`, `.ing-table`, `.sauce-card`, `.tips`, `.history` switched to `var(--t-card)`. Other surfaces inherit via alias.
+
+Files modified: `BaseLayout.astro`, `pages/[locale]/index.astro`, `pages/[locale]/dishes/[id].astro`. New dep: `focus-trap`.
 
 Build clean: 576 pages, vitest 5/5, `astro check` 0 errors.
 

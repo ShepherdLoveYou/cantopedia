@@ -1,5 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+import CategoryIcon from '~/components/CategoryIcon.astro';
 
 interface Props {
   title: string;
@@ -10,10 +12,23 @@ interface Props {
 const { title, locale = 'zh', description, showNav = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+const categories = await getCollection('category');
+const dishes = await getCollection('dish');
+const categoryCounts = new Map<string, number>();
+for (const d of dishes) {
+  const id = d.data.category.id;
+  categoryCounts.set(id, (categoryCounts.get(id) ?? 0) + 1);
+}
+const drawerCategories = categories
+  .filter((c) => (categoryCounts.get(c.id) ?? 0) > 0)
+  .sort((a, b) => a.data.sort_order - b.data.sort_order);
+
+type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
+
 const dict = {
-  zh: { yue: '粵', zh: '中', en: 'En', tag_browse: '瀏覽', tag_search: '搜尋', tag_about: '關於' },
-  en: { yue: '粵', zh: '中', en: 'En', tag_browse: 'Browse', tag_search: 'Search', tag_about: 'About' },
-  yue: { yue: '粵', zh: '中', en: 'En', tag_browse: '瀏覽', tag_search: '搵', tag_about: '關於' },
+  zh: { yue: '粵語', zh: '中文', en: 'English', tag_browse: '瀏覽分類', tag_search: '搜尋', tag_about: '關於', menu: '選單', theme: '主題', light: '明', dark: '暗', auto: '自動', pieces: '道', github: '原始碼' },
+  en: { yue: '粵語', zh: '中文', en: 'English', tag_browse: 'Browse categories', tag_search: 'Search', tag_about: 'About', menu: 'Menu', theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Auto', pieces: 'dishes', github: 'Source' },
+  yue: { yue: '粵語', zh: '中文', en: 'English', tag_browse: '瀏覽分類', tag_search: '搵', tag_about: '關於', menu: '選單', theme: '主題', light: '明', dark: '暗', auto: '自動', pieces: '道', github: '原始碼' },
 }[locale];
 ---
 <!doctype html>
@@ -22,6 +37,19 @@ const dict = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <script is:inline>
+      (function () {
+        try {
+          const saved = localStorage.getItem('cantopedia-theme') || 'auto';
+          const dark = saved === 'dark' || (saved === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          document.documentElement.dataset.themeChoice = saved;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.dataset.themeChoice = 'auto';
+        }
+      })();
+    </script>
     <title>{title} · 粵食典 Cantopedia</title>
     {description && <meta name="description" content={description} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,16 +61,71 @@ const dict = {
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
       <nav class="metro-nav" transition:persist>
+        <button class="hamburger" id="hamburger" type="button" aria-controls="nav-drawer" aria-expanded="false" aria-label={dict.menu}>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
         <a class="brand" href={`${base}/${locale}`}>
           <span class="brand-seal">粵</span>
           <span class="brand-name">食典 · Cantopedia</span>
         </a>
         <div class="locale-switcher">
           {(['zh', 'yue', 'en'] as const).map((loc) => (
-            <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} href={`${base}/${loc}`}>{dict[loc]}</a>
+            <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} href={`${base}/${loc}`}>{loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'En'}</a>
           ))}
         </div>
       </nav>
+    )}
+    {showNav && (
+      <>
+        <div class="drawer-scrim" id="drawer-scrim" transition:persist></div>
+        <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" transition:persist>
+          <div class="drawer-inner">
+            <div class="drawer-brand">
+              <span class="brand-seal" aria-hidden="true">粵</span>
+              <span class="drawer-brand-name">食典<br /><small>Cantopedia</small></span>
+            </div>
+
+            <div class="drawer-section-label">{dict.tag_browse}</div>
+            <nav class="drawer-cats">
+              {drawerCategories.map((cat) => {
+                const nm = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
+                const count = categoryCounts.get(cat.id) ?? 0;
+                return (
+                  <a class="drawer-cat" href={`${base}/${locale}/browse/${cat.id}`} data-cat={cat.id}>
+                    <span class="drawer-cat-icon"><CategoryIcon cat={cat.id as CatId} size={22} /></span>
+                    <span class="drawer-cat-name">{nm}</span>
+                    <span class="drawer-cat-count">{count}</span>
+                  </a>
+                );
+              })}
+            </nav>
+
+            <hr class="drawer-rule" />
+
+            <div class="drawer-section-label">{locale === 'en' ? 'Language' : '語言'}</div>
+            <div class="drawer-locales">
+              {(['zh', 'yue', 'en'] as const).map((loc) => (
+                <a class={`drawer-locale ${loc === locale ? 'active' : ''}`} href={`${base}/${loc}`}>{dict[loc]}</a>
+              ))}
+            </div>
+
+            <hr class="drawer-rule" />
+
+            <div class="drawer-section-label">{dict.theme}</div>
+            <div class="drawer-themes" role="radiogroup" aria-label={dict.theme}>
+              <button class="drawer-theme" type="button" data-theme-choice="light" aria-label={dict.light}><span aria-hidden="true">☀</span> {dict.light}</button>
+              <button class="drawer-theme" type="button" data-theme-choice="dark" aria-label={dict.dark}><span aria-hidden="true">☾</span> {dict.dark}</button>
+              <button class="drawer-theme" type="button" data-theme-choice="auto" aria-label={dict.auto}><span aria-hidden="true">⚙</span> {dict.auto}</button>
+            </div>
+
+            <div class="drawer-foot">
+              <a href="https://github.com/ShepherdLoveYou/cantopedia">{dict.github} →</a>
+            </div>
+          </div>
+        </aside>
+      </>
     )}
     <main>
       <slot />
@@ -81,6 +164,68 @@ const dict = {
         ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => document.addEventListener(ev, release));
       })();
     </script>
+
+    <script>
+      // Drawer + theme — instantiated on every page load; uses focus-trap (MIT) for a11y.
+      import { createFocusTrap } from 'focus-trap';
+
+      function setup() {
+        const drawer = document.getElementById('nav-drawer');
+        const scrim = document.getElementById('drawer-scrim');
+        const burger = document.getElementById('hamburger');
+        if (!drawer || !scrim || !burger) return;
+
+        let trap: ReturnType<typeof createFocusTrap> | null = null;
+
+        function open() {
+          drawer!.classList.add('open');
+          scrim!.classList.add('open');
+          drawer!.setAttribute('aria-hidden', 'false');
+          burger!.setAttribute('aria-expanded', 'true');
+          if (!trap) {
+            trap = createFocusTrap(drawer!, {
+              onDeactivate: () => burger!.focus(),
+              clickOutsideDeactivates: true,
+              escapeDeactivates: true,
+              returnFocusOnDeactivate: true,
+              fallbackFocus: drawer!,
+            });
+          }
+          trap.activate();
+        }
+        function close() {
+          drawer!.classList.remove('open');
+          scrim!.classList.remove('open');
+          drawer!.setAttribute('aria-hidden', 'true');
+          burger!.setAttribute('aria-expanded', 'false');
+          trap?.deactivate();
+        }
+        function toggle() {
+          drawer!.classList.contains('open') ? close() : open();
+        }
+
+        burger.addEventListener('click', toggle);
+        scrim.addEventListener('click', close);
+        drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+        document.addEventListener('astro:before-preparation', close);
+
+        // Theme toggle wiring
+        const buttons = drawer.querySelectorAll<HTMLButtonElement>('[data-theme-choice]');
+        function applyChoice(choice: string) {
+          const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          document.documentElement.dataset.themeChoice = choice;
+          try { localStorage.setItem('cantopedia-theme', choice); } catch {}
+          buttons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false'));
+        }
+        const current = document.documentElement.dataset.themeChoice || 'auto';
+        applyChoice(current);
+        buttons.forEach((b) => b.addEventListener('click', () => applyChoice(b.dataset.themeChoice!)));
+      }
+
+      setup();
+      document.addEventListener('astro:page-load', setup);
+    </script>
     <style is:global>
       :root {
         /* Metro / W3CSS Metro palette */
@@ -105,13 +250,29 @@ const dict = {
         --m-steel: #647687;
         --m-ink: #1d1d1d;
 
-        /* Surface */
-        --bg: #f5f5f5;
-        --plate: #ebebeb;
-        --plate-dark: #cccccc;
-        --ink: #1d1d1d;
-        --ink-dim: #555;
-        --rule: #d8d8d8;
+        /* Theme tokens (light default) */
+        --t-bg: #f5f5f5;
+        --t-plate: #ebebeb;
+        --t-plate-dark: #cccccc;
+        --t-ink: #1d1d1d;
+        --t-ink-dim: #555;
+        --t-rule: #d8d8d8;
+        --t-card: #ffffff;
+        --t-nav-bg: rgba(29, 29, 29, 0.72);
+        --t-nav-ink: #ffffff;
+        --t-drawer-bg: rgba(20, 20, 22, 0.78);
+        --t-drawer-ink: #ffffff;
+        --t-drawer-dim: rgba(255,255,255,0.6);
+        --t-acrylic-fallback: rgba(20, 20, 22, 0.94);
+        --t-scrim: rgba(0,0,0,0.45);
+
+        /* Surface aliases (forward to theme tokens for back-compat) */
+        --bg: var(--t-bg);
+        --plate: var(--t-plate);
+        --plate-dark: var(--t-plate-dark);
+        --ink: var(--t-ink);
+        --ink-dim: var(--t-ink-dim);
+        --rule: var(--t-rule);
         --seal: #B71C1C;
 
         /* Type stacks — Segoe UI primary (Microsoft Metro) with serif Chinese for body */
@@ -130,6 +291,22 @@ const dict = {
         --fluent-duration-normal:      200ms;
         --fluent-duration-gentle:      250ms;
       }
+
+      html[data-theme="dark"] {
+        --t-bg: #0e0e10;
+        --t-plate: #1a1a1c;
+        --t-plate-dark: #25252a;
+        --t-ink: #f0f0f0;
+        --t-ink-dim: #9a9a9a;
+        --t-rule: #2a2a2c;
+        --t-card: #161618;
+        --t-nav-bg: rgba(10, 10, 12, 0.78);
+        --t-nav-ink: #f0f0f0;
+        --t-drawer-bg: rgba(8, 8, 10, 0.82);
+        --t-acrylic-fallback: rgba(8, 8, 10, 0.96);
+      }
+
+      html, body { background: var(--t-bg); color: var(--t-ink); transition: background-color var(--fluent-duration-gentle) ease, color var(--fluent-duration-gentle) ease; }
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
       body {
@@ -162,16 +339,42 @@ const dict = {
       footer { max-width: 1200px; margin: 4rem auto 2rem; padding: 2rem 1.5rem 0; border-top: 1px solid var(--rule); font-family: var(--meta); font-size: 0.8125rem; color: var(--ink-dim); text-align: center; }
 
       .metro-nav {
-        background: var(--m-ink);
-        color: white;
-        padding: 0.75rem 1.5rem;
+        background: var(--t-nav-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        color: var(--t-nav-ink);
+        padding: 0.625rem 1rem;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        gap: 0.75rem;
         position: sticky;
         top: 0;
         z-index: 50;
       }
+      @supports not (backdrop-filter: blur(1px)) {
+        .metro-nav { background: var(--t-acrylic-fallback); }
+      }
+      .metro-nav .brand { flex: 1; justify-content: center; }
+      .hamburger {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        width: 36px; height: 36px;
+        display: inline-flex; flex-direction: column; justify-content: center; align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        padding: 0;
+        color: var(--t-nav-ink);
+      }
+      .hamburger-bar {
+        display: block; width: 18px; height: 2px;
+        background: currentColor;
+        transition: transform var(--fluent-duration-normal) var(--fluent-curve-easy-ease),
+                    opacity var(--fluent-duration-fast) ease;
+      }
+      .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+      .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(2) { opacity: 0; }
+      .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
       .brand { display: flex; align-items: center; gap: 0.75rem; color: white !important; }
       .brand:hover { color: white !important; }
       .brand-seal {
@@ -300,6 +503,129 @@ const dict = {
         ::view-transition-new(*) {
           animation: none !important;
         }
+      }
+
+      /* ===== Drawer + scrim ===== */
+      .drawer-scrim {
+        position: fixed; inset: 0;
+        background: var(--t-scrim);
+        opacity: 0; pointer-events: none;
+        transition: opacity var(--fluent-duration-normal) var(--fluent-curve-easy-ease);
+        z-index: 90;
+      }
+      .drawer-scrim.open { opacity: 1; pointer-events: auto; }
+
+      .nav-drawer {
+        position: fixed; top: 0; bottom: 0; left: 0;
+        width: clamp(260px, 78vw, 320px);
+        background: var(--t-drawer-bg);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        color: var(--t-drawer-ink);
+        transform: translateX(-100%);
+        transition: transform var(--fluent-duration-gentle) var(--fluent-curve-easy-ease);
+        z-index: 100;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 2px 0 16px rgba(0,0,0,0.35);
+      }
+      @supports not (backdrop-filter: blur(1px)) {
+        .nav-drawer { background: var(--t-acrylic-fallback); }
+      }
+      .nav-drawer.open { transform: translateX(0); }
+      .nav-drawer[aria-hidden="true"] a, .nav-drawer[aria-hidden="true"] button { tab-index: -1; }
+      .drawer-inner { padding: 1.25rem 1rem 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+      .drawer-brand { display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0 0.75rem; }
+      .drawer-brand-name { font-family: var(--sans), var(--sans-zh); font-weight: 300; font-size: 1.5rem; line-height: 1.1; }
+      .drawer-brand-name small { display: block; font-size: 0.7rem; opacity: 0.6; letter-spacing: 0.16em; text-transform: uppercase; }
+
+      .drawer-section-label {
+        font-family: var(--sans);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--t-drawer-dim);
+        margin: 0.75rem 0 0.25rem;
+      }
+
+      .drawer-cats { display: flex; flex-direction: column; }
+      .drawer-cat {
+        display: grid;
+        grid-template-columns: 28px 1fr auto;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 0.5rem 0.5rem;
+        color: var(--t-drawer-ink) !important;
+        text-decoration: none;
+        border-left: 3px solid transparent;
+        transition: background var(--fluent-duration-fast) ease, border-color var(--fluent-duration-fast) ease;
+      }
+      .drawer-cat:hover { background: rgba(255,255,255,0.06); border-left-color: var(--m-red); color: var(--t-drawer-ink) !important; }
+      .drawer-cat-icon { display: inline-flex; }
+      .drawer-cat-name { font-family: var(--sans), var(--sans-zh); font-size: 0.95rem; }
+      .drawer-cat-count {
+        font-family: var(--sans);
+        font-size: 0.72rem;
+        opacity: 0.7;
+        padding: 1px 6px;
+        background: rgba(255,255,255,0.10);
+        letter-spacing: 0.04em;
+      }
+
+      .drawer-rule { border: 0; border-top: 1px solid rgba(255,255,255,0.10); margin: 0.5rem 0; }
+
+      .drawer-locales { display: flex; gap: 0.25rem; }
+      .drawer-locale {
+        flex: 1;
+        text-align: center;
+        padding: 0.5rem 0.25rem;
+        font-family: var(--sans), var(--sans-zh);
+        font-size: 0.8rem;
+        color: var(--t-drawer-dim) !important;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.04);
+      }
+      .drawer-locale.active { color: var(--t-drawer-ink) !important; background: rgba(255,255,255,0.14); border-color: var(--m-red); }
+
+      .drawer-themes { display: flex; gap: 0.25rem; }
+      .drawer-theme {
+        flex: 1;
+        appearance: none;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: var(--t-drawer-dim);
+        padding: 0.5rem 0.25rem;
+        font-family: var(--sans), var(--sans-zh);
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: background var(--fluent-duration-fast) ease, color var(--fluent-duration-fast) ease;
+      }
+      .drawer-theme:hover { background: rgba(255,255,255,0.10); color: var(--t-drawer-ink); }
+      .drawer-theme[aria-pressed="true"] { background: rgba(255,255,255,0.18); color: var(--t-drawer-ink); border-color: var(--m-red); }
+
+      .drawer-foot { margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.7; }
+      .drawer-foot a { color: var(--t-drawer-ink); }
+
+      /* ===== Continuum domino — staggered children-in on every page ===== */
+      main > * {
+        animation: continuum-in var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+      }
+      main > *:nth-child(1) { animation-delay: 0ms; }
+      main > *:nth-child(2) { animation-delay: 50ms; }
+      main > *:nth-child(3) { animation-delay: 100ms; }
+      main > *:nth-child(4) { animation-delay: 150ms; }
+      main > *:nth-child(5) { animation-delay: 200ms; }
+      main > *:nth-child(6) { animation-delay: 250ms; }
+      main > *:nth-child(n+7) { animation-delay: 300ms; }
+      @keyframes continuum-in {
+        from { transform: translateY(18px); opacity: 0; }
+        to   { transform: none; opacity: 1; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nav-drawer, .drawer-scrim, .hamburger-bar { transition: none !important; }
+        main > * { animation: none !important; }
       }
     </style>
   </body>
