@@ -7,34 +7,115 @@ names:
   en: Pickled-mustard Pork Vermicelli Soup
 category: soup-noodle
 ingredients:
+  - ref: rice-noodle
+    qty: 6
+    unit: 兩
+    prep:
+      yue: 圓米線泡軟瀝乾
+      zh: 圆米线泡软沥干
+      en: round rice noodles, softened and drained
   - ref: snow-vegetable
     qty: 1
     unit: 份
+    prep:
+      yue: 雪菜（醃製芥菜）2 兩、洗淨切細
+      zh: 雪菜（腌制芥菜）2 两、洗净切细
+      en: snow vegetable (pickled mustard greens), 75 g, rinsed and finely chopped
   - ref: pork-strips
     qty: 1
     unit: 份
+    prep:
+      yue: 瘦肉絲、用少少鹽生粉抓勻
+      zh: 瘦肉丝、用少许盐生粉抓匀
+      en: lean pork julienned, lightly salted and tossed with cornstarch
   - ref: bean-sprouts
     qty: 1
     unit: 份
   - ref: turnip
     qty: 1
     unit: 份
+    prep:
+      yue: 豆卜 2 件
+      zh: 豆卜 2 件
+      en: 2 tofu puffs
   - ref: egg
     qty: 0.5
     unit: 個
+    prep:
+      yue: 半個溏心蛋
+      zh: 半个溏心蛋
+      en: half a soft-boiled egg
   - ref: shiitake-dry
     qty: 1
     unit: 份
+    prep:
+      yue: 冬菇絲少少
+      zh: 冬菇丝少许
+      en: shredded dried shiitake
   - ref: peanuts
     qty: 1
     unit: 份
-  - ref: rice-noodle
-    qty: 6
-    unit: 兩
-method_status: stub
+    prep:
+      yue: 炸花生少少裝飾
+      zh: 炸花生少许装饰
+      en: a sprinkle of fried peanuts
+  - ref: scallion
+    qty: 1
+    unit: 份
+  - ref: dry-fried-onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 炸幹蔥少少裝飾
+      zh: 炸干葱少许装饰
+      en: a sprinkle of crispy fried shallot
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 大鍋燒 600 ml 雞湯到滾，落冬菇絲、雪菜煮 60 秒等味散入湯裡。
+      zh: 大锅烧 600 ml 鸡汤至沸，加冬菇丝、雪菜煮 60 秒等味散入汤里。
+      en: Bring 600 ml chicken stock to a boil, add shiitake and snow vegetable; simmer 60 seconds to release flavour.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 落瀝乾米線、豆卜、芽菜煮 90 秒；落瘦肉絲用筷子撥散，煮 60 秒到肉變色即熟。
+      zh: 加沥干米线、豆卜、芽菜煮 90 秒；加瘦肉丝用筷子拨散，煮 60 秒至肉变色即熟。
+      en: Add drained noodles, tofu puffs, and bean sprouts; simmer 90 seconds. Add pork strips, disperse with chopsticks, simmer 60 seconds until just cooked.
+    time_seconds: 150
+  - order: 3
+    body:
+      yue: 試味，加少少鹽、白胡椒粉、麻油調味（雪菜本身已鹹）。撈入大碗——米線打底，所有配料分區排列，最後放半個溏心蛋，灑蔥花、炸幹蔥、炸花生裝飾，即上枱。
+      zh: 试味，加少许盐、白胡椒粉、麻油调味（雪菜本身已咸）。捞入大碗——米线垫底，所有配料分区排列，最后放半个溏心蛋，撒葱花、炸干葱、炸花生装饰，即上桌。
+      en: Taste and adjust with salt, white pepper, sesame oil (snow vegetable is already salty). Plate up — noodles at the bottom, toppings arranged around, half soft egg on top, scatter scallion, crispy shallot, and peanuts. Serve.
+    time_seconds: 60
+tips:
+  - yue: 「雪菜」係醃製嘅芥菜——本身鹹味重，調味嘅時候鹽要落得少。雪菜唔可以炒過耐，會變黑變苦。
+    zh: 「雪菜」是腌制的芥菜——本身咸味重，调味时盐要放少。雪菜不可炒过久，会变黑变苦。
+    en: Snow vegetable (xue cai) is pickled mustard greens — already salty. Salt the soup lightly. Don't overcook it or it turns dark and bitter.
+  - yue: 呢個係茶餐廳湯米線入面嘅「清淡派」——湯底清、配料豐富但唔重油。同 #33 柱侯牛腩湯米線（重口）係相反風格。
+    zh: 这是茶餐厅汤米线中的「清淡派」——汤底清、配料丰富但不重油。与 #33 柱侯牛腩汤米线（重口）是相反风格。
+    en: This is the "clean" school of HK soup vermicelli — clear broth, abundant toppings, low oil. The opposite of dish #33 chu hou beef brisket soup (which is the "heavy" school).
+  - yue: 「雪菜肉絲」嘅組合源自江浙菜——雪菜係江南醃菜，1949 年後喺香港被粵菜廚師吸收，配上廣式米線同瘦肉，創造港式融合菜。
+    zh: 「雪菜肉丝」的组合源自江浙菜——雪菜是江南腌菜，1949 年后在香港被粤菜厨师吸收，配上广式米线与瘦肉，创造港式融合菜。
+    en: The snow-vegetable-and-pork combination originates in Jiangzhe (Jiangsu-Zhejiang) cuisine — pickled mustard greens are a Jiangnan tradition. After 1949 Cantonese cooks in Hong Kong adopted them, pairing with Cantonese vermicelli and pork to create the HK fusion version.
+history:
+  yue: 雪菜肉絲湯米線喺 1960 年代香港江浙移民帶到嘅菜式——當時上海菜、寧波菜廚師將「雪菜肉絲」呢個經典組合（原本配麵或者炒）配湯米線變化。雪菜本身保存期長，係茶餐廳常備食材，今日係香港米線檔嘅基本款。
+  zh: 雪菜肉丝汤米线在 1960 年代由香港江浙移民带入——当时上海菜、宁波菜厨师将「雪菜肉丝」这个经典组合（原本配面或炒）配汤米线变化。雪菜本身保存期长，是茶餐厅常备食材，今日是香港米线档的基本款。
+  en: Snow-vegetable pork vermicelli soup arrived in 1960s Hong Kong with Jiangzhe migrants — Shanghai and Ningbo cooks adapted the classic snow-vegetable-and-pork pairing (originally with wheat noodle or stir-fried) into a soup vermicelli format. Snow vegetable keeps well, making it a standard tea-restaurant pantry ingredient. Today it is a basic offering on Hong Kong vermicelli menus.
+allergens:
+  - peanut
+  - soy
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #34 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #34 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

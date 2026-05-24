@@ -7,22 +7,91 @@ names:
   en: Char-siu Laksa Vermicelli
 category: soup-noodle
 ingredients:
-  - ref: cha-siu
-    qty: 8
-    unit: 片
   - ref: rice-noodle
     qty: 6
     unit: 兩
+    prep:
+      yue: 圓米線泡軟瀝乾
+      zh: 圆米线泡软沥干
+      en: round rice noodles, softened and drained
+  - ref: cha-siu
+    qty: 8
+    unit: 片
+    prep:
+      yue: 預先做好嘅叉燒，切薄片
+      zh: 预先做好的叉烧，切薄片
+      en: pre-made char siu, sliced thin
   - ref: laksa-paste
     qty: 2
     unit: 匙
+    prep:
+      yue: 馬來喇沙醬 2 匙
+      zh: 马来喇沙酱 2 勺
+      en: 2 Tbsp Malay laksa paste
   - ref: coconut-milk
     qty: 0.2
     unit: 份
-method_status: stub
+    prep:
+      yue: 椰漿 100 ml
+      zh: 椰浆 100 ml
+      en: 100 ml coconut cream
+  - ref: bean-sprouts
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 摘尾根
+      zh: 掐尾根
+      en: tails trimmed
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥花
+      zh: 葱花
+      en: chopped
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 7
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鍋落 1 匙油，落喇沙醬中火炒 90 秒到出紅油；加 600 ml 雞湯煮滾，落椰漿煮 60 秒到湯體變奶白。
+      zh: 锅下 1 勺油，下喇沙酱中火炒 90 秒至出红油；加 600 ml 鸡汤煮沸，加椰浆煮 60 秒至汤体变奶白。
+      en: Heat 1 Tbsp oil, toast laksa paste on medium 90 seconds until red oil rises. Add 600 ml chicken stock, bring to boil. Add coconut cream, simmer 60 seconds until creamy.
+    time_seconds: 240
+  - order: 2
+    body:
+      yue: 落瀝乾米線同芽菜煮 90 秒到米線熱透、芽菜剛剛斷生。
+      zh: 加沥干米线与芽菜煮 90 秒至米线热透、芽菜刚断生。
+      en: Add the drained noodles and bean sprouts; simmer 90 seconds — noodles warmed through, sprouts still crunchy.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 撈入大碗——米線打底，叉燒片半月形覆喺面上，澆湯，灑蔥花，即上枱。
+      zh: 捞入大碗——米线垫底，叉烧片半月形覆在面上，浇汤，撒葱花，即上桌。
+      en: Plate up — noodles at the bottom, char siu fanned over the top in a half-moon. Pour over the broth, top with scallion, serve.
+    time_seconds: 30
+tips:
+  - yue: 叉燒已經熟，落湯只係翻熱——唔可以煮太耐，否則叉燒會變柴。
+    zh: 叉烧已熟，下汤只是回温——不可煮太久，否则叉烧会变柴。
+    en: Char siu is already cooked — adding it to the soup is only for warming. Too long and it dries out.
+  - yue: 「叉燒喇沙」係茶餐廳「叉燒系列 + 喇沙系列」嘅交叉組合——體現港式茶餐廳「萬物可融合」嘅精神。
+    zh: 「叉烧喇沙」是茶餐厅「叉烧系列 + 喇沙系列」的交叉组合——体现港式茶餐厅「万物可融合」的精神。
+    en: Char-siu laksa is the cross-product of "char siu series" and "laksa series" — exemplifying HK tea-restaurant's "fuse anything with anything" attitude.
+history:
+  yue: 叉燒喇沙喺 1980 年代香港茶餐廳出現——當時叉燒已經係茶餐廳鎮場食材、喇沙係南洋熱門新味。將兩者組合，提供俾鍾意叉燒但又想試南洋風味嘅客人。
+  zh: 叉烧喇沙在 1980 年代香港茶餐厅出现——当时叉烧已是茶餐厅镇场食材、喇沙是南洋热门新味。将两者组合，提供给喜欢叉烧又想试南洋风味的客人。
+  en: Char-siu laksa appeared in 1980s HK tea-restaurants when char siu was an established staple and laksa was the hot new Nanyang flavour. Combining the two served diners who loved char siu but wanted to try Southeast Asian taste profiles.
+allergens:
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #32 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #32 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

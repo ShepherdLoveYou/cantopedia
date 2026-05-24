@@ -7,46 +7,157 @@ names:
   en: Italian Herb Baked Seafood
 category: baked-rice
 ingredients:
+  - ref: white-rice
+    qty: 1
+    unit: 碗
+    prep:
+      yue: 白飯一碗（焗飯版）或者意粉 6 兩（意粉版）
+      zh: 白饭一碗（焗饭版）或意粉 6 两（意粉版）
+      en: 1 bowl rice (for baked-rice version) or 6 兩 spaghetti (for pasta version)
   - ref: shrimp-balls
     qty: 3
     unit: 件
+    prep:
+      yue: 大蝦球 3 隻、去殼留尾
+      zh: 大虾球 3 只、去壳留尾
+      en: 3 prawns peeled tail-on
   - ref: squid
     qty: 3
     unit: 件
+    prep:
+      yue: 鮮魷 3 件、切花刀
+      zh: 鲜鱿 3 件、切花刀
+      en: 3 pieces fresh squid, scored
   - ref: fish-fillet
     qty: 2
     unit: 件
+    prep:
+      yue: 龍利柳 2 件、切大塊
+      zh: 龙利柳 2 件、切大块
+      en: 2 pieces sole fillet, cut large
   - ref: crab-stick
     qty: 3
     unit: 件
+    prep:
+      yue: 蟹柳 3 條
+      zh: 蟹柳 3 条
+      en: 3 crab sticks
   - ref: fish-cake-balls
     qty: 0.5
     unit: 件
+    prep:
+      yue: 魚蛋 2 粒
+      zh: 鱼蛋 2 颗
+      en: 2 fish balls
   - ref: mussel
     qty: 2
     unit: 件
+    prep:
+      yue: 青口肉 2 隻
+      zh: 青口肉 2 只
+      en: 2 mussel meats
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切丁
+      zh: 切丁
+      en: diced
   - ref: green-peas
     qty: 1
     unit: 份
   - ref: mushroom
     qty: 1
     unit: 份
+    prep:
+      yue: 切片
+      zh: 切片
+      en: sliced
   - ref: bechamel-white
     qty: 1
     unit: 份
+    prep:
+      yue: 白汁——牛油 30 g + 麵粉 30 g + 牛奶 400 ml + 鹽 + 白胡椒粉 + 雞粉
+      zh: 白汁——黄油 30 g + 面粉 30 g + 牛奶 400 ml + 盐 + 白胡椒粉 + 鸡粉
+      en: béchamel — 30 g butter + 30 g flour + 400 ml milk + salt + white pepper + chicken bouillon
   - ref: herbs
     qty: 1
     unit: 份
+    prep:
+      yue: 意式香草混合（羅勒、奧勒岡、百里香）少少
+      zh: 意式香草混合（罗勒、奥勒冈、百里香）少许
+      en: Italian herb mix (basil, oregano, thyme), a pinch
   - ref: cheese-topping
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: Mozzarella 同 Cheddar 混合絲 100 g
+      zh: Mozzarella 与 Cheddar 混合丝 100 g
+      en: 100 g mozzarella-cheddar blend, shredded
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 15
+equipment:
+  - oven
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 白汁製作——奶油溶化，落麵粉用打蛋器攪到無顆粒（製成 roux），轉細火慢慢加入牛奶，唔停攪到順滑無顆粒；加鹽、白胡椒粉、雞粉調味，加意式香草拌勻。
+      zh: 白汁制作——黄油融化，下面粉用打蛋器搅至无颗粒（制成 roux），转小火慢慢加入牛奶，不停搅至顺滑无颗粒；加盐、白胡椒粉、鸡粉调味，加意式香草拌匀。
+      en: Béchamel — melt butter, whisk in flour to form a roux (no lumps), turn heat low and slowly stream in milk while whisking continuously until smooth. Season with salt, white pepper, chicken bouillon, and Italian herbs.
+    time_seconds: 480
+  - order: 2
+    body:
+      yue: 鑊燒熱落 1 匙油，落洋蔥同蘑菇爆 60 秒，再落所有海鮮（蝦、魷、魚柳、青口、蟹柳）大火快炒 90 秒到剛熟，落青豆翻 10 秒。
+      zh: 锅烧热下 1 勺油，下洋葱与蘑菇爆 60 秒，再下所有海鲜（虾、鱿、鱼柳、青口、蟹柳）大火快炒 90 秒至刚熟，加青豆翻 10 秒。
+      en: Heat 1 Tbsp oil, stir-fry onion and mushroom 60 seconds. Add all seafood (shrimp, squid, sole, mussel, crab stick) and stir-fry on high 90 seconds until just cooked. Toss in peas for 10 seconds.
+    time_seconds: 160
+  - order: 3
+    body:
+      yue: 倒入白汁，輕輕拌勻令所有食材裹勻白汁。
+      zh: 倒入白汁，轻轻拌匀令所有食材裹匀白汁。
+      en: Pour in the béchamel, fold gently to coat all the seafood.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 焗碗底鋪白飯（或者煮熟意粉），淋上白汁海鮮，灑芝士絲蓋面。
+      zh: 焗碗底铺白饭（或煮熟意粉），淋上白汁海鲜，撒芝士丝盖面。
+      en: In a baking dish, layer rice (or cooked spaghetti) at the bottom. Pour the béchamel seafood mixture on top. Blanket with shredded cheese.
+    time_seconds: 60
+  - order: 5
+    body:
+      yue: 焗爐預熱 220°C，焗 10-12 分鐘到芝士金黃帶焦邊，灑少少香草裝飾，即上枱。
+      zh: 烤箱预热 220°C，烤 10-12 分钟至芝士金黄带焦边，撒少许香草装饰，即上桌。
+      en: Preheat oven to 220°C / 425°F. Bake 10-12 minutes until cheese is golden with browned edges. Scatter additional herbs and serve.
+    temperature_c: 220
+    time_seconds: 720
+tips:
+  - yue: 白汁（béchamel）係法式母醬之一——粵菜廚師將其本地化，配中式海鮮同白飯。白汁濃度好重要——稀咗會浸濕飯、稠咗會結團。
+    zh: 白汁（béchamel）是法式母酱之一——粤菜厨师将其本地化，配中式海鲜与白饭。白汁浓度很重要——稀了会浸湿饭、稠了会结团。
+    en: Béchamel is one of the French mother sauces — Cantonese cooks localised it to pair with Chinese seafood and rice. Sauce consistency is critical — too thin and it floods the rice, too thick and it clumps.
+  - yue: 海鮮要快炒至剛熟先淋白汁——海鮮喺白汁裡面再焗 10 分鐘會變柴。預煮七成熟、入爐再煮三成最為理想。
+    zh: 海鲜要快炒至刚熟再淋白汁——海鲜在白汁里再烤 10 分钟会变柴。预煮七成熟、入炉再煮三成最为理想。
+    en: Cook the seafood to just-done before saucing — another 10 minutes in the oven would overcook it. Aim for 70% done in the pan, the oven finishes the remaining 30%.
+  - yue: 「意式香草焗海鮮」係茶餐廳「西式焗類」嘅高級版——比 #37 白汁雞扒、#38 葡汁焗龍利柳價貴，因為海鮮成本最高。
+    zh: 「意式香草焗海鲜」是茶餐厅「西式烘类」的高级版——比 #37 白汁鸡扒、#38 葡汁焗龙利柳价格高，因为海鲜成本最高。
+    en: Italian herb baked seafood is the premium offering in HK tea-restaurants' "baked Western series" — priced higher than dishes #37 (béchamel chicken) and #38 (Portuguese sauce sole) because seafood is the most expensive base.
+history:
+  yue: 港式焗海鮮係 1960 年代香港冰室同茶餐廳借鑒法意菜（béchamel-style baked seafood）嘅創造——將法式 béchamel 同義大利 herb 混合，配上香港本地海鮮、再淋上中式芝士面，係「東西合璧」嘅典型例子。今日喺香港、海外港式茶餐廳普遍提供。
+  zh: 港式烘海鲜是 1960 年代香港冰室与茶餐厅借鉴法意菜（béchamel-style baked seafood）的创造——将法式 béchamel 与意大利 herb 混合，配上香港本地海鲜、再淋上中式芝士面，是「东西合璧」的典型。今天在香港、海外港式茶餐厅普遍提供。
+  en: HK baked seafood emerged in 1960s Hong Kong ice-houses and tea-restaurants, riffing on French and Italian béchamel-baked seafood. Combining French béchamel with Italian herbs, topped with the Chinese-style cheese melt, paired with local HK seafood — it is an exemplar of "East-meets-West" fusion. Today it is on every HK tea-restaurant menu.
+allergens:
+  - dairy
+  - shellfish
+  - fish
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #36 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #36 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

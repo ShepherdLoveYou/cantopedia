@@ -7,22 +7,88 @@ names:
   en: Chu Hou Beef-brisket Vermicelli Soup
 category: soup-noodle
 ingredients:
-  - ref: beef-brisket
-    qty: 9
-    unit: 件
-  - ref: lettuce
-    qty: 3
-    unit: 兩
   - ref: rice-noodle
     qty: 6
     unit: 兩
+    prep:
+      yue: 圓米線泡軟瀝乾
+      zh: 圆米线泡软沥干
+      en: round rice noodles, softened and drained
+  - ref: beef-brisket
+    qty: 9
+    unit: 件
+    prep:
+      yue: 預先用柱侯醬炆好嘅牛腩塊（同 #28 共用）
+      zh: 预先用柱侯酱炖好的牛腩块（与 #28 共用）
+      en: pre-braised brisket cubes in chu hou sauce (same prep as #28)
+  - ref: lettuce
+    qty: 3
+    unit: 兩
+    prep:
+      yue: 唐生菜切段、飛水
+      zh: 唐生菜切段、飞水
+      en: Chinese lettuce, cut into segments and blanched
   - ref: chu-hou-sauce
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 牛腩本身嘅柱侯炆汁 3 匙
+      zh: 牛腩本身的柱侯炖汁 3 勺
+      en: 3 Tbsp of the chu hou braising liquid the brisket cooked in
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥花
+      zh: 葱花
+      en: chopped
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 大鍋燒 600 ml 雞湯到滾，落柱侯炆汁同少少老抽（上色），煮 60 秒。
+      zh: 大锅烧 600 ml 鸡汤至沸，加柱侯炖汁与少许老抽（上色），煮 60 秒。
+      en: Bring 600 ml chicken stock to a boil, add the chu hou braising liquid and a touch of dark soy for colour. Simmer 60 seconds.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 落已炆牛腩塊翻熱 90 秒，落瀝乾米線同唐生菜煮 60 秒到米線熱透、生菜剛剛斷生。
+      zh: 加已炖牛腩块翻热 90 秒，下沥干米线与唐生菜煮 60 秒至米线热透、生菜刚断生。
+      en: Add the pre-braised brisket to re-warm 90 seconds. Add the noodles and lettuce, simmer 60 seconds until noodles are hot and lettuce just tender.
+    time_seconds: 150
+  - order: 3
+    body:
+      yue: 撈入大碗——米線打底，牛腩擺中央，生菜分佈四周，澆湯，灑蔥花，即上枱。
+      zh: 捞入大碗——米线垫底，牛腩摆中央，生菜分布四周，浇汤，撒葱花，即上桌。
+      en: Plate up — noodles bottom, brisket centre, lettuce around. Pour the broth, top with scallion, serve.
+    time_seconds: 30
+tips:
+  - yue: 同 #28 柱侯牛腩炒河 共用同一個「半成品」牛腩——茶餐廳每日早上炆一大鍋，分批做炒河、湯米線、煲仔飯。
+    zh: 与 #28 柱侯牛腩炒河共用同一个「半成品」牛腩——茶餐厅每日早上炖一大锅，分批做炒河、汤米线、煲仔饭。
+    en: Shares the pre-braised brisket "mise" with dish #28 (chu hou beef hor fun) — tea-restaurants braise one big pot every morning and use it across hor fun, soup vermicelli, and clay-pot rice.
+  - yue: 同湯米線（#34 雪菜肉絲）相比——柱侯牛腩湯米線屬於「重口味」湯底，雪菜肉絲屬於「清淡」湯底。茶餐廳客人可按口味選擇。
+    zh: 与汤米线（#34 雪菜肉丝）相比——柱侯牛腩汤米线属于「重口味」汤底，雪菜肉丝属于「清淡」汤底。茶餐厅客人可按口味选择。
+    en: Compared with dish #34 (snow vegetable + pork strip soup vermicelli) — this one is the "heavy" broth, that's the "clean" one. Tea-restaurant diners pick by mood.
+  - yue: 「湯米線」嘅米線一定要係圓米線（laksa 米線），唔可以用扁米粉——扁米粉煮過頭即時化開。
+    zh: 「汤米线」的米线必须是圆米线（laksa 米线），不能用扁米粉——扁米粉煮过头会立即化开。
+    en: Soup noodles must use round laksa-style vermicelli, not flat rice vermicelli — flat vermicelli falls apart in the soup.
+history:
+  yue: 柱侯牛腩湯米線係香港茶餐廳「米線系列」嘅基本款——將原本喺粵式酒樓砂煲嘅柱侯牛腩，配上湯米線變成快速餐點。同 #28 炒河版係兩個變體：呢個係湯版（軟身、湯多）、#28 係炒版（乾身、有鑊氣）。
+  zh: 柱侯牛腩汤米线是香港茶餐厅「米线系列」的基本款——将本是粤式酒楼砂煲菜的柱侯牛腩，配上汤米线变成快速餐点。与 #28 炒河版是两个变体：此为汤版（软身、汤多）、#28 为炒版（干身、有镬气）。
+  en: Chu hou brisket soup vermicelli is the basic offering in HK tea-restaurants' vermicelli series — what was originally a Cantonese restaurant clay-pot dish (chu hou brisket) became a quick noodle-bowl meal. With dish #28 (the hor fun stir-fry), this forms a pair — this is the soup version (soft, broth-heavy); #28 is the stir-fry (dry, wok-hei).
+allergens:
+  - soy
+  - gluten
+  - sesame
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #33 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #33 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

@@ -7,22 +7,105 @@ names:
   en: Shrimp-ball Laksa Vermicelli Soup
 category: soup-noodle
 ingredients:
-  - ref: shrimp-balls
-    qty: 6
-    unit: 件
   - ref: rice-noodle
     qty: 6
     unit: 兩
+    prep:
+      yue: 圓米線（laksa 米線）泡軟備用
+      zh: 圆米线（laksa 米线）泡软备用
+      en: round rice noodles (laksa-style), softened in cold water
+  - ref: shrimp-balls
+    qty: 6
+    unit: 件
+    prep:
+      yue: 大蝦球 6 隻、去殼留尾、開背取腸
+      zh: 大虾球 6 只、去壳留尾、开背取肠
+      en: 6 large prawns, peeled tail-on, deveined
   - ref: laksa-paste
     qty: 2
     unit: 匙
+    prep:
+      yue: 喇沙醬（馬來品牌）2 匙
+      zh: 喇沙酱（马来品牌）2 勺
+      en: 2 Tbsp laksa paste (Malaysian brand)
   - ref: coconut-milk
     qty: 0.2
     unit: 份
-method_status: stub
+    prep:
+      yue: 椰漿 100 ml
+      zh: 椰浆 100 ml
+      en: 100 ml coconut cream
+  - ref: bean-sprouts
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 摘走尾根
+      zh: 掐去尾根
+      en: tails trimmed
+  - ref: turnip
+    qty: 1
+    unit: 個
+    prep:
+      yue: 豆卜 2 件
+      zh: 豆卜 2 件
+      en: 2 tofu puffs
+  - ref: cilantro
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切段裝飾
+      zh: 切段装饰
+      en: chopped for garnish
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 20
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 米線用凍水浸 30 分鐘到軟、瀝乾備用。
+      zh: 米线用冷水浸 30 分钟至软、沥干备用。
+      en: Soak rice noodles in cold water 30 min until pliable; drain.
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 大鍋燒熱落 1 匙油，落喇沙醬中火慢炒 90 秒到出紅油。加 600 ml 雞湯煮滾，落豆卜煮 3 分鐘等味滲入。
+      zh: 大锅烧热下 1 勺油，下喇沙酱中火慢炒 90 秒至出红油。加 600 ml 鸡汤煮沸，下豆卜煮 3 分钟等味渗入。
+      en: Heat 1 Tbsp oil in a pot, toast the laksa paste on medium for 90 seconds until red oil rises. Add 600 ml chicken stock, bring to a boil; add tofu puffs and simmer 3 minutes.
+    time_seconds: 270
+  - order: 3
+    body:
+      yue: 落椰漿煮 60 秒到湯體變濃白；落瀝乾嘅米線、芽菜煮 30 秒。最後落蝦球煮 90 秒到變紅、剛熟。
+      zh: 加椰浆煮 60 秒至汤体变浓白；加沥干米线、芽菜煮 30 秒。最后下虾球煮 90 秒至变红、刚熟。
+      en: Stir in coconut cream, simmer 60 seconds — soup becomes creamy. Add the noodles and bean sprouts, simmer 30 seconds. Finally add the prawns, simmer 90 seconds to pink-just-cooked.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 全部食材撈入大碗——米線打底、蝦球擺中央、豆卜同芽菜分佈四周。澆湯，灑芫茜碎，即上枱。
+      zh: 全部食材捞入大碗——米线垫底、虾球摆中央、豆卜与芽菜分布四周。浇汤，撒芫荽碎，即上桌。
+      en: Plate up — noodles bottom, prawns centre, tofu and bean sprouts around. Pour broth, top with cilantro, serve.
+tips:
+  - yue: 蝦喇沙係茶餐廳「升級版喇沙」——比 #32 叉燒喇沙、#33 柱侯牛腩喇沙都貴，因為蝦球係海鮮高價食材。
+    zh: 虾喇沙是茶餐厅「升级版喇沙」——比 #32 叉烧喇沙、#33 柱侯牛腩喇沙都贵，因为虾球是海鲜高价食材。
+    en: Shrimp laksa is the premium version — priced higher than dishes #32 (char siu laksa) or #33 (chu hou beef laksa), since prawns are pricier than the alternatives.
+  - yue: 蝦球必須最後落、火唔可過大——煮過熟會變橡皮，失去彈牙感同甜味。
+    zh: 虾球必须最后下、火不可过大——煮过熟会变橡皮，失去弹牙感与甜味。
+    en: Prawns go in last, on gentle heat — overcooked they turn rubbery and lose both bounce and sweetness.
+  - yue: 「蝦頭」唔好丟——可以喺浸蝦之前剪走蝦頭，落鑊用 1 匙油煎到出蝦頭油（油變紅），呢個係喇沙湯底嘅天然提鮮劑。
+    zh: 「虾头」不要丢——可在剥虾之前剪下虾头，下锅用 1 勺油煎至出虾头油（油变红），这是喇沙汤底的天然提鲜剂。
+    en: Don't discard the shrimp heads — sear them in 1 Tbsp oil until they release red shrimp oil, an excellent natural umami booster for the laksa broth.
+history:
+  yue: 蝦球喇沙係香港茶餐廳「南洋融合菜」之一——將馬來喇沙湯底同粵式蝦球結合，反映 1970 年代香港同新馬之間嘅人口流動。粵菜廚師將喇沙嘅濃郁辣味調溫和啲、配以本地化嘅蝦球，創造出地道港式喇沙。
+  zh: 虾球喇沙是香港茶餐厅「南洋融合菜」之一——将马来喇沙汤底与粤式虾球结合，反映 1970 年代香港与新马之间的人口流动。粤菜厨师将喇沙的浓郁辣味调温和些、配以本地化的虾球，创造出地道港式喇沙。
+  en: Shrimp laksa is one of HK tea-restaurants' South-East Asian fusion dishes — Malay laksa broth meets Cantonese-style large prawns. Reflects 1970s migration between Hong Kong and Malaysia/Singapore. Cantonese cooks toned down the intense heat of original laksa and standardised on local prawns, creating the HK-specific version.
+allergens:
+  - shellfish
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #31 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #31 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
