@@ -132,7 +132,7 @@ const dict = {
           {isWide ? (
             <>
               <div class="face front">
-                <CategoryIcon cat={cat.id as CatId} size={56} />
+                <CategoryIcon cat={cat.id as CatId} size={88} />
                 <div class="tile-name">{catName}</div>
                 <div class="tile-count">{inCat.length} {dict.pieces}</div>
               </div>
@@ -148,9 +148,16 @@ const dict = {
             </>
           ) : (
             <>
-              <div class="tile-icon"><CategoryIcon cat={cat.id as CatId} size={size === 's' ? 32 : 28} /></div>
-              <span class="tile-badge">{inCat.length}</span>
-              <div class="tile-name">{catName}</div>
+              <div class="face front">
+                <CategoryIcon cat={cat.id as CatId} size={size === 's' ? 48 : 72} />
+                <div class="tile-name">{catName}</div>
+                <span class="tile-badge">{inCat.length}</span>
+              </div>
+              <div class="face back" aria-hidden="true">
+                <div class="back-num-sm">{inCat.length}</div>
+                <div class="back-label-sm">{locale === 'en' ? 'dishes' : '道菜'}</div>
+                <div class="back-name-sm">{catName}</div>
+              </div>
             </>
           )}
         </a>
@@ -245,17 +252,41 @@ const dict = {
   }
   .tile:hover { color: white !important; }
 
-  /* Icon positions per size */
-  .tile.size-w .face .tile-name  { font-size: 1.5rem; font-weight: 400; margin-top: 0.5rem; }
-  .tile.size-w .face .tile-count { font-size: 0.95rem; opacity: 0.85; margin-top: 0.15rem; letter-spacing: 0.04em; }
+  /* Live Tile flip — applied to ALL tiles, staggered via JS */
+  .tile { perspective: 1200px; }
+  .tile .face {
+    position: absolute; inset: 0;
+    padding: 1rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s var(--fluent-curve-easy-ease, cubic-bezier(0.6, 0, 0.2, 1));
+  }
+  .tile .face.back { transform: rotateX(180deg); }
+  .tile.flipped .face.front { transform: rotateX(180deg); }
+  .tile.flipped .face.back  { transform: rotateX(360deg); }
 
-  .tile.size-m { padding: 12px; }
-  .tile.size-m .tile-icon { position: absolute; top: 10px; left: 10px; }
-  .tile.size-m .tile-name { position: absolute; bottom: 8px; left: 10px; right: 10px;
-                            font-size: 0.85rem; font-weight: 400; letter-spacing: 0.02em; }
+  /* WIDE front + back text */
+  .tile.size-w .face { padding: 1.25rem; }
+  .tile.size-w .face .tile-name  { font-size: 1.75rem; font-weight: 400; margin-top: 0.6rem; letter-spacing: 0.01em; }
+  .tile.size-w .face .tile-count { font-size: 1rem; opacity: 0.85; margin-top: 0.2rem; letter-spacing: 0.04em; }
+  .tile.size-w .face.back .back-label   { font-size: 0.7rem; letter-spacing: 0.22em; opacity: 0.7; font-weight: 500; }
+  .tile.size-w .face.back .back-num     { font-size: 4rem; font-weight: 200; line-height: 1.1; margin: 0.25rem 0; }
+  .tile.size-w .face.back .back-tagline { font-size: 0.9rem; opacity: 0.85; max-width: 320px; }
 
-  .tile.size-s .tile-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-  .tile.size-s .tile-name { display: none; }
+  /* MEDIUM front + back text */
+  .tile.size-m .face .tile-name { font-size: 1rem; font-weight: 400; margin-top: 0.6rem; letter-spacing: 0.02em; }
+  .tile.size-m .face.back .back-num-sm   { font-size: 3rem; font-weight: 200; line-height: 1; }
+  .tile.size-m .face.back .back-label-sm { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.25rem; }
+  .tile.size-m .face.back .back-name-sm  { font-size: 0.85rem; opacity: 0.85; margin-top: 0.5rem; }
+
+  /* SMALL front + back text */
+  .tile.size-s .face { padding: 0.5rem; }
+  .tile.size-s .face .tile-name { font-size: 0.7rem; font-weight: 400; margin-top: 0.35rem; letter-spacing: 0.02em; line-height: 1.1; }
+  .tile.size-s .face.back .back-num-sm   { font-size: 2.25rem; font-weight: 200; line-height: 1; }
+  .tile.size-s .face.back .back-label-sm { font-size: 0.6rem; opacity: 0.85; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.15rem; }
+  .tile.size-s .face.back .back-name-sm  { font-size: 0.65rem; opacity: 0.8; margin-top: 0.25rem; }
 
   .tile-badge {
     position: absolute;
@@ -268,25 +299,6 @@ const dict = {
   }
   .tile.size-s .tile-badge { display: none; }
 
-  /* Live Tile flip — WIDE main only */
-  .tile.size-w { perspective: 1200px; }
-  .tile.size-w .face {
-    position: absolute; inset: 0;
-    padding: 1.25rem;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: transform 0.8s var(--fluent-curve-easy-ease, cubic-bezier(0.6, 0, 0.2, 1));
-  }
-  .tile.size-w .face.back { transform: rotateX(180deg); }
-  .tile.size-w.flipped .face.front { transform: rotateX(180deg); }
-  .tile.size-w.flipped .face.back  { transform: rotateX(360deg); }
-
-  .tile.size-w .face.back .back-label { font-size: 0.7rem; letter-spacing: 0.22em; opacity: 0.7; font-weight: 500; }
-  .tile.size-w .face.back .back-num   { font-size: 3.5rem; font-weight: 200; line-height: 1.1; margin: 0.25rem 0; }
-  .tile.size-w .face.back .back-tagline { font-size: 0.85rem; opacity: 0.85; max-width: 280px; }
-
   @media (max-width: 640px) {
     .hero { padding: 2.5rem 1.5rem 2.5rem; }
     .hero-title { font-size: 3.5rem; }
@@ -294,18 +306,38 @@ const dict = {
 </style>
 
 <script>
-  (function setupLiveTile() {
-    const wide = document.querySelector('.tile.size-w');
-    if (!wide) return;
-    let timer = setInterval(flip, 8000);
-    function flip() {
+  // Live Tile flip — every tile flips every 10s, staggered by per-tile phase so
+  // the Start Screen has the WP10 "always-alive" rhythm without all tiles syncing.
+  (function setupLiveTiles() {
+    const tiles = Array.from(document.querySelectorAll<HTMLElement>('.start-screen .tile'));
+    if (tiles.length === 0) return;
+    const PERIOD = 10000;
+    const STEP = 1400;
+    const timers: number[] = [];
+    function flip(t: HTMLElement) {
       if (document.hidden) return;
-      if (wide!.classList.contains('pressing')) return;
-      wide!.classList.toggle('flipped');
+      if (t.classList.contains('pressing')) return;
+      t.classList.toggle('flipped');
     }
+    function start() {
+      tiles.forEach((t, i) => {
+        const offset = (i * STEP) % PERIOD;
+        const initial = window.setTimeout(() => {
+          flip(t);
+          const id = window.setInterval(() => flip(t), PERIOD);
+          timers.push(id);
+        }, offset);
+        timers.push(initial);
+      });
+    }
+    function stop() {
+      timers.forEach((id) => { window.clearTimeout(id); window.clearInterval(id); });
+      timers.length = 0;
+    }
+    start();
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) clearInterval(timer);
-      else timer = setInterval(flip, 8000);
+      if (document.hidden) stop();
+      else { stop(); start(); }
     });
   })();
 </script>
