@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import CategoryIcon from '~/components/CategoryIcon.astro';
 
 export async function getStaticPaths() {
   return [
@@ -37,10 +38,13 @@ const tileColors: Record<string, string> = {
   congee:       '#9f00a7',  // Metro purple — long simmer
   main:         '#1d1d1d',  // Metro near-black — banquet
 };
-const tileGlyphs: Record<string, string> = {
-  appetizer: '🥟', 'soup-wonton': '🥣', rice: '🍚', noodle: '🍜',
-  'soup-noodle': '🍲', 'baked-rice': '🧀', congee: '🥄', main: '🍖',
-};
+type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
+// Tile size mapping: dishes >=20 -> WIDE, 7-19 -> MEDIUM, <7 -> SMALL.
+function sizeOf(_catId: string, dishCount: number): 'w' | 'm' | 's' {
+  if (dishCount >= 20) return 'w';
+  if (dishCount >= 7) return 'm';
+  return 's';
+}
 
 const total = dishes.length;
 const complete = dishes.filter(d => d.data.method_status === 'complete').length;
@@ -109,28 +113,46 @@ const dict = {
 
   <h2 style="margin-top: 3rem;">{dict.browse}</h2>
 
-  <div class="tile-grid">
+  <div class="start-screen">
     {sortedCategories.map((cat) => {
       const inCat = dishesByCategory.get(cat.id) ?? [];
       if (inCat.length === 0) return null;
       const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
-      const desc = locale === 'en'
-        ? (cat.data.description.en ?? cat.data.description.zh)
-        : locale === 'yue'
-          ? (cat.data.description.yue ?? cat.data.description.zh)
-          : cat.data.description.zh;
       const tileColor = tileColors[cat.id] || '#37474F';
-      const glyph = tileGlyphs[cat.id] ?? '·';
+      const size = sizeOf(cat.id, inCat.length);
+      const isWide = size === 'w';
       return (
-        <a class="tile wp-tile" href={`${base}/${locale}/browse/${cat.id}`} style={`--tile: ${tileColor}; view-transition-name: tile-${cat.id};`}>
-          <div class="tile-glyph" aria-hidden="true">{glyph}</div>
-          <div class="tile-meta">
-            <span class="tile-count">{inCat.length}</span>
-            <span class="tile-of">{dict.pieces}</span>
-          </div>
-          <div class="tile-name">{catName}</div>
-          <div class="tile-desc">{desc}</div>
-          <div class="tile-chev">›</div>
+        <a
+          class={`tile wp-tile size-${size}`}
+          href={`${base}/${locale}/browse/${cat.id}`}
+          data-cat={cat.id}
+          aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
+          style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}
+        >
+          {isWide ? (
+            <>
+              <div class="face front">
+                <CategoryIcon cat={cat.id as CatId} size={56} />
+                <div class="tile-name">{catName}</div>
+                <div class="tile-count">{inCat.length} {dict.pieces}</div>
+              </div>
+              <div class="face back" aria-hidden="true">
+                <div class="back-label">{locale === 'en' ? 'CANTOPEDIA · STATS' : '粵食典 · 數據'}</div>
+                <div class="back-num">{total}</div>
+                <div class="back-tagline">{
+                  locale === 'en'
+                    ? `${total} dishes · 8 categories · tri-lingual`
+                    : `${total} 道菜 · 8 大類 · 三語可溯`
+                }</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div class="tile-icon"><CategoryIcon cat={cat.id as CatId} size={size === 's' ? 32 : 28} /></div>
+              <span class="tile-badge">{inCat.length}</span>
+              <div class="tile-name">{catName}</div>
+            </>
+          )}
         </a>
       );
     })}
@@ -189,88 +211,101 @@ const dict = {
   .prog-complete { background: var(--m-green); }
   .prog-draft { background: var(--m-orange); }
 
-  .tile-grid {
+  .start-screen {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 8px;
-    margin-top: 1rem;
+    grid-template-columns: repeat(4, var(--tile-unit));
+    grid-auto-rows: var(--tile-unit);
+    gap: var(--start-gap, 6px);
+    justify-content: center;
+    margin: 1rem auto 2rem;
+    --tile-unit: clamp(72px, 18vw, 200px);
   }
+  @media (min-width: 768px) {
+    .start-screen { --start-gap: 8px; }
+  }
+
+  /* Per-tile placement */
+  .start-screen .tile[data-cat="main"]        { grid-area: 1 / 1 / 3 / 5; }
+  .start-screen .tile[data-cat="rice"]        { grid-area: 3 / 1 / 5 / 3; }
+  .start-screen .tile[data-cat="noodle"]      { grid-area: 3 / 3 / 5 / 5; }
+  .start-screen .tile[data-cat="appetizer"]   { grid-area: 5 / 1 / 7 / 3; }
+  .start-screen .tile[data-cat="soup-noodle"] { grid-area: 5 / 3 / 6 / 4; }
+  .start-screen .tile[data-cat="baked-rice"]  { grid-area: 5 / 4 / 6 / 5; }
+  .start-screen .tile[data-cat="congee"]      { grid-area: 6 / 3 / 7 / 4; }
+  .start-screen .tile[data-cat="soup-wonton"] { grid-area: 6 / 4 / 7 / 5; }
+
   .tile {
-    background: var(--tile);
-    color: white !important;
-    padding: 1.5rem 1.5rem 1.25rem;
-    text-decoration: none;
-    transition: opacity 0.12s, transform 0.12s;
-    display: grid;
-    grid-template-areas:
-      "glyph meta"
-      "name name"
-      "desc desc"
-      "chev chev";
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr auto auto;
-    min-height: 220px;
     position: relative;
+    display: block;
+    color: white !important;
+    text-decoration: none;
+    cursor: pointer;
     overflow: hidden;
+    padding: 10px;
   }
-  .tile:hover { color: white !important; opacity: 0.92; transform: translateY(-2px); }
-  .tile-glyph {
-    grid-area: glyph;
-    font-size: 2.5rem;
-    line-height: 1;
-    opacity: 0.95;
+  .tile:hover { color: white !important; }
+
+  /* Icon positions per size */
+  .tile.size-w .face .tile-name  { font-size: 1.5rem; font-weight: 400; margin-top: 0.5rem; }
+  .tile.size-w .face .tile-count { font-size: 0.95rem; opacity: 0.85; margin-top: 0.15rem; letter-spacing: 0.04em; }
+
+  .tile.size-m { padding: 12px; }
+  .tile.size-m .tile-icon { position: absolute; top: 10px; left: 10px; }
+  .tile.size-m .tile-name { position: absolute; bottom: 8px; left: 10px; right: 10px;
+                            font-size: 0.85rem; font-weight: 400; letter-spacing: 0.02em; }
+
+  .tile.size-s .tile-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .tile.size-s .tile-name { display: none; }
+
+  .tile-badge {
+    position: absolute;
+    top: 6px; right: 8px;
+    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
-  .tile-meta {
-    grid-area: meta;
-    text-align: right;
-    display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-    justify-self: end;
+  .tile.size-s .tile-badge { display: none; }
+
+  /* Live Tile flip — WIDE main only */
+  .tile.size-w { perspective: 1200px; }
+  .tile.size-w .face {
+    position: absolute; inset: 0;
+    padding: 1.25rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s var(--fluent-curve-easy-ease, cubic-bezier(0.6, 0, 0.2, 1));
   }
-  .tile-count {
-    font-family: var(--sans);
-    font-size: 3rem;
-    font-weight: 200;
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-  .tile-of {
-    font-family: var(--sans);
-    font-size: 0.75rem;
-    opacity: 0.7;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  .tile-name {
-    grid-area: name;
-    font-family: var(--serif-zh);
-    font-size: 1.75rem;
-    font-weight: 500;
-    margin: 1rem 0 0.25rem;
-    line-height: 1.2;
-  }
-  .tile-desc {
-    grid-area: desc;
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    opacity: 0.88;
-  }
-  .tile-chev {
-    grid-area: chev;
-    text-align: right;
-    font-family: var(--sans);
-    font-size: 1.5rem;
-    line-height: 1;
-    margin-top: 0.5rem;
-    opacity: 0.7;
-  }
+  .tile.size-w .face.back { transform: rotateX(180deg); }
+  .tile.size-w.flipped .face.front { transform: rotateX(180deg); }
+  .tile.size-w.flipped .face.back  { transform: rotateX(360deg); }
+
+  .tile.size-w .face.back .back-label { font-size: 0.7rem; letter-spacing: 0.22em; opacity: 0.7; font-weight: 500; }
+  .tile.size-w .face.back .back-num   { font-size: 3.5rem; font-weight: 200; line-height: 1.1; margin: 0.25rem 0; }
+  .tile.size-w .face.back .back-tagline { font-size: 0.85rem; opacity: 0.85; max-width: 280px; }
 
   @media (max-width: 640px) {
     .hero { padding: 2.5rem 1.5rem 2.5rem; }
     .hero-title { font-size: 3.5rem; }
-    .tile-grid { grid-template-columns: 1fr; }
-    .tile { min-height: 160px; }
   }
 </style>
+
+<script>
+  (function setupLiveTile() {
+    const wide = document.querySelector('.tile.size-w');
+    if (!wide) return;
+    let timer = setInterval(flip, 8000);
+    function flip() {
+      if (document.hidden) return;
+      if (wide!.classList.contains('pressing')) return;
+      wide!.classList.toggle('flipped');
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearInterval(timer);
+      else timer = setInterval(flip, 8000);
+    });
+  })();
+</script>
