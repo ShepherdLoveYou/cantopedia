@@ -7,28 +7,99 @@ names:
   en: Sha Tin Chicken Congee
 category: congee
 ingredients:
-  - ref: hainanese-chicken
-    qty: 6
-    unit: 件
-  - ref: shiitake-dry
-    qty: 1
-    unit: 份
-  - ref: peanuts
-    qty: 1
-    unit: 份
-  - ref: scallion
-    qty: 1
-    unit: 份
-  - ref: ginger-scallion
-    qty: 1
-    unit: 份
   - ref: congee-base
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 預先熬好嘅粥底
+      zh: 预先熬好的粥底
+      en: pre-cooked plain congee base
+  - ref: hainanese-chicken
+    qty: 6
+    unit: 件
+    prep:
+      yue: 預先白切嘅雞片
+      zh: 预先白切的鸡片
+      en: pre-poached chicken slices
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+    prep:
+      yue: 冬菇 3 件、預先泡發、切粒
+      zh: 冬菇 3 件、预先泡发、切粒
+      en: 3 dried shiitake, pre-soaked and diced
+  - ref: peanuts
+    qty: 1
+    unit: 份
+    prep:
+      yue: 油炸花生 1 匙裝飾
+      zh: 油炸花生 1 勺装饰
+      en: 1 Tbsp fried peanuts, garnish
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: chopped
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 薑絲 + 蔥白末
+      zh: 姜丝 + 葱白末
+      en: ginger julienned + scallion whites minced
+  - ref: dry-fried-onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 炸幹蔥 1 茶匙
+      zh: 炸干葱 1 茶匙
+      en: 1 tsp crispy fried shallot
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 5
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 粥底加熱到滾，落薑絲同冬菇粒，煮 90 秒到冬菇香氣散入粥裡。
+      zh: 粥底加热至沸，下姜丝与冬菇粒，煮 90 秒至冬菇香气散入粥中。
+      en: Bring congee base to a boil. Add ginger and shiitake; simmer 90 seconds to infuse the mushroom aroma.
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 落白切雞片，再煮 60 秒到雞片熱透（雞已熟、只係翻熱）。
+      zh: 下白切鸡片，再煮 60 秒至鸡片热透（鸡已熟、只是回温）。
+      en: Add the pre-poached chicken slices; simmer 60 seconds to warm through (chicken is already cooked, just reheating).
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 試味，加少少鹽、雞粉、白胡椒粉、麻油調味。盛入大碗，灑蔥花、炸幹蔥、油炸花生增加口感對比，即上枱。
+      zh: 试味，加少许盐、鸡粉、白胡椒粉、麻油调味。盛入大碗，撒葱花、炸干葱、油炸花生增加口感对比，即上桌。
+      en: Taste and adjust with salt, chicken bouillon, white pepper, sesame oil. Ladle into a large bowl, top with scallion, crispy shallot, and peanuts for textural contrast. Serve.
+tips:
+  - yue: 「沙田」係香港新界一個地名，以雞粥馳名——傳統沙田雞粥用本地飼養嘅嫩雞，切片連骨同雞油落粥底煮，雞油令粥底特別濃郁。
+    zh: 「沙田」是香港新界一个地名，以鸡粥驰名——传统沙田鸡粥用本地饲养的嫩鸡，切片连骨与鸡油落粥底煮，鸡油令粥底特别浓郁。
+    en: Sha Tin is a Hong Kong New Territories district famous for chicken congee — traditional Sha Tin chicken congee uses locally raised tender chicken, sliced with bone-in along with chicken fat into the congee base, the schmaltz giving the congee its signature richness.
+  - yue: 「沙田雞粥」嘅特色係灑「炸幹蔥」同「油炸花生」——呢個係粵北客家做法，提供咬感對比。其他雞粥少有呢個處理。
+    zh: 「沙田鸡粥」的特色是撒「炸干葱」与「油炸花生」——这是粤北客家做法，提供咬感对比。其他鸡粥少有此处理。
+    en: The signature of Sha Tin chicken congee is the topping of crispy fried shallot and roasted peanuts — a Hakka touch from northern Guangdong that provides crunch contrast. Most other chicken congees skip this.
+  - yue: 沙田雞最好用「三黃雞」、「龍崗雞」或者北美 free-range chicken——脂肪含量夠、肉質緊實，先夠香夠味。
+    zh: 沙田鸡最好用「三黄鸡」、「龙岗鸡」或北美 free-range chicken——脂肪含量够、肉质紧实，才够香够味。
+    en: Use a free-range bird (sanwhang, lung gong, or any well-raised free-range chicken in N. America) — sufficient fat and firm texture are essential for the depth this congee depends on.
+history:
+  yue: 沙田雞粥喺 1950 年代香港新界沙田一帶嘅大牌檔興起——當時沙田仍以農村為主，飼養大量散養雞，廚師將鮮雞同雞油落粥煮，創造出獨特風味。1970 年代隨著沙田發展成新市鎮，沙田雞粥傳入九龍同港島茶餐廳，成為粵菜粥品經典之一。
+  zh: 沙田鸡粥在 1950 年代香港新界沙田一带的大牌档兴起——当时沙田仍以农村为主，饲养大量散养鸡，厨师将鲜鸡与鸡油下粥煮，创造独特风味。1970 年代随沙田发展成新市镇，沙田鸡粥传入九龙与港岛茶餐厅，成为粤菜粥品经典之一。
+  en: Sha Tin chicken congee emerged in 1950s Sha Tin (New Territories), then still rural, when local cooks made use of abundant free-range chickens. Slicing fresh chicken into the congee with the schmaltz produced a uniquely rich version. As Sha Tin developed into a new town in the 1970s, the congee spread to Kowloon and Hong Kong Island tea-restaurants and became a Cantonese congee classic.
+allergens:
+  - peanut
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #40 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #40 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

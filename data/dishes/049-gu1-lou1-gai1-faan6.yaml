@@ -10,24 +10,111 @@ ingredients:
   - ref: chicken-balls
     qty: 5
     unit: 兩
-  - ref: fried-rice-base
-    qty: 1
-    unit: 碗
+    prep:
+      yue: 雞髀肉切麻將粒，醃 15 分鐘（生抽 + 紹興酒 + 蛋白 + 生粉）；落鍋前再均勻拍上生粉
+      zh: 鸡腿肉切麻将粒，腌 15 分钟（生抽+绍兴酒+蛋白+生粉）；下锅前再均匀拍上生粉
+      en: chicken thigh cut into mahjong-sized cubes; marinated 15 min with soy + Shaoxing + egg white + cornstarch; coated again with cornstarch before frying
   - ref: sweet-sour-sauce
     qty: 1
     unit: 份
+    prep:
+      yue: 茄汁 3 匙 + 大紅浙醋 2 匙 + 糖 3 匙 + 水 4 匙 + 少少生粉水
+      zh: 茄汁 3 勺 + 大红浙醋 2 勺 + 糖 3 勺 + 水 4 勺 + 少许生粉水
+      en: 3 Tbsp ketchup + 2 Tbsp red Zhenjiang vinegar + 3 Tbsp sugar + 4 Tbsp water + cornstarch slurry
+  - ref: bell-pepper
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 青紅椒切菱角形
+      zh: 青红椒切菱形片
+      en: bell peppers, diamond-cut
+  - ref: pineapple
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 罐裝菠蘿切塊（瀝乾糖水）
+      zh: 罐装菠萝切块（沥干糖水）
+      en: canned pineapple, drained
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切菱角形
+      zh: 切菱形片
+      en: diamond-cut
+  - ref: fried-rice-base
+    qty: 1
+    unit: 碗
+    prep:
+      yue: 隔夜白飯 1 碗
+      zh: 隔夜白饭 1 碗
+      en: 1 bowl day-old cooked rice
   - ref: spring-rolls-veg
     qty: 1
     unit: 條
+    prep:
+      yue: 春卷 1 條切段裝飾
+      zh: 春卷 1 条切段装饰
+      en: 1 spring roll as side garnish
   - ref: white-rice
     qty: 2
     unit: 兩
-method_status: stub
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 12
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞粒醃完用蛋白漿、再均勻拍上厚厚一層生粉。油溫 165°C，落雞粒炸第一次 3 分鐘到表面定型撈起；油溫升 190°C，複炸 30 秒到金黃酥脆。
+      zh: 鸡粒腌完用蛋白浆、再均匀拍上厚厚一层生粉。油温 165°C，下鸡粒炸第一次 3 分钟至表面定型捞起；油温升 190°C，复炸 30 秒至金黄酥脆。
+      en: After marinating and the egg-white coat, dredge thoroughly in cornstarch. First fry at 165°C / 330°F for 3 minutes to set; remove. Heat oil to 190°C / 375°F and second-fry 30 seconds until shatteringly crisp.
+    temperature_c: 190
+    time_seconds: 210
+  - order: 2
+    body:
+      yue: 鑊預留 1 匙油，落洋蔥同青紅椒爆 30 秒，落菠蘿翻兩下；倒入糖醋汁煮滾、起膠，加生粉水推稠到「掛得住」。
+      zh: 锅留 1 勺油，下洋葱与青红椒爆 30 秒，下菠萝翻两下；倒入糖醋汁煮沸、起胶，加生粉水勾芡至「挂得住」。
+      en: Wipe the wok, keep 1 Tbsp oil. Stir-fry onion and peppers 30 seconds, add pineapple. Pour in sweet-and-sour sauce, boil to gloss, thicken with slurry.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 落炸雞粒，快手翻 5-8 下令每件裹勻芡汁——多翻會軟、少翻芡掛不住。
+      zh: 倒入炸鸡粒，快手翻 5-8 下令每件裹匀芡汁——多翻会软、少翻芡挂不住。
+      en: Toss the fried chicken in 5-8 times — any more softens the crust, any fewer and the sauce won't coat.
+    time_seconds: 15
+  - order: 4
+    body:
+      yue: 配白飯一碗、春卷一段，做成「碟頭飯」格式，即上枱。
+      zh: 配白饭一碗、春卷一段，做成「碟头饭」格式，即上桌。
+      en: Plate with a bowl of rice and one segment of spring roll on the side — the classic one-plate set-meal layout.
+tips:
+  - yue: 咕嚕雞同咕嚕肉（#66）係相同手法、不同主蛋白嘅變體——雞肉炸時間較短（3 分鐘），豬肉較長（4 分鐘）。雞肉版口感較滑、豬肉版較紮實。
+    zh: 咕咾鸡与咕咾肉（#66）是相同手法、不同主蛋白的变体——鸡肉炸时间较短（3 分钟），猪肉较长（4 分钟）。鸡肉版口感较滑、猪肉版较扎实。
+    en: Sweet-and-sour chicken and pork (dish #66) use the same technique with different proteins — chicken fries shorter (3 min), pork longer (4 min). The chicken version is silkier, the pork firmer.
+  - yue: 咕嚕嘅靈魂係「外酥內嫩 + 芡掛得住」——必須兩次油炸先夠脆，芡汁稠度要剛好。茶餐廳呢個菜配白飯做「碟頭飯」，係日常午餐主流。
+    zh: 咕咾的灵魂是「外酥内嫩 + 芡能挂住」——必须两次油炸才够脆，芡汁稠度要刚好。茶餐厅此菜配白饭做「碟头饭」，是日常午餐主流。
+    en: The soul of "gu lou" is crisp shell + tender inside + a sauce that clings. Double-fry is essential. As a one-plate-with-rice meal in HK tea-restaurants, this dish is a staple lunch order.
+  - yue: 變體 #049b 用豬肉代替雞肉——技術相同，只係豬肉嘅選材係梅頭肉。豬肉版較傳統、雞肉版係現代健康偏好。
+    zh: 变体 #049b 用猪肉代替鸡肉——技术相同，只是猪肉的选材是梅头肉。猪肉版较传统、鸡肉版是现代健康偏好。
+    en: Variant #049b uses pork instead of chicken — same technique, pork shoulder is the cut. The pork version is more traditional; the chicken version reflects modern healthier preferences.
+history:
+  yue: 咕嚕菜系源自 19 世紀廣州西關——當時粵菜廚師為外國水手創造嘅「方便食」，將魚骨剃淨、肉切粒、淋糖醋汁，方便用叉。傳統用豬肉，後來茶餐廳發展出雞肉版本以迎合健康潮流。今日呢個雞肉版同豬肉版並行於茶餐廳菜單。
+  zh: 咕咾菜系源自 19 世纪广州西关——当时粤菜厨师为外国水手创制的「方便食」，将鱼骨剃净、肉切粒、淋糖醋汁，方便用叉。传统用猪肉，后来茶餐厅发展出鸡肉版以迎合健康潮流。今日鸡肉与猪肉版并行于茶餐厅菜单。
+  en: The "gu lou" family comes from 19th-century Western Canton — Cantonese chefs created bone-free, fork-friendly dishes for foreign sailors, cubing meat and saucing it in sweet-and-sour. Pork was the original; tea-restaurants later developed a chicken version to suit modern health preferences. Today both run side-by-side on HK menus.
+allergens:
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #49 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #49 on the source menu"
 variants:
   - 049b-gu1-lou1-zyu1-faan6
+created: 2026-05-24
+updated: 2026-05-24

@@ -7,15 +7,34 @@ names:
   en: Seafood Stir-fried Noodles
 category: noodle
 ingredients:
+  - ref: pan-fried-noodle
+    qty: 6
+    unit: 兩
+    prep:
+      yue: 港式蛋麵煮熟、煎成「兩面黃」麵餅墊底
+      zh: 港式蛋面煮熟、煎成「两面黄」面饼垫底
+      en: HK egg noodle boiled, pan-fried into a "two-sides-golden" disc as base
   - ref: shrimp-balls
     qty: 3
     unit: 件
+    prep:
+      yue: 蝦球 3 隻去殼留尾
+      zh: 虾球 3 只去壳留尾
+      en: 3 prawns peeled tail-on
   - ref: squid
     qty: 3
     unit: 件
+    prep:
+      yue: 鮮魷 3 件切花刀
+      zh: 鲜鱿 3 件切花刀
+      en: 3 pieces fresh squid, scored
   - ref: mussel
     qty: 3
     unit: 件
+    prep:
+      yue: 青口肉 3 隻
+      zh: 青口肉 3 只
+      en: 3 mussel meats
   - ref: crab-stick
     qty: 3
     unit: 件
@@ -28,19 +47,81 @@ ingredients:
   - ref: carrot
     qty: 3
     unit: 件
+    prep:
+      yue: 切薄片飛水
+      zh: 切薄片飞水
+      en: thin slices, blanched
   - ref: broccoli
     qty: 3
     unit: 件
+    prep:
+      yue: 飛水
+      zh: 飞水
+      en: blanched
   - ref: corn
     qty: 3
     unit: 件
-  - ref: pan-fried-noodle
-    qty: 6
-    unit: 兩
-method_status: stub
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 25
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 麵餅製作——煮熟蛋麵過冷河瀝乾；平底鑊燒 2 匙油，落麵攤平壓成餅形，中火煎 3 分鐘到底面金黃，反轉再煎 2 分鐘——「兩面黃」脆麵餅墊底。
+      zh: 面饼制作——煮熟蛋面过冷水沥干；平底锅烧 2 勺油，下面摊平压成饼形，中火煎 3 分钟至底面金黄，翻面再煎 2 分钟——「两面黄」脆面饼垫底。
+      en: Make the noodle disc — boil the egg noodles, shock, drain. In a flat pan with 2 Tbsp oil, press flat into a disc. Pan-fry on medium for 3 minutes per side until golden — the "two-sides-golden" base.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 麵餅擺喺大碟中央保溫。鑊燒大火落 2 匙油，落蝦球煎 30 秒撈起，再落魷魚、青口、蟹柳、魚球、魚蛋爆 45 秒撈起——海鮮一定要分批煎，唔可以一齊落。
+      zh: 面饼摆在大盘中央保温。锅烧大火下 2 勺油，下虾球煎 30 秒捞起，再下鱿鱼、青口、蟹柳、鱼球、鱼蛋爆 45 秒捞起——海鲜务必分批煎，不可一同下。
+      en: Park the noodle disc on a warm plate. Heat wok with 2 Tbsp oil. Sear prawns 30 seconds; remove. Sear squid, mussel, crab stick, fish balls, fish cake 45 seconds; remove. Always batch-sear seafood — dumping it together steams instead of sears.
+    time_seconds: 75
+  - order: 3
+    body:
+      yue: 鑊餘油落西蘭花、紅蘿蔔、粟米段炒 30 秒，加 200 ml 雞湯、1 匙蠔油、1 茶匙生抽、半茶匙糖、少少胡椒粉煮滾。
+      zh: 锅余油下西兰花、红萝卜、粟米段炒 30 秒，加 200 ml 鸡汤、1 勺蚝油、1 茶匙生抽、半茶匙糖、少许胡椒粉煮沸。
+      en: With remaining oil, stir-fry the broccoli, carrot, baby corn 30 seconds. Add 200 ml chicken stock, 1 Tbsp oyster sauce, 1 tsp light soy, ½ tsp sugar, white pepper. Bring to a boil.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 落番所有海鮮，落 1 茶匙生粉水推稠到芡汁濃稠掛得住，加少少紹興酒提鮮——快手翻 20 秒令所有食材均勻。
+      zh: 倒回所有海鲜，加 1 茶匙生粉水勾芡至浓稠挂得住，加少许绍兴酒提鲜——快手翻 20 秒令所有食材均匀。
+      en: Return all seafood, thicken with 1 tsp cornstarch slurry until the sauce coats and clings. Splash in a touch of Shaoxing wine; toss 20 seconds.
+    time_seconds: 30
+  - order: 5
+    body:
+      yue: 將湯料連湯汁淋喺脆麵餅上面——部份麵保持脆口、部份吸汁變軟，即上枱。
+      zh: 将汤料连汤汁淋在脆面饼上——部分面保持脆口、部分吸汁变软，即上桌。
+      en: Pour the topping and sauce over the noodle disc — some noodle stays crisp, some soaks up the sauce. Serve immediately.
+tips:
+  - yue: 同 #22 招牌炒麵 比較——招牌炒麵有肉類同海鮮混合（雞、叉燒 + 蝦、魷、蟹柳），海鮮炒麵淨係海鮮（無肉）。
+    zh: 与 #22 招牌炒面比较——招牌炒面有肉类与海鲜混合（鸡、叉烧 + 虾、鱿、蟹柳），海鲜炒面只用海鲜（无肉）。
+    en: Compared with dish #22 signature stir-fried noodles — the signature version mixes meats and seafood (chicken, char siu + shrimp, squid, crab stick); this dish uses seafood only.
+  - yue: 海鮮分批煎係必須——熱鑊先煎蝦球再煎其他海鮮，分批落能令每樣食材都焦香唔出水。一齊落會變蒸海鮮。
+    zh: 海鲜分批煎是必须——热锅先煎虾球再煎其他海鲜，分批下能令每样食材都焦香不出水。一同下会变蒸海鲜。
+    en: Batch-sear the seafood — into a hot wok, prawns first, then other seafood. Doing it together drops the wok temperature and you end up steaming, not searing.
+  - yue: 芡汁要稠到「掛得住」但仲流動——濃度大概係「能掛喺勺背、提起勺幾秒先滴」嘅程度。太稀會浸濕麵餅，太稠就會「結住」。
+    zh: 芡汁要稠到「挂得住」但仍流动——浓度大约是「能挂在勺背、提勺几秒才滴落」的程度。太稀会浸湿面饼，太稠则「结住」。
+    en: The gravy needs to coat the back of a spoon yet still flow — too thin floods the noodle, too thick clumps. Test by lifting a spoon; sauce should drip slowly after a few seconds.
+history:
+  yue: 海鮮炒麵屬於粵菜「兩面黃」系列——將平民嘅炒麵升級成「碟頭海鮮宴」嘅手法，源自 1960 年代香港經濟起飛時嘅消費升級。同時間香港漁業極為發達，海鮮成本相對低廉，俾呢個菜得以「家家有」。今日係茶餐廳「鎮場海鮮菜」之一。
+  zh: 海鲜炒面属于粤菜「两面黄」系列——将平民炒面升级为「碟头海鲜宴」的手法，源自 1960 年代香港经济起飞时的消费升级。同期香港渔业极为发达，海鲜成本相对低廉，让此菜得以「家家有」。今日是茶餐厅「镇场海鲜菜」之一。
+  en: Seafood stir-fried noodles belong to the "two-sides-golden" series — upgrading humble noodles into a "seafood spread on a plate" technique. Born of 1960s Hong Kong's economic boom and the abundance of cheap fresh seafood from the then-thriving local fishing industry, it became a staple presentation of HK tea-restaurant seafood menus.
+allergens:
+  - shellfish
+  - fish
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #23 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #23 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

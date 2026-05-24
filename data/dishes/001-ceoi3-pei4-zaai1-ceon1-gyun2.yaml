@@ -10,12 +10,98 @@ ingredients:
   - ref: spring-rolls-veg
     qty: 3
     unit: 條
-method_status: stub
+    prep:
+      yue: 春卷皮（春卷皮、wonton wrappers 6 吋方形）3 張
+      zh: 春卷皮（春卷皮、wonton wrappers 6 寸方形）3 张
+      en: 3 spring roll wrappers (6-inch square)
+  - ref: bean-sprouts
+    qty: 1
+    unit: 份
+    prep:
+      yue: 摘走尾根、洗淨瀝乾
+      zh: 掐去尾根、洗净沥干
+      en: tails trimmed, washed and drained
+  - ref: shiitake-dry
+    qty: 1
+    unit: 份
+    prep:
+      yue: 冬菇 4 件、預先泡發、切絲
+      zh: 冬菇 4 件、预先泡发、切丝
+      en: 4 dried shiitake, pre-soaked and julienned
+  - ref: carrot
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: bell-pepper
+    qty: 1
+    unit: 份
+    prep:
+      yue: 紅椒絲少少
+      zh: 红椒丝少许
+      en: red bell pepper, julienned (small amount)
+  - ref: plum-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蘸料——酸梅醬（如沙井大同梅子醬）
+      zh: 蘸料——酸梅酱（如沙井大同梅子酱）
+      en: dipping sauce — plum sauce (Cantonese-style)
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒熱落 1 匙油，落冬菇絲爆 30 秒到出香，再落紅蘿蔔絲、紅椒絲、芽菜，加 1 茶匙生抽、半茶匙鹽、半茶匙糖、少少胡椒粉，快炒 60 秒到食材剛剛斷生但唔好太軟，盛起冷卻——熱嘅餡會將春卷皮浸破。
+      zh: 锅烧热下 1 勺油，下冬菇丝爆 30 秒至出香，再下红萝卜丝、红椒丝、芽菜，加 1 茶匙生抽、半茶匙盐、半茶匙糖、少许胡椒粉，快炒 60 秒至食材刚断生但不要太软，盛出冷却——热馅会将春卷皮浸破。
+      en: Stir-fry the shiitake 30 seconds, add the carrot, red pepper, and bean sprouts. Season with 1 tsp soy, ½ tsp salt, ½ tsp sugar, white pepper. Stir-fry 60 seconds until just tender — don't overcook. Cool completely; hot filling will tear the wrappers.
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 春卷皮一張平鋪——尖角朝向自己，落 2 匙餡料於下端三分一處，由下向上捲一下，左右兩邊摺向中央，繼續向上捲緊。最後封口用少少蛋液或者麵粉糊封住。
+      zh: 春卷皮一张平铺——尖角朝向自己，下 2 勺馅料于下端三分之一处，由下向上卷一下，左右两边折向中央，继续向上卷紧。最后封口用少许蛋液或面粉糊封住。
+      en: Lay a wrapper diamond-style, corner facing you. Place 2 Tbsp filling at the lower third. Fold up once, fold left and right corners into the centre, continue rolling tightly. Seal the final corner with egg wash or flour paste.
+    time_seconds: 300
+  - order: 3
+    body:
+      yue: 油溫 170°C，落春卷炸 3 分鐘到金黃酥脆，撈起瀝油。
+      zh: 油温 170°C，下春卷炸 3 分钟至金黄酥脆，捞出沥油。
+      en: Heat oil to 170°C / 340°F. Deep-fry the spring rolls 3 minutes until golden and crisp; drain.
+    temperature_c: 170
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 春卷斜切兩件擺碟，伴酸梅醬即上枱。
+      zh: 春卷斜切两段摆盘，伴酸梅酱即上桌。
+      en: Slice each roll diagonally into two pieces, plate, and serve with plum sauce alongside.
+tips:
+  - yue: 「齋」即素食——傳統佛教齋戒嘅意思。茶餐廳齋春卷淨用素菜，但有時會加豆腐絲或者腐皮絲增加蛋白。
+    zh: 「斋」即素食——传统佛教斋戒之意。茶餐厅斋春卷只用素菜，但有时会加豆腐丝或腐皮丝增加蛋白。
+    en: '"齋" (zaai) means vegetarian — from the Buddhist fasting tradition. The basic version uses only vegetables, though some shops add julienned tofu or beancurd skin for protein.'
+  - yue: 餡料要完全冷透先包——熱餡會將春卷皮浸軟，落油就會散開。
+    zh: 馅料要完全冷透才能包——热馅会将春卷皮浸软，下油就会散开。
+    en: The filling must be completely cool before wrapping — heat softens the wrappers and they'll fall apart in the oil.
+  - yue: 春卷皮係越南或者中國嘅薄皮——市售有「春卷皮」（厚啲）同「越南米紙」（透明）兩種，香港茶餐廳通常用厚啲嘅春卷皮，炸出來脆度更好。
+    zh: 春卷皮是越南或中国的薄皮——市售有「春卷皮」（厚些）与「越南米纸」（透明）两种，香港茶餐厅常用厚些的春卷皮，炸出更脆。
+    en: Spring roll wrappers come in two main types — Chinese-style thick wheat wrappers and Vietnamese-style translucent rice paper. HK tea-restaurants use the thick wheat type for better crunch.
+history:
+  yue: 春卷源自南北朝時期嘅「春餅」（春日嘅薄餅）。粵菜入面嘅春卷係將餡料用春卷皮包住油炸而成，齋春卷係佛教素食版本，主要喺廟宇周邊賣俾齋戒嘅信眾。茶餐廳將之納入小食類別，1960 年代起係香港茶餐廳開胃菜常客。
+  zh: 春卷源自南北朝时期的「春饼」（春日的薄饼）。粤菜中的春卷是将馅料用春卷皮包住油炸而成，斋春卷是佛教素食版本，主要在庙宇周边卖给斋戒的信众。茶餐厅将之纳入小食类别，1960 年代起是香港茶餐厅开胃菜常客。
+  en: Spring rolls trace to the "spring pancakes" of the Northern and Southern Dynasties (4th-6th c). The deep-fried Cantonese version wraps filling in thin wheat wrappers. The vegetarian version originally served Buddhist pilgrims around temples; HK tea-restaurants absorbed it into the appetiser canon from the 1960s.
+allergens:
+  - gluten
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #1 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 伴酸梅醬
+    accessed: 2026-05-24
+    note: "Item #1 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

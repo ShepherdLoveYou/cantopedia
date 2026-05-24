@@ -7,31 +7,116 @@ names:
   en: Satay Beef Noodles
 category: noodle
 ingredients:
-  - ref: bell-pepper
-    qty: 4
-    unit: 兩
-  - ref: carrot
-    qty: 1
-    unit: 份
-  - ref: onion
-    qty: 1
-    unit: 份
-  - ref: beef-slices
-    qty: 10
-    unit: 件
-  - ref: satay-sauce
-    qty: 1
-    unit: 份
-  - ref: oyster-sauce
-    qty: 1
-    unit: 份
   - ref: pan-fried-noodle
     qty: 6
     unit: 兩
-method_status: stub
+    prep:
+      yue: 港式蛋麵——煮熟煎成「兩面黃」墊底
+      zh: 港式蛋面——煮熟煎成「两面黄」垫底
+      en: HK egg noodle, boiled then pan-fried into "two-sides-golden" base
+  - ref: beef-slices
+    qty: 10
+    unit: 件
+    prep:
+      yue: 牛肉逆紋切薄片，醃 15 分鐘（生抽 + 沙爹醬少少 + 紹興酒 + 糖 + 生粉 + 蛋白 + 油 + 1 茶匙小蘇打）
+      zh: 牛肉逆纹切薄片，腌 15 分钟（生抽+沙爹酱少许+绍兴酒+糖+生粉+蛋白+油+1 茶匙小苏打）
+      en: beef sliced thinly against the grain; marinated 15 min with soy + a touch of satay paste + Shaoxing + sugar + cornstarch + egg white + oil + 1 tsp baking soda
+  - ref: bell-pepper
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 青紅椒切菱角形
+      zh: 青红椒切菱形片
+      en: bell peppers cut into diamond shapes
+  - ref: carrot
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切薄片飛水
+      zh: 切薄片飞水
+      en: thin slices, blanched
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
+  - ref: satay-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 沙爹醬 2 匙（馬來品牌如 Hap Seng）+ 椰漿 50 ml + 花生醬 1 茶匙 + 糖 1 茶匙
+      zh: 沙爹酱 2 勺（马来品牌如 Hap Seng）+ 椰浆 50 ml + 花生酱 1 茶匙 + 糖 1 茶匙
+      en: 2 Tbsp satay paste (Malay brand like Hap Seng) + 50 ml coconut cream + 1 tsp peanut butter + 1 tsp sugar
+  - ref: oyster-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蠔油芡——蠔油 1 匙 + 生抽 1 茶匙 + 雞湯 150 ml + 生粉水 1 茶匙
+      zh: 蚝油芡——蚝油 1 勺 + 生抽 1 茶匙 + 鸡汤 150 ml + 生粉水 1 茶匙
+      en: oyster gravy — 1 Tbsp oyster sauce + 1 tsp light soy + 150 ml chicken stock + 1 tsp cornstarch slurry
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 25
+  cook: 10
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 麵餅製作——煮熟蛋麵過冷河瀝乾；平底鑊燒 2 匙油，落麵壓成餅形煎到「兩面黃」，盛起喺大碟中央。
+      zh: 面饼制作——煮熟蛋面过冷水沥干；平底锅烧 2 勺油，下面压成饼形煎至「两面黄」，盛在大盘中央。
+      en: Make the noodle disc — boil the egg noodle, shock, drain. Pan-fry into a "two-sides-golden" disc, plate in centre of a large dish.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落牛肉攤平煎 30 秒到底面焦香、撥散快炒到剛變色撈起。
+      zh: 锅烧至大热，下 2 勺油，下牛肉摊平煎 30 秒至底面焦香、拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear beef flat for 30 seconds for crust, break apart, stir-fry to just-cooked, remove.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 鑊留 1 匙油，落洋蔥同青紅椒爆 60 秒到洋蔥開始焦邊；加入沙爹醬料中火爆 30 秒到出紅油同沙爹香氣升騰。
+      zh: 锅留 1 勺油，下洋葱与青红椒爆 60 秒至洋葱开始焦边；加入沙爹酱料中火爆 30 秒至出红油与沙爹香气升腾。
+      en: Keep 1 Tbsp oil. Stir-fry onion and peppers 60 seconds until the onion edges brown. Lower to medium, add the satay mixture and toast 30 seconds until red oil rises and the satay aroma blooms.
+    time_seconds: 90
+  - order: 4
+    body:
+      yue: 倒入蠔油芡料，煮滾到芡稠光亮，落番牛肉同紅蘿蔔片，快手翻 20 秒令所有食材均勻。
+      zh: 倒入蚝油芡料，煮沸至芡稠光亮，倒回牛肉与红萝卜片，快手翻 20 秒令所有食材均匀。
+      en: Pour in the oyster gravy mixture, boil until glossy and clinging. Return the beef and carrot, toss 20 seconds.
+    time_seconds: 30
+  - order: 5
+    body:
+      yue: 將湯料連湯汁淋喺脆麵餅上面，即上枱。
+      zh: 将汤料连汤汁淋在脆面饼上，即上桌。
+      en: Pour the topping and sauce over the noodle disc and serve at once.
+tips:
+  - yue: 沙爹醬係南洋醬料——主成份係花生、辣椒、檸檬草、薑、椰漿。香港版沙爹比新馬版甜啲、辣度低啲、椰漿少啲，符合廣東人口味。
+    zh: 沙爹酱是南洋酱料——主成分是花生、辣椒、柠檬草、姜、椰浆。香港版沙爹比新马版甜些、辣度低些、椰浆少些，符合广东人口味。
+    en: Satay sauce is a South-East Asian import — peanut, chili, lemongrass, ginger, coconut. The HK version is sweeter, milder, and less coconut-heavy than the Malaysian original, calibrated to Cantonese palates.
+  - yue: 沙爹醬一定要先炒香——直接落湯料會油水分離。中火爆 30 秒到出紅油先加湯料。
+    zh: 沙爹酱必须先炒香——直接下汤料会油水分离。中火爆 30 秒至出红油再加汤料。
+    en: Bloom the satay paste in oil first — adding it directly to a wet mixture causes it to break and separate. 30 seconds on medium until red oil rises.
+  - yue: 沙爹牛肉炒河（同樣手法、用河粉代替麵餅）係另一個港式經典。同一鑊牛肉沙爹可以同時做炒麵同炒河兩個版本。
+    zh: 沙爹牛肉炒河（同手法、用河粉代替面饼）是另一个港式经典。同一锅牛肉沙爹可同时做炒面与炒河两个版本。
+    en: Satay beef hor fun (same technique, rice noodles instead of noodle disc) is a parallel HK classic. The satay-beef stir-fry from the same wok can top either format.
+history:
+  yue: 沙爹（satay）源自東南亞——馬來、印尼、新加坡。1950 年代香港同新馬之間嘅人口流動將沙爹醬同沙爹串燒帶到香港。粵菜廚師將沙爹醬用喺炒麵、炒河、煲仔飯，創造港式沙爹菜系。沙爹牛肉麵成為茶餐廳「南洋風味」嘅代表。
+  zh: 沙爹（satay）源自东南亚——马来、印尼、新加坡。1950 年代香港与新马之间的人口流动将沙爹酱与沙爹串烧带到香港。粤菜厨师将沙爹酱用在炒面、炒河、煲仔饭，创造港式沙爹菜系。沙爹牛肉面成为茶餐厅「南洋风味」的代表。
+  en: '"Satay" comes from South-East Asia — Malaysia, Indonesia, Singapore. 1950s migration between Hong Kong and the Straits brought satay paste and skewers to HK. Cantonese cooks adapted the paste for stir-fried noodles, rice, and clay-pot rice, creating an HK satay sub-genre. This dish stands as the tea-restaurant''s "Nanyang flavour" representative.'
+allergens:
+  - peanut
+  - soy
+  - gluten
+  - shellfish
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #24 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #24 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
