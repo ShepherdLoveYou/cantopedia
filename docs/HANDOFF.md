@@ -4,7 +4,7 @@
 
 - **Live**: <https://shepherdloveyou.github.io/cantopedia>
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Release tag**: `v0.1.0`
+- **Release tag**: `v0.2.0` (planned after this push)
 - **Dishes**: 66/66 method_status: complete, full tri-lingual (粵/中/En)
 - **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
 
@@ -30,16 +30,28 @@ Implemented:
 - **Tighter typography**: h1/h2 weight 200, more letter-spacing contrast
 - Persistent nav and loading bar across transitions
 
-## WP10 polish — still TODO (Phase 2)
+### WP10 polish v2 — Phase 2 SHIPPED
+
+Implemented per spec `docs/superpowers/specs/2026-05-24-wp10-phase2-design.md`:
+
+- **3-peek pivot strip** on `/browse/<category>` pages — current category large, ±1 dim peek neighbors. Click peek, keyboard `←/→`, or touch swipe navigates between categories.
+- **dish-card → hero-band shared element morph** — clicking a dish card on the browse page morphs the whole card into the colored hero band on the dish detail page. Each card now has a 6px catColor top stripe as the morph anchor.
+- **Fluent motion tokens** borrowed (MIT, microsoft/fluentui): `--fluent-curve-{decelerate-mid,accelerate-mid,easy-ease}`, `--fluent-duration-{fast,normal,gentle}`.
+- **Directional slide animation** for pivot navigation (exit accelerates, enter decelerates).
+- **prefers-reduced-motion** guard disables all view-transition animations.
+
+Files added: `site/src/lib/categoryOrder.ts` + `.test.ts`, `site/src/components/CategoryPivot.astro`. Files modified: `BaseLayout.astro`, `pages/[locale]/browse/[category].astro`, `pages/[locale]/dishes/[id].astro`.
+
+## WP10 polish — still TODO (Phase 3 — see prototype)
 
 Priority order if you want me to continue:
 
-1. **Dish-card → dish-hero shared element** — same trick as tile→hero, but for the click path from category browse to single dish page. Currently the dish page jumps in without a visible link.
-2. **Horizontal Hub-pane navigation in browse pages** — WP10's signature is horizontal pivot panes. Convert `/browse/<category>` to a horizontal-scrolling Hub showing All-Categories-at-Once with arrows to flick between.
-3. **Live-tile flip animation** — on hover (desktop) or every 6 seconds (mobile), each homepage tile flips to show a secondary face (a featured dish from the category).
-4. **WP10 "Resco-style" segmented arrows** in nav — back-arrow + forward-arrow as actual WP10-chrome glyphs.
-5. **Tap ripple** — secondary press effect (subtle color wash from tap point).
-6. **Marquee text** on tile names if they exceed width (very WP10).
+1. **Live-tile flip animation** — on hover (desktop) or every 6 seconds (mobile), each homepage tile flips to show a secondary face (a featured dish from the category).
+2. **WP10 "Resco-style" segmented arrows** in nav — back-arrow + forward-arrow as actual WP10-chrome glyphs.
+3. **Tap ripple** — secondary press effect (subtle color wash from tap point).
+4. **Marquee text** on tile names if they exceed width (very WP10).
+
+The approved prototype at `docs/prototypes/2026-05-24-uwp-mock.html` is now the design contract for Phase 3+ work. See `docs/superpowers/specs/2026-05-24-uwp-phase3-design-stub.md` for the suggested phase decomposition.
 
 ## Other open work (v0.2+)
 
