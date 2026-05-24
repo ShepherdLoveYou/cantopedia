@@ -10,16 +10,83 @@ ingredients:
   - ref: shrimp-balls
     qty: 12
     unit: 件
+    prep:
+      yue: 大蝦球 12 隻，去殼留尾、開背取腸，醃 10 分鐘（蛋白 + 鹽 + 生粉 + 油 + 少少小蘇打）
+      zh: 大虾球 12 只，去壳留尾、开背取肠，腌 10 分钟（蛋白+盐+生粉+油+少许小苏打）
+      en: 12 large prawns, peeled with tail on, deveined, marinated 10 min with egg white + salt + cornstarch + oil + a touch of baking soda
   - ref: broccoli
     qty: 6
     unit: 兩
+    prep:
+      yue: 切細件（每件約 4 cm）、飛水 60 秒過冷河
+      zh: 切小块（每块约 4 cm）、飞水 60 秒过冷水
+      en: cut into small florets (~4 cm), blanched 60 seconds and shocked
   - ref: oil-poach-mix
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 油泡料——鹽 1/2 茶匙 + 雞粉少少 + 紹興酒 1 茶匙 + 雞湯 3 匙 + 生粉 1/2 茶匙
+      zh: 油泡料——盐 1/2 茶匙 + 鸡粉少许 + 绍兴酒 1 茶匙 + 鸡汤 3 勺 + 生粉 1/2 茶匙
+      en: oil-poaching seasoning — ½ tsp salt + pinch chicken bouillon + 1 tsp Shaoxing + 3 Tbsp chicken stock + ½ tsp cornstarch
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 拍碎
+      zh: 拍碎
+      en: smashed
+  - ref: ginger
+    qty: 2
+    unit: 片
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 油泡蝦球——鑊燒油到 120-130°C（低油溫），落蝦球輕推散，浸炸 45 秒到剛剛變紅、彎成球形，撈起瀝油。
+      zh: 油泡虾球——锅烧油至 120-130°C（低油温），下虾球轻推散，浸炸 45 秒至刚变红、弯成球形，捞起沥油。
+      en: Oil-poach the prawns — heat oil to 120-130°C / 250-265°F (low temp). Slip the prawns in and gently push apart; bathe for 45 seconds until they just turn pink and curl into a ball shape. Remove and drain.
+    temperature_c: 125
+    time_seconds: 45
+  - order: 2
+    body:
+      yue: 鑊餘油大約 1 匙，落薑同蒜頭爆 10 秒，落飛好嘅西蘭花炒 30 秒到表面熱透。
+      zh: 锅余油约 1 勺，下姜与蒜头爆 10 秒，下飞水好的西兰花炒 30 秒至表面热透。
+      en: With about 1 Tbsp oil remaining, fry ginger and garlic 10 seconds, then add the blanched broccoli and toss 30 seconds to heat through.
+    time_seconds: 40
+  - order: 3
+    body:
+      yue: 落番蝦球，加油泡料調味，輕手翻 15 秒令食材均勻、芡汁掛勻，即上碟。
+      zh: 倒回虾球，加油泡料调味，轻手翻 15 秒令食材均匀、芡汁挂匀，即出锅。
+      en: Return the prawns. Add the seasoning and toss gently for 15 seconds — sauce should gloss and cling. Plate immediately.
+    time_seconds: 15
+tips:
+  - yue: 蝦球嘅「球」形——係靠醃料嘅小蘇打令蝦肉收緊，加上低溫油泡令蝦肉收縮成球。淨用滾水會煮唔出球形。
+    zh: 虾球的「球」形——靠腌料中的小苏打令虾肉收紧，加上低温油泡令虾肉收缩成球。光用沸水煮不出球形。
+    en: The "球" (ball) shape comes from two things — baking soda in the marinade firms the protein, and low-temperature oil poaching makes the prawn curl tight. Boiling alone won't curl them.
+  - yue: 西蘭花飛水嘅時候水加少少油同鹽——令花蕊飽滿、表面光亮唔失色。飛完一定要過冷河，唔係嘅話餘溫會繼續煮、變黃。
+    zh: 西兰花飞水时水中加少许油与盐——令花蕊饱满、表面光亮不失色。飞完务必过冷水，否则余温会继续煮、变黄。
+    en: Blanch the broccoli in salted oily water — keeps the florets plump and glossy. Always shock in cold water immediately; residual heat continues cooking and turns the broccoli yellow.
+  - yue: 茶餐廳呢個菜講究「碧綠遮玉」嘅視覺——西蘭花包圍蝦球如玉嵌綠葉，係粵菜美學標準之一。
+    zh: 茶餐厅这道菜讲究「碧绿遮玉」的视觉——西兰花包围虾球如玉嵌绿叶，是粤菜美学标准之一。
+    en: The presentation aim is 「碧綠遮玉」 — "emerald shielding jade" — where the broccoli surrounds the prawns like green leaves around polished jade. This is a canonical Cantonese plating aesthetic.
+history:
+  yue: 西蘭花蝦球係粵菜「油泡蝦球」嘅升級版——加西蘭花一方面增加營養、一方面襯托蝦球嘅紅白色，造成「碧綠遮玉」嘅視覺效果。1970 年代喺香港酒樓興起，後傳入茶餐廳，今日係宴會菜同家常菜嘅交界點。
+  zh: 西兰花虾球是粤菜「油泡虾球」的升级版——加入西兰花一方面增加营养、一方面衬托虾球的红白色，造成「碧绿遮玉」的视觉效果。1970 年代在香港酒楼兴起，后传入茶餐厅，今日处于宴会菜与家常菜的交界。
+  en: Broccoli shrimp balls evolved from the classic oil-poached prawn — broccoli was added both for nutrition and to set off the prawn's pink-white against emerald, creating the 「碧綠遮玉」 aesthetic. It rose in 1970s Hong Kong restaurants and was later adopted by tea-restaurants. Today it sits between banquet-grade dish and home cooking.
+allergens:
+  - shellfish
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #55 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #55 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

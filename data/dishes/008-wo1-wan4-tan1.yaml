@@ -10,15 +10,31 @@ ingredients:
   - ref: wontons
     qty: 6
     unit: 粒
+    prep:
+      yue: 鮮蝦豬肉雲吞 6 粒
+      zh: 鲜虾猪肉云吞 6 颗
+      en: 6 fresh shrimp-and-pork wontons
   - ref: large-shrimp
     qty: 2
     unit: 件
+    prep:
+      yue: 大蝦 2 隻、去殼留尾
+      zh: 大虾 2 只、去壳留尾
+      en: 2 large prawns, peeled tail-on
   - ref: chicken-slices
     qty: 3
     unit: 件
+    prep:
+      yue: 雞片 3 件
+      zh: 鸡片 3 件
+      en: 3 slices of chicken
   - ref: cha-siu
     qty: 3
     unit: 件
+    prep:
+      yue: 叉燒 3 片
+      zh: 叉烧 3 片
+      en: 3 slices char siu
   - ref: broccoli
     qty: 3
     unit: 件
@@ -28,16 +44,69 @@ ingredients:
   - ref: mushroom
     qty: 3
     unit: 件
+    prep:
+      yue: 冬菇 3 件、預先泡發
+      zh: 冬菇 3 件、预先泡发
+      en: 3 dried shiitake, pre-soaked
   - ref: carrot
     qty: 3
     unit: 件
   - ref: corn
     qty: 3
     unit: 件
-method_status: stub
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 8
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 大鍋燒水至滾，落配菜（西蘭花、椰菜花、冬菇、紅蘿蔔、粟米段）煮 2 分鐘到斷生，撈起備用。
+      zh: 大锅烧水至沸，下配菜（西兰花、椰菜花、冬菇、红萝卜、粟米段）煮 2 分钟至断生，捞出备用。
+      en: Bring a large pot of water to a boil. Blanch the vegetables (broccoli, cauliflower, shiitake, carrot, baby corn) for 2 minutes; remove.
+    time_seconds: 120
+  - order: 2
+    body:
+      yue: 雞片同大蝦輕醃 5 分鐘（鹽 + 生粉 + 油）。用同一鍋滾水快灼 30 秒至剛變色撈起。
+      zh: 鸡片与大虾轻腌 5 分钟（盐+生粉+油）。用同一锅沸水快灼 30 秒至刚变色捞出。
+      en: Lightly marinate the chicken and prawns for 5 minutes (salt + cornstarch + oil). Blanch in the same boiling water for 30 seconds; remove.
+    time_seconds: 30
+  - order: 3
+    body:
+      yue: 落雲吞煮 3 分鐘到皮浮起且半透明、餡熟透——窩雲吞用嘅雲吞皮薄餡大隻，煮夠時間先軟滑。
+      zh: 下云吞煮 3 分钟至皮浮起且半透明、馅熟透——窝云吞用的云吞皮薄馅大颗，煮足时间才软滑。
+      en: Add the wontons and cook for 3 minutes — skin should float and turn translucent, filling cooked through. The thin-skin large-filling wontons in this dish need the full time to become silky.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 大窩或者深碗一隻：雲吞墊底、配菜分區圍邊、叉燒鋪一邊、雞片同大蝦擺中央。淋上熱湯（雞湯 + 蝦頭油 + 少少鹽白胡椒），即上枱。
+      zh: 大窝或深碗一只：云吞垫底、配菜分区围边、叉烧铺一边、鸡片与大虾摆中央。淋上热汤（鸡汤+虾头油+少许盐白胡椒），即上桌。
+      en: "In a deep bowl — wontons at the bottom, vegetables fanned around the rim, char siu on one side, chicken and prawns in the centre. Ladle over hot broth (chicken stock + a touch of shrimp-head oil + salt and white pepper) and serve."
+tips:
+  - yue: 「窩」呢個字粵菜入面通常指深窩、大碗——意思係份量足、配料豐富。窩雲吞同普通雲吞湯嘅最大分別係配菜——一份頂得普通雲吞湯加配菜加叉燒。
+    zh: 「窝」在粤菜中通常指深碗、大碗——意指份量足、配料丰富。窝云吞与普通云吞汤最大区别是配菜——一份相当于普通云吞汤加配菜加叉烧。
+    en: 「窩」 (wo) in Cantonese cuisine denotes a deep bowl with generous toppings. The difference between 窩雲吞 (this dish) and plain wonton soup is the extras — one 窩雲吞 is roughly a plain wonton soup plus blanched vegetables plus char siu.
+  - yue: 雲吞皮要薄——傳統用「全蛋雲吞皮」，每張只有 1 mm 厚；煮 3 分鐘係臨界值，過咗皮會破、餡會散。
+    zh: 云吞皮要薄——传统用「全蛋云吞皮」，每张只有 1 mm 厚；煮 3 分钟是临界值，过了皮会破、馅会散。
+    en: Wonton skins must be thin — traditional all-egg wrappers are only 1 mm thick. 3 minutes is the critical cook time; longer and the skins burst, the filling escapes.
+  - yue: 湯底好重要——茶餐廳通常用大地魚、蝦頭、雞骨熬嘅濃湯。家裡可以用雞湯加少少蝦頭油同蝦籽提鮮。
+    zh: 汤底很重要——茶餐厅常用大地鱼、虾头、鸡骨熬的浓汤。家里可用鸡汤加少许虾头油与虾籽提鲜。
+    en: The broth makes the dish. HK shops use a deep stock of dried plaice, shrimp heads, and chicken bone. At home, fortify chicken stock with shrimp-head oil and a pinch of dried shrimp roe for the umami depth.
+history:
+  yue: 窩雲吞係香港 1950 年代麵家「升級版」雲吞湯——將平民嘅雲吞湯加入大蝦、雞片、叉燒、配菜，定價約為普通雲吞湯嘅 2-3 倍，提供俾「想加料但唔想點兩碟」嘅食客。今日係茶餐廳「正餐式湯品」嘅代表。
+  zh: 窝云吞是香港 1950 年代面家「升级版」云吞汤——将平民的云吞汤加入大虾、鸡片、叉烧、配菜，定价约为普通云吞汤的 2-3 倍，提供给「想加料但不想点两道」的食客。今天是茶餐厅「正餐式汤品」的代表。
+  en: 窩雲吞 emerged in 1950s Hong Kong noodle shops as a "premium" wonton soup — adding prawns, chicken, char siu, and vegetables to humble wontons, priced at 2-3× the basic bowl. It targeted diners who wanted more without ordering two dishes. Today it stands as a tea-restaurant "meal-in-a-bowl" classic.
+allergens:
+  - shellfish
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #8 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #8 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

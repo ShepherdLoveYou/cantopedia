@@ -7,19 +7,78 @@ names:
   en: Ginger-scallion Fish-ball Congee
 category: congee
 ingredients:
-  - ref: fish-fillet
-    qty: 8
-    unit: 件
-  - ref: ginger-scallion
-    qty: 1
-    unit: 份
   - ref: congee-base
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 預先熬好嘅粥底
+      zh: 预先熬好的粥底
+      en: pre-cooked plain congee base
+  - ref: fish-fillet
+    qty: 8
+    unit: 件
+    prep:
+      yue: 龍利柳切大球，用蛋白同生粉漿薄薄一層
+      zh: 龙利柳切大球，用蛋白与生粉浆薄薄一层
+      en: sole fillet cut into large pieces, coated with thin egg-white-and-cornstarch slurry
+  - ref: ginger-scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 薑切細絲、蔥切蔥花、蔥白末
+      zh: 姜切细丝、葱切葱花、葱白末
+      en: ginger julienned, scallion sliced into greens and whites
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 6
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 粥底加熱到滾，落薑絲、蔥白末。
+      zh: 粥底加热至沸，下姜丝、葱白末。
+      en: Bring the congee base to a boil, add ginger and scallion whites.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 落魚球輕輕推散——魚球好脆弱，用勺背輕推，唔可以用力攪，否則散開變成「魚茸」。
+      zh: 下鱼球轻轻推散——鱼球脆弱，用勺背轻推，不可用力搅，否则会散开变「鱼茸」。
+      en: Add the fish, push apart gently with the back of a ladle — sole is fragile; vigorous stirring breaks it into a fish paste.
+    time_seconds: 30
+  - order: 3
+    body:
+      yue: 轉細火煮 2-3 分鐘到魚球變白、熟透——時間太長魚球會散，太短會生。
+      zh: 转小火煮 2-3 分钟至鱼球变白、熟透——时间太长鱼球会散，太短会生。
+      en: Lower the heat and simmer 2-3 minutes — the fish should turn opaque white and just cook through. Too long and the pieces disintegrate; too short and they remain raw inside.
+    time_seconds: 150
+  - order: 4
+    body:
+      yue: 試味，加少少鹽、白胡椒粉、麻油調味；最後落蔥花同少少炸幹蔥裝飾，即上枱。
+      zh: 试味，加少许盐、白胡椒粉、麻油调味；最后撒葱花与少许炸干葱装饰，即上桌。
+      en: Taste and adjust with salt, white pepper, and sesame oil. Finish with scallion greens and a sprinkle of crispy fried shallot; serve.
+tips:
+  - yue: 「魚球」唔係魚丸——魚球係新鮮魚柳切大塊，質感較粗、有層次；魚丸係魚漿攪打成丸，彈牙但冇魚肉感。香港人睇法分明，茶餐廳菜單若寫「魚球粥」用魚丸就會被投訴。
+    zh: 「鱼球」不是鱼丸——鱼球是新鲜鱼柳切大块，质感较粗、有层次；鱼丸是鱼浆搅打成丸，弹牙但无鱼肉感。香港人分得清楚，茶餐厅菜单若写「鱼球粥」用鱼丸会被投诉。
+    en: 「魚球」 (fish "balls") here means cut chunks of fresh fish fillet, not the bouncy paste balls (魚丸). Hong Kong diners distinguish strictly — a "fish-球" congee made with paste balls would get a complaint.
+  - yue: 薑絲落得多少少——同魚一齊有除腥嘅作用。如果魚有腥味重，可以薑絲落多兩倍。
+    zh: 姜丝多放一些——与鱼一同有除腥作用。若鱼有腥味，可将姜丝量加倍。
+    en: Be generous with ginger — it neutralises fishiness. If the fillet has a strong fish smell, double the ginger.
+  - yue: 龍利柳係海外華埠最易買到嘅替代品——同 sole 質感接近，但冇 sole 嘅淡腥味，適合粥品。
+    zh: 龙利柳是海外华人区最易买到的替代品——与 sole 质感接近，但无 sole 的淡腥味，适合粥品。
+    en: Sole fillet is the standard, but basa or dover sole work equally well — texture-similar without the muddy note that puts off some diners.
+history:
+  yue: 薑蔥魚球粥係粵菜「素以濟葷」嘅例子——魚球提供鮮味同質感、薑絲化解腥味、粥底提供溫暖底味。傳統廣州茶居清晨開市，第一鍋粥就係呢類「滾水沖嘢」嘅生滾粥。今日香港茶餐廳早餐三件套之一（同油條、奶茶）。
+  zh: 姜葱鱼球粥是粤菜「素以济荤」的例子——鱼球提供鲜味与质感、姜丝化解腥味、粥底提供温暖底味。传统广州茶居清晨开市，第一锅粥就是这类「滚水冲东西」的生滚粥。今天是香港茶餐厅早餐三件套之一（搭配油条、奶茶）。
+  en: Ginger-scallion fish congee exemplifies the Cantonese principle of "vegetables balancing meat" — the fish gives umami and texture, ginger neutralises fishiness, the congee base provides comfort. Traditional Canton tea-houses opened at dawn with this kind of "boil-water-over-toppings" sang-gun congee. Today it is one of three canonical HK tea-restaurant breakfasts (with youtiao and milk tea).
+allergens:
+  - fish
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #42 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #42 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

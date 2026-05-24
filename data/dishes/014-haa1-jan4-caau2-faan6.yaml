@@ -7,22 +7,89 @@ names:
   en: Shrimp Fried Rice
 category: rice
 ingredients:
-  - ref: shrimp-meat
-    qty: 2
-    unit: 兩
-  - ref: green-peas
-    qty: 1
-    unit: 份
-  - ref: scallion
-    qty: 1
-    unit: 份
   - ref: fried-rice-base
     qty: 2
     unit: 份
-method_status: stub
+    prep:
+      yue: 隔夜冷飯 2 碗、用手揉散
+      zh: 隔夜冷饭 2 碗、用手揉散
+      en: 2 bowls day-old cold cooked rice, broken up by hand
+  - ref: shrimp-meat
+    qty: 2
+    unit: 兩
+    prep:
+      yue: 中等蝦仁去殼去腸，用蛋白同生粉抓勻
+      zh: 中等虾仁去壳去肠，用蛋白与生粉抓匀
+      en: medium peeled shrimp, deveined, tossed with egg white and cornstarch
+  - ref: green-peas
+    qty: 1
+    unit: 份
+    prep:
+      yue: 飛水 30 秒過冷河
+      zh: 飞水 30 秒过冷水
+      en: blanched 30 seconds, shocked
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切蔥花
+      zh: 切葱花
+      en: thinly sliced
+  - ref: egg
+    qty: 2
+    unit: 個
+    prep:
+      yue: 打散加少少鹽
+      zh: 打散加少许盐
+      en: beaten with a pinch of salt
+servings: 2
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒熱落 1 匙油，落蝦仁攤平煎 15 秒到底面變色、撥散快炒到剛變紅撈起——蝦仁過熟會變橡皮，要見好就收。
+      zh: 锅烧热下 1 勺油，下虾仁摊平煎 15 秒至底面变色、拨散快炒至刚变红捞起——虾仁过熟会变橡皮，要见好就收。
+      en: Heat 1 Tbsp oil. Lay the shrimp flat, sear 15 seconds, then break apart and stir-fry just until pink; remove immediately. Overcooked shrimp turns rubbery.
+    time_seconds: 45
+  - order: 2
+    body:
+      yue: 鑊再落 2 匙油，倒入蛋液晃成蛋皮，半熟即落冷飯，快手撥散到每粒米裹住蛋汁——金包銀手法。
+      zh: 锅再下 2 勺油，倒入蛋液晃成蛋皮，半熟即下冷饭，快手拨散至每粒米裹上蛋汁——金包银手法。
+      en: Add 2 Tbsp oil. Swirl in egg, and just before it sets, dump in the cold rice. Toss aggressively until every grain is egg-coated — the 金包銀 technique.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 落番蝦仁、青豆、蔥花，加 1 茶匙鹽、半茶匙糖、少少胡椒粉、鑊邊淋少少生抽，再翻 30 秒到所有食材均勻，即上碟。
+      zh: 倒回虾仁、青豆、葱花，加 1 茶匙盐、半茶匙糖、少许胡椒粉、锅边淋少许生抽，再翻 30 秒至所有食材均匀，即出锅。
+      en: Return the shrimp, peas, scallion. Season with 1 tsp salt, ½ tsp sugar, white pepper, drizzle light soy around the rim. Toss 30 seconds and plate.
+    time_seconds: 30
+tips:
+  - yue: 比起揚州炒飯，蝦仁炒飯配料簡單但更講究——蝦仁係主角，必須夠新鮮夠彈牙。茶餐廳一般用解凍蝦仁，自家整用鮮蝦最好。
+    zh: 相比扬州炒饭，虾仁炒饭配料简单但更讲究——虾仁是主角，必须够新鲜够弹牙。茶餐厅一般用解冻虾仁，自家做用鲜虾最好。
+    en: Compared with Yangzhou fried rice, shrimp fried rice has fewer ingredients but is more demanding — the shrimp is the star, so freshness and snap matter. Restaurants use thawed frozen shrimp; at home, fresh is best.
+  - yue: 蝦仁抓生粉要薄薄一層——多咗會結團、覆住蝦仁本身嘅鮮味。
+    zh: 虾仁抓生粉要薄薄一层——多了会结团、掩盖虾仁本身的鲜味。
+    en: Dust the shrimp lightly with cornstarch — too much creates a doughy coating that masks the shrimp's sweetness.
+  - yue: 「鑊氣」嘅關鍵係用大火快炒、唔好喺鑊裡停太耐。蝦仁炒飯由蛋落鑊到上碟最多 3 分鐘。
+    zh: 「镬气」的关键是用大火快炒、不要在锅里停留太久。虾仁炒饭从蛋下锅到出锅最多 3 分钟。
+    en: Wok hei demands a fierce flame and short cook time. From the egg hitting the pan to plating should take 3 minutes maximum.
+history:
+  yue: 蝦仁炒飯係粵菜「淨味派」嘅代表——同揚州炒飯嘅「七寶」對比，蝦仁炒飯只用蝦仁、青豆、蔥花、蛋四樣，講求蝦本身嘅鮮甜同鑊氣。19 世紀廣州珠江一帶嘅水上人家，將新鮮捕撈嘅河蝦同冷飯快炒，逐漸演變成今日嘅版本。
+  zh: 虾仁炒饭是粤菜「净味派」的代表——与扬州炒饭的「七宝」对比，虾仁炒饭只用虾仁、青豆、葱花、蛋四样，讲求虾本身的鲜甜与镬气。19 世纪广州珠江一带的水上人家，将新鲜捕捞的河虾与冷饭快炒，逐渐演变成今日的版本。
+  en: Shrimp fried rice represents the Cantonese "pure-flavour" school — where Yangzhou fried rice has seven garnishes, shrimp fried rice has only four (shrimp, peas, scallion, egg). It prizes the shrimp's natural sweetness and wok hei. Traced to 19th-century Pearl River boat dwellers in Canton who flash-fried freshly caught river shrimp with cold rice.
+allergens:
+  - shellfish
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #14 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #14 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

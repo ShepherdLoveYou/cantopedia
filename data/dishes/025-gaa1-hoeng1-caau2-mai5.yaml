@@ -7,34 +7,122 @@ names:
   en: Country-style Fried Rice Vermicelli
 category: noodle
 ingredients:
-  - ref: bell-pepper
-    qty: 4
-    unit: 兩
-  - ref: onion
-    qty: 1
-    unit: 份
-  - ref: bean-sprouts
-    qty: 1
-    unit: 份
-  - ref: turnip
-    qty: 1
-    unit: 份
-  - ref: shrimp-meat
-    qty: 1
-    unit: 兩
-  - ref: ham-strips
-    qty: 1
-    unit: 兩
-  - ref: egg
-    qty: 1
-    unit: 個
   - ref: rice-vermicelli
     qty: 6
     unit: 兩
-method_status: stub
+    prep:
+      yue: 溫水浸 10 分鐘軟身、瀝乾
+      zh: 温水浸 10 分钟软身、沥干
+      en: soaked in warm water 10 min, drained
+  - ref: shrimp-meat
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 去殼去腸、用少少鹽生粉抓勻
+      zh: 去壳去肠、用少许盐生粉抓匀
+      en: peeled, deveined, salted and tossed with cornstarch
+  - ref: ham-strips
+    qty: 1
+    unit: 兩
+    prep:
+      yue: 火腿絲（中式金華火腿絲最佳）
+      zh: 火腿丝（中式金华火腿丝最佳）
+      en: ham strips (Chinese Jinhua ham preferred)
+  - ref: egg
+    qty: 1
+    unit: 個
+    prep:
+      yue: 打散
+      zh: 打散
+      en: beaten
+  - ref: bell-pepper
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 青紅各半、切絲
+      zh: 青红各半、切丝
+      en: red and green, julienned
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: bean-sprouts
+    qty: 1
+    unit: 份
+    prep:
+      yue: 摘走尾根
+      zh: 掐去尾根
+      en: tails trimmed
+  - ref: turnip
+    qty: 1
+    unit: 份
+    prep:
+      yue: 豆卜或者唐菜絲，根據茶餐廳習慣
+      zh: 豆卜或唐菜丝，按茶餐厅习惯
+      en: tofu puffs or shredded Chinese cabbage, per house preference
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 米粉用溫水浸軟瀝乾，加 1 茶匙油拌散——同時準備好其他食材。
+      zh: 米粉用温水浸软沥干，加 1 茶匙油拌散——同时准备好其他食材。
+      en: Soak the rice vermicelli in warm water until pliable, drain, and toss with 1 tsp oil. Prep the other ingredients.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 鑊燒熱落 1 匙油，倒入蛋液晃成蛋皮，半熟撥碎撈起；再起鑊落少少油，落蝦仁同火腿絲爆 30 秒撈起。
+      zh: 锅烧热下 1 勺油，倒入蛋液晃成蛋皮，半熟拨碎捞起；再起锅下少量油，下虾仁与火腿丝爆 30 秒捞起。
+      en: Heat 1 Tbsp oil, scramble the egg into loose curds; remove. Reheat with a touch of oil, stir-fry the shrimp and ham strips 30 seconds; remove.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 鑊燒大火，落 2 匙油爆香洋蔥絲同青紅椒絲 30 秒，落瀝乾嘅米粉，用筷子同鏟「拋」起來令米粉均勻熱身——唔可以結團。
+      zh: 锅烧大火，下 2 勺油爆香洋葱丝与青红椒丝 30 秒，下沥干的米粉，用筷子与铲「抛」起令米粉均匀热身——不可结团。
+      en: Crank the heat. Add 2 Tbsp oil, stir-fry onion and peppers 30 seconds, add the drained vermicelli. Toss with chopsticks and spatula to heat evenly — no clumping.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 鑊邊淋 1 茶匙老抽（上色）、1 茶匙生抽、半茶匙糖、少少胡椒粉，繼續快手翻炒到米粉均勻金黃。
+      zh: 锅边淋 1 茶匙老抽（上色）、1 茶匙生抽、半茶匙糖、少许胡椒粉，继续快手翻炒至米粉均匀金黄。
+      en: Drizzle 1 tsp dark soy (for colour), 1 tsp light soy, ½ tsp sugar, white pepper around the rim. Toss until the vermicelli is evenly golden.
+    time_seconds: 60
+  - order: 5
+    body:
+      yue: 落番蝦仁、火腿絲、蛋粒、芽菜，再翻 20 秒到芽菜剛剛斷生即上碟。
+      zh: 倒回虾仁、火腿丝、蛋粒、芽菜，再翻 20 秒至芽菜刚断生即出锅。
+      en: Return the shrimp, ham, scrambled egg, and bean sprouts. Toss 20 seconds — sprouts should still crunch — and plate.
+    time_seconds: 20
+tips:
+  - yue: 家鄉炒米同星洲炒米嘅最大分別係——家鄉冇咖喱粉、用火腿絲提供鹹鮮、米粉本色為主；星洲有咖喱粉、米粉染成金黃。
+    zh: 家乡炒米与星洲炒米的最大区别——家乡无咖喱粉、用火腿丝提供咸鲜、米粉本色为主；星洲有咖喱粉、米粉染成金黄。
+    en: Country-style differs from Singapore-style fried vermicelli in two ways — country has no curry powder and depends on ham strips for savouriness; the vermicelli stays mostly natural-coloured rather than curry-stained gold.
+  - yue: 「家鄉」呢個名係指廣東「家鄉風味」——即係簡樸、淨味、不靠重醬料嘅做法，符合廣東鄉村食物嘅美學。
+    zh: 「家乡」之名指广东「家乡风味」——即朴素、净味、不靠重酱料的做法，符合广东乡村食物的美学。
+    en: '"Country-style" (家鄉, jaa1 hoeng1) here denotes the rustic Cantonese aesthetic — simple, clean-flavoured, not reliant on heavy sauces. Reflects the village-cooking values of rural Guangdong.'
+  - yue: 火腿絲必須係中式火腿（金華、宣威）——西式火腿太鹹太濕，喺呢個菜入面唔對味。
+    zh: 火腿丝必须是中式火腿（金华、宣威）——西式火腿太咸太湿，在此菜中不对味。
+    en: Use Chinese-style cured ham (Jinhua or Xuanwei) — Western ham is too wet and salty for this dish.
+history:
+  yue: 家鄉炒米屬於 1920 年代廣東鄉村廚師為城市流動勞工準備嘅簡單食物——用米粉同少少蔬菜、火腿絲、雞蛋，可以一鑊解決一餐。後來傳入香港茶餐廳，成為標準午餐選擇之一。
+  zh: 家乡炒米属于 1920 年代广东乡村厨师为城市流动劳工准备的简单食物——用米粉与少许蔬菜、火腿丝、鸡蛋，一锅解决一餐。后传入香港茶餐厅，成为标准午餐选择之一。
+  en: Country-style fried vermicelli originated in 1920s rural Guangdong as cheap workers' food — rice vermicelli with a handful of vegetables, ham strips, and egg, all in one pan. It travelled into Hong Kong tea-restaurants and became a standard lunch option.
+allergens:
+  - shellfish
+  - egg
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #25 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #25 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
