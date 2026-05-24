@@ -7,31 +7,105 @@ names:
   en: Portuguese-sauce Twin Chop Rice
 category: baked-rice
 ingredients:
+  - ref: white-rice
+    qty: 1
+    unit: 碗
   - ref: pork-chop
     qty: 1
     unit: 件
+    prep:
+      yue: 豬扒拍鬆、醃 20 分鐘
+      zh: 猪扒拍松、腌 20 分钟
+      en: pork chop pounded thin, marinated 20 min
   - ref: chicken-chop
     qty: 1
     unit: 件
+    prep:
+      yue: 雞扒醃 20 分鐘
+      zh: 鸡扒腌 20 分钟
+      en: chicken chop marinated 20 min
   - ref: bell-pepper
     qty: 1
     unit: 份
+    prep:
+      yue: 青紅各半切絲
+      zh: 青红各半切丝
+      en: red and green, julienned
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切丁
+      zh: 切丁
+      en: diced
   - ref: mushroom
     qty: 1
     unit: 份
+    prep:
+      yue: 切片
+      zh: 切片
+      en: sliced
   - ref: portuguese-sauce
     qty: 4
     unit: 兩
+    prep:
+      yue: 葡汁（見 #38 做法）
+      zh: 葡汁（见 #38 做法）
+      en: Portuguese sauce (see dish #38 for method)
   - ref: cheese-topping
     qty: 1
     unit: 份
-method_status: stub
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 18
+equipment:
+  - oven
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 兩款扒（豬同雞）拍鬆、醃料同 #18 番茄豬扒飯。落鑊用 2 匙油煎金黃熟透（豬扒煎 2 分鐘每面、雞扒煎 90 秒每面），撈起切條。
+      zh: 两款扒（猪与鸡）拍松、腌料同 #18 番茄猪扒饭。下锅用 2 勺油煎金黄熟透（猪扒每面 2 分钟、鸡扒每面 90 秒），捞起切条。
+      en: Pound and marinate both chops (use the marinade from dish #18). Pan-fry in 2 Tbsp oil — pork 2 min per side, chicken 90 sec per side. Slice into strips.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 鑊餘油落洋蔥、青紅椒、冬菇爆 60 秒。倒入葡汁料煮滾，加生粉水推稠到「掛得住」。
+      zh: 锅余油下洋葱、青红椒、冬菇爆 60 秒。倒入葡汁料煮沸，加生粉水勾芡至「挂得住」。
+      en: With remaining oil, stir-fry onion, peppers, mushroom 60 seconds. Add Portuguese sauce, boil and thicken with slurry.
+    time_seconds: 120
+  - order: 3
+    body:
+      yue: 焗碗底鋪白飯，淋少少葡汁；豬扒同雞扒並排鋪喺飯面（一半豬扒、一半雞扒——「鴛鴦」），淋上葡汁，灑芝士絲。焗 220°C 焗 10 分鐘到芝士金黃，即上枱。
+      zh: 焗碗底铺白饭，淋少许葡汁；猪扒与鸡扒并排铺在饭面（一半猪扒、一半鸡扒——「鸳鸯」），淋上葡汁，撒芝士丝。烤 220°C 焗 10 分钟至芝士金黄，即上桌。
+      en: In a baking dish, layer rice with a drizzle of sauce. Arrange pork chop and chicken chop side-by-side on top (half each — that's the "twin" / 鴛鴦), ladle remaining sauce, blanket with cheese. Bake at 220°C / 425°F for 10 minutes until golden. Serve.
+    temperature_c: 220
+    time_seconds: 600
+tips:
+  - yue: 「鴛鴦」喺粵菜入面指「一菜兩種搭配」——鴛鴦冰室、鴛鴦麵、鴛鴦飯，全部都係兩種主蛋白並陳。呢個菜雙人份、一人份對半都得。
+    zh: 「鸳鸯」在粤菜中指「一菜两种搭配」——鸳鸯冰室、鸳鸯面、鸳鸯饭，全部都是两种主蛋白并陈。此菜双人份、一人份对半皆可。
+    en: 「鴛鴦」 (jyun joeng, mandarin ducks) in Cantonese cuisine means "two-of-a-kind in one plate" — yuanyang ice-house, yuanyang noodles, yuanyang rice, all pairings of two proteins. Works as a single portion (half and half) or a double portion.
+  - yue: 豬扒同雞扒嘅煎時間唔同——豬扒厚啲煎得耐啲（每面 2 分鐘），雞扒薄啲煎短啲（每面 90 秒）。分開煎、唔好一齊落鑊。
+    zh: 猪扒与鸡扒的煎时间不同——猪扒厚些煎久些（每面 2 分钟），鸡扒薄些煎短些（每面 90 秒）。分开煎、不要一同下锅。
+    en: Pork and chicken chops have different cook times — pork is thicker (2 min per side), chicken thinner (90 sec per side). Sear separately, not together.
+  - yue: 喺香港茶餐廳呢個菜屬於「比較貴」嘅焗飯——因為要做兩款扒。同 #35（豬扒）、#37（雞扒）相比，價格高 30%。
+    zh: 在香港茶餐厅此菜属于「较贵」的焗饭——因为要做两款扒。与 #35（猪扒）、#37（鸡扒）相比，价格高 30%。
+    en: This is among the pricier baked-rice options in HK tea-restaurants — uses both proteins. Typically 30% more than the single-protein versions in dishes #35 (pork) or #37 (chicken).
+history:
+  yue: 葡汁鴛鴦飯係茶餐廳「鴛鴦菜」嘅典型——同鴛鴦麵、鴛鴦炒飯、鴛鴦凍咖啡奶茶（鴛鴦）一樣，都係「兩種選擇唔知點揀就要兩種」嘅妥協菜式，反映港式茶餐廳「為食客諗到盡」嘅精神。
+  zh: 葡汁鸳鸯饭是茶餐厅「鸳鸯菜」的典型——与鸳鸯面、鸳鸯炒饭、鸳鸯冻咖啡奶茶（鸳鸯）一样，都是「两种选择不知道选哪个就要两种」的妥协菜式，反映港式茶餐厅「为食客想到尽」的精神。
+  en: Portuguese-sauce twin chop rice exemplifies the "yuanyang" genre in HK tea-restaurants — like yuanyang noodles, yuanyang fried rice, and yuanyang (the iced coffee-tea blend), it solves the "can't decide" problem by serving both. Reflects HK tea-restaurants' service philosophy of "thinking through every diner's needs."
+allergens:
+  - dairy
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #39 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #39 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

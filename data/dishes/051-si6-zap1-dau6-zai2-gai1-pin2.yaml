@@ -10,24 +10,94 @@ ingredients:
   - ref: chicken-slices
     qty: 4
     unit: 兩
+    prep:
+      yue: 雞片醃 15 分鐘（生抽 + 紹興酒 + 糖 + 生粉 + 蛋白 + 油）
+      zh: 鸡片腌 15 分钟（生抽+绍兴酒+糖+生粉+蛋白+油）
+      en: chicken slices marinated 15 min with soy + Shaoxing + sugar + cornstarch + egg white + oil
   - ref: long-bean
     qty: 6
     unit: 兩
-  - ref: onion
-    qty: 1
-    unit: 份
+    prep:
+      yue: 切 5 cm 段，飛水 60 秒過冷河
+      zh: 切 5 cm 段，飞水 60 秒过冷水
+      en: cut into 5 cm segments, blanched 60 sec, shocked in cold water
   - ref: bell-pepper
     qty: 1
     unit: 份
+    prep:
+      yue: 青紅椒切菱角形
+      zh: 青红椒切菱形
+      en: bell peppers diamond-cut
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
   - ref: black-bean-sauce
     qty: 1
     unit: 份
-method_status: stub
-sources:
-  - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #51 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    prep:
+      yue: 豆豉 1.5 匙浸軟剁碎 + 蒜茸 1 匙 + 薑茸 1 茶匙 + 辣椒粒
+      zh: 豆豉 1.5 勺浸软剁碎 + 蒜茸 1 勺 + 姜茸 1 茶匙 + 辣椒粒
+      en: 1.5 Tbsp soaked dried black beans chopped + 1 Tbsp minced garlic + 1 tsp minced ginger + chili
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾落 2 匙油，落醃好嘅雞片煎 20 秒到底面焦香，撥散快炒到剛變色撈起。
+      zh: 锅烧至大热下 2 勺油，下腌好的鸡片煎 20 秒至底面焦香，拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear marinated chicken 20 seconds flat, break apart, stir-fry to just-cooked, remove.
+    time_seconds: 30
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落豉汁料（豆豉+蒜+薑+辣椒）中火爆 30 秒到極香；落洋蔥同青紅椒爆 30 秒。
+      zh: 锅留 1 勺油，下豉汁料（豆豉+蒜+姜+辣椒）中火爆 30 秒至极香；下洋葱与青红椒爆 30 秒。
+      en: Keep 1 Tbsp oil. Stir-fry the black bean mixture on medium for 30 seconds until intensely aromatic. Add onion and peppers, stir-fry 30 seconds.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 落豆仔翻 30 秒（已飛水、再升溫）。
+      zh: 加豆仔翻 30 秒（已飞水、再升温）。
+      en: Add the blanched long beans, toss 30 seconds to reheat.
+    time_seconds: 30
+  - order: 4
+    body:
+      yue: 落番雞片，加 1 匙紹興酒、1 茶匙生抽、半茶匙糖、3 匙雞湯、1 茶匙生粉水，翻炒 30 秒到芡掛勻，即上碟。
+      zh: 倒回鸡片，加 1 勺绍兴酒、1 茶匙生抽、半茶匙糖、3 勺鸡汤、1 茶匙生粉水，翻炒 30 秒至芡挂匀，即出锅。
+      en: Return the chicken. Add 1 Tbsp Shaoxing, 1 tsp light soy, ½ tsp sugar, 3 Tbsp chicken stock, 1 tsp cornstarch slurry. Toss 30 seconds until glossy and clinging. Plate.
+    time_seconds: 30
+tips:
+  - yue: 「豆仔」即yard-long bean——纖維比較長，必須先飛水再炒，唔可以淨炒。
+    zh: 「豆仔」即 yard-long bean——纤维较长，必须先飞水再炒，不能净炒。
+    en: 「豆仔」 means yard-long bean — quite fibrous. Always blanch before stir-frying; raw-frying leaves them tough and raw-tasting.
+  - yue: 變體 #051b 用牛片代替雞片——做法相同，牛肉醃料加少少小蘇打嫩肉。
+    zh: 变体 #051b 用牛片代替鸡片——做法相同，牛肉腌料加少许小苏打嫩肉。
+    en: Variant #051b uses beef slices instead of chicken — same technique, beef marinade includes a touch of baking soda for tenderising.
+  - yue: 豉汁同豆仔嘅組合源自客家菜——客家人用豆仔調節油膩、用豆豉提味，係客家經典。
+    zh: 豉汁与豆仔的组合源自客家菜——客家人用豆仔调节油腻、用豆豉提味，是客家经典。
+    en: The black-bean-and-long-bean combination comes from Hakka cuisine — Hakka cooks use long beans to cut richness and black beans for umami, a Hakka classic.
+history:
+  yue: 豉汁豆仔雞片反映客家菜對粵菜嘅影響——客家「豆仔燜」嘅手法被粵菜廚師改成快炒版。1960 年代起茶餐廳普遍提供，係下飯菜選項。
+  zh: 豉汁豆仔鸡片反映客家菜对粤菜的影响——客家「豆仔焖」的手法被粤菜厨师改为快炒版。1960 年代起茶餐厅普遍提供，是下饭菜选项。
+  en: Black-bean long-bean chicken reflects Hakka influence on Cantonese cuisine — the Hakka braised-long-bean technique was reworked as a Cantonese stir-fry. Standard tea-restaurant offering since the 1960s as a rice-companion dish.
+allergens:
+  - egg
+  - soy
+  - gluten
 variants:
   - 051b-si6-zap1-dau6-zai2-ngau4-pin2
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: 2026-05-24
+    note: "Item #51 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

@@ -7,31 +7,105 @@ names:
   en: Béchamel Chicken Chop Baked Rice
 category: baked-rice
 ingredients:
+  - ref: white-rice
+    qty: 1
+    unit: 碗
   - ref: chicken-chop
     qty: 2
     unit: 件
+    prep:
+      yue: 雞髀肉去骨，醃 20 分鐘（生抽 + 鹽 + 黑椒 + 生粉 + 蛋液）
+      zh: 鸡腿肉去骨，腌 20 分钟（生抽+盐+黑椒+生粉+蛋液）
+      en: boneless chicken thigh, marinated 20 min with soy + salt + black pepper + cornstarch + egg
   - ref: bechamel-white
     qty: 1
     unit: 份
+    prep:
+      yue: 白汁——牛油 + 麵粉 + 牛奶（同 #36 做法）
+      zh: 白汁——黄油 + 面粉 + 牛奶（同 #36 做法）
+      en: béchamel — butter + flour + milk (see dish #36 for method)
   - ref: mushroom
     qty: 1
     unit: 份
+    prep:
+      yue: 鮮冬菇切片
+      zh: 鲜冬菇切片
+      en: fresh shiitake, sliced
   - ref: onion
     qty: 1
     unit: 份
+    prep:
+      yue: 切丁
+      zh: 切丁
+      en: diced
   - ref: green-peas
     qty: 1
     unit: 份
+    prep:
+      yue: 飛水
+      zh: 飞水
+      en: blanched
   - ref: cheese-topping
     qty: 1
     unit: 份
   - ref: herbs
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 香草少少裝飾
+      zh: 香草少许装饰
+      en: a pinch of herbs
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 15
+equipment:
+  - oven
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞扒醃 20 分鐘，掛少少生粉。鑊燒熱落 1 匙油，落雞扒煎 2 分鐘每面到金黃熟透，撈起切條。
+      zh: 鸡扒腌 20 分钟，拍少许生粉。锅烧热下 1 勺油，下鸡扒煎 2 分钟每面至金黄熟透，捞出切条。
+      en: After marinating, dust the chicken with cornstarch. Pan-fry in 1 Tbsp oil, 2 minutes per side until golden and cooked through. Slice into strips.
+    time_seconds: 240
+  - order: 2
+    body:
+      yue: 鑊餘油落洋蔥同冬菇爆 60 秒，倒入白汁同青豆，輕拌至混勻。
+      zh: 锅余油下洋葱与冬菇爆 60 秒，倒入白汁与青豆，轻拌至混匀。
+      en: With remaining oil, stir-fry onion and mushroom 60 seconds. Pour in béchamel and peas, fold gently.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 焗碗底鋪白飯，淋少少白汁滲入飯底；雞扒條鋪喺飯面，淋上大部份白汁，灑芝士絲蓋面。焗 220°C 焗 10 分鐘到芝士金黃。撒香草，即上枱。
+      zh: 焗碗底铺白饭，淋少许白汁渗入饭底；鸡扒条铺在饭面，淋上大部分白汁，撒芝士丝盖面。烤 220°C 焗 10 分钟至芝士金黄。撒香草，即上桌。
+      en: In a baking dish, layer rice, drizzle a touch of sauce. Lay chicken strips on top, ladle remaining sauce, blanket with cheese. Bake at 220°C / 425°F for 10 minutes until golden. Top with herbs, serve.
+    temperature_c: 220
+    time_seconds: 600
+tips:
+  - yue: 「白汁」（béchamel）係呢個菜嘅靈魂——白汁濃度同調味好重要，淨用牛奶嫩腥，加少少雞粉同白胡椒粉先夠味。
+    zh: 「白汁」（béchamel）是这道菜的灵魂——白汁浓度与调味很重要，单用牛奶嫌腥，加少许鸡粉与白胡椒粉才够味。
+    en: Béchamel is the soul — sauce thickness and seasoning matter. Plain milk is bland; add chicken bouillon and white pepper for savoury depth.
+  - yue: 雞扒要選雞髀肉、唔好用雞胸——雞髀肉有少少肥，焗 10 分鐘後仍然嫩，雞胸會柴。
+    zh: 鸡扒要选鸡腿肉、不要用鸡胸——鸡腿肉有少许肥，烤 10 分钟后仍嫩，鸡胸会柴。
+    en: Use chicken thigh, not breast — thigh has enough fat to stay tender after 10 minutes in the oven; breast dries out.
+  - yue: 同 #35 茄汁豬扒飯係相對——白汁=西式法菜風格、茄汁=西式意式風格，係茶餐廳「焗飯類」嘅兩大基本款。
+    zh: 与 #35 茄汁猪扒饭相对——白汁=西式法菜风格、茄汁=西式意式风格，是茶餐厅「焗饭类」的两大基本款。
+    en: Mirrors dish #35 (tomato pork chop) — béchamel for the French style, tomato for the Italian. The two pillars of HK tea-restaurant baked rice.
+history:
+  yue: 白汁雞扒飯反映 1950 年代香港冰室對法菜嘅本地化——將法式 béchamel 同煎雞扒、白飯結合，創造港式融合菜。今日係茶餐廳焗飯類嘅基本選擇。
+  zh: 白汁鸡扒饭反映 1950 年代香港冰室对法菜的本地化——将法式 béchamel 与煎鸡扒、白饭结合，创造港式融合菜。今天是茶餐厅焗饭类的基本选项。
+  en: Béchamel chicken-chop rice reflects 1950s Hong Kong ice-house adaptation of French cooking — combining French béchamel with pan-fried chicken thigh and rice into a Cantonese fusion classic. Today it is a standard option in HK tea-restaurant baked rice.
+allergens:
+  - dairy
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #37 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #37 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

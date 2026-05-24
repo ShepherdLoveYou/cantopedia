@@ -10,6 +10,31 @@ ingredients:
   - ref: beef-strips
     qty: 5
     unit: 兩
+    prep:
+      yue: 牛肉切絲（沿紋切，5 mm 寬、5 cm 長），醃 15 分鐘（生抽 + 紹興酒 + 糖 + 生粉 + 蛋白 + 油 + 1 茶匙小蘇打）
+      zh: 牛肉切丝（沿纹切，5 mm 宽、5 cm 长），腌 15 分钟（生抽+绍兴酒+糖+生粉+蛋白+油+1 茶匙小苏打）
+      en: beef julienned (with the grain, 5 mm wide × 5 cm long), marinated 15 min with soy + Shaoxing + sugar + cornstarch + egg white + oil + 1 tsp baking soda
+  - ref: ginger
+    qty: 4
+    unit: 片
+    prep:
+      yue: 嫩薑切細絲、磨少少薑汁
+      zh: 嫩姜切细丝、磨少许姜汁
+      en: young ginger julienned, with a touch grated for juice
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥白切段
+      zh: 葱白切段
+      en: scallion whites, cut into segments
+  - ref: oyster-sauce
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蠔油芡——蠔油 1 匙 + 生抽 1 茶匙 + 糖 1 茶匙 + 雞湯 3 匙 + 生粉水 1 茶匙
+      zh: 蚝油芡——蚝油 1 勺 + 生抽 1 茶匙 + 糖 1 茶匙 + 鸡汤 3 勺 + 生粉水 1 茶匙
+      en: oyster gravy — 1 Tbsp oyster sauce + 1 tsp light soy + 1 tsp sugar + 3 Tbsp chicken stock + 1 tsp cornstarch slurry
   - ref: fried-rice-base
     qty: 1
     unit: 碗
@@ -19,12 +44,57 @@ ingredients:
   - ref: spring-rolls-veg
     qty: 1
     unit: 條
-method_status: stub
-sources:
-  - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #48 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 6
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾，落 2 匙油，落醃好嘅牛絲攤平煎 20 秒到底面焦香，撥散快炒到剛變色撈起。
+      zh: 锅烧至大热，下 2 勺油，下腌好的牛丝摊平煎 20 秒至底面焦香，拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear the beef strips flat 20 seconds, break apart, stir-fry to just-cooked, remove.
+    time_seconds: 30
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落薑絲同蔥白爆 20 秒到極香——薑同油接觸，會產生薑辣素同薑酮，呢個係呢個菜嘅靈魂。
+      zh: 锅留 1 勺油，下姜丝与葱白爆 20 秒至极香——姜与油接触，会产生姜辣素与姜酮，这是这道菜的灵魂。
+      en: Keep 1 Tbsp oil. Stir-fry ginger and scallion whites 20 seconds until intensely aromatic — the ginger blooms in hot oil, releasing gingerol and shogaol that are the soul of the dish.
+    time_seconds: 20
+  - order: 3
+    body:
+      yue: 落番牛絲，加蠔油芡，加少少薑汁，快手翻炒 20 秒令所有食材均勻、芡掛勻，配白飯一碗、春卷一段，即上枱。
+      zh: 倒回牛丝，加蚝油芡，加少许姜汁，快手翻炒 20 秒令所有食材均匀、芡挂匀，配白饭一碗、春卷一段，即上桌。
+      en: Return the beef. Add the oyster gravy and a touch of ginger juice. Toss 20 seconds until everything is coated. Serve with a bowl of rice and a piece of spring roll.
+    time_seconds: 30
+tips:
+  - yue: 「薑汁」係呢個菜嘅關鍵——除咗薑絲爆香之外，最後加少少薑汁加強薑香。薑汁要用嫩薑、磨蓉用紗布榨。
+    zh: 「姜汁」是这道菜的关键——除了姜丝爆香之外，最后加少许姜汁加强姜香。姜汁要用嫩姜、磨蓉用纱布榨。
+    en: The ginger juice is the soul — beyond stir-frying ginger strips, the final touch of ginger juice doubles the aroma. Use young ginger, grate and squeeze through cheesecloth.
+  - yue: 牛肉「絲」唔同「片」——絲要沿紋切（食起來有絲狀口感），片要逆紋切（食起來嫩）。呢個菜要求沿紋切。
+    zh: 牛肉「丝」不同「片」——丝要沿纹切（吃起来有丝状口感），片要逆纹切（吃起来嫩）。这道菜要求沿纹切。
+    en: Beef "strips" cut differently from "slices" — strips with the grain for fibrous bite, slices against the grain for tenderness. This dish wants with-the-grain strips.
+  - yue: 變體 #048b 用雞絲代替牛絲——做法相同，雞肉煎時間短啲（10 秒）。
+    zh: 变体 #048b 用鸡丝代替牛丝——做法相同，鸡肉煎时间短些（10 秒）。
+    en: Variant #048b uses chicken strips instead of beef — same technique, chicken sears faster (10 sec).
+history:
+  yue: 薑汁系列係粵菜「以薑入饌」嘅代表——粵人相信薑可以驅寒去濕，喺潮濕嘅嶺南氣候特別適合。薑汁牛絲傳統用嚟產婦坐月、寒冬補身。茶餐廳將之納入日常餐單，成為下飯菜選項。
+  zh: 姜汁系列是粤菜「以姜入馔」的代表——粤人相信姜可以驱寒去湿，在潮湿的岭南气候特别适合。姜汁牛丝传统用于产妇坐月、寒冬补身。茶餐厅将之纳入日常餐单，成为下饭菜选项。
+  en: The ginger-juice series exemplifies Cantonese "cooking with ginger" — Cantonese folk medicine holds that ginger expels dampness, useful in southern China's humid climate. Traditionally served to postpartum mothers and as winter restoration; HK tea-restaurants brought it into the everyday rice-companion repertoire.
+allergens:
+  - egg
+  - shellfish
+  - soy
+  - gluten
 variants:
   - 048b-goeng1-zap1-gai1-si1-faan6
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: 2026-05-24
+    note: "Item #48 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

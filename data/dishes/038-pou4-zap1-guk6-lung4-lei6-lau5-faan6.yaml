@@ -7,28 +7,104 @@ names:
   en: Portuguese-sauce Baked Sole Rice
 category: baked-rice
 ingredients:
+  - ref: white-rice
+    qty: 1
+    unit: 碗
   - ref: sole-balls
     qty: 8
     unit: 件
+    prep:
+      yue: 龍利柳切大塊（每塊 30 g）、輕薄拍生粉
+      zh: 龙利柳切大块（每块 30 g）、轻拍生粉
+      en: sole fillet cut into large pieces (~30 g each), lightly dusted with cornstarch
   - ref: bell-pepper
     qty: 1
     unit: 兩
+    prep:
+      yue: 青紅各半、切絲
+      zh: 青红各半、切丝
+      en: red and green, julienned
   - ref: onion
     qty: 1
     unit: 兩
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
   - ref: mushroom
     qty: 1
     unit: 兩
+    prep:
+      yue: 鮮冬菇切片
+      zh: 鲜冬菇切片
+      en: fresh shiitake, sliced
   - ref: portuguese-sauce
     qty: 4
     unit: 兩
+    prep:
+      yue: 葡汁——咖喱粉 1.5 茶匙 + 椰漿 150 ml + 雞湯 200 ml + 牛奶 100 ml + 麵粉 1 匙（先用油炒成 roux）+ 黃薑粉 1/2 茶匙 + 鹽糖少少
+      zh: 葡汁——咖喱粉 1.5 茶匙 + 椰浆 150 ml + 鸡汤 200 ml + 牛奶 100 ml + 面粉 1 勺（先用油炒成 roux）+ 黄姜粉 1/2 茶匙 + 盐糖少许
+      en: Portuguese sauce — 1.5 tsp curry powder + 150 ml coconut cream + 200 ml chicken stock + 100 ml milk + 1 Tbsp flour (toasted in oil into roux) + ½ tsp turmeric + salt and sugar to taste
   - ref: cheese-topping
     qty: 1
     unit: 份
-method_status: stub
+servings: 1
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 18
+equipment:
+  - oven
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 油溫 170°C，落龍利柳炸 90 秒到表面金黃酥脆，撈起瀝油。
+      zh: 油温 170°C，下龙利柳炸 90 秒至表面金黄酥脆，捞出沥油。
+      en: Heat oil to 170°C / 340°F. Deep-fry the sole 90 seconds until golden and crisp; drain.
+    temperature_c: 170
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 鑊燒熱落 1 匙油，落洋蔥絲、青紅椒、冬菇片爆 60 秒到出香。
+      zh: 锅烧热下 1 勺油，下洋葱丝、青红椒、冬菇片爆 60 秒至出香。
+      en: Heat 1 Tbsp oil, stir-fry onion, peppers, and mushroom 60 seconds until fragrant.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 落葡汁料煮滾，加生粉水推稠至「掛得住」濃度。落番炸龍利柳輕拌一拌。
+      zh: 下葡汁料煮沸，加生粉水勾芡至「挂得住」浓度。倒回炸龙利柳轻拌一拌。
+      en: Add Portuguese sauce, bring to a boil and thicken to clinging consistency. Fold in the fried sole.
+    time_seconds: 120
+  - order: 4
+    body:
+      yue: 焗碗底鋪白飯，淋少少葡汁滲入飯底；龍利柳同葡汁鋪喺飯面，灑芝士絲蓋面。焗 220°C 焗 10 分鐘到芝士金黃帶焦邊，即上枱。
+      zh: 焗碗底铺白饭，淋少许葡汁渗入饭底；龙利柳与葡汁铺在饭面，撒芝士丝盖面。烤 220°C 焗 10 分钟至芝士金黄带焦边，即上桌。
+      en: In a baking dish, layer rice with a drizzle of sauce. Top with sole and remaining sauce, blanket with cheese. Bake at 220°C / 425°F for 10 minutes until golden. Serve.
+    temperature_c: 220
+    time_seconds: 600
+tips:
+  - yue: 「葡汁」係香港創造嘅醬料——係澳門葡式焗飯（baked rice with Portuguese-style curry sauce）嘅本地化版本，特點係咖喱粉 + 椰漿 + 黃薑粉嘅組合。同葡萄牙本地嘅 estufado / cabidela 完全唔同。
+    zh: 「葡汁」是香港创造的酱料——是澳门葡式烘饭（baked rice with Portuguese-style curry sauce）的本地化版本，特点是咖喱粉 + 椰浆 + 黄姜粉的组合。与葡萄牙本地的 estufado / cabidela 完全不同。
+    en: HK "Portuguese sauce" is a Cantonese creation, localised from the Macanese Portuguese-style baked rice. Its signature is the curry-coconut-turmeric combination; it bears no resemblance to actual Portuguese estufado or cabidela.
+  - yue: 葡汁嘅黃色係黃薑粉，唔係咖喱粉。咖喱粉提供咖喱香、黃薑粉提供金黃色澤。兩者缺一不可。
+    zh: 葡汁的黄色是黄姜粉，不是咖喱粉。咖喱粉提供咖喱香、黄姜粉提供金黄色泽。两者缺一不可。
+    en: The yellow colour comes from turmeric, not curry powder. Curry powder provides aroma; turmeric provides the golden hue. Both are needed.
+  - yue: 龍利柳要先炸再焗——淨焗會出水、炸後再焗保持外脆內嫩。茶餐廳呢個菜典型賣 30-50 港元。
+    zh: 龙利柳要先炸再烤——只烤会出水、炸后再烤保持外脆内嫩。茶餐厅此菜典型卖 30-50 港元。
+    en: Fry the sole first, then bake — baking alone releases water; pre-frying keeps it crisp outside, tender inside. Typically priced at HK$30-50 in tea-restaurants.
+history:
+  yue: 葡汁焗飯起源於澳門——18 世紀葡萄牙殖民澳門時，葡人用本地材料模仿家鄉嘅 estufado（燉菜）創造出咖喱牛奶醬汁。1950 年代由澳門廚師帶入香港茶餐廳，配上本地海鮮，創造出港式葡汁焗飯。
+  zh: 葡汁焗饭起源于澳门——18 世纪葡萄牙殖民澳门时，葡人用本地材料模仿家乡的 estufado（炖菜）创造出咖喱牛奶酱汁。1950 年代由澳门厨师带入香港茶餐厅，配上本地海鲜，创造出港式葡汁烘饭。
+  en: Portuguese-sauce baked rice originated in Macau — when Portuguese colonised Macau in the 18th century, they improvised a curry-and-milk sauce to mimic the estufado of home. 1950s Macanese cooks brought it to Hong Kong tea-restaurants, where local seafood replaced the original meats, creating the HK version.
+allergens:
+  - dairy
+  - fish
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #38 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #38 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
