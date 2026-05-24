@@ -1,44 +1,123 @@
-# Cantopedia · 粵食典 — Handoff (2026-05-24)
+# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24)
 
-## What's live
+## Status snapshot
 
-- **Live site**: <https://shepherdloveyou.github.io/cantopedia>
+- **Live**: <https://shepherdloveyou.github.io/cantopedia>
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Status**: v0.1.0 tagged. CI + Deploy workflows green.
-- **Dishes**: **66/66 method_status: complete**, all with tri-lingual (粵/中/English)
-  method, history, tips, allergens, difficulty, prep+cook time, equipment.
+- **Release tag**: `v0.1.0`
+- **Dishes**: 66/66 method_status: complete, full tri-lingual (粵/中/En)
+- **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
 
-## What got built (one session, ~13 hours of autonomous work)
+## What was done in the last session
 
-1. **M1** — Repo skeleton: dual licenses (MIT + CC BY-SA 4.0), tri-lingual READMEs,
-   six original menu photos archived
-2. **M2** — Astro 5 site with Content Collections + Zod schemas; tri-lingual
-   i18n routing (`/zh/`, `/en/`, `/yue/`)
-3. **M3** — Python pipeline (`conda env cantopedia`) with pydantic models
-   mirroring Zod, Click CLI, Wikipedia + Wikimedia Commons adapters, on-disk cache
-4. **M4** — `pipeline init` generated 66 stub dishes + 110 ingredient stubs
-   from hand-transcription of the menu
-5. **M5** — Metro / Windows-Phone-style UX with W3CSS palette, Segoe font stack,
-   sticky pivot nav, Live Tile homepage, dish hero band with breadcrumbs
-6. **M8** — GitHub Pages deploy via `withastro/action@v3` (Node 22, pnpm@10)
-7. **M9** — CHANGELOG, READMEs, this handoff, v0.1.0 tag
-8. **13 enrichment iterations** — promoted all 66 dishes from `stub` to `complete`
-   with hand-authored tri-lingual content. No Claude API was used; everything
-   is original Cantonese-cuisine prose written by me with Wikipedia/CC source
-   references.
+### v0.1.0 — ship (earlier today)
+1. Repo skeleton (dual-license, READMEs, menu photos archived)
+2. Astro 5 site with Content Collections + Zod schemas, tri-lingual i18n routing
+3. Python pipeline (conda env `cantopedia`): models, CLI, Wikipedia/Wikimedia adapters
+4. `pipeline init` → 66 stub dishes + 110 ingredient stubs from menu transcription
+5. Metro UX with W3CSS palette, sticky pivot nav, Live Tile homepage
+6. 13 enrichment iterations: all 66 dishes hand-authored to `complete`
+7. Deploy to GitHub Pages, v0.1.0 tagged
 
-## Repo at-a-glance
+### WP10 polish v1 (latest commit: `cce14fc`)
+User feedback: "整个网站和互交，UI 还不是全是 wp10 风格 — 点击新磁块，不要跳转新网页，而是在本网页跳转，类似 wp10 跳转风格"
+
+Implemented:
+- **Astro 5 ClientRouter**: smooth in-place navigation (URL still changes, no full reload)
+- **Top loading bar**: WP10-style sliding red strip during transitions
+- **Shared element transitions**: tile color expands into category hero (`view-transition-name="tile-<category>"`)
+- **WP10 tile press**: `.wp-tile:active` does a bouncy 0.96 squish-and-spring
+- **Tighter typography**: h1/h2 weight 200, more letter-spacing contrast
+- Persistent nav and loading bar across transitions
+
+## WP10 polish — still TODO (Phase 2)
+
+Priority order if you want me to continue:
+
+1. **Dish-card → dish-hero shared element** — same trick as tile→hero, but for the click path from category browse to single dish page. Currently the dish page jumps in without a visible link.
+2. **Horizontal Hub-pane navigation in browse pages** — WP10's signature is horizontal pivot panes. Convert `/browse/<category>` to a horizontal-scrolling Hub showing All-Categories-at-Once with arrows to flick between.
+3. **Live-tile flip animation** — on hover (desktop) or every 6 seconds (mobile), each homepage tile flips to show a secondary face (a featured dish from the category).
+4. **WP10 "Resco-style" segmented arrows** in nav — back-arrow + forward-arrow as actual WP10-chrome glyphs.
+5. **Tap ripple** — secondary press effect (subtle color wash from tap point).
+6. **Marquee text** on tile names if they exceed width (very WP10).
+
+## Other open work (v0.2+)
+
+- **Dish images** — Wikimedia Commons search adapter is wired in `pipeline/pipeline/sources/wikimedia_commons.py`, but no images attached yet. Run `python -m pipeline fetch dish <slug>` to see candidates with licenses.
+- **Pagefind UI page** — `/search` route doesn't exist yet; Pagefind is in dependencies but not initialised.
+- **Community contribution flow** — CONTRIBUTING.md is a stub. Need PR/issue templates + license-screening checklist + CODE_OF_CONDUCT.md.
+- **Ingredient stubs** — 110 of 116 ingredients have only name + category. Need nutrition (USDA) + procurement (海外采购) for the rest.
+
+## Restart prompt for the new window
+
+Copy this into your new session — it loads the right context fast:
+
+```
+# Cantopedia restart context
+
+I'm continuing work on Cantopedia (粵食典), a tri-lingual open-source Cantonese
+recipe project. Project root: d:/Cantonese Cuisine. Repo: 
+https://github.com/ShepherdLoveYou/cantopedia.
+
+Current state (read this first):
+- See docs/HANDOFF.md for full state
+- v0.1.0 shipped: 66/66 dishes complete, live at 
+  https://shepherdloveyou.github.io/cantopedia
+- Latest commit cce14fc started WP10 polish (ClientRouter, view transitions,
+  tile press, loading bar)
+
+Conventions to follow:
+- Conda env: `conda activate cantopedia`
+- Validate before commit: `cd pipeline && python -m pipeline validate`
+- Build to verify: `cd site && pnpm build`
+- YAML gotcha: `#` in unquoted strings is a comment; quote 
+  any value containing `#` or starting with `"..."`. See HANDOFF.md
+- Schema parity: site/src/content.config.ts (Zod) and 
+  pipeline/pipeline/models.py (pydantic) must stay in sync
+- Deploy workflow only triggers on changes to site/ or data/ — 
+  docs/README/CHANGELOG changes don't redeploy
+
+Next priorities (pick one or tell me which):
+1. WP10 polish Phase 2 — dish-card→dish-hero shared element, 
+   horizontal Hub navigation, live-tile flip
+2. Dish images via Wikimedia Commons
+3. Pagefind search UI page  
+4. More ingredient enrichment
+
+What should we work on?
+```
+
+## Quick local dev commands
+
+```bash
+# Activate env
+conda activate cantopedia
+
+# Validate data
+cd "d:/Cantonese Cuisine/pipeline"
+python -m pipeline validate
+python -m pipeline status
+
+# Run site
+cd "d:/Cantonese Cuisine/site"
+pnpm install
+pnpm dev    # → http://localhost:4321/cantopedia/
+
+# Build (CI does this on push)
+pnpm build
+```
+
+## Repo at a glance
 
 ```
 cantopedia/
-├── data/              ★ source of truth — 8 categories, 66 dishes,
-│                        116 ingredients, 1 sauce, 7 sources
-├── pipeline/          Python package (conda env: cantopedia)
-├── site/              Astro 5 (pnpm, Node 22)
-├── raw_materials/     6 original menu photos (HEIC + JPEG previews)
+├── data/              ★ source of truth — 66 dishes, 116 ingredients, 8 categories, 1 sauce, 7 sources
+├── pipeline/          Python (conda env: cantopedia)
+├── site/              Astro 5 (pnpm, Node 22) — built sites are 576 pages
+├── raw_materials/     6 menu photos (HEIC + JPEG previews)
 ├── docs/
 │   ├── superpowers/specs/2026-05-24-...-design.md   ← full design spec
-│   └── HANDOFF.md                                   ← this file
+│   └── HANDOFF.md                                   ← this file (always update on session end)
 ├── .github/workflows/ deploy.yml + ci.yml
 ├── README.md / README.zh.md
 ├── CHANGELOG.md
@@ -48,130 +127,9 @@ cantopedia/
 └── .env               (gitignored; your local Pexels key)
 ```
 
-## How to re-open the project later
+## API key locations
 
-```bash
-cd "d:/Cantonese Cuisine"
-
-# Activate conda env
-conda activate cantopedia
-
-# Check pipeline status
-cd pipeline && python -m pipeline status
-
-# Make a data change, then validate
-python -m pipeline validate
-
-# Run the site locally
-cd ../site && pnpm install && pnpm dev
-# → http://localhost:4321/cantopedia/
-
-# Build (CI does this on push)
-pnpm build
-
-# Or just git push and let CI deploy
-git push
-```
-
-## Things you should know
-
-### Conda env name was renamed
-- The env is now `cantopedia` (was `cantonese-cuisine`). All scripts reference the new name.
-
-### API key handling
-- **Pexels API key** you gave is stored:
-  - Locally in `.env` (gitignored)
-  - As GitHub Actions secret `PEXELS_API_KEY` on the repo
-- Other keys (`UNSPLASH`, `USDA`, `ANTHROPIC`) are documented in `.env.example` but
-  not set — fill them in if/when you want to enable those features.
-- **No Anthropic API calls were made**. The synthesize layer is intentionally
-  not implemented; all enrichment was hand-authored.
-
-### YAML gotchas I hit (and fixed) — for your future editing
-- **`#` in unquoted strings** triggers a YAML comment. Always quote strings
-  containing `#`. Example: `note: "Item #16 on the source menu"`.
-- **English `en:` values starting with `"..."`** confuse YAML — it tries to
-  parse the whole value as a quoted string. Use single quotes around the whole
-  value: `en: '"金包銀" — gold wrapping silver'`.
-- **`word: word` colons** in unquoted strings break YAML. Either use em-dashes
-  instead, or wrap the value in quotes.
-
-### Schema notes
-- The `prep` field on ingredient refs is `TriLangBodyPartial` (yue / zh / en, all
-  optional) — distinct from the `names` field which uses `TriLangText`
-  (yue_hant / jyutping / zh / en, all required). Don't confuse them.
-- `allergens` enum: gluten, peanut, tree_nut, shellfish, fish, dairy, egg, soy,
-  sesame, sulfite.
-- `equipment` enum: wok, rice_cooker, steamer, oven, pressure_cooker,
-  chinese_cleaver, blender, smoker, sous_vide.
-- `method_status` enum: stub / draft / complete. All 66 are currently `complete`.
-
-### Design system
-- Authentic W3CSS Metro palette (per category):
-  appetizer #e51400 · soup-wonton #2d89ef · rice #f09609 · noodle #008a00 ·
-  soup-noodle #00aba9 · baked-rice #a05000 · congee #9f00a7 · main #1d1d1d
-- Sans-serif primary: Segoe UI / Noto Sans SC; serif for body / dish display:
-  Crimson Pro / Noto Serif SC.
-- 朱紅 印章 logo on top-left, no dark mode, no gradients.
-
-### What's NOT done (planned for v0.2 / v0.3)
-
-- **No images on dishes** — Wikimedia Commons image search is implemented
-  but no images are attached. To add: `python -m pipeline fetch dish <id>`
-  lists candidates with licenses; you'd then download, optimise via Astro's
-  image pipeline, and add `images:` entries to dish YAMLs.
-- **No community-contribution flow** — CONTRIBUTING is a stub. v0.2 should
-  add issue/PR templates, license screening, image submission, CoC.
-- **Some ingredient procurement / nutrition fields are sparse** — only the
-  6 original ingredients (cha-siu, gai-laan, jasmine-rice, honey, hoisin,
-  maltose) have full nutrition + procurement detail. The 110 stub ingredients
-  have name + category only.
-- **No Pagefind UI yet** — Pagefind is configured but the `/search` page
-  hasn't been built. Easy add when needed.
-
-## Commits & branches
-
-- Single branch: `main`. Linear history (no feature branches were needed for
-  this solo session).
-- 25-ish commits, each tagged with milestone (M1, M2, M3, M4, M5a, M5b, M8,
-  iter 1-13, etc.). Read `git log --oneline` to retrace.
-
-## If something is wrong
-
-The most likely "something wrong" is data quality — a translation that sounds
-off, a method step that's vague, a tip that's not quite right. To fix:
-
-1. Find the dish YAML in `data/dishes/`
-2. Edit the field
-3. Run `python -m pipeline validate` to check schema
-4. Commit + push → CI builds and deploys
-
-For schema changes, edit `site/src/content.config.ts` AND
-`pipeline/pipeline/models.py` together (they must stay in parity).
-
-For pipeline changes, the code is small and well-commented; start at
-`pipeline/pipeline/cli.py` and follow the imports.
-
-For site UX changes, start at `site/src/layouts/BaseLayout.astro` for chrome
-and `site/src/pages/` for routes.
-
-## Cost so far
-
-- Cloud: zero. GitHub Pages is free at this scale.
-- API: zero. Pexels key stored but not yet used. No Anthropic API calls.
-- Your time: ~9 hours sleep, 0 minutes of work during. My time:
-  ~13 hours of autonomous building.
-
-## Next moves (when you wake)
-
-1. **Visit the live site**: <https://shepherdloveyou.github.io/cantopedia>
-2. **Click around** — at least 5 dishes across different categories. The
-   layout should feel Metro-clean and the content tri-lingual.
-3. **Spot-check the writing** — find one dish you know well and read all
-   three language versions. Tell me what's off.
-4. **Decide on v0.2 direction** — images? community-contribution flow? more
-   dishes beyond the menu?
-
-Good morning!
+- **PEXELS_API_KEY**: set in `.env` (gitignored) AND as GitHub Actions secret
+- **UNSPLASH_ACCESS_KEY**, **USDA_API_KEY**, **ANTHROPIC_API_KEY**: documented in `.env.example`, not set. Fill in when you want those features.
 
 — Claude
