@@ -1,10 +1,11 @@
-# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24)
+# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24, end of v0.2.0 session)
 
 ## Status snapshot
 
-- **Live**: <https://shepherdloveyou.github.io/cantopedia>
+- **Live**: <https://shepherdloveyou.github.io/cantopedia> — v0.2.0 deployed (Phase 2: pivot + morph + Fluent tokens)
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Release tag**: `v0.2.0` (planned after this push)
+- **Latest commit on main**: `175935a` (Phase 2 final review fixes, pushed)
+- **Next ready-to-execute plan**: `docs/superpowers/plans/2026-05-24-uwp-phase3-abe-plan.md` (Phase 3 A+B+E — Start Screen + 3D tilt + monoline SVG icons + Live Tile flip)
 - **Dishes**: 66/66 method_status: complete, full tri-lingual (粵/中/En)
 - **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
 
@@ -42,16 +43,31 @@ Implemented per spec `docs/superpowers/specs/2026-05-24-wp10-phase2-design.md`:
 
 Files added: `site/src/lib/categoryOrder.ts` + `.test.ts`, `site/src/components/CategoryPivot.astro`. Files modified: `BaseLayout.astro`, `pages/[locale]/browse/[category].astro`, `pages/[locale]/dishes/[id].astro`.
 
-## WP10 polish — still TODO (Phase 3 — see prototype)
+## Phase 3 (A+B+E) — READY TO EXECUTE in new session
 
-Priority order if you want me to continue:
+**User feedback at end of v0.2.0 session:** "不够彻底，还不彻底是 windows10 mobile 的 UI" — Phase 2 alone (pivot strip + dish-card morph + Fluent tokens) doesn't deliver the full WP10 Mobile experience. The approved design contract is the standalone prototype at `docs/prototypes/2026-05-24-uwp-mock.html` (commit `b9a8b3c`).
 
-1. **Live-tile flip animation** — on hover (desktop) or every 6 seconds (mobile), each homepage tile flips to show a secondary face (a featured dish from the category).
-2. **WP10 "Resco-style" segmented arrows** in nav — back-arrow + forward-arrow as actual WP10-chrome glyphs.
-3. **Tap ripple** — secondary press effect (subtle color wash from tap point).
-4. **Marquee text** on tile names if they exceed width (very WP10).
+**Phase 3 scope (chosen by user as `A + B + E`):**
 
-The approved prototype at `docs/prototypes/2026-05-24-uwp-mock.html` is now the design contract for Phase 3+ work. See `docs/superpowers/specs/2026-05-24-uwp-phase3-design-stub.md` for the suggested phase decomposition.
+- **A. Start Screen homepage** — replace uniform tile-grid with explicit 4×6 grid: 1 WIDE main, 3 MEDIUM (rice/noodle/appetizer), 4 SMALL (soup-wonton/soup-noodle/baked-rice/congee). Size mapping by dish count (≥20/7-19/<7).
+- **B. 3D directional tilt press + monoline SVG icons** — upgrade `.wp-tile:active` from scale-only to perspective + rotateX/Y toward press point (max 3° + scale 0.96). Replace 8 emoji glyphs with hand-drawn 32×32 SVG icons via new `CategoryIcon.astro` component.
+- **E. Live Tile flip on WIDE main** — X-axis flip every 8s. Front = icon + name + count. Back = dictionary stats (no daily recommendations, no photos — those need image pipeline).
+
+**Spec:** `docs/superpowers/specs/2026-05-24-uwp-phase3-abe-design.md`
+**Plan:** `docs/superpowers/plans/2026-05-24-uwp-phase3-abe-plan.md` (5 tasks, each commit-able)
+
+## Phase 4+ — still TODO (see prototype contract)
+
+Larger UWP overhaul items deferred from Phase 3:
+
+1. **Hamburger drawer + acrylic blur** — additive to pivot strip (both coexist as in WP10).
+2. **Dark / Light dual mode + accent picker + bottom AppBar** — theming refactor; touches all CSS color literals.
+3. **Wide-tile photo flip back** — requires dish images pipeline to be unblocked first.
+4. **A-Z jumping grid search** — depends on Pagefind init.
+5. **Continuum dominos page transitions** — alternate to current ClientRouter cross-fade.
+6. **WP10 "Resco-style" segmented arrows**, tap ripple, marquee — minor polish.
+
+The prototype is the design contract for items 1-5. See `docs/superpowers/specs/2026-05-24-uwp-phase3-design-stub.md` for the suggested Phase 4-7 decomposition.
 
 ## Other open work (v0.2+)
 
@@ -60,43 +76,60 @@ The approved prototype at `docs/prototypes/2026-05-24-uwp-mock.html` is now the 
 - **Community contribution flow** — CONTRIBUTING.md is a stub. Need PR/issue templates + license-screening checklist + CODE_OF_CONDUCT.md.
 - **Ingredient stubs** — 110 of 116 ingredients have only name + category. Need nutrition (USDA) + procurement (海外采购) for the rest.
 
-## Restart prompt for the new window
+## Restart prompt for the new window — Phase 3 (A+B+E) execution
 
-Copy this into your new session — it loads the right context fast:
+Copy this into your new session. It loads the right context fast and points the agent straight to the ready plan:
 
 ```
-# Cantopedia restart context
+# Cantopedia restart context (2026-05-24, after v0.2.0)
 
-I'm continuing work on Cantopedia (粵食典), a tri-lingual open-source Cantonese
-recipe project. Project root: d:/Cantonese Cuisine. Repo: 
-https://github.com/ShepherdLoveYou/cantopedia.
+I'm continuing work on Cantopedia (粵食典). Project root: d:/Cantonese Cuisine.
+Repo: https://github.com/ShepherdLoveYou/cantopedia.
 
-Current state (read this first):
+Current state:
+- v0.2.0 LIVE at https://shepherdloveyou.github.io/cantopedia
+- Latest commit on main: 175935a (Phase 2 final review fixes)
 - See docs/HANDOFF.md for full state
-- v0.1.0 shipped: 66/66 dishes complete, live at 
-  https://shepherdloveyou.github.io/cantopedia
-- Latest commit cce14fc started WP10 polish (ClientRouter, view transitions,
-  tile press, loading bar)
 
-Conventions to follow:
-- Conda env: `conda activate cantopedia`
-- Validate before commit: `cd pipeline && python -m pipeline validate`
-- Build to verify: `cd site && pnpm build`
-- YAML gotcha: `#` in unquoted strings is a comment; quote 
-  any value containing `#` or starting with `"..."`. See HANDOFF.md
-- Schema parity: site/src/content.config.ts (Zod) and 
+User feedback at end of last session: "不够彻底，还不彻底是 windows10 mobile 的 UI".
+Phase 2 (pivot + morph + tokens) shipped but the homepage and tiles still
+don't read as WP10 Mobile.
+
+The approved design contract is the standalone prototype:
+  docs/prototypes/2026-05-24-uwp-mock.html (commit b9a8b3c)
+
+Next task: execute Phase 3 (A + B + E) — Start Screen homepage + 3D tilt
+press + monoline SVG icons + Live Tile flip. NOT yet implemented in Astro.
+
+Spec: docs/superpowers/specs/2026-05-24-uwp-phase3-abe-design.md
+Plan: docs/superpowers/plans/2026-05-24-uwp-phase3-abe-plan.md
+       (5 tasks, each commit-able)
+
+Phase 4+ (hamburger drawer + acrylic, dark/light + accent picker + AppBar,
+photo flip, A-Z search) is documented separately in 
+docs/superpowers/specs/2026-05-24-uwp-phase3-design-stub.md — NOT in scope
+for this session. Stay focused on A+B+E only.
+
+Conventions:
+- Conda env: conda activate cantopedia
+- Site dev: cd site && pnpm dev → http://localhost:4321/cantopedia/
+- Validate: cd pipeline && python -m pipeline validate (only if data/ touched;
+  not needed for Phase 3)
+- Schema parity: site/src/content.config.ts (Zod) and
   pipeline/pipeline/models.py (pydantic) must stay in sync
-- Deploy workflow only triggers on changes to site/ or data/ — 
-  docs/README/CHANGELOG changes don't redeploy
+- Deploy auto-triggers on push if site/ or data/ changed (docs/README don't)
+- YAML gotcha: # is a comment in unquoted strings; en: "..." values need to
+  be single-quote-wrapped
 
-Next priorities (pick one or tell me which):
-1. WP10 polish Phase 2 — dish-card→dish-hero shared element, 
-   horizontal Hub navigation, live-tile flip
-2. Dish images via Wikimedia Commons
-3. Pagefind search UI page  
-4. More ingredient enrichment
+Suggested execution: use superpowers:subagent-driven-development to dispatch
+fresh subagents per task, with spec compliance + code quality reviews
+between tasks. Same flow as v0.2.0.
 
-What should we work on?
+DO NOT push to remote until all 5 tasks complete + final review clean +
+visual smoke approved.
+
+Start with: read the Phase 3 plan, then dispatch Task 1 (CategoryIcon
+component).
 ```
 
 ## Quick local dev commands
