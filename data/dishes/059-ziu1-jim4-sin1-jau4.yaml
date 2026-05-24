@@ -10,15 +10,91 @@ ingredients:
   - ref: squid
     qty: 6
     unit: 兩
+    prep:
+      yue: 鮮魷 6 兩（約 15 件）、洗淨切花刀、用廚紙吸乾
+      zh: 鲜鱿 6 两（约 15 件）、洗净切花刀、用厨纸吸干
+      en: 6 兩 fresh squid (~15 pieces), cleaned and scored with cross-hatch knife marks, patted dry
   - ref: salt-pepper-mix
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 椒鹽粉（鹽 + 白胡椒粉 + 五香粉 + 糖）
+      zh: 椒盐粉（盐 + 白胡椒粉 + 五香粉 + 糖）
+      en: salt-and-pepper mix (salt + white pepper + five-spice + sugar)
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蒜茸 1 茶匙
+      zh: 蒜茸 1 茶匙
+      en: 1 tsp minced garlic
+  - ref: bell-pepper
+    qty: 0.5
+    unit: 份
+    prep:
+      yue: 紅辣椒粒
+      zh: 红辣椒粒
+      en: minced red chili
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蔥粒
+      zh: 葱粒
+      en: scallion green, sliced
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鮮魷切花刀後拍上薄薄一層生粉同少少粟粉——令外面起脆。一定要乾燥，濕嘅魷魚落油會劇烈濺油。
+      zh: 鲜鱿切花刀后拍上薄薄一层生粉与少许粟粉——令外面起脆。必须干燥，湿鱿鱼下油会剧烈溅油。
+      en: After scoring, dust the squid with cornstarch and a touch of potato starch. Surface must be completely dry — wet squid causes violent oil spatter.
+    time_seconds: 120
+  - order: 2
+    body:
+      yue: 油溫 180°C，落魷魚炸 60-90 秒到金黃酥脆——魷魚會即刻收縮捲成圓筒形，叫做「花刀魷魚」。
+      zh: 油温 180°C，下鱿鱼炸 60-90 秒至金黄酥脆——鱿鱼会立即收缩卷成圆筒形，叫做「花刀鱿鱼」。
+      en: Heat oil to 180°C / 355°F. Deep-fry squid 60-90 seconds until golden and crisp — the squid will immediately curl into tubes (the "scored squid" effect).
+    temperature_c: 180
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 鑊留 1 茶匙油，落蒜茸同紅辣椒粒中火爆 15 秒到蒜茸金黃。
+      zh: 锅留 1 茶匙油，下蒜茸与红辣椒粒中火爆 15 秒至蒜茸金黄。
+      en: Keep 1 tsp oil. Fry minced garlic and chili on medium for 15 seconds until garlic is golden.
+    time_seconds: 15
+  - order: 4
+    body:
+      yue: 落炸魷，灑椒鹽粉，快手翻 10 下令椒鹽均勻分佈；最後落蔥粒再翻 3 下即上碟。
+      zh: 倒入炸鱿，撒椒盐粉，快手翻 10 下令椒盐均匀分布；最后下葱粒再翻 3 下即出碟。
+      en: Toss in fried squid, scatter the salt-pepper mix, toss 10 times. Add scallion, three more tosses, plate.
+    time_seconds: 20
+tips:
+  - yue: 鮮魷一定要切花刀——令表面有更多接觸熱油嘅面積、炸後更脆、亦容易吸收椒鹽味。花刀深度大概 2 mm、密度 5 mm 間距。
+    zh: 鲜鱿务必切花刀——令表面有更多接触热油的面积、炸后更脆、亦容易吸收椒盐味。花刀深度约 2 mm、密度 5 mm 间距。
+    en: Score the squid — increases surface area for hot oil contact, crisps better, absorbs more seasoning. Cut about 2 mm deep with 5 mm spacing.
+  - yue: 炸魷時間極短（60-90 秒）——魷魚過熟會變橡皮，唔嫩唔脆。
+    zh: 炸鱿时间极短（60-90 秒）——鱿鱼过熟会变橡皮，不嫩不脆。
+    en: Fry time is very short (60-90 sec) — overcooked squid turns rubbery, neither tender nor crisp.
+  - yue: 同 #58 椒鹽三鮮、#54 椒鹽蝦、#65 椒鹽肉排 共用同一款椒鹽粉——茶餐廳整椒鹽菜時一鑊調好，可以做多款。
+    zh: 与 #58 椒盐三鲜、#54 椒盐虾、#65 椒盐肉排共用同款椒盐粉——茶餐厅做椒盐菜时一锅调好，可做多款。
+    en: Shares the same salt-pepper mix with dishes #58 three-fresh, #54 prawns, and #65 ribs — HK tea-restaurants batch-mix one bottle for the whole "salt-pepper" sub-menu.
+history:
+  yue: 椒鹽鮮尤係粵菜經典——「鮮尤」即新鮮魷魚（粵語）。1960 年代起喺香港大排檔流行，1980 年代喺茶餐廳普及。屬於「下酒菜」類別，最適合配啤酒。
+  zh: 椒盐鲜鱿是粤菜经典——「鲜尤」即新鲜鱿鱼（粤语）。1960 年代起在香港大排档流行，1980 年代在茶餐厅普及。属于「下酒菜」类别，最适合配啤酒。
+  en: Salt-and-pepper squid is a Cantonese classic — 「鮮尤」 (sin jau) means "fresh squid" in Cantonese. Popular at HK dai pai dong street stalls from the 1960s, standardised on tea-restaurant menus by the 1980s. A "drinking snack" — pairs best with beer.
+allergens:
+  - shellfish
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #59 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 15 件
+    accessed: 2026-05-24
+    note: "Item #59 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

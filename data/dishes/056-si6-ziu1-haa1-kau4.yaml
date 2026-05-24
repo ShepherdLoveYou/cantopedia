@@ -10,22 +10,101 @@ ingredients:
   - ref: shrimp-balls
     qty: 12
     unit: 件
+    prep:
+      yue: 大蝦球 12 隻、去殼留尾、開背取腸、薄拍生粉
+      zh: 大虾球 12 只、去壳留尾、开背取肠、薄拍生粉
+      en: 12 large prawns, peeled tail-on, deveined, lightly dusted with cornstarch
   - ref: bell-pepper
     qty: 1
     unit: 份
+    prep:
+      yue: 青紅椒切菱角形
+      zh: 青红椒切菱形
+      en: bell peppers diamond-cut
   - ref: onion
     qty: 6
     unit: 兩
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
   - ref: preserved-tofu
     qty: 1
     unit: 份
+    prep:
+      yue: 豆豉 1.5 匙浸軟剁碎
+      zh: 豆豉 1.5 勺浸软剁碎
+      en: 1.5 Tbsp dried black beans, soaked and chopped
   - ref: chili-paste
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 辣椒醬 1 茶匙
+      zh: 辣椒酱 1 茶匙
+      en: 1 tsp chili paste
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蒜茸 1 匙
+      zh: 蒜茸 1 勺
+      en: 1 Tbsp minced garlic
+  - ref: ginger
+    qty: 1
+    unit: 片
+    prep:
+      yue: 薑茸 1 茶匙
+      zh: 姜茸 1 茶匙
+      en: 1 tsp minced ginger
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 15
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 油溫 130°C，落蝦球油泡 45 秒到剛變紅、彎成球形，撈起瀝油。
+      zh: 油温 130°C，下虾球油泡 45 秒至刚变红、弯成球形，捞出沥油。
+      en: Heat oil to 130°C / 265°F. Oil-poach the prawns 45 seconds until just pink and curled into balls; drain.
+    temperature_c: 130
+    time_seconds: 45
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落豆豉、蒜茸、薑茸、辣椒醬中火爆 30 秒到極香。
+      zh: 锅留 1 勺油，下豆豉、蒜茸、姜茸、辣椒酱中火爆 30 秒至极香。
+      en: Keep 1 Tbsp oil. Stir-fry black beans, garlic, ginger, chili paste on medium 30 seconds until intensely fragrant.
+    time_seconds: 30
+  - order: 3
+    body:
+      yue: 落洋蔥同青紅椒爆 30 秒，落番蝦球，加 1 茶匙生抽、半茶匙糖、3 匙雞湯、1 茶匙生粉水，翻 20 秒到芡掛勻即上碟。
+      zh: 下洋葱与青红椒爆 30 秒，倒回虾球，加 1 茶匙生抽、半茶匙糖、3 勺鸡汤、1 茶匙生粉水，翻 20 秒至芡挂匀即上碟。
+      en: Stir-fry onion and peppers 30 seconds, return the prawns. Add 1 tsp light soy, ½ tsp sugar, 3 Tbsp chicken stock, 1 tsp slurry. Toss 20 seconds and plate.
+    time_seconds: 50
+tips:
+  - yue: 蝦球留尾——一方面美觀，另一方面方便食客拎住食。
+    zh: 虾球留尾——一方面美观，另一方面方便食客拿住吃。
+    en: Leave the tails on the prawns — looks good and gives diners a handle.
+  - yue: 同 #55 西蘭花蝦球 比較——呢個有豉椒醬，重口；#55 淨用油泡料，清淡。兩者係對應菜式。
+    zh: 与 #55 西兰花虾球比较——这个有豉椒酱，重口；#55 只用油泡料，清淡。两者是对应菜式。
+    en: Compared with dish #55 (broccoli shrimp balls) — this is the heavy version with black bean and chili; that one is clean with only oil-blanch seasoning. They are paired offerings.
+  - yue: 油泡蝦球嘅油溫一定要低（120-130°C）——高油溫會令蝦球外硬內生、唔嫩。
+    zh: 油泡虾球的油温必须低（120-130°C）——高油温会令虾球外硬内生、不嫩。
+    en: Oil-poaching the prawns must stay low (120-130°C / 250-265°F) — higher temperatures sear the outside while leaving the inside raw and tough.
+history:
+  yue: 豉椒蝦球係豉椒系列嘅海鮮版——同 #47 豉汁牛、#29 豉椒雞片炒河共用相同醬料思路，但用油泡蝦球作主蛋白，更高級。
+  zh: 豉椒虾球是豉椒系列的海鲜版——与 #47 豉汁牛、#29 豉椒鸡片炒河共用相同酱料思路，但用油泡虾球作主蛋白，更高级。
+  en: Black-bean chili shrimp is the seafood version of the black-bean-and-chili series — shares the sauce concept with dish #47 (beef in black bean) and dish #29 (black-bean chili chicken hor fun), but uses oil-poached prawns as the premium protein.
+allergens:
+  - shellfish
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #56 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #56 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

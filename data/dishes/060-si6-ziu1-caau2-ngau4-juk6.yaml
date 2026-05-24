@@ -10,21 +10,94 @@ ingredients:
   - ref: beef-slices
     qty: 4
     unit: 兩
+    prep:
+      yue: 牛肉逆紋切薄片，醃 15 分鐘（生抽 + 蠔油 + 糖 + 紹興酒 + 生粉 + 蛋白 + 油 + 1 茶匙小蘇打）
+      zh: 牛肉逆纹切薄片，腌 15 分钟（生抽+蠔油+糖+绍兴酒+生粉+蛋白+油+1 茶匙小苏打）
+      en: beef thinly sliced against the grain, marinated 15 min with soy + oyster + sugar + Shaoxing + cornstarch + egg white + oil + 1 tsp baking soda
   - ref: bell-pepper
     qty: 6
     unit: 兩
+    prep:
+      yue: 青紅椒切菱角形
+      zh: 青红椒切菱形
+      en: bell peppers diamond-cut
   - ref: preserved-tofu
     qty: 1
     unit: 份
+    prep:
+      yue: 豆豉 1.5 匙浸軟剁碎
+      zh: 豆豉 1.5 勺浸软剁碎
+      en: 1.5 Tbsp dried black beans, soaked and chopped
   - ref: chili-paste
     qty: 1
     unit: 份
-method_status: stub
-sources:
-  - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #60 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    prep:
+      yue: 辣椒醬 1 茶匙
+      zh: 辣椒酱 1 茶匙
+      en: 1 tsp chili paste
+  - ref: garlic
+    qty: 0.5
+    unit: 份
+  - ref: ginger
+    qty: 1
+    unit: 片
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切大塊
+      zh: 切大块
+      en: rough-cut
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 20
+  cook: 5
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到大滾落 2 匙油，落醃好嘅牛肉攤平煎 30 秒到底面焦香，撥散快炒到剛變色撈起。
+      zh: 锅烧至大热下 2 勺油，下腌好的牛肉摊平煎 30 秒至底面焦香，拨散快炒至刚变色捞起。
+      en: Crank the wok hot. Add 2 Tbsp oil, sear beef flat 30 seconds, break apart, stir-fry just-cooked, remove.
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 鑊留 1 匙油，落豉汁料（豆豉+蒜+薑+辣椒醬）中火爆 30 秒；落洋蔥同青紅椒爆 60 秒到斷生。
+      zh: 锅留 1 勺油，下豉汁料（豆豉+蒜+姜+辣椒酱）中火爆 30 秒；下洋葱与青红椒爆 60 秒至断生。
+      en: Keep 1 Tbsp oil. Stir-fry the black bean mixture on medium 30 seconds. Add onion and peppers, stir-fry 60 seconds.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 落番牛肉，加 1 匙紹興酒、1 茶匙生抽、半茶匙糖、3 匙雞湯、1 茶匙生粉水，翻 30 秒到芡掛勻即上碟。
+      zh: 倒回牛肉，加 1 勺绍兴酒、1 茶匙生抽、半茶匙糖、3 勺鸡汤、1 茶匙生粉水，翻 30 秒至芡挂匀即出锅。
+      en: Return beef. Add 1 Tbsp Shaoxing, 1 tsp light soy, ½ tsp sugar, 3 Tbsp chicken stock, 1 tsp slurry. Toss 30 seconds and plate.
+    time_seconds: 30
+tips:
+  - yue: 「豉椒炒」嘅手法重點係——豉汁先炒香、配料後落、主蛋白最後落並快速翻勻。三段式操作不可省。
+    zh: 「豉椒炒」的手法重点是——豉汁先炒香、配料后下、主蛋白最后下并快速翻匀。三段式操作不可省。
+    en: The three-stage logic of black-bean stir-fry — sauce first (toast), vegetables second, protein last (returned briefly). Don't shortcut.
+  - yue: 變體 #060b 用雞片代替牛片——做法相同，雞肉煎時間短啲（20 秒）。
+    zh: 变体 #060b 用鸡片代替牛片——做法相同，鸡肉煎时间短些（20 秒）。
+    en: Variant #060b uses chicken slices instead of beef — same technique, chicken sears faster (20 sec).
+  - yue: 同 #29 豉椒雞片炒河、#51 豉汁豆仔雞片 共用同一個豉椒醬基礎。茶餐廳一鑊豉椒可整三個版本。
+    zh: 与 #29 豉椒鸡片炒河、#51 豉汁豆仔鸡片共用同一豉椒酱基础。茶餐厅一锅豉椒可做三个版本。
+    en: Shares the same black-bean base with dishes #29 (chicken hor fun) and #51 (long-bean chicken). A single batch of black-bean sauce serves all three.
+history:
+  yue: 豉椒炒牛肉係粵菜「豉椒系列」最基本款——19 世紀廣州大排檔常見菜式，1950 年代傳入香港茶餐廳。今日係茶餐廳「下飯菜」嘅標配。
+  zh: 豉椒炒牛肉是粤菜「豉椒系列」最基本款——19 世纪广州大排档常见菜式，1950 年代传入香港茶餐厅。今日是茶餐厅「下饭菜」的标配。
+  en: Black-bean chili stir-fried beef is the most basic dish in the Cantonese "black-bean-and-chili series" — a 19th-century Canton dai pai dong staple, brought into HK tea-restaurants in the 1950s. Today a standard rice-companion offering.
+allergens:
+  - egg
+  - soy
+  - gluten
 variants:
   - 060b-si6-ziu1-caau2-gai1-pin2
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: 2026-05-24
+    note: "Item #60 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

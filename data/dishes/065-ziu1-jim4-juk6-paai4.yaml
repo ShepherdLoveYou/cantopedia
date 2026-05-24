@@ -7,22 +7,96 @@ names:
   en: Salt-and-pepper Pork Ribs
 category: main
 ingredients:
-  - ref: salt-pepper-mix
-    qty: 1
-    unit: 份
   - ref: kyoto-ribs
     qty: 8
     unit: 件
+    prep:
+      yue: 一字排切短條（4 cm 長），醃 30 分鐘（生抽 + 紹興酒 + 五香粉 + 蛋白 + 生粉 + 蒜茸）
+      zh: 一字排切短条（4 cm 长），腌 30 分钟（生抽+绍兴酒+五香粉+蛋白+生粉+蒜茸）
+      en: pork ribs cut into 4 cm bone-in segments, marinated 30 min with soy + Shaoxing + five-spice + egg + cornstarch + garlic
+  - ref: salt-pepper-mix
+    qty: 1
+    unit: 份
+    prep:
+      yue: 椒鹽粉
+      zh: 椒盐粉
+      en: salt-and-pepper mix
   - ref: huai-salt
     qty: 1
     unit: 份
+    prep:
+      yue: 淮鹽 1/2 茶匙（補強鹹鮮）
+      zh: 淮盐 1/2 茶匙（补强咸鲜）
+      en: ½ tsp huai salt (extra savouriness)
   - ref: chili-paste
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 紅辣椒粒少少
+      zh: 红辣椒粒少许
+      en: minced red chili
+  - ref: garlic
+    qty: 1
+    unit: 份
+    prep:
+      yue: 蒜茸 1 茶匙（炸香用）
+      zh: 蒜茸 1 茶匙（炸香用）
+      en: 1 tsp minced garlic (for crispy garnish)
+  - ref: scallion
+    qty: 1
+    unit: 份
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 40
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 排骨醃 30 分鐘，掛厚厚一層生粉。油溫 170°C，落排骨炸第一次 3 分鐘到表面金黃定型；油溫升 190°C，複炸 30 秒到酥脆。
+      zh: 排骨腌 30 分钟，拍厚厚一层生粉。油温 170°C，下排骨炸第一次 3 分钟至表面金黄定型；油温升 190°C，复炸 30 秒至酥脆。
+      en: After marinating, coat ribs thickly in cornstarch. First fry at 170°C for 3 minutes to set; second fry at 190°C for 30 seconds to crisp.
+    temperature_c: 190
+    time_seconds: 210
+  - order: 2
+    body:
+      yue: 鑊留 1 茶匙油，落蒜茸同紅辣椒粒中火爆 15 秒到蒜茸金黃酥脆。
+      zh: 锅留 1 茶匙油，下蒜茸与红辣椒粒中火爆 15 秒至蒜茸金黄酥脆。
+      en: Keep 1 tsp oil. Fry minced garlic and chili on medium for 15 seconds until garlic is golden and crispy.
+    time_seconds: 15
+  - order: 3
+    body:
+      yue: 落炸排骨，灑椒鹽粉同淮鹽，快手翻 10 下令調味均勻；最後落蔥粒再翻 3 下即上碟。
+      zh: 倒入炸排骨，撒椒盐粉与淮盐，快手翻 10 下令调味均匀；最后下葱粒再翻 3 下即上碟。
+      en: Toss in the fried ribs, scatter both salt-pepper mix and huai salt, toss 10 times. Add scallion, three more, plate.
+    time_seconds: 25
+tips:
+  - yue: 同 #64 京都肉排 用同一隻一字排（baby back）——京都肉排淋京都汁，椒鹽肉排灑椒鹽。茶餐廳呢兩個菜通常同時提供，俾客人選擇酸甜定鹹香。
+    zh: 与 #64 京都肉排用同一只一字排（baby back）——京都肉排淋京都汁，椒盐肉排撒椒盐。茶餐厅这两个菜通常同时提供，让客人选择酸甜或咸香。
+    en: Uses the same baby-back ribs as dish #64 (Kyoto pork ribs) — #64 saucy and sweet, this one savoury-spicy. HK tea-restaurants typically offer both side-by-side.
+  - yue: 「淮鹽」係炒香嘅鹽加五香粉，提供「鹹鮮中帶香」嘅層次。椒鹽粉提供麻香，兩者結合先夠地道。
+    zh: 「淮盐」是炒香的盐加五香粉，提供「咸鲜带香」的层次。椒盐粉提供麻香，两者结合才够地道。
+    en: Huai salt is toasted salt with five-spice — adds a "savoury-and-spiced" layer. Combined with salt-pepper mix, the seasoning has full dimension.
+  - yue: 兩次油炸係必須——第一次低溫煮熟、第二次高溫起脆。淨炸一次得唔到「外酥內嫩」。
+    zh: 两次油炸是必须——第一次低温煮熟、第二次高温起脆。只炸一次得不到「外酥内嫩」。
+    en: Double-frying is essential — first at low temp cooks through, second at high temp crisps. Single-frying gives soggy crust.
+  - yue: 椒鹽肉排係茶餐廳「下酒菜」嘅代表——配啤酒最對味。同 #50 蒜汁脆皮雞、#54 椒鹽蝦、#58 椒鹽三鮮、#59 椒鹽鮮尤共組港式「炸味」家族。
+    zh: 椒盐肉排是茶餐厅「下酒菜」的代表——配啤酒最对味。与 #50 蒜汁脆皮鸡、#54 椒盐虾、#58 椒盐三鲜、#59 椒盐鲜鱿共组港式「炸味」家族。
+    en: Salt-and-pepper pork ribs are quintessential HK "drinking food" — pairs best with beer. Belongs to the larger fried-and-salt-pepper family alongside dishes #50, #54, #58, and #59.
+history:
+  yue: 椒鹽肉排係粵菜「炸味系列」嘅基本款——同 #64 京都肉排嘅手法相同，只係調味不同。1960 年代起喺香港茶餐廳普及，係「下酒菜」嘅代表。
+  zh: 椒盐肉排是粤菜「炸味系列」的基本款——与 #64 京都肉排手法相同，只是调味不同。1960 年代起在香港茶餐厅普及，是「下酒菜」的代表。
+  en: Salt-and-pepper pork ribs is the basic offering in the Cantonese "fried-flavour series" — shares technique with dish #64 (Kyoto pork ribs), differing only in seasoning. Popularised in HK tea-restaurants from the 1960s as a canonical "drinking food."
+allergens:
+  - egg
+  - soy
+  - gluten
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #65 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #65 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

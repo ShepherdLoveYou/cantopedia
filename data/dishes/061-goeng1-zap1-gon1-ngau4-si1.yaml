@@ -10,18 +10,85 @@ ingredients:
   - ref: beef-strips
     qty: 1
     unit: 磅
+    prep:
+      yue: 牛肉切絲（沿紋切細絲）、醃 30 分鐘（生抽 + 紹興酒 + 糖 + 生粉 + 蛋白 + 蘇打粉）；落鍋前再均勻拍上生粉
+      zh: 牛肉切丝（沿纹切细丝）、腌 30 分钟（生抽+绍兴酒+糖+生粉+蛋白+苏打粉）；下锅前再均匀拍上生粉
+      en: beef julienned (with the grain), marinated 30 min; dredged in cornstarch before frying
   - ref: bell-pepper
     qty: 1
     unit: 份
+    prep:
+      yue: 青紅椒切絲
+      zh: 青红椒切丝
+      en: bell peppers julienned
   - ref: onion
     qty: 1
     unit: 份
-method_status: stub
-sources:
-  - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #61 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: ginger
+    qty: 4
+    unit: 片
+    prep:
+      yue: 嫩薑切細絲、磨少少薑汁
+      zh: 嫩姜切细丝、磨少许姜汁
+      en: young ginger julienned, with extra grated for juice
+  - ref: scallion
+    qty: 1
+    unit: 份
+servings: 3
+difficulty: medium
+time_minutes:
+  prep: 35
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 牛絲醃完掛厚厚一層生粉。油溫 170°C，落牛絲炸 90 秒到金黃酥脆，撈起瀝油——「干」嘅意思就係炸到外脆。
+      zh: 牛丝腌完拍厚厚一层生粉。油温 170°C，下牛丝炸 90 秒至金黄酥脆，捞起沥油——「干」的意思就是炸到外脆。
+      en: After marinating, coat beef strips thickly in cornstarch. Heat oil to 170°C / 340°F, deep-fry 90 seconds until crispy. The 「干」 (gon, "dry") in the name means deep-fried until externally crisp.
+    temperature_c: 170
+    time_seconds: 90
+  - order: 2
+    body:
+      yue: 鑊餘油落薑絲爆 20 秒到香氣出嚟，落洋蔥絲同青紅椒絲爆 60 秒到斷生。
+      zh: 锅余油下姜丝爆 20 秒至出香气，下洋葱丝与青红椒丝爆 60 秒至断生。
+      en: With remaining oil, stir-fry ginger 20 seconds, then add onion and bell pepper strips and stir-fry 60 seconds until just tender.
+    time_seconds: 80
+  - order: 3
+    body:
+      yue: 落番炸牛絲，加薑汁、1 茶匙生抽、半茶匙糖、少少老抽（上色）、1 茶匙紹興酒，快手翻 15 秒到所有食材均勻，即上碟——多翻會令外脆變軟。
+      zh: 倒回炸牛丝，加姜汁、1 茶匙生抽、半茶匙糖、少许老抽（上色）、1 茶匙绍兴酒，快手翻 15 秒至所有食材均匀，即上碟——多翻会令外脆变软。
+      en: Return the beef strips. Add ginger juice, 1 tsp light soy, ½ tsp sugar, a touch of dark soy (colour), 1 tsp Shaoxing. Toss 15 seconds — any more softens the crust. Plate.
+    time_seconds: 15
+tips:
+  - yue: 「干」係粵菜手法——「干炒」嘅意思唔淨係「炒到乾」，而係將食材炸到外脆，再用少少汁料快速炒勻。同 #27 干炒牛河 嘅「干」相同意思。
+    zh: 「干」是粤菜手法——「干炒」之意不只是「炒到干」，而是将食材炸到外脆，再用少量汁料快速炒匀。与 #27 干炒牛河的「干」相同意思。
+    en: 「干」 (gon) is a Cantonese technique — "dry-frying" doesn't just mean cook until dry. It means crisp the protein in oil first, then quickly toss with minimal sauce. Same usage as in dish #27 (dry-fried beef hor fun).
+  - yue: 牛絲掛粉要厚——薄咗炸出來就唔脆，會變干硬。掛厚啲、炸到金黃酥脆。
+    zh: 牛丝拍粉要厚——薄了炸出来就不脆，会变干硬。拍厚些、炸至金黄酥脆。
+    en: Coat thickly — a thin coat fries dry and hard rather than crisp. Aim for an obvious cornstarch layer.
+  - yue: 變體 #061b 用雞絲代替牛絲——做法相同，雞絲炸時間短啲（60 秒）。
+    zh: 变体 #061b 用鸡丝代替牛丝——做法相同，鸡丝炸时间短些（60 秒）。
+    en: Variant #061b uses chicken strips — same technique, chicken fries for only 60 sec.
+history:
+  yue: 薑汁干牛絲係粵菜「干炒系列」嘅代表——同 #27 干炒牛河、#65 椒鹽肉排共用「外炸內嫩」嘅手法。源自 19 世紀廣州茶居，1960 年代喺香港茶餐廳普及。
+  zh: 姜汁干牛丝是粤菜「干炒系列」的代表——与 #27 干炒牛河、#65 椒盐肉排共用「外炸内嫩」的手法。源自 19 世纪广州茶居，1960 年代在香港茶餐厅普及。
+  en: Ginger-juice fried beef strips represents the Cantonese "dry-fried series" — sharing the "crispy outside, tender inside" technique with dishes #27 (beef hor fun) and #65 (salt-pepper ribs). Traced to 19th-century Canton tea-houses, standardised on HK tea-restaurant menus by the 1960s.
+allergens:
+  - egg
+  - soy
+  - gluten
 variants:
   - 061b-goeng1-zap1-gon1-gai1-si1
+sources:
+  - source_id: menu-2025-handwritten
+    accessed: 2026-05-24
+    note: "Item #61 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24
