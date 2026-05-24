@@ -116,9 +116,25 @@ const dict = {
 
   .dish-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 6px;
   }
+  @media (max-width: 900px) { .dish-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .dish-grid { grid-template-columns: 1fr; } }
+
+  /* Start Screen size rhythm — every 5th card spans 2 columns (and the
+     7th in each set of 10 spans 2 rows) so a long category list still
+     looks lively. Stripe + transparent look from prior revision kept. */
+  .dish-card:nth-child(5n+1) { grid-column: span 2; }
+  .dish-card:nth-child(10n+7) { grid-row: span 2; }
+  @media (max-width: 900px) {
+    .dish-card:nth-child(5n+1) { grid-column: span 2; }
+    .dish-card:nth-child(10n+7) { grid-row: auto; }
+  }
+  @media (max-width: 520px) {
+    .dish-card:nth-child(5n+1) { grid-column: span 1; }
+  }
+
   /* Panorama dish-card — no fill bg, only a 6px top stripe (morph anchor), thin row rule. */
   .dish-card {
     background: transparent;
@@ -131,6 +147,7 @@ const dict = {
     display: flex;
     flex-direction: column;
   }
+  .dish-card:nth-child(5n+1) .card-name { font-size: 1.5rem; }
   .dish-card:hover { background: var(--t-plate); color: var(--t-ink) !important; }
   .card-no {
     font-family: var(--sans);
