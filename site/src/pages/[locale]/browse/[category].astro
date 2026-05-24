@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import CategoryPivot from '~/components/CategoryPivot.astro';
 
 export async function getStaticPaths() {
   const cats = await getCollection('category');
@@ -43,7 +44,7 @@ const dict = {
 }[locale];
 ---
 <BaseLayout title={catName} locale={locale}>
-  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
+  <CategoryPivot currentId={cat.id} locale={locale} />
 
   <header class="cat-hero" style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}>
     <div class="cat-no">{dishes.length}</div>
@@ -64,7 +65,9 @@ const dict = {
         dish.data.method_status === 'complete' ? dict.complete :
         dish.data.method_status === 'draft' ? dict.draft : dict.stub;
       return (
-        <a class="dish-card wp-tile" href={`${base}/${locale}/dishes/${dish.id}`}>
+        <a class="dish-card wp-tile"
+           href={`${base}/${locale}/dishes/${dish.id}`}
+           style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
           <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
           <div class="card-name">{dishName}</div>
           <div class="card-jyut">{dish.data.names.jyutping}</div>
@@ -117,6 +120,7 @@ const dict = {
     padding: 1.25rem 1.5rem;
     text-decoration: none;
     border: 1px solid transparent;
+    border-top: 6px solid var(--cat-color);
     border-bottom: 1px solid var(--rule);
     transition: background 0.15s, transform 0.15s;
     display: flex;
