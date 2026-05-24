@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import { getPivotNeighbors } from '~/lib/categoryOrder';
+
+interface Props {
+  currentId: string;
+  locale: 'zh' | 'en' | 'yue';
+}
+const { currentId, locale } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = await getCollection('category');
+const { prev, curr, next } = getPivotNeighbors(currentId, all);
+const nameOf = (c: typeof curr) =>
+  locale === 'en' ? c.data.names.en : c.data.names.yue_hant;
+---
+<nav class="pivot-strip" aria-label="Category pivot">
+  <a class="pivot pivot--dim"
+     href={`${base}/${locale}/browse/${prev.id}`}
+     data-dir="prev"
+     rel="prev">{nameOf(prev)}</a>
+  <h1 class="pivot pivot--current"
+      style="view-transition-name: pivot-title">{nameOf(curr)}</h1>
+  <a class="pivot pivot--dim"
+     href={`${base}/${locale}/browse/${next.id}`}
+     data-dir="next"
+     rel="next">{nameOf(next)}</a>
+</nav>
+
+<style>
+  .pivot-strip {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.5rem 0 0.5rem;
+    font-family: var(--serif-zh);
+  }
+  .pivot { text-decoration: none; color: inherit; }
+  .pivot--dim {
+    font-size: 1.125rem;
+    opacity: 0.42;
+    transition: opacity var(--fluent-duration-fast, .15s) var(--fluent-curve-easy-ease, ease);
+  }
+  .pivot--dim:hover { opacity: 0.7; }
+  .pivot--dim[data-dir="prev"] { text-align: right; }
+  .pivot--current {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+  }
+  @media (max-width: 540px) {
+    .pivot--current { font-size: 1.75rem; }
+    .pivot--dim { font-size: 0.875rem; }
+  }
+</style>
