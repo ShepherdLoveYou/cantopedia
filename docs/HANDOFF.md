@@ -1,11 +1,11 @@
-# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24, end of v0.2.0 session)
+# Cantopedia · 粵食典 — Handoff (latest: 2026-05-24, end of v0.3.0 session)
 
 ## Status snapshot
 
-- **Live**: <https://shepherdloveyou.github.io/cantopedia> — v0.2.0 deployed (Phase 2: pivot + morph + Fluent tokens)
+- **Live**: <https://shepherdloveyou.github.io/cantopedia> — v0.3.0 (Phase 3: Start Screen + 3D tilt + monoline SVG icons + Live Tile flip)
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Latest commit on main**: `175935a` (Phase 2 final review fixes, pushed)
-- **Next ready-to-execute plan**: `docs/superpowers/plans/2026-05-24-uwp-phase3-abe-plan.md` (Phase 3 A+B+E — Start Screen + 3D tilt + monoline SVG icons + Live Tile flip)
+- **Latest commit on main**: `89da338` (Phase 3 homepage Start Screen, pushed)
+- **Release tag**: `v0.3.0` (planned after this push)
 - **Dishes**: 66/66 method_status: complete, full tri-lingual (粵/中/En)
 - **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
 
@@ -43,7 +43,20 @@ Implemented per spec `docs/superpowers/specs/2026-05-24-wp10-phase2-design.md`:
 
 Files added: `site/src/lib/categoryOrder.ts` + `.test.ts`, `site/src/components/CategoryPivot.astro`. Files modified: `BaseLayout.astro`, `pages/[locale]/browse/[category].astro`, `pages/[locale]/dishes/[id].astro`.
 
-## Phase 3 (A+B+E) — READY TO EXECUTE in new session
+### UWP polish v3 — Phase 3 (A+B+E) SHIPPED
+
+Implemented per spec `docs/superpowers/specs/2026-05-24-uwp-phase3-abe-design.md`:
+
+- **Start Screen homepage** — 4-column explicit grid: 1 WIDE main (22), 3 MEDIUM rice/noodle/appetizer (7-11), 4 SMALL soup-wonton/soup-noodle/baked-rice/congee (3-5). Size mapping by dish count (≥20/7-19/<7).
+- **3D directional tilt press** — `.wp-tile` upgraded site-wide. Press point computed in JS (max 3° rotation + scale 0.96 via `--tilt-x` / `--tilt-y`). Replaces v1's scale-only press.
+- **Monoline SVG icons** — 8 hand-drawn category glyphs in `CategoryIcon.astro` (1.4 stroke, 32×32 viewBox) replace emoji.
+- **Live Tile flip** — WIDE main tile flips X-axis every 8s; back face shows dictionary stats (`66` + `粵食典 · 數據` tagline). Pauses on `document.hidden` or `.pressing`.
+
+Files added: `site/src/components/CategoryIcon.astro`. Files modified: `BaseLayout.astro` (tilt CSS + script), `pages/[locale]/index.astro` (Start Screen layout + Live Tile flip).
+
+Build clean: 576 pages, vitest 5/5, `astro check` 0 errors.
+
+## Phase 3 (A+B+E) — SHIPPED (kept for archival; see section above)
 
 **User feedback at end of v0.2.0 session:** "不够彻底，还不彻底是 windows10 mobile 的 UI" — Phase 2 alone (pivot strip + dish-card morph + Fluent tokens) doesn't deliver the full WP10 Mobile experience. The approved design contract is the standalone prototype at `docs/prototypes/2026-05-24-uwp-mock.html` (commit `b9a8b3c`).
 
@@ -56,7 +69,7 @@ Files added: `site/src/lib/categoryOrder.ts` + `.test.ts`, `site/src/components/
 **Spec:** `docs/superpowers/specs/2026-05-24-uwp-phase3-abe-design.md`
 **Plan:** `docs/superpowers/plans/2026-05-24-uwp-phase3-abe-plan.md` (5 tasks, each commit-able)
 
-## Phase 4+ — still TODO (see prototype contract)
+## Phase 4+ — still TODO (see prototype contract for design)
 
 Larger UWP overhaul items deferred from Phase 3:
 
