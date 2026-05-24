@@ -10,24 +10,107 @@ ingredients:
   - ref: hainanese-chicken
     qty: 10
     unit: 件
+    prep:
+      yue: 整隻雞用「白切」手法低溫浸熟，斬件
+      zh: 整鸡以「白切」手法低温浸熟，斩件
+      en: whole chicken poached at sub-boil and chopped through the bone
   - ref: chicken-oil-rice
     qty: 1
     unit: 碗
+    prep:
+      yue: 用浸雞嘅雞湯同雞油焗飯，加少少薑蒜
+      zh: 以浸鸡的高汤与鸡油焗饭，加少许姜蒜
+      en: rice cooked in the chicken-poaching stock with chicken fat, ginger, and garlic
   - ref: broccoli
     qty: 8
     unit: 件
+    prep:
+      yue: 飛水至斷生
+      zh: 飞水至断生
+      en: blanched until just tender
   - ref: chicken-jus
     qty: 1
     unit: 份
+    prep:
+      yue: 上湯收稠調生抽
+      zh: 高汤收稠调生抽
+      en: chicken stock reduced and tempered with light soy
   - ref: ginger-dip
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 薑蓉同蔥花混薑油
+      zh: 姜蓉与葱花调入姜油
+      en: minced ginger and scallion bound with hot oil
+  - ref: jasmine-rice
+    qty: 1
+    unit: 碗
+    notes: "煮鸡油饭的原料"
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 30
+  cook: 60
+equipment:
+  - rice_cooker
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 雞由雪櫃攞出，室溫回溫 30 分鐘。雞腔內外撒鹽 + 拍蒜 + 拍薑塞入腔，外皮搽少少鹽。
+      zh: 鸡从冰箱取出室温回温 30 分钟。鸡腹内外抹盐 + 蒜 + 姜塞入腹腔，外皮抹少许盐。
+      en: Bring the whole chicken to room temperature for 30 min. Salt the cavity and skin, stuff with smashed garlic and ginger.
+    time_seconds: 1800
+  - order: 2
+    body:
+      yue: 大鍋燒水到輕微滾（90°C，唔好大滾），雞頭朝上「三浸三提」——浸入 5 秒、提起來 5 秒，重複三次，做埋雞腔入面有滾水循環。
+      zh: 大锅烧水至轻微沸腾（90°C，勿大滚），鸡头朝上「三浸三提」——浸入 5 秒、提起 5 秒，重复三次，让鸡腔内有热水循环。
+      en: Bring a large pot of water to a gentle bubble (90°C / 195°F, not a rolling boil). Lower the chicken head-up; lift-and-dunk three times so hot water circulates through the cavity.
+    temperature_c: 90
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 將雞整隻浸入水裡面，蓋上鍋蓋，水溫保持 80-85°C 不滾，浸 30-35 分鐘（按雞嘅大小調整）。雞最厚位置插入溫度計讀 72°C 即熟。
+      zh: 将鸡整只浸入水中，盖盖，水温保持 80-85°C 不沸，浸 30-35 分钟（按鸡大小调整）。鸡最厚处插入温度计读 72°C 即熟。
+      en: Submerge the chicken fully, cover, hold the water at 80-85°C / 175-185°F (do not let it boil) for 30-35 minutes depending on size. The thickest part of the thigh should read 72°C / 162°F.
+    temperature_c: 82
+    time_seconds: 1800
+  - order: 4
+    body:
+      yue: 撈起雞，立即沉入冰水浴 5 分鐘——令雞皮收緊變脆，肉汁鎖住。瀝乾，抹少少麻油令雞皮光亮。
+      zh: 捞出鸡，立即沉入冰水浴 5 分钟——令鸡皮收紧变脆、锁住肉汁。沥干，刷少许麻油令鸡皮光亮。
+      en: Plunge the chicken into ice water for 5 minutes — this firms the skin and locks in juices. Drain, then brush lightly with sesame oil for a glossy finish.
+    time_seconds: 300
+  - order: 5
+    body:
+      yue: 浸雞嘅雞湯撇起最上層雞油備用。米洗淨瀝乾，鑊中爆香薑蒜，落雞油同米炒到米粒透明，加入雞湯（米水 1:1.2），轉電飯煲焗熟。
+      zh: 浸鸡高汤撇起最上层鸡油备用。米洗净沥干，锅中爆香姜蒜，下鸡油与米炒至米粒透明，加入鸡汤（米水 1:1.2），转电饭煲焗熟。
+      en: Skim the schmaltz off the poaching liquid. Rinse the rice, drain. In a hot pan, sauté ginger and garlic in chicken fat, then toast the rice until translucent. Transfer to a rice cooker with the chicken stock (rice:stock 1:1.2) and cook normally.
+    time_seconds: 1500
+  - order: 6
+    body:
+      yue: 雞斬大件，鋪喺雞油飯上面。芥蘭飛水擺一邊。淋上少少雞醬汁，配薑蓉同碟雞湯例湯，即上枱。
+      zh: 鸡斩大块，铺在鸡油饭上。芥兰飞水摆一旁。淋上少许鸡酱汁，配姜蓉小碟与一碗鸡汤例汤，即可上桌。
+      en: Chop the chicken through the bone into large bone-in pieces. Plate over the chicken-oil rice with blanched broccoli to the side. Drizzle the chicken jus, serve with a small bowl of ginger dip and a cup of clear chicken broth.
+tips:
+  - yue: 「白切雞」嘅靈魂係皮要脆、肉要嫩、骨內帶少少粉紅色——溫度唔可以超過 85°C，過咗肉會老。
+    zh: 「白切鸡」的灵魂是皮脆、肉嫩、骨内带微微粉色——水温绝不可超过 85°C，否则肉会老。
+    en: The soul of poached chicken is firm skin, juicy flesh, and a faint blush of pink at the bone. Never let the water exceed 85°C — anything more and the meat tightens.
+  - yue: 揀「三黃雞」、「龍崗雞」或者北美嘅 free-range chicken 都好——重點係 1.5 公斤左右、養夠日數先夠香。
+    zh: 选「三黄鸡」、「龙岗鸡」或北美 free-range chicken 皆可——关键是约 1.5 公斤、足月养殖才够香。
+    en: Choose a 1.5 kg free-range bird — the breed matters less than the maturity and the fat layer just under the skin. Industrial battery birds lack the schmaltz this dish depends on.
+  - yue: 薑蓉醬係用嫩薑磨蓉、加蔥白末，再用熱油「啫」一下——熱油溫度太高薑會苦，180°C 啱啱好。
+    zh: 姜蓉酱用嫩姜磨蓉、加葱白末，再以热油「啫」一下——油温过高姜会苦，180°C 刚好。
+    en: For the ginger dip, grate young ginger and mince scallion whites, then pour over hot oil (180°C). Hotter and the ginger turns bitter.
+history:
+  yue: 海南雞飯源自海南文昌嘅「文昌雞」做法，1920 年代由海南移民帶到新加坡、馬來西亞、再傳入香港。香港版相對清淡，保留浸雞 + 雞油飯 + 薑蓉醬「三件套」，但通常會配杯熱例湯，呢個係新馬版無嘅。
+  zh: 海南鸡饭源自海南文昌的「文昌鸡」做法，1920 年代由海南移民带到新加坡、马来西亚，再传入香港。香港版相对清淡，保留浸鸡 + 鸡油饭 + 姜蓉酱「三件套」，但通常配一碗热例汤，这是新马版没有的。
+  en: Hainanese chicken rice descends from Wenchang-style poached chicken in Hainan. Migrants carried it to Singapore and Malaysia in the 1920s and onward to Hong Kong. The HK version is leaner than the Southeast Asian original — it keeps the holy trinity (poached chicken, chicken-fat rice, ginger dip) but is always served with a cup of clear broth, a touch absent from Singapore Hawker stalls.
+allergens:
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #46 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 湯例 1 碗，雞醬 1 碟
+    accessed: 2026-05-24
+    note: "Item #46 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

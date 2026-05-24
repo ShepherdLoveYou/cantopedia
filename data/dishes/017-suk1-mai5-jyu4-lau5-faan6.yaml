@@ -10,21 +10,85 @@ ingredients:
   - ref: fish-fillet
     qty: 8
     unit: 件
+    prep:
+      yue: 拍生粉、炸至金黃
+      zh: 拍生粉、炸至金黄
+      en: dredged in cornstarch, fried until golden
   - ref: corn
     qty: 0.5
     unit: 份
+    prep:
+      yue: 罐裝奶油粟米半罐
+      zh: 罐装奶油粟米半罐
+      en: half a tin of creamed corn
   - ref: egg
     qty: 1
     unit: 個
+    prep:
+      yue: 打散
+      zh: 打散
+      en: beaten
   - ref: white-rice
     qty: 1
     unit: 碗
-method_status: stub
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 10
+  cook: 15
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 魚柳切大件、用少少鹽同胡椒粉醃 5 分鐘，再均勻拍上薄薄一層生粉。
+      zh: 鱼柳切大块，用少量盐与胡椒粉腌 5 分钟，再均匀拍上薄薄一层生粉。
+      en: Cut fish fillet into large pieces, season with a pinch of salt and white pepper for 5 minutes, then coat evenly with a thin layer of cornstarch.
+    time_seconds: 300
+  - order: 2
+    body:
+      yue: 落油落鑊燒到 170°C，炸魚柳大概 3 分鐘到金黃酥脆，撈起瀝油。
+      zh: 锅中下油烧至 170°C，下鱼柳炸约 3 分钟至金黄酥脆，捞出沥油。
+      en: Heat oil in a wok to 170°C / 340°F. Fry the fish for ~3 minutes until golden and crisp; drain on a rack.
+    temperature_c: 170
+    time_seconds: 180
+  - order: 3
+    body:
+      yue: 另起鑊，落罐裝奶油粟米同 200 ml 水煮滾，慢慢倒入蛋液，用筷子輕輕推幾下，整出蛋花。
+      zh: 另起锅，倒入罐装奶油粟米和 200 ml 水煮沸，再慢慢倒入蛋液，用筷子轻轻推几下成蛋花。
+      en: In another pan, combine creamed corn with 200 ml water, bring to a boil, then slowly drizzle in the beaten egg and stir gently with chopsticks to form silk-thin ribbons.
+    time_seconds: 180
+  - order: 4
+    body:
+      yue: 嚐味，加少少鹽、糖、雞粉調味；如果想芡稠啲，加少少生粉水推勻。
+      zh: 试味，加入少许盐、糖、鸡粉调味；如希望芡汁更稠，可加少量生粉水推匀。
+      en: Taste, adjust with a pinch of salt, sugar, and chicken bouillon; thicken further with a cornstarch slurry if you prefer a glossier finish.
+  - order: 5
+    body:
+      yue: 白飯盛一碗，倒扣喺碟中央，炸魚柳鋪喺飯上面，淋上粟米芡，即上枱。
+      zh: 白饭盛入碗中倒扣在碟中央，炸鱼柳铺在饭上，淋上粟米芡，即可上桌。
+      en: Invert the bowl of rice onto a plate, lay the fish on top, ladle the corn sauce generously over everything, and serve at once.
+tips:
+  - yue: 魚柳炸完先淋芡，唔好淋完先擺——啲魚柳會即刻變腍，失去脆口。
+    zh: 鱼柳一定要炸完后再淋芡，淋好再放会立刻变软，失去脆口。
+    en: Pour the sauce just before serving; if you sauce the fish in advance the crust collapses within a minute.
+  - yue: 用「龍利柳」或者解凍嘅冷凍 dory 都可以，海外超市好易買到。
+    zh: 龙利柳或解冻冷冻 dory 均可，海外超市易于购得。
+    en: Sole, basa, or any firm white-fish fillet works; frozen "dory" from overseas Asian groceries is the easiest swap.
+  - yue: 茶餐廳通常用罐裝奶油粟米慳工夫；自己整想新鮮啲，可以用半罐 + 用粟米仁拌入，口感更立體。
+    zh: 茶餐厅常用罐装奶油粟米省时；想做得更新鲜，可半罐奶油 + 半罐玉米粒，口感更立体。
+    en: Restaurants use canned creamed corn for speed. For more texture, use half creamed corn and half whole kernels.
+history:
+  yue: 粟米魚柳係 1970 年代港式茶餐廳將西式 chowder 概念本地化嘅產物——將「美式奶油粟米湯」濃縮成芡汁，覆喺中式炸魚同白飯上面，係茶餐廳「碟頭飯」嘅經典代表之一。
+  zh: 粟米鱼柳是 1970 年代港式茶餐厅将西式 chowder 概念本地化的产物——把「美式奶油粟米汤」浓缩成芡汁，淋在中式炸鱼与白饭之上，是茶餐厅「碟头饭」的经典代表。
+  en: Creamed-corn-and-fish rice emerged in 1970s Hong Kong tea-restaurants as a Cantonese take on American corn chowder — the chowder thickened into a gravy and ladled over Chinese-style fried fish and rice, becoming a signature of the 碟頭飯 (one-plate) genre.
+allergens:
+  - gluten
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #17 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
-tips:
-  - zh: 餐汁 6 兩
+    accessed: 2026-05-24
+    note: "Item #17 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

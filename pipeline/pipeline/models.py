@@ -51,6 +51,14 @@ class TriLangTextPartial(BaseModel):
     en: str | None = None
 
 
+class TriLangBodyPartial(BaseModel):
+    """Like TriLangBody but every field optional — used for short prep notes."""
+    model_config = ConfigDict(extra="forbid")
+    yue: str | None = None
+    zh: str | None = None
+    en: str | None = None
+
+
 class SourceRef(BaseModel):
     model_config = ConfigDict(extra="forbid")
     source_id: str
@@ -70,7 +78,7 @@ class IngredientRefBlock(BaseModel):
     ref: str
     qty: float = Field(gt=0)
     unit: Unit
-    prep: TriLangTextPartial | None = None
+    prep: TriLangBodyPartial | None = None
     notes: str | None = None
 
 

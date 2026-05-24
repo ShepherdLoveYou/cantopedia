@@ -10,19 +10,90 @@ ingredients:
   - ref: pork-strips
     qty: 1
     unit: 兩
+    prep:
+      yue: 切薄絲，用少少鹽、生粉、白胡椒粉、油醃 10 分鐘
+      zh: 切薄丝，用少许盐、生粉、白胡椒粉、油腌 10 分钟
+      en: thinly julienned; marinated 10 min with salt, cornstarch, white pepper, and oil
   - ref: century-egg
     qty: 1
     unit: 個
+    prep:
+      yue: 剝殼、切大粒（保留蛋黃流心）
+      zh: 剥壳、切大粒（保留蛋黄流心）
+      en: peeled, cut into large dice (keep the soft amber yolk intact)
   - ref: ginger-scallion
     qty: 1
     unit: 份
+    prep:
+      yue: 薑切細絲、蔥切蔥花
+      zh: 姜切细丝、葱切葱花
+      en: ginger finely julienned, scallion thinly sliced
   - ref: congee-base
     qty: 1
     unit: 碗
-method_status: stub
+    prep:
+      yue: 預先熬好嘅生滾粥底（米同水比例 1:12，慢火熬 90 分鐘到米開花）
+      zh: 预先熬好的生滚粥底（米水 1:12，慢火 90 分钟至米开花）
+      en: pre-cooked plain congee base (rice-to-water 1:12, simmered 90 min until grains burst)
+  - ref: white-rice
+    qty: 0.5
+    unit: 碗
+    notes: "粥底原料（如自家从米熬起）"
+servings: 1
+difficulty: easy
+time_minutes:
+  prep: 15
+  cook: 10
+equipment: []
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 粥底攞出嚟，喺鑊或者深鍋裡面加熱到滾，期間用勺貼底攪兩下，唔好黐底。
+      zh: 取出粥底，倒入锅中加热至沸腾，期间用勺贴底搅两下，防止粘底。
+      en: Bring the congee base to a boil in a deep pot, scraping the bottom with a ladle to prevent scorching.
+    time_seconds: 180
+  - order: 2
+    body:
+      yue: 落薑絲，再落醃好嘅瘦肉絲，用筷子撥散，唔好結成團，煮大概 90 秒到剛剛變色。
+      zh: 加入姜丝，再下腌好的瘦肉丝，用筷子拨散，避免结块，煮约 90 秒至刚变色。
+      en: Add the ginger, then scatter in the pork strips. Stir gently with chopsticks to prevent clumping; cook ~90 seconds until just opaque.
+    time_seconds: 90
+  - order: 3
+    body:
+      yue: 落皮蛋粒，輕輕拌入——唔好用力攪，皮蛋會散掉，「見到塊狀」先好食。轉細火再煮 60 秒。
+      zh: 加入皮蛋粒，轻轻拌入——不要用力搅，否则皮蛋会散开，留些块状最好吃。转小火再煮 60 秒。
+      en: Add the century-egg dice and gently fold in — do not stir vigorously or the egg will dissolve. The point is to keep visible cubes. Lower the heat and cook 60 seconds more.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 試味，加少少鹽、雞粉、白胡椒粉調味；唔夠香可以淋一茶匙麻油。
+      zh: 试味，加少许盐、鸡粉、白胡椒粉调味；不够香可淋一茶匙麻油。
+      en: Taste and adjust with salt, chicken bouillon, and white pepper. A teaspoon of sesame oil rounds out the aroma if needed.
+  - order: 5
+    body:
+      yue: 盛入大碗，灑上蔥花同少少炸幹蔥（或者鬆脆嘅炒花生），即上枱。
+      zh: 盛入大碗，撒上葱花与少许炸干葱（或脆花生），即可上桌。
+      en: Ladle into a large bowl, top with the chopped scallion and a pinch of fried shallot (or crushed peanuts), and serve at once.
+tips:
+  - yue: 粥底先熬好，臨食先「生滾」加料，呢個叫「生滾粥」——粥米已經完全開花，加料快煮幾十秒到熟，口感最滑。
+    zh: 粥底先熬好，临食时再「生滚」加料，这叫「生滚粥」——米已彻底开花，加料快煮数十秒至熟，口感最滑。
+    en: This is "sang gun" (生滾) style — the congee base is fully blown out long before, then fresh toppings are flash-cooked in. Mastering the timing of when to add what is the entire craft of Cantonese congee.
+  - yue: 皮蛋唔好太凍——直接由雪櫃攞出來會令粥水降溫好快；剝完殼可以室溫放 5 分鐘再切。
+    zh: 皮蛋不要太凉——直接从冰箱拿出会令粥水降温太快；剥壳后室温放 5 分钟再切。
+    en: Don't add century egg straight from the fridge — the cold dramatically drops the congee temperature. Let it sit at room temperature for 5 minutes after peeling.
+  - yue: 茶餐廳通常會加少少瘦肉粒同肉絲混合，口感更立體；自家做用一兩肉絲已足夠。
+    zh: 茶餐厅常加少量瘦肉粒与肉丝混合，口感更立体；自家做一两肉丝足够。
+    en: Restaurants often mix minced and julienned pork for textural contrast; for a home portion, 1 tael (~37 g) of strips alone is plenty.
+history:
+  yue: 皮蛋瘦肉粥喺粵菜傳統入面屬於「素以濟葷」嘅例子——皮蛋本身有微微「鹼味」同硫磺香，瘦肉提供蛋白同肉香，薑絲化解皮蛋嘅腥味。呢碗粥喺廣東係宵夜常客，喺香港由 1950 年代開始成為茶餐廳早餐套餐三大選擇之一（同油條、奶茶配搭）。
+  zh: 皮蛋瘦肉粥在粤菜里属于「素以济荤」的例子——皮蛋自带微碱味与硫磺香，瘦肉提供蛋白与肉香，姜丝化解皮蛋的腥气。这碗粥在广东是宵夜常客，香港 1950 年代起成为茶餐厅早餐三大选项之一（搭配油条与奶茶）。
+  en: Pork-and-century-egg congee is a classic Cantonese pairing — the century egg's mineral, sulphurous depth meets the clean savouriness of lean pork, with ginger cutting through both. A late-night staple in Guangdong, it became one of the canonical Hong Kong tea-restaurant breakfasts from the 1950s onward, served with youtiao and milk tea.
+allergens:
+  - egg
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #43 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #43 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

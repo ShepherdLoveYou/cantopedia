@@ -10,22 +10,99 @@ ingredients:
   - ref: sweet-sour-pork
     qty: 1
     unit: 磅
+    prep:
+      yue: 梅頭肉切麻將粒、用蛋白同生粉漿薄薄一層
+      zh: 梅头肉切麻将粒、用蛋白与生粉浆薄薄一层
+      en: pork shoulder cut into mahjong-sized cubes, light coating of egg-white-and-cornstarch batter
   - ref: pineapple
     qty: 1
     unit: 兩
-  - ref: sweet-sour-sauce
-    qty: 4
-    unit: 兩
+    prep:
+      yue: 新鮮菠蘿切塊（罐裝亦可，但濾乾糖水）
+      zh: 新鲜菠萝切块（罐装亦可，但需沥干糖水）
+      en: fresh pineapple cut into chunks (canned works, drained of syrup)
   - ref: bell-pepper
     qty: 1
     unit: 份
+    prep:
+      yue: 青紅各半，切菱角形
+      zh: 青红各半，切菱形片
+      en: red and green, cut into diamond shapes
   - ref: onion
     qty: 1
     unit: 份
-method_status: stub
+    prep:
+      yue: 切菱角形
+      zh: 切菱形片
+      en: cut into diamond shapes
+  - ref: sweet-sour-sauce
+    qty: 4
+    unit: 兩
+    prep:
+      yue: 茄汁 3 匙 + 大紅浙醋 2 匙 + 糖 3 匙 + 水 4 匙 + 少少生粉水
+      zh: 茄汁 3 匙 + 大红浙醋 2 匙 + 糖 3 匙 + 水 4 匙 + 少许生粉水
+      en: 3 Tbsp ketchup + 2 Tbsp red Zhenjiang vinegar + 3 Tbsp sugar + 4 Tbsp water + a touch of cornstarch slurry
+servings: 2
+difficulty: medium
+time_minutes:
+  prep: 25
+  cook: 15
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 豬肉切粒（約 2.5 cm 方），用 1 茶匙生抽 + 0.5 茶匙糖 + 少少胡椒粉醃 10 分鐘；之後加入 1 隻蛋白拌勻，再均勻拍上生粉。
+      zh: 猪肉切粒（约 2.5 cm 方），用 1 茶匙生抽 + 0.5 茶匙糖 + 少许胡椒粉腌 10 分钟；再加入 1 个蛋白拌匀，最后均匀拍上生粉。
+      en: Cut pork into 2.5 cm cubes. Marinate 10 min with 1 tsp soy + ½ tsp sugar + a pinch of pepper. Stir in 1 egg white, then coat evenly with cornstarch.
+    time_seconds: 600
+  - order: 2
+    body:
+      yue: 油溫燒到 165°C，落豬肉炸第一次 3 分鐘到表面定型，撈起；油溫再升到 190°C，落番去複炸 30 秒到金黃酥脆，撈起瀝油。
+      zh: 油温烧至 165°C，下猪肉炸第一次 3 分钟至表面定型，捞出；油温再升至 190°C，复炸 30 秒至金黄酥脆，捞出沥油。
+      en: Heat oil to 165°C / 330°F. Deep-fry the pork 3 minutes until the surface sets; remove. Heat oil to 190°C / 375°F and re-fry 30 seconds until deep golden and crisp; drain.
+    temperature_c: 190
+    time_seconds: 210
+  - order: 3
+    body:
+      yue: 鑊預留 1 匙油，落洋蔥同青紅椒爆 30 秒，落菠蘿翻兩下。
+      zh: 锅留 1 勺油，下洋葱与青红椒爆炒 30 秒，下菠萝翻两下。
+      en: Wipe the wok, leaving ~1 Tbsp oil. Stir-fry the onion and peppers 30 seconds. Add the pineapple and toss.
+    time_seconds: 60
+  - order: 4
+    body:
+      yue: 倒入糖醋汁，煮到滾、起膠，再加少少生粉水推埋——汁要稠到「掛得住」。
+      zh: 倒入糖醋汁，煮至沸腾、起胶，再加少量生粉水勾芡——芡汁需稠至「挂得住」。
+      en: Pour in the sweet-and-sour sauce, bring to a glossy bubble, then add a touch of cornstarch slurry to thicken into a sauce that coats the back of a spoon.
+    time_seconds: 60
+  - order: 5
+    body:
+      yue: 落炸豬肉，快速翻 5-8 下，令每粒豬肉裹勻芡汁——多炒少少肉就會變腍，少咗芡掛不住。
+      zh: 倒入炸猪肉，快速翻 5-8 下，让每粒猪肉均匀裹上芡汁——多翻肉会变软，少翻则芡挂不住。
+      en: Toss the fried pork back in. 5-8 tosses only — any more and the crust softens, any fewer and the sauce won't coat evenly. Plate immediately.
+    time_seconds: 20
+tips:
+  - yue: 「咕嚕肉」嘅靈魂係「外酥內嫩 + 芡掛得住」。炸要兩次，第一次定型、第二次脆殼；芡要夠稠掛得住，但又唔可以厚到結團。
+    zh: 「咕咾肉」的灵魂是「外酥内嫩 + 芡能挂住」。一定要两次油炸，第一次定型、第二次脆壳；芡汁要够稠挂得住，但不能厚到结团。
+    en: The soul of sweet-and-sour pork is crisp shell + tender inside + a sauce that clings without pooling. Double-fry is non-negotiable. Aim for a sauce that just coats and clings, not one that drips off the plate.
+  - yue: 茶餐廳通常用罐頭菠蘿求方便——新鮮菠蘿更香但要先用鹽水浸 10 分鐘去澀。
+    zh: 茶餐厅常用罐头菠萝求方便——新鲜菠萝更香但需先盐水浸 10 分钟去涩。
+    en: Restaurants often use canned pineapple for convenience. Fresh tastes brighter but soak it in light brine for 10 minutes first to remove the prickly bromelain bite.
+  - yue: 大紅浙醋係靈魂——同普通白醋唔同，浙醋帶玫瑰紅色同麥芽香，唔可以替代。
+    zh: 大红浙醋是灵魂——与普通白醋不同，浙醋带玫瑰红色与麦芽香，不可替代。
+    en: Red Zhenjiang vinegar is essential — its rose-amber colour and malt aroma are nothing like white vinegar. If you can only find rice vinegar, add a drop of Worcestershire to mimic the depth.
+history:
+  yue: 咕嚕肉相傳源自 19 世紀廣州——當時外國水手食粵菜唔識用筷子整魚骨，所以廚師將豬肉切粒、骨頭剃淨，再淋上糖醋汁，方便用叉。「咕嚕」二字源自食嘅時候汁咕嚕咕嚕響嘅擬聲詞，亦有人講係源自「古老」嘅諧音，因為呢個係粵菜古老菜式之一。
+  zh: 咕咾肉相传源自 19 世纪广州——当时外国水手吃粤菜不会用筷子剔鱼骨，所以厨师将猪肉切粒、剔净骨头，淋上糖醋汁，方便用叉。「咕咾」二字源自吃时酱汁咕咾响的拟声词，也有人说源自「古老」的谐音，因为这是粤菜古老菜式之一。
+  en: Sweet-and-sour pork is said to have emerged in 19th-century Canton — Western sailors couldn't navigate fish bones with chopsticks, so chefs cubed boneless pork, fried it, and drowned it in tangy sauce for easy fork eating. The Cantonese name "咕嚕" (gu lou) is variously explained as onomatopoeia for the sauce burbling on hot meat, or a homophone of "古老" (ancient), one of Cantonese cuisine's oldest dishes.
+allergens:
+  - egg
+  - gluten
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #66 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #66 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

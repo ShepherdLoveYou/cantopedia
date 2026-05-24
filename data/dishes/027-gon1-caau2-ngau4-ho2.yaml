@@ -7,25 +7,101 @@ names:
   en: Dry-fried Beef Hor Fun
 category: noodle
 ingredients:
-  - ref: onion
-    qty: 1
-    unit: 份
-  - ref: bean-sprouts
-    qty: 3
-    unit: 兩
-  - ref: beef-slices
-    qty: 8
-    unit: 件
-  - ref: scallion
-    qty: 1
-    unit: 份
   - ref: hor-fun
     qty: 1
     unit: 磅
-method_status: stub
+    prep:
+      yue: 新鮮河粉、用手撕散唔好揸爛
+      zh: 新鲜河粉，用手撕散勿弄烂
+      en: fresh hor fun, separated by hand without breaking the ribbons
+  - ref: beef-slices
+    qty: 8
+    unit: 件
+    prep:
+      yue: 逆紋切片，醃 15 分鐘（生抽 + 蠔油 + 糖 + 油 + 生粉 + 水）
+      zh: 逆纹切片，腌 15 分钟（生抽+蠔油+糖+油+生粉+水）
+      en: sliced against the grain; marinated 15 min in soy + oyster + sugar + oil + cornstarch + water
+  - ref: onion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切絲
+      zh: 切丝
+      en: julienned
+  - ref: bean-sprouts
+    qty: 3
+    unit: 兩
+    prep:
+      yue: 摘走尾根、清水沖洗
+      zh: 掐去尾根、清水冲洗
+      en: tails trimmed, rinsed
+  - ref: scallion
+    qty: 1
+    unit: 份
+    prep:
+      yue: 切段
+      zh: 切段
+      en: cut into 5 cm segments
+  - ref: oyster-sauce
+    qty: 1
+    unit: 匙
+  - ref: black-pepper
+    qty: 0.25
+    unit: 茶匙
+servings: 2
+difficulty: hard
+time_minutes:
+  prep: 25
+  cook: 8
+equipment:
+  - wok
+method_status: complete
+method:
+  - order: 1
+    body:
+      yue: 鑊燒到冒煙，落 1 匙油，落醃好嘅牛肉攤平，唔好馬上推——煎 20 秒等底面出焦香，再撥散炒到變色，盛起。
+      zh: 锅烧至冒烟，下 1 勺油，放入腌好的牛肉摊平，先不要翻动——煎 20 秒让底面出焦香，再拨散炒至变色，盛出。
+      en: Get the wok ripping hot until it smokes. Add 1 Tbsp oil, lay the marinated beef flat. Do not stir for 20 seconds — let the bottom sear. Then break apart, stir-fry until just coloured, transfer out.
+    temperature_c: 240
+    time_seconds: 60
+  - order: 2
+    body:
+      yue: 同一隻鑊，再落 1 匙油，落洋蔥絲爆香 30 秒，加入河粉攤平，靠鑊邊「拋」起來——上下翻動，唔好用鏟壓爛。
+      zh: 同一锅，再下 1 勺油，下洋葱丝爆香 30 秒，加入河粉摊平，靠锅边「抛」起来——上下翻动，不要用铲压烂。
+      en: Same wok, add another 1 Tbsp oil. Stir-fry the onion 30 seconds, then add the hor fun. Toss using the wok's curve — never press with a spatula or the noodles will mash.
+    time_seconds: 60
+  - order: 3
+    body:
+      yue: 鑊邊淋入老抽（少少令河粉上色）、生抽、蠔油，繼續快手翻炒到每條河粉都均勻上色——目標係邊邊微焦帶鑊氣。
+      zh: 锅边淋入老抽（少量上色用）、生抽、蠔油，继续快手翻炒至每条河粉均匀上色——目标是边缘微焦带镬气。
+      en: Drizzle dark soy (just for colour), light soy, and oyster sauce around the rim of the wok. Toss continuously until every ribbon is evenly stained — you want the edges to char slightly, that's wok hei.
+    time_seconds: 120
+  - order: 4
+    body:
+      yue: 落番牛肉、芽菜、蔥段，再翻 30 秒令所有嘢拌勻、芽菜剛剛斷生即上碟。
+      zh: 倒回牛肉、芽菜、葱段，再翻 30 秒让所有食材拌匀、芽菜刚断生即出锅。
+      en: Return the beef, add the bean sprouts and scallions. Toss 30 seconds — the sprouts should still be crunchy and the noodles glossy. Plate immediately.
+    time_seconds: 30
+tips:
+  - yue: 「鑊氣」嘅關鍵係鑊夠紅 + 火夠猛 + 唔好過量——每次最多炒一磅，多咗就分批，唔可以一次成兩磅。
+    zh: 「镬气」的关键是锅够红 + 火够猛 + 不要超量——每次最多炒一磅，多了就分批，绝不可一次两磅。
+    en: Wok hei needs a screaming-hot wok, a strong flame, and modest portions. Cook ≤1 lb (≈450 g) of noodles per batch — doubling up will steam everything into a soggy mess.
+  - yue: 老抽係用嚟上色，唔係用嚟調味——大概 1 茶匙就夠，多咗會死黑同太鹹。
+    zh: 老抽用于上色而非调味——约 1 茶匙足够，多了会发黑且过咸。
+    en: Dark soy is for colour only — about 1 tsp is plenty. Use light soy or oyster sauce for the salt.
+  - yue: 河粉一定要室溫，唔可以冷藏直接炒——冷河粉一炒就斷，要先用油拌散到唔黐手。
+    zh: 河粉必须室温，不可冷藏直接炒——冷河粉一炒就断，先用油拌散至不粘手。
+    en: Bring fresh hor fun to room temperature first — fridge-cold ribbons snap on contact with the wok. Toss them with a drizzle of oil to loosen before cooking.
+history:
+  yue: 干炒牛河源自 1930 年代廣州，戰後傳入香港。「干」係相對於「濕炒」（即用芡汁淋面）而言。坊間流傳「老師傅淨炒一份牛河可以睇出師傅功底」——係粵菜廚師資格嘅試金石。
+  zh: 干炒牛河源自 1930 年代广州，战后传入香港。「干」是相对于「湿炒」（用芡汁淋面）而言。坊间流传「老师傅净炒一份牛河可看出师傅功底」——是粤菜厨师资格的试金石。
+  en: Dry-fried beef hor fun originated in 1930s Canton and spread to Hong Kong after the war. "Dry" distinguishes it from "wet-fried" noodles drowned in cornstarch gravy. It is the canonical proving dish for any Cantonese wok cook — Anthony Bourdain once called it the truest test of a chef.
+allergens:
+  - gluten
+  - soy
 sources:
   - source_id: menu-2025-handwritten
-    accessed: '2026-05-24'
-    note: 'Item #27 on the source menu'
-created: '2026-05-24'
-updated: '2026-05-24'
+    accessed: 2026-05-24
+    note: "Item #27 on the source menu"
+created: 2026-05-24
+updated: 2026-05-24

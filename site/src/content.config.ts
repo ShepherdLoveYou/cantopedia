@@ -28,6 +28,12 @@ const SourceRef = z.object({
   note: z.string().optional(),
 });
 
+const TriLangBodyPartial = z.object({
+  yue: z.string().optional(),
+  zh: z.string().optional(),
+  en: z.string().optional(),
+});
+
 const Ingredient = z.object({
   ref: reference('ingredient'),
   qty: z.number().positive(),
@@ -35,7 +41,7 @@ const Ingredient = z.object({
     '件', '兩', '錢', '磅', '碗', '匙', '茶匙', '克', '毫升',
     '個', '條', '粒', '滴', '片', '份', '適量',
   ]),
-  prep: TriLangText.partial().optional(),
+  prep: TriLangBodyPartial.optional(),
   notes: z.string().optional(),
 });
 
