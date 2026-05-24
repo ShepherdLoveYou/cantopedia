@@ -7,7 +7,8 @@
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](./LICENSE-CODE)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/content-CC%20BY--SA%204.0-lightgrey.svg)](./LICENSE-CONTENT)
-[![Status](https://img.shields.io/badge/status-v0.1--alpha-orange.svg)](./CHANGELOG.md)
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](./CHANGELOG.md)
+[![Dishes](https://img.shields.io/badge/dishes-66%2F66%20complete-success.svg)](https://shepherdloveyou.github.io/cantopedia)
 
 ---
 
@@ -87,6 +88,7 @@ address it.
 
 ## Status
 
-**v0.1-alpha** — initial scaffold, 66 dishes as `stub`, 1 demo dish complete,
-site deployed to GitHub Pages. See [`docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md`](./docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md)
-for the full design.
+**v0.1.0** — all 66 dishes complete with full tri-lingual method, history,
+tips, allergens, difficulty, and timing. Live at
+<https://shepherdloveyou.github.io/cantopedia>. See [`docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md`](./docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md)
+for the full design and [`CHANGELOG.md`](./CHANGELOG.md) for the release log.

@@ -6,7 +6,8 @@ English README → [`README.md`](./README.md)
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](./LICENSE-CODE)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/content-CC%20BY--SA%204.0-lightgrey.svg)](./LICENSE-CONTENT)
-[![Status](https://img.shields.io/badge/status-v0.1--alpha-orange.svg)](./CHANGELOG.md)
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](./CHANGELOG.md)
+[![Dishes](https://img.shields.io/badge/dishes-66%2F66%20complete-success.svg)](https://shepherdloveyou.github.io/cantopedia)
 
 ---
 
@@ -82,6 +83,7 @@ docs/             設計文檔
 
 ## 狀態
 
-**v0.1-alpha** — 初始骨架完成；66 道菜全部入庫為 `stub`；1 道示範菜完整；
-站點已部署至 GitHub Pages。完整設計請見
-[`docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md`](./docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md)。
+**v0.1.0** — 66 道菜全部完整，三語做法、由來、貼士、過敏原、難度、時間齊備。
+線上版：<https://shepherdloveyou.github.io/cantopedia>。完整設計請見
+[`docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md`](./docs/superpowers/specs/2026-05-24-cantonese-cuisine-design.md)，
+版本記錄請見 [`CHANGELOG.md`](./CHANGELOG.md)。
