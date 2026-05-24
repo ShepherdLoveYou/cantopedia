@@ -76,7 +76,7 @@ method:
     body:
       yue: 雞粒落鑊嘅時候用「半煎炸」手法——油溫 160°C，落雞粒攤平炸 45 秒到表面金黃定型，撈起瀝油。鑊留 1 匙油。
       zh: 鸡粒下锅用「半煎炸」手法——油温 160°C，下鸡粒摊平炸 45 秒至表面金黄定型，捞出沥油。锅留 1 勺油。
-      en: Velvet-fry the chicken: heat oil to 160°C / 320°F, spread the cubes in a single layer, fry 45 seconds until the surface is golden and set; remove and drain. Reserve 1 Tbsp oil.
+      en: "Velvet-fry the chicken — heat oil to 160°C / 320°F, spread the cubes in a single layer, fry 45 seconds until the surface is golden and set; remove and drain. Reserve 1 Tbsp oil."
     temperature_c: 160
     time_seconds: 45
   - order: 2
@@ -109,10 +109,10 @@ tips:
     en: HK tea-restaurant kung pao adds bell peppers for colour, a Cantonese adaptation. The Sichuan original uses only garlic shoots and scallion whites.
   - yue: 「煳辣味」係宮保雞嘅靈魂——干辣椒要爆到表面有少少深紅油亮，但唔可以變黑、變黑就苦。火力收細啲、慢慢嚟。
     zh: 「煳辣味」是宫保鸡的灵魂——干辣椒要爆到表面深红油亮，但不可变黑、变黑就苦。火力收小一些、慢慢炒。
-    en: "Húlàwèi" — toasty-spicy — is the dish's defining note. Toast the chilies on medium heat until darkened but not blackened; black chilies are bitter and ruin the dish.
+    en: '"Húlàwèi" — toasty-spicy — is the dish''s defining note. Toast the chilies on medium heat until darkened but not blackened; black chilies are bitter and ruin the dish.'
   - yue: 「宮保」名字來自清代官員丁寶楨（諡號「文正」、加銜「太子少保」、簡稱「宮保」）。佢喺四川任職時鍾意呢個菜，廚師後來以佢嘅銜頭命名。
     zh: 「宫保」之名来自清代官员丁宝桢（谥号「文正」、加衔「太子少保」、简称「宫保」）。他在四川任职时酷爱此菜，厨师后来以其衔头命名。
-    en: "Kung Pao" (宮保) comes from Ding Baozhen, a Qing-dynasty official whose honorary title was Crown Prince's Grand Tutor (太子少保, abbreviated 宮保). He loved this dish while governing Sichuan, and cooks named it after him.
+    en: '"Kung Pao" (宮保) comes from Ding Baozhen, a Qing-dynasty official whose honorary title was Crown Prince''s Grand Tutor (太子少保, abbreviated 宮保). He loved this dish while governing Sichuan, and cooks named it after him.'
 history:
   yue: 宮保雞源自 19 世紀末四川官府菜，由四川入廣州、再傳入香港。粵化版本添加青紅椒同調糖醋汁，口味比川菜版更甜更溫和，係粵菜「川菜本地化」嘅典型例子。香港茶餐廳普遍提供，係下飯極品。
   zh: 宫保鸡源自 19 世纪末四川官府菜，由四川传入广州、再入香港。粤化版本添加青红椒并调以糖醋汁，口味比川菜版更甜更温和，是粤菜「川菜本地化」的典型。香港茶餐厅普遍提供，下饭极品。
