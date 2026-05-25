@@ -187,18 +187,18 @@ const nameOf = (c: typeof curr) =>
     }
 
     if (Math.abs(dx) >= w * THRESH) {
-      // Commit nav — animate off-screen then click
+      // Commit nav — RESET inline transform first so the VT API snapshots
+      // the page at its natural position (not mid-drag, which would make
+      // the OLD snapshot's content look already half-off-screen). The
+      // micro-snap is imperceptible because VT animation takes over
+      // within ~16ms and slides the whole page cleanly.
       const dir = dx < 0 ? 'next' : 'prev';
-      m.style.transition = `transform 220ms var(--fluent-curve-accelerate-mid, ease-in)`;
-      m.style.transform = `translateX(${dx < 0 ? -w : w}px)`;
-      setTimeout(() => {
-        const link = document.querySelector<HTMLAnchorElement>(`.pivot[data-dir="${dir}"]`);
-        if (link) link.click();
-        // Reset transform after a tick so the new page renders cleanly
-        setTimeout(() => {
-          if (m) { m.style.transition = ''; m.style.transform = ''; }
-        }, 50);
-      }, 200);
+      m.style.transition = 'none';
+      m.style.transform = '';
+      // Force a layout flush so the reset is applied before the click.
+      void m.offsetHeight;
+      const link = document.querySelector<HTMLAnchorElement>(`.pivot[data-dir="${dir}"]`);
+      if (link) link.click();
     } else {
       // Spring back
       m.style.transition = `transform 320ms var(--fluent-curve-spring, ease-out)`;
