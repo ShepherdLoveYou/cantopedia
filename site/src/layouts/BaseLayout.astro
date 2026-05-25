@@ -849,6 +849,22 @@ const dict = {
         view-transition-name: none !important;
       }
 
+      /* Suppress the tile entrance stagger AND search-hit stagger AND any
+         page-load animation during pivot nav — the new page arrives via
+         the slide; tiles should already be in their final state when the
+         slide reveals them. Otherwise users see: slide → THEN tiles
+         trickle in, which reads as "old left, then new appeared". */
+      html.nav-next .wp-tile,
+      html.nav-prev .wp-tile,
+      html.nav-next .stat-tile,
+      html.nav-prev .stat-tile,
+      html.nav-next .search-hit,
+      html.nav-prev .search-hit,
+      html.nav-next .dish-card,
+      html.nav-prev .dish-card {
+        animation: none !important;
+      }
+
       /* Full-screen card slide — old goes ALL the way off, new comes ALL
          the way in. No opacity fade: solid cards moving together. The lockstep
          travel is the WP10 pivot signature (NOT a crossfade with slide). */
