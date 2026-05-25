@@ -97,7 +97,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     <span class="meta">#{String(dish.data.menu_no).padStart(2, '0')}</span>
   </nav>
 
-  <header class={`hero-band ${dish.data.images?.[0] ? 'has-photo' : ''}`} style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
+  <header class={`hero-band ${dish.data.images?.[0] ? 'has-photo' : ''}`} data-parallax="0.35" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
     {dish.data.images?.[0] && (
       <img class={`hero-photo kb ${(dish.data.menu_no % 2 === 0) ? 'kb-b' : ''}`} src={commonsThumb(dish.data.images[0].path, 1400)} alt={`${dish.data.names.yue_hant} · ${dish.data.names.en}`} loading="eager" decoding="async" />
     )}
