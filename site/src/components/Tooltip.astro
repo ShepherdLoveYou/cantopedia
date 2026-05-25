@@ -1,0 +1,43 @@
+---
+interface Props {
+  text: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+}
+const { text, position = 'top' } = Astro.props;
+---
+<span class={`tooltip tooltip-${position}`} data-tip={text}>
+  <slot />
+</span>
+
+<style>
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+  }
+  .tooltip::after {
+    content: attr(data-tip);
+    position: absolute;
+    background: #1d1d1d;
+    color: #fff;
+    padding: 0.35rem 0.625rem;
+    font-family: var(--lang-font-primary);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    border-left: 2px solid var(--m-red);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease, transform 150ms ease;
+    z-index: 50;
+  }
+  .tooltip:hover::after, .tooltip:focus-visible::after { opacity: 1; }
+  .tooltip-top::after        { bottom: 100%; left: 50%; transform: translate(-50%, -6px); }
+  .tooltip-top:hover::after  { transform: translate(-50%, -10px); }
+  .tooltip-bottom::after        { top: 100%; left: 50%; transform: translate(-50%, 6px); }
+  .tooltip-bottom:hover::after  { transform: translate(-50%, 10px); }
+  .tooltip-left::after         { right: 100%; top: 50%; transform: translate(-6px, -50%); }
+  .tooltip-left:hover::after   { transform: translate(-10px, -50%); }
+  .tooltip-right::after        { left: 100%; top: 50%; transform: translate(6px, -50%); }
+  .tooltip-right:hover::after  { transform: translate(10px, -50%); }
+</style>
