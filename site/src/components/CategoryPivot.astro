@@ -29,31 +29,39 @@ const nameOf = (c: typeof curr) =>
 <style>
   .pivot-strip {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 1.5rem 0 0.5rem;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0 0.5rem;
     font-family: var(--sans), var(--sans-zh);
+    min-height: 3.5rem;     /* lock height so pivot strip doesn't resize per page */
   }
   .pivot { text-decoration: none; color: inherit; }
+  /* Peek text: ALWAYS one line, ellipsized if too long. This is the source
+     of the layout jump — long category names like "湯米線/雲吞" were
+     wrapping and blowing the strip to 3-4 lines tall. */
   .pivot--dim {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 300;
     opacity: 0.4;
     transition: opacity var(--fluent-duration-fast, .15s) var(--fluent-curve-easy-ease, ease);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
   .pivot--dim:hover { opacity: 0.75; }
   .pivot--dim[data-dir="prev"] { text-align: right; }
   .pivot--current {
-    font-size: 3rem;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
     font-weight: 300;
     letter-spacing: -0.02em;
     margin: 0;
-    line-height: 1;
+    line-height: 1.05;
+    white-space: nowrap;
   }
   @media (max-width: 540px) {
-    .pivot--current { font-size: 2rem; }
-    .pivot--dim { font-size: 1rem; }
+    .pivot--dim { font-size: 0.85rem; }
   }
 </style>
 
