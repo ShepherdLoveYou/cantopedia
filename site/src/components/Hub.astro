@@ -339,17 +339,20 @@ const firstDishId = allDishes[0]?.id ?? '';
 
 <!-- Hub module: featured-tile + hub-nav re-init on every ClientRouter swap. -->
 <script>
-  import { initFeaturedTile, teardownFeaturedTile, initHubNav, teardownHubNav } from '~/lib/hubScripts';
+  import { initFeaturedTile, teardownFeaturedTile, initHubNav, teardownHubNav,
+           initCatTileCycle, teardownCatTileCycle } from '~/lib/hubScripts';
 
   function boot() {
     const cfg = (window as any).__hubBoot;
     if (!cfg) return;
     initFeaturedTile(cfg.base, cfg.locale, cfg.dishesData);
     initHubNav();
+    initCatTileCycle();
   }
   function teardown() {
     teardownFeaturedTile();
     teardownHubNav();
+    teardownCatTileCycle();
   }
 
   boot();

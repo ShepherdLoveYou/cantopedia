@@ -208,3 +208,58 @@ export function teardownHubNav() {
   }
   delete hub.dataset.navWired;
 }
+
+const _catTileTimers = new WeakMap<HTMLElement, number>();
+
+export function initCatTileCycle() {
+  const tiles = document.querySelectorAll<HTMLElement>('.cat-tile.has-imgs');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  tiles.forEach((tile, idx) => {
+    if (tile.dataset.cycleWired === '1') return;
+    tile.dataset.cycleWired = '1';
+
+    const faces = Array.from(tile.querySelectorAll<HTMLElement>('.cat-face'));
+    if (faces.length < 2) return;
+    const solidFace = tile.querySelector<HTMLElement>('.cat-face--solid');
+    const photoFaces = faces.filter((f) => f.classList.contains('cat-face--photo'));
+    if (!solidFace || photoFaces.length === 0) return;
+
+    let showSolid = true;   // current face is solid
+    let photoIdx = 0;
+    let currentActive: HTMLElement = solidFace;
+
+    function tick() {
+      currentActive.classList.remove('active');
+      if (showSolid) {
+        // about to switch to photo
+        currentActive = photoFaces[photoIdx];
+        photoIdx = (photoIdx + 1) % photoFaces.length;
+      } else {
+        currentActive = solidFace!;
+      }
+      currentActive.classList.add('active');
+      showSolid = !showSolid;
+    }
+
+    // Stagger starts so tiles don't flip in sync
+    const startDelay = idx * 350;
+    const startId = window.setTimeout(() => {
+      tick();
+      const intervalId = window.setInterval(tick, 2000);
+      _catTileTimers.set(tile, intervalId);
+    }, startDelay);
+    (tile as any)._catTileStartTimeout = startId;
+  });
+}
+
+export function teardownCatTileCycle() {
+  document.querySelectorAll<HTMLElement>('.cat-tile').forEach((tile) => {
+    const startId = (tile as any)._catTileStartTimeout;
+    if (typeof startId === 'number') clearTimeout(startId);
+    const intervalId = _catTileTimers.get(tile);
+    if (typeof intervalId === 'number') clearInterval(intervalId);
+    _catTileTimers.delete(tile);
+    delete tile.dataset.cycleWired;
+  });
+}
