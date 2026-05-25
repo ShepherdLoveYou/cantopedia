@@ -211,47 +211,43 @@ export function teardownHubNav() {
 
 const _catTileTimers = new WeakMap<HTMLElement, number>();
 
+/**
+ * WP10-style live-tile flip — toggles `.flipped` on every .cat-tile with a
+ * .face.back child. Period 9s, stagger 1.4s per tile (matches the master/
+ * cee6736 cadence). Pauses while the panel is off-screen or the tab is
+ * hidden, so background tiles don't burn CPU.
+ */
 export function initCatTileCycle() {
-  const tiles = document.querySelectorAll<HTMLElement>('.cat-tile.has-imgs');
+  const PERIOD = 3000;
+  const STEP = 500;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  const tiles = Array.from(document.querySelectorAll<HTMLElement>('.cat-tile'));
   tiles.forEach((tile, idx) => {
     if (tile.dataset.cycleWired === '1') return;
+    // Only flip tiles that actually have a back face to reveal
+    if (!tile.querySelector('.face.back')) return;
     tile.dataset.cycleWired = '1';
 
-    const faces = Array.from(tile.querySelectorAll<HTMLElement>('.cat-face'));
-    if (faces.length < 2) return;
-    const solidFace = tile.querySelector<HTMLElement>('.cat-face--solid');
-    const photoFaces = faces.filter((f) => f.classList.contains('cat-face--photo'));
-    if (!solidFace || photoFaces.length === 0) return;
-
-    let showSolid = true;   // current face is solid
-    let photoIdx = 0;
-    let currentActive: HTMLElement = solidFace;
-
-    function tick() {
-      currentActive.classList.remove('active');
-      if (showSolid) {
-        // about to switch to photo
-        currentActive = photoFaces[photoIdx];
-        photoIdx = (photoIdx + 1) % photoFaces.length;
-      } else {
-        currentActive = solidFace!;
-      }
-      currentActive.classList.add('active');
-      showSolid = !showSolid;
+    function isPanelVisible(): boolean {
+      const panel = tile.closest<HTMLElement>('.hub-panel');
+      if (!panel) return true;
+      const r = panel.getBoundingClientRect();
+      return !(r.right < 0 || r.left > window.innerWidth);
+    }
+    function flip() {
+      if (document.hidden) return;
+      if (tile.classList.contains('pressing')) return;
+      if (!isPanelVisible()) return;
+      tile.classList.toggle('flipped');
     }
 
-    // Stagger starts so tiles don't flip in sync, but keep the stagger tight
-    // (150ms × idx) so the user sees activity within ~1 second of page load.
-    // The first tile starts at 80ms — enough for the page to paint solid faces,
-    // but soon enough that the cycle is unmistakable.
-    const startDelay = 80 + idx * 150;
+    const offset = (idx * STEP) % PERIOD;
     const startId = window.setTimeout(() => {
-      tick();
-      const intervalId = window.setInterval(tick, 2000);
+      flip();
+      const intervalId = window.setInterval(flip, PERIOD);
       _catTileTimers.set(tile, intervalId);
-    }, startDelay);
+    }, offset);
     (tile as any)._catTileStartTimeout = startId;
   });
 }
@@ -264,5 +260,6 @@ export function teardownCatTileCycle() {
     if (typeof intervalId === 'number') clearInterval(intervalId);
     _catTileTimers.delete(tile);
     delete tile.dataset.cycleWired;
+    tile.classList.remove('flipped');
   });
 }

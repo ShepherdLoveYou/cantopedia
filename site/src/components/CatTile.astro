@@ -1,65 +1,63 @@
 ---
 /**
- * Reusable Metro live-tile with face cycling.
+ * Live-tile with WP10-style card flip (front ↔ back via rotateX 180°).
  *
- * Faces alternate: solid (icon + label + badge) → photo 1 → solid → photo 2 → …
- * Each face holds 2s. JS driver in lib/hubScripts.ts (initCatTileCycle).
+ * Front face: solid color + icon (slot) + category name + count badge.
+ * Back face:  photo (if available) or solid color + BIG count number + label + name.
+ *
+ * JS driver in lib/hubScripts.ts (initCatTileCycle) toggles `.flipped` on
+ * the tile every ~9 seconds with a 1.4s stagger per tile, matching the
+ * master (cee6736) cadence that the user said "做得挺好".
  *
  * Props:
- *   size: 's' | 'm' | 'w' | 'l' — maps to tile-small/medium/wide/large
- *   href: navigation target
- *   color: solid-face background (CSS color string or var(--m-*) token)
- *   label: text shown on solid face (branding-bar)
- *   badge: optional count badge bottom-right
- *   photos: array of image URLs for photo faces (empty array → no cycling)
- *   viewTransitionName: optional inline view-transition-name for Continuum morph
- *   ariaLabel: accessible label
+ *   size: 's' | '2x1' | 'm' | 'w' — see CSS below
+ *   href, color, ariaLabel
+ *   label: category name (e.g., "頭盤 / 小食")
+ *   count: dish count (e.g., 7)
+ *   countLabel: unit suffix (e.g., "道", "dishes")
+ *   photo: optional URL for the back face background
+ *   viewTransitionName: inline view-transition-name for Continuum morph
  */
 export interface Props {
-  /**
-   * Tile size in grid units. Only three sizes are supported:
-   *   's'   → 1×1 (.tile-small)        — single grid cell
-   *   '2x1' → 2×1 wide-slim (.tile-2x1) — wide banner, half-height of medium
-   *   'm'   → 2×2 (.tile-medium)       — square
-   * Pixel dimensions are derived from CSS variables --tile-unit + --tile-gap,
-   * so the grid is responsive without media-query forks.
-   */
-  size: 's' | '2x1' | 'm';
+  size: 's' | '2x1' | 'm' | 'w';
   href: string;
   color: string;
-  label?: string;
-  badge?: string | number;
-  photos?: string[];
+  label: string;
+  count?: number;
+  countLabel?: string;
+  photo?: string;
   viewTransitionName?: string;
   ariaLabel: string;
 }
-const { size, href, color, label, badge, photos = [], viewTransitionName, ariaLabel } = Astro.props;
-const sizeClass = { s: 'tile-small', m: 'tile-medium', '2x1': 'tile-2x1' }[size];
-const hasImgs = photos.length > 0;
+const { size, href, color, label, count, countLabel, photo, viewTransitionName, ariaLabel } = Astro.props;
+const sizeClass = { s: 'tile-small', m: 'tile-medium', '2x1': 'tile-2x1', w: 'tile-wide' }[size];
 const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName};` : '';
+const backBg = photo
+  ? `background-image: url('${photo}'); background-size: cover; background-position: center;`
+  : `background: ${color};`;
 ---
-<a
-  class={`${sizeClass} cat-tile ${hasImgs ? 'has-imgs' : ''} wp-tile`}
-  href={href}
-  aria-label={ariaLabel}
-  style={vtStyle}
->
-  <div class="cat-face cat-face--solid active" style={`background: ${color};`}>
-    <span class="cat-tile-content"><slot /></span>
-    {label && <span class="branding-bar">{label}</span>}
-    {badge != null && <span class="badge-bottom">{badge}</span>}
+<a class={`${sizeClass} cat-tile wp-tile`} href={href} aria-label={ariaLabel} style={vtStyle}>
+  <div class="face front" style={`background: ${color};`}>
+    <span class="tile-icon"><slot /></span>
+    <span class="tile-name">{label}</span>
+    {count != null && <span class="tile-badge">{count}</span>}
   </div>
-  {photos.map((src) => (
-    <div class="cat-face cat-face--photo" style={`background-image: url('${src}');`}>
-      {label && <span class="branding-bar">{label}</span>}
-    </div>
-  ))}
+  <div class="face back" style={backBg}>
+    {photo && <span class="face-scrim" aria-hidden="true"></span>}
+    {count != null && (
+      <span class="back-num-block">
+        <span class="back-num">{count}</span>
+        {countLabel && <span class="back-num-label">{countLabel}</span>}
+      </span>
+    )}
+    <span class="back-name">{label}</span>
+  </div>
 </a>
 
 <style is:global>
-  /* Responsive tile grid pitch — single source of truth for all tile dimensions.
-     Pixel sizes for tile-small / tile-medium / tile-2x1 are derived from these,
-     so the grid scales fluidly across viewports without a media-query fork per class. */
+  /* ============================================================
+     Tile grid pitch (single source of truth for all tile sizes)
+     ============================================================ */
   :root {
     --tile-unit: 70px;
     --tile-gap: 10px;
@@ -71,12 +69,8 @@ const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName
     }
   }
 
-  /* Override Metro UI's fixed-pixel tile sizes with variable-based dimensions.
-     Metro defaults: small=70, medium=150, wide=310, large=310×310. We keep only
-     three sizes (1×1, 2×1, 2×2). Each class has both EXPLICIT pixel sizing
-     (for flex contexts and the underlying Metro defaults) AND grid-row/-column
-     spans (so .tiles-grid using `display: grid` snaps tiles to a uniform
-     --tile-unit pitch with no jagged gaps). */
+  /* Tile size classes — width/height for flex parents, grid-column/-row spans
+     for CSS Grid parents (.tiles-grid uses display:grid). */
   .tile-small {
     width: var(--tile-unit) !important;
     height: var(--tile-unit) !important;
@@ -96,77 +90,137 @@ const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName
     grid-row: span 1;
   }
   .tile-wide {
-    /* Wide hero tile — 4 cols × 2 rows (Metro "wide" proportions). Used by the
-       featured/today pick to give it visual prominence on the Start Menu. */
+    /* 4 cols × 2 rows — Metro "wide" banner, for featured/hero tiles */
     width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap)) !important;
     height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
     grid-column: span 4;
     grid-row: span 2;
   }
-
-  /* Sharp corners override — Metro is mostly square but defense-in-depth */
   [class*="tile-"].cat-tile { border-radius: 0 !important; }
+
+  /* ============================================================
+     Cat-tile flip — rotateX 180° card-flip (matches master cee6736)
+     ============================================================ */
   .cat-tile {
     position: relative;
     overflow: hidden;
-    perspective: 800px;
+    perspective: 1200px;
     color: #fff;
     text-decoration: none;
     display: block;
   }
-  .cat-face {
+  .cat-tile .face {
     position: absolute;
     inset: 0;
-    backface-visibility: hidden;
-    transform: rotateX(90deg);
-    opacity: 0;
-    transition: transform 520ms cubic-bezier(0.6, 0, 0.2, 1), opacity 220ms ease;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 8px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     background-size: cover;
     background-position: center;
   }
-  .cat-face.active {
-    transform: rotateX(0deg);
-    opacity: 1;
-  }
-  .cat-face--photo::after {
-    content: '';
+  /* Initial state: front facing viewer (rotateX 0), back rotated away (rotateX 180) */
+  .cat-tile .face.back { transform: rotateX(180deg); }
+  /* Flipped state: front rotates away, back rotates to viewer */
+  .cat-tile.flipped .face.front { transform: rotateX(180deg); }
+  .cat-tile.flipped .face.back  { transform: rotateX(360deg); }
+
+  /* Photo back gets a bottom-up gradient so white text stays legible */
+  .cat-tile .face-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 50%);
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
     pointer-events: none;
+    z-index: 1;
   }
-  .cat-tile-content {
-    position: absolute;
-    top: 8px; left: 8px;
+
+  /* === Front face content === */
+  .cat-tile .tile-icon {
+    align-self: flex-start;
     color: #fff;
+    line-height: 0;
   }
-  .branding-bar {
+  .cat-tile .tile-name {
+    margin-top: auto;
     font-family: var(--sans), var(--sans-zh);
-    font-size: 0.8rem;
     font-weight: 400;
-    letter-spacing: 0.02em;
     line-height: 1.2;
     word-break: keep-all;
     overflow-wrap: anywhere;
-    max-width: 100%;
+    color: #fff;
+  }
+  .cat-tile .tile-badge {
+    position: absolute;
+    top: 8px; right: 10px;
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.28);
+    padding: 1px 8px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  /* === Back face content (the big-number reveal) === */
+  .cat-tile .back-num-block {
     position: relative;
     z-index: 2;
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
   }
-  .badge-bottom {
-    position: absolute;
-    bottom: 6px; right: 8px;
+  .cat-tile .back-num {
     font-family: var(--sans);
-    font-size: 0.7rem;
-    background: rgba(0,0,0,0.4);
-    padding: 1px 6px;
-    z-index: 2;
+    font-weight: 200;
+    line-height: 1;
+    color: #fff;
   }
+  .cat-tile .back-num-label {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .cat-tile .back-name {
+    position: absolute;
+    top: 10px; left: 10px;
+    z-index: 2;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.15;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+
+  /* === Size-specific font tuning === */
+  .cat-tile.tile-small .tile-icon { font-size: 22px; }
+  .cat-tile.tile-small .tile-name { font-size: 0.7rem; line-height: 1.1; }
+  .cat-tile.tile-small .tile-badge { font-size: 0.72rem; padding: 0 5px; top: 4px; right: 5px; }
+  .cat-tile.tile-small .back-num { font-size: 1.6rem; }
+  .cat-tile.tile-small .back-name { display: none; }
+  .cat-tile.tile-small .back-num-label { display: none; }
+
+  .cat-tile.tile-2x1 .tile-name { font-size: 0.95rem; }
+  .cat-tile.tile-2x1 .tile-badge { font-size: 0.95rem; }
+  .cat-tile.tile-2x1 .back-num { font-size: 2.2rem; }
+
+  .cat-tile.tile-medium .tile-name { font-size: 1.1rem; }
+  .cat-tile.tile-medium .tile-badge { font-size: 1rem; }
+  .cat-tile.tile-medium .back-num { font-size: 3rem; }
+
+  .cat-tile.tile-wide .tile-name { font-size: 1.45rem; font-weight: 300; }
+  .cat-tile.tile-wide .tile-badge { font-size: 1.05rem; }
+  .cat-tile.tile-wide .back-num { font-size: 3.5rem; }
+  .cat-tile.tile-wide .back-num-block { gap: 10px; }
+
   @media (prefers-reduced-motion: reduce) {
-    .cat-face { transition: none; }
+    .cat-tile .face { transition: none; }
   }
 </style>

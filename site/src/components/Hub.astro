@@ -37,13 +37,13 @@ for (const cat of allCats) {
     .sort((a, b) => a.data.menu_no - b.data.menu_no));
 }
 
-function categoryPhotos(catId: string, max = 4): string[] {
+function categoryPhoto(catId: string): string | undefined {
   const dishes = dishesByCat.get(catId) ?? [];
-  return dishes
-    .map((d) => d.data.images?.[0]?.path)
-    .filter((p): p is string => !!p)
-    .slice(0, max)
-    .map((p) => commonsThumb(p, 800));
+  for (const d of dishes) {
+    const p = d.data.images?.[0]?.path;
+    if (p) return commonsThumb(p, 800);
+  }
+  return undefined;
 }
 
 type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
@@ -181,77 +181,60 @@ const firstDishId = allDishes[0]?.id ?? '';
         const inCat = dishesByCat.get(cat.id) ?? [];
         if (inCat.length === 0) return null;
         const catName = nameOf(cat);
-        // All category tiles are 2×2 (dish-related content). Only utility tiles (search,
-        // theme switchers, github link) below stay 1×1.
+        // All category tiles are 2×2 (dish-related content). Only utility tiles
+        // (search, theme switchers, github link) below stay 1×1.
         const size: 'm' = 'm';
-        const photos = categoryPhotos(cat.id);
+        const photo = categoryPhoto(cat.id);
         return (
           <CatTile
             size={size}
             href={`${base}/${locale}/browse/${cat.id}`}
             color={tileColorFor(cat.id)}
             label={catName}
-            badge={inCat.length}
-            photos={photos}
+            count={inCat.length}
+            countLabel={dict.pieces}
+            photo={photo}
             viewTransitionName={`tile-${cat.id}`}
             ariaLabel={`${catName} (${inCat.length} ${dict.pieces})`}
           >
-            <CategoryIcon cat={cat.id as CatId} size={56} />
+            <CategoryIcon cat={cat.id as CatId} size={48} />
           </CatTile>
         );
       })}
 
-      {/* 4 stat tiles (medium, no photos, inline-style backgrounds via --m-* tokens) */}
-      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
-        <div class="cat-face cat-face--solid active" style="background: var(--m-green);">
-          <span class="stat-num">{complete}</span>
-          <span class="branding-bar">{dict.complete}</span>
-        </div>
+      {/* 4 stat tiles (medium, single-face, no flip — they show stats not pictures) */}
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
+        <span class="stat-num">{complete}</span>
+        <span class="stat-label">{dict.complete}</span>
       </a>
-      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
-        <div class="cat-face cat-face--solid active" style="background: var(--m-orange);">
-          <span class="stat-num">{draft}</span>
-          <span class="branding-bar">{dict.draft}</span>
-        </div>
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
+        <span class="stat-num">{draft}</span>
+        <span class="stat-label">{dict.draft}</span>
       </a>
-      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
-        <div class="cat-face cat-face--solid active" style="background: var(--m-steel);">
-          <span class="stat-num">{total - complete - draft}</span>
-          <span class="branding-bar">{dict.stub}</span>
-        </div>
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
+        <span class="stat-num">{total - complete - draft}</span>
+        <span class="stat-label">{dict.stub}</span>
       </a>
-      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-red);">
-        <div class="cat-face cat-face--solid active" style="background: var(--m-red);">
-          <span class="stat-num">{total}</span>
-          <span class="branding-bar">{dict.pieces}</span>
-        </div>
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-red);">
+        <span class="stat-num">{total}</span>
+        <span class="stat-label">{dict.pieces}</span>
       </a>
 
-      {/* Utility row: search + 3 theme + github (all small) */}
-      <a class="tile-small cat-tile wp-tile util-tile" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
-        <div class="cat-face cat-face--solid active" style="background: var(--m-cyan);">
-          <span class="mif-search" style="font-size: 32px; color: #fff;"></span>
-        </div>
+      {/* Utility row: search + 3 theme + github (all 1×1, single-face icon only) */}
+      <a class="tile-small wp-tile util-tile" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
+        <span class="mif-search util-icon"></span>
       </a>
-      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="light" style="background: var(--m-yellow);" aria-label={dict.light ?? 'Light'}>
-        <div class="cat-face cat-face--solid active" style="background: var(--m-yellow);">
-          <span class="mif-sunny" style="font-size: 32px; color: #fff;"></span>
-        </div>
+      <button type="button" class="tile-small wp-tile util-tile" data-theme-choice="light" style="background: var(--m-yellow);" aria-label={dict.light ?? 'Light'}>
+        <span class="mif-sunny util-icon"></span>
       </button>
-      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="dark" style="background: var(--m-purple);" aria-label={dict.dark ?? 'Dark'}>
-        <div class="cat-face cat-face--solid active" style="background: var(--m-purple);">
-          <span class="mif-moon-right" style="font-size: 32px; color: #fff;"></span>
-        </div>
+      <button type="button" class="tile-small wp-tile util-tile" data-theme-choice="dark" style="background: var(--m-purple);" aria-label={dict.dark ?? 'Dark'}>
+        <span class="mif-moon-right util-icon"></span>
       </button>
-      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="auto" style="background: var(--m-steel);" aria-label={dict.auto ?? 'Auto'}>
-        <div class="cat-face cat-face--solid active" style="background: var(--m-steel);">
-          <span class="mif-cog" style="font-size: 32px; color: #fff;"></span>
-        </div>
+      <button type="button" class="tile-small wp-tile util-tile" data-theme-choice="auto" style="background: var(--m-steel);" aria-label={dict.auto ?? 'Auto'}>
+        <span class="mif-cog util-icon"></span>
       </button>
-      <a class="tile-small cat-tile wp-tile util-tile" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
-        <div class="cat-face cat-face--solid active" style="background: var(--m-ink);">
-          <span class="mif-github" style="font-size: 32px; color: #fff;"></span>
-        </div>
+      <a class="tile-small wp-tile util-tile" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
+        <span class="mif-github util-icon"></span>
       </a>
     </div>
   </section>
@@ -286,15 +269,14 @@ const firstDishId = allDishes[0]?.id ?? '';
             const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
             return (
               <a
-                class="tile-medium cat-tile wp-tile dish-tile"
+                class="tile-medium wp-tile dish-tile"
                 href={`${base}/${locale}/dishes/${dish.id}`}
                 style={`background: ${tileColor}; ${thumb ? `background-image: url('${thumb}'); background-size: cover; background-position: center;` : ''} view-transition-name: dish-${dish.id};`}
                 aria-label={dishName}
               >
-                <div class="cat-face cat-face--solid active" style={thumb ? '' : `background: ${tileColor};`}>
-                  <span class="dish-no">#{String(dish.data.menu_no).padStart(2, '0')}</span>
-                  <span class="branding-bar">{dishName}</span>
-                </div>
+                <span class="dish-scrim" aria-hidden="true"></span>
+                <span class="dish-no">#{String(dish.data.menu_no).padStart(2, '0')}</span>
+                <span class="dish-name">{dishName}</span>
               </a>
             );
           })}
@@ -472,39 +454,90 @@ const firstDishId = allDishes[0]?.id ?? '';
     margin-inline: auto;
     box-sizing: border-box;
   }
+  /* === Dish tile (browse panels) — single face, photo bg + name overlay === */
   .dish-tile {
     position: relative;
     overflow: hidden;
+    display: block;
+    text-decoration: none;
+    color: #fff;
   }
-  .dish-tile .cat-face--solid {
-    /* photo overlay if image set — solid color shows through when no image */
-    background: rgba(0,0,0,0.25);
+  .dish-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
   }
   .dish-no {
     position: absolute;
     top: 8px; right: 8px;
     font-family: var(--sans);
-    font-size: 0.85rem;
-    font-weight: 200;
+    font-size: 0.9rem;
+    font-weight: 400;
     color: #fff;
-    background: rgba(0,0,0,0.4);
-    padding: 2px 6px;
+    background: rgba(0,0,0,0.45);
+    padding: 2px 8px;
     z-index: 2;
+    letter-spacing: 0.02em;
   }
-  .dish-tile .branding-bar {
+  .dish-name {
     position: absolute;
-    bottom: 8px; left: 8px; right: 8px;
+    bottom: 10px; left: 10px; right: 10px;
     z-index: 2;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  /* === Stat tile — big number + label, single face === */
+  .stat-tile-mt {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
   }
   .stat-num {
+    position: absolute;
+    top: 12px; left: 14px;
     font-family: var(--sans);
     font-size: 3rem;
     font-weight: 200;
     color: #fff;
     line-height: 1;
+  }
+  .stat-label {
     position: absolute;
-    top: 12px; left: 12px;
+    bottom: 12px; left: 14px;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 0.06em;
+  }
+
+  /* === Utility tile (search / theme / github) — centered icon, single face === */
+  .util-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .util-tile .util-icon {
+    font-size: 28px;
+    color: #fff;
+    line-height: 1;
   }
   .featured-tile {
     position: relative;
