@@ -1,4 +1,4 @@
-# WP10 Metro Refresh — Initial Completion Report
+# WP10 Metro Refresh — Completion Report
 
 **Date:** 2026-05-25
 **Spec:** [docs/superpowers/specs/2026-05-25-wp10-metro-refresh-design.md](../superpowers/specs/2026-05-25-wp10-metro-refresh-design.md)
@@ -49,6 +49,28 @@
 ## Build status
 
 Final build before deploy: 580 pages indexed, no errors. Pagefind warns about lack of stemming for `zh` / `yue-hant` (cosmetic, not a regression).
+
+## Bundle size
+
+| Asset | Size |
+|---|---|
+| `BaseLayout.astro_*.js` (drawer, theme, motion init) | 23 KB |
+| `ClientRouter.astro_*.js` (Astro built-in) | 13 KB |
+| `index.*.js` | 2.3 KB |
+| **Total app JS** | **~38 KB** (well under 100 KB target) |
+
+Total diff vs. plan baseline: **+527 / -41** lines across 11 files.
+
+## Final cross-cutting review (2026-05-25)
+
+Status: **READY TO SHIP**. No blockers.
+
+Verified:
+- `--lang-*` vars consumed by all 3 new components + live tile back face
+- `initMotion()` correctly composes parallax/reveal/liveTile; all modules idempotent
+- Parallax → Ken Burns conflict fix intact (parallax owns CSS `translate`, Ken Burns owns `transform`)
+- No CSS conflicts on `.wp-tile::before` (reveal glow)
+- `Tooltip` / `Accordion` are not yet imported anywhere — utilities for future use, acceptable per scope
 
 ## Files changed (high-level)
 
