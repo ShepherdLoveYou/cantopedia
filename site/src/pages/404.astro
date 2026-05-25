@@ -1,0 +1,61 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout title="404" locale="zh">
+  <section class="panorama-404">
+    <div class="big">404</div>
+    <h1 class="title">餸唔見咗</h1>
+    <p class="sub">這道菜不在水牌上。<br/>The dish you're looking for isn't on the menu.</p>
+    <div class="actions">
+      <a class="action" href={`${base}/zh`}>← 回首頁</a>
+      <a class="action" href={`${base}/zh/search`}>搜尋 / Search</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panorama-404 {
+    position: relative;
+    padding: 3rem 0 2rem;
+    border-top: 6px solid var(--m-red);
+    max-width: 720px;
+  }
+  .big {
+    font-family: var(--sans);
+    font-weight: 200;
+    font-size: clamp(6rem, 18vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--t-ink);
+    margin-top: 1.5rem;
+  }
+  .title {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 200;
+    letter-spacing: -0.01em;
+    margin: 0.5rem 0 0.75rem;
+    color: var(--t-ink);
+  }
+  .sub {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--t-ink-dim);
+    line-height: 1.6;
+    margin: 0 0 1.75rem;
+  }
+  .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .action {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--t-ink-dim) !important;
+    text-decoration: none;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--t-rule);
+    transition: background var(--fluent-duration-fast) ease;
+  }
+  .action:hover { background: var(--t-plate); color: var(--t-ink) !important; }
+</style>

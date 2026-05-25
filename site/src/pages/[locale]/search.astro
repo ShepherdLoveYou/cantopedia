@@ -1,0 +1,162 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: 'zh' } },
+    { params: { locale: 'en' } },
+    { params: { locale: 'yue' } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const dict = {
+  zh: { title: '搜尋', placeholder: '搜尋菜式、配料、醬料…', hint: '輸入關鍵字（粵 / 中 / English / jyutping 都可以）', empty: '輸入關鍵字開始搜尋。', no_results: '冇結果。試試其他關鍵字？' },
+  en: { title: 'Search', placeholder: 'Search dishes, ingredients, sauces…', hint: 'Enter a keyword in Cantonese, Chinese, English, or Jyutping.', empty: 'Type a keyword to start searching.', no_results: 'No results. Try a different keyword?' },
+  yue: { title: '搵', placeholder: '搵餸、食材、醬料…', hint: '入關鍵字（粵 / 中 / English / jyutping 都得）', empty: '入關鍵字開始搵。', no_results: '冇結果。試下其他關鍵字？' },
+}[locale];
+---
+<BaseLayout title={dict.title} locale={locale}>
+  <section class="panorama">
+    <div class="panorama-stripe" aria-hidden="true"></div>
+    <h1 class="panorama-title">{dict.title}</h1>
+    <p class="panorama-sub">{dict.hint}</p>
+  </section>
+
+  <section class="search-section">
+    <input
+      id="q"
+      class="search-input"
+      type="search"
+      autocomplete="off"
+      autocapitalize="none"
+      spellcheck="false"
+      placeholder={dict.placeholder}
+      aria-label={dict.title}
+    />
+    <div id="results" class="search-results" data-empty={dict.empty} data-noresults={dict.no_results}>
+      <p class="search-status">{dict.empty}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ base }}>
+  let pagefind;
+  const q = document.getElementById('q');
+  const results = document.getElementById('results');
+  const emptyMsg = results.dataset.empty;
+  const noResultsMsg = results.dataset.noresults;
+
+  async function ensurePagefind() {
+    if (pagefind) return pagefind;
+    // Pagefind ships its own JS bundle at /pagefind/pagefind.js relative to site root.
+    pagefind = await import(`${base}/pagefind/pagefind.js`);
+    await pagefind.options({ baseUrl: base + '/' });
+    return pagefind;
+  }
+
+  async function runSearch(term) {
+    if (!term.trim()) {
+      results.innerHTML = `<p class="search-status">${emptyMsg}</p>`;
+      return;
+    }
+    try {
+      const pf = await ensurePagefind();
+      const { results: hits } = await pf.search(term);
+      if (hits.length === 0) {
+        results.innerHTML = `<p class="search-status">${noResultsMsg}</p>`;
+        return;
+      }
+      const top = hits.slice(0, 20);
+      const html = await Promise.all(
+        top.map(async (h) => {
+          const data = await h.data();
+          return `
+            <a class="search-hit" href="${data.url.replace(/\/$/, '')}">
+              <span class="hit-title">${data.meta?.title ?? data.url}</span>
+              <span class="hit-excerpt">${data.excerpt}</span>
+            </a>
+          `;
+        })
+      );
+      results.innerHTML = html.join('');
+    } catch (err) {
+      // Pagefind not yet built locally (dev mode) — show friendly notice
+      results.innerHTML = `<p class="search-status">Search index not available in dev. Run <code>pnpm build</code>.</p>`;
+    }
+  }
+
+  let timer;
+  q.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => runSearch(q.value), 120);
+  });
+
+  // Honor ?q= on initial load
+  const urlQ = new URL(location.href).searchParams.get('q');
+  if (urlQ) { q.value = urlQ; runSearch(urlQ); }
+  q.focus();
+</script>
+
+<style>
+  .search-section { margin: 0 0 3rem; }
+  .search-input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--t-rule);
+    color: var(--t-ink);
+    font-family: var(--sans), var(--sans-zh);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 200;
+    letter-spacing: -0.01em;
+    padding: 0.5rem 0 0.5rem;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color var(--fluent-duration-fast) ease;
+  }
+  .search-input::placeholder { color: var(--t-ink-dim); opacity: 0.6; }
+  .search-input:focus { border-bottom-color: var(--m-red); }
+
+  .search-results { display: flex; flex-direction: column; }
+  .search-status {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--t-ink-dim);
+    padding: 1rem 0;
+  }
+  .search-hit {
+    display: block;
+    padding: 0.9rem 0 1rem;
+    border-bottom: 1px solid var(--t-rule);
+    color: var(--t-ink) !important;
+    text-decoration: none;
+    transition: background var(--fluent-duration-fast) ease;
+  }
+  .search-hit:hover { background: var(--t-plate); color: var(--t-ink) !important; }
+  .hit-title {
+    display: block;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--t-ink);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.005em;
+  }
+  .hit-excerpt {
+    display: block;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--t-ink-dim);
+    line-height: 1.5;
+  }
+  .hit-excerpt :global(mark) {
+    background: var(--m-yellow);
+    color: var(--t-ink);
+    padding: 0 2px;
+  }
+</style>
