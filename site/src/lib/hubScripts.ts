@@ -242,8 +242,11 @@ export function initCatTileCycle() {
       showSolid = !showSolid;
     }
 
-    // Stagger starts so tiles don't flip in sync
-    const startDelay = idx * 350;
+    // Stagger starts so tiles don't flip in sync, but keep the stagger tight
+    // (150ms × idx) so the user sees activity within ~1 second of page load.
+    // The first tile starts at 80ms — enough for the page to paint solid faces,
+    // but soon enough that the cycle is unmistakable.
+    const startDelay = 80 + idx * 150;
     const startId = window.setTimeout(() => {
       tick();
       const intervalId = window.setInterval(tick, 2000);
