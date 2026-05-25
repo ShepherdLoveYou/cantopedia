@@ -87,21 +87,45 @@ const dict = {
   <section class="pivot-section">
     <div class="pivot-label">{dict.progress}</div>
     <div class="stat-tiles">
-      <div class="stat-tile stat-complete">
-        <div class="stat-num">{complete}</div>
-        <div class="stat-label">{dict.complete}</div>
+      <div class="stat-tile stat-complete live-tile">
+        <div class="live-tile-face front">
+          <div class="stat-num">{complete}</div>
+          <div class="stat-label">{dict.complete}</div>
+        </div>
+        <div class="live-tile-face back">
+          <div class="stat-num-small">{Math.round((complete / total) * 100)}%</div>
+          <div class="stat-label">{dict.complete}</div>
+        </div>
       </div>
-      <div class="stat-tile stat-draft">
-        <div class="stat-num">{draft}</div>
-        <div class="stat-label">{dict.draft}</div>
+      <div class="stat-tile stat-draft live-tile">
+        <div class="live-tile-face front">
+          <div class="stat-num">{draft}</div>
+          <div class="stat-label">{dict.draft}</div>
+        </div>
+        <div class="live-tile-face back">
+          <div class="stat-num-small">{Math.round((draft / total) * 100)}%</div>
+          <div class="stat-label">{dict.draft}</div>
+        </div>
       </div>
-      <div class="stat-tile stat-stub">
-        <div class="stat-num">{total - complete - draft}</div>
-        <div class="stat-label">{dict.stub}</div>
+      <div class="stat-tile stat-stub live-tile">
+        <div class="live-tile-face front">
+          <div class="stat-num">{total - complete - draft}</div>
+          <div class="stat-label">{dict.stub}</div>
+        </div>
+        <div class="live-tile-face back">
+          <div class="stat-num-small">{Math.round(((total - complete - draft) / total) * 100)}%</div>
+          <div class="stat-label">{dict.stub}</div>
+        </div>
       </div>
-      <div class="stat-tile stat-total">
-        <div class="stat-num">{total}</div>
-        <div class="stat-label">{dict.pieces}</div>
+      <div class="stat-tile stat-total live-tile">
+        <div class="live-tile-face front">
+          <div class="stat-num">{total}</div>
+          <div class="stat-label">{dict.pieces}</div>
+        </div>
+        <div class="live-tile-face back">
+          <div class="stat-num-small">100%</div>
+          <div class="stat-label">{dict.pieces}</div>
+        </div>
       </div>
     </div>
     <div class="prog-track">
@@ -357,6 +381,49 @@ const dict = {
   @media (max-width: 640px) {
     .hero { padding: 2.5rem 1.5rem 2.5rem; }
     .hero-title { font-size: 3.5rem; }
+  }
+
+  .live-tile {
+    position: relative;
+    perspective: 800px;
+    overflow: hidden;
+  }
+  .live-tile-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: inherit;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    animation: tile-flip-front 9s infinite;
+  }
+  .live-tile-face.back {
+    animation-name: tile-flip-back;
+    transform: rotateX(180deg);
+  }
+  @keyframes tile-flip-front {
+    0%, 50%   { transform: rotateX(0deg); }
+    60%, 100% { transform: rotateX(-180deg); }
+  }
+  @keyframes tile-flip-back {
+    0%, 50%   { transform: rotateX(180deg); }
+    60%, 100% { transform: rotateX(0deg); }
+  }
+  .stat-num-small {
+    font-family: var(--lang-font-primary);
+    font-size: 2.5rem;
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: -0.02em;
+    color: white;
+    line-height: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-tile-face { animation: none; }
+    .live-tile-face.back { display: none; }
   }
 </style>
 
