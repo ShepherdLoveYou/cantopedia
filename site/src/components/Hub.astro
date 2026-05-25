@@ -326,165 +326,30 @@ const firstDishId = allDishes[0]?.id ?? '';
   })}
 </div>
 
-<!-- Home-panel featured-tile script: needs dishesData via define:vars. -->
-<script define:vars={{ base, locale, dishesData, homeUrl: `${base}/${locale}` }}>
-  (function () {
-    const tile = document.getElementById('featured-tile');
-    if (!tile) return;
-    const faces = tile.querySelectorAll('.featured-face');
-    const withImg = dishesData.filter((d) => d.img);
-    if (withImg.length === 0) return;
-
-    // Today's pick — deterministic by day-of-year
-    const today = new Date();
-    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
-    const todayDish = withImg[dayOfYear % withImg.length];
-
-    const randomDish = withImg[Math.floor(Math.random() * withImg.length)];
-
-    let recentDish = null;
-    try {
-      const recentId = localStorage.getItem('cantopedia-last-dish');
-      if (recentId) {
-        recentDish = dishesData.find((d) => d.id === recentId && d.img);
-      }
-    } catch {}
-    if (!recentDish) recentDish = todayDish;
-
-    const picks = { today: todayDish, random: randomDish, recent: recentDish };
-
-    faces.forEach((face) => {
-      const f = face.dataset.face;
-      const pick = picks[f];
-      if (!pick) return;
-      const imgEl = face.querySelector('.featured-img');
-      if (imgEl && pick.img) imgEl.style.backgroundImage = `url("${pick.img}")`;
-      face.querySelector('.featured-name').textContent = pick.name;
-    });
-
-    tile.addEventListener('click', () => {
-      const active = tile.querySelector('.featured-face--active');
-      const f = active?.dataset.face;
-      const pick = picks[f];
-      if (pick) {
-        try { localStorage.setItem('cantopedia-last-dish', pick.id); } catch {}
-        tile.href = `${base}/${locale}/dishes/${pick.id}`;
-      }
-    });
-    tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let i = 0;
-    setInterval(() => {
-      faces[i].classList.remove('featured-face--active');
-      i = (i + 1) % faces.length;
-      faces[i].classList.add('featured-face--active');
-      const f = faces[i].dataset.face;
-      if (picks[f]) tile.href = `${base}/${locale}/dishes/${picks[f].id}`;
-    }, 6000);
-  })();
+<!-- Hub boot config: pass SSR data to client module via window.__hubBoot. -->
+<script define:vars={{ base, locale, dishesData }}>
+  window.__hubBoot = { base, locale, dishesData };
 </script>
 
-<!-- Hub navigation: scroll-snap + URL sync + pivot prev/next (wraps modulo N). -->
+<!-- Hub module: featured-tile + hub-nav re-init on every ClientRouter swap. -->
 <script>
-  (function () {
-    const hub = document.getElementById('hub') as HTMLElement | null;
-    if (!hub) return;
-    const titleEl = document.getElementById('hub-pivot-title');
-    const prevLink = document.getElementById('hub-pivot-prev') as HTMLAnchorElement | null;
-    const nextLink = document.getElementById('hub-pivot-next') as HTMLAnchorElement | null;
-    const panels = Array.from(hub.querySelectorAll<HTMLElement>('.hub-panel'));
-    if (panels.length === 0) return;
+  import { initFeaturedTile, teardownFeaturedTile, initHubNav, teardownHubNav } from '~/lib/hubScripts';
 
-    function getActiveIndex() {
-      const w = hub!.clientWidth;
-      const i = Math.round(hub!.scrollLeft / w);
-      return Math.max(0, Math.min(panels.length - 1, i));
-    }
+  function boot() {
+    const cfg = (window as any).__hubBoot;
+    if (!cfg) return;
+    initFeaturedTile(cfg.base, cfg.locale, cfg.dishesData);
+    initHubNav();
+  }
+  function teardown() {
+    teardownFeaturedTile();
+    teardownHubNav();
+  }
 
-    function updatePivot(i: number) {
-      const p = panels[i];
-      if (!p) return;
-      const name = p.dataset.name ?? '';
-      const url = p.dataset.url ?? '';
-      if (titleEl) titleEl.textContent = name;
-      // Update document title to match active panel
-      document.title = `${name} · 粵食典 Cantopedia`;
-      // Push URL without triggering nav
-      if (url && location.pathname + location.hash !== url) {
-        history.replaceState({ panelIndex: i }, '', url);
-      }
-      // Update prev/next link hrefs for non-JS users + middle-click (wraps).
-      const prev = panels[(i - 1 + panels.length) % panels.length];
-      const next = panels[(i + 1) % panels.length];
-      if (prevLink && prev?.dataset.url) prevLink.href = prev.dataset.url;
-      if (nextLink && next?.dataset.url) nextLink.href = next.dataset.url;
-    }
-
-    function scrollToIndex(i: number) {
-      const w = hub!.clientWidth;
-      hub!.scrollTo({ left: i * w, behavior: 'smooth' });
-    }
-
-    // Initial scroll position from data-initial-panel
-    const initialPanelId = hub.dataset.initialPanel;
-    const initialIdx = panels.findIndex((p) => p.dataset.panel === initialPanelId);
-    if (initialIdx > 0) {
-      hub.style.scrollBehavior = 'auto';
-      hub.scrollLeft = initialIdx * hub.clientWidth;
-      requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
-    }
-    updatePivot(initialIdx >= 0 ? initialIdx : 0);
-
-    // Pivot prev/next — wraps modulo N (home <-> appetizer ... <-> main)
-    prevLink?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const i = getActiveIndex();
-      scrollToIndex((i - 1 + panels.length) % panels.length);
-    });
-    nextLink?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const i = getActiveIndex();
-      scrollToIndex((i + 1) % panels.length);
-    });
-
-    // Keyboard arrows when focus is inside hub
-    hub.addEventListener('keydown', (e) => {
-      const k = (e as KeyboardEvent).key;
-      if (k === 'ArrowLeft') { e.preventDefault(); prevLink?.click(); }
-      if (k === 'ArrowRight') { e.preventDefault(); nextLink?.click(); }
-    });
-
-    // Snap detection via IntersectionObserver
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.intersectionRatio > 0.5) {
-          const idx = panels.indexOf(entry.target as HTMLElement);
-          if (idx >= 0) updatePivot(idx);
-        }
-      });
-    }, { root: hub, threshold: [0.5] });
-    panels.forEach((p) => io.observe(p));
-
-    // Resize: re-snap to current panel
-    let resizeT: number | undefined;
-    window.addEventListener('resize', () => {
-      window.clearTimeout(resizeT);
-      resizeT = window.setTimeout(() => {
-        const i = getActiveIndex();
-        hub.style.scrollBehavior = 'auto';
-        hub.scrollLeft = i * hub.clientWidth;
-        requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
-      }, 100);
-    });
-
-    // popstate: scroll to URL's panel
-    window.addEventListener('popstate', () => {
-      const url = location.pathname.replace(/\/$/, '');
-      const idx = panels.findIndex((p) => (p.dataset.url ?? '').replace(/\/$/, '') === url);
-      if (idx >= 0) scrollToIndex(idx);
-    });
-  })();
+  boot();
+  document.addEventListener('astro:after-swap', boot);
+  document.addEventListener('astro:page-load', boot);
+  document.addEventListener('astro:before-preparation', teardown);
 </script>
 
 <!-- Live Tile flip for category Start Screen tiles + stat tiles + dish cards.
