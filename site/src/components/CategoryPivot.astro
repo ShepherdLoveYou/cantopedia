@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { getPivotNeighbors } from '~/lib/categoryOrder';
 
 interface Props {
   currentId: string;
@@ -7,102 +8,108 @@ interface Props {
 }
 const { currentId, locale } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const cats = (await getCollection('category'))
-  .sort((a, b) => a.data.sort_order - b.data.sort_order);
-const nameOf = (c: typeof cats[number]) =>
+const all = await getCollection('category');
+const { prev, curr, next } = getPivotNeighbors(currentId, all);
+const nameOf = (c: typeof curr) =>
   locale === 'en' ? c.data.names.en : c.data.names.yue_hant;
 ---
 <nav class="pivot-strip" aria-label="Category pivot">
-  {cats.map((c) => (
-    <a
-      class={`pivot ${c.id === currentId ? 'pivot--current' : ''}`}
-      href={`${base}/${locale}/browse/${c.id}`}
-      data-cat={c.id}
-      aria-current={c.id === currentId ? 'page' : undefined}
-    >{nameOf(c)}</a>
-  ))}
+  <a class="pivot pivot--dim"
+     href={`${base}/${locale}/browse/${prev.id}`}
+     data-dir="prev"
+     rel="prev">{nameOf(prev)}</a>
+  <h1 class="pivot pivot--current"
+      style="view-transition-name: pivot-title">{nameOf(curr)}</h1>
+  <a class="pivot pivot--dim"
+     href={`${base}/${locale}/browse/${next.id}`}
+     data-dir="next"
+     rel="next">{nameOf(next)}</a>
 </nav>
 
 <style>
-  /* WP10 classic Pivot tab strip — all categories on one horizontally
-     scrollable row, current one larger + red underline. Authentic
-     Windows Phone hub-tab pattern. */
   .pivot-strip {
-    display: flex;
-    align-items: flex-end;       /* unify bottom edge so red bar sits on one line */
-    gap: 1.5rem;
-    padding: 1.25rem 1.5rem 0;
-    margin: 0 -1.5rem 1.5rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    border-bottom: 1px solid var(--t-rule);
-  }
-  .pivot-strip::-webkit-scrollbar { display: none; }
-
-  .pivot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0 0.5rem;
     font-family: var(--sans), var(--sans-zh);
+    min-height: 3.5rem;     /* lock height so pivot strip doesn't resize per page */
+  }
+  .pivot { text-decoration: none; color: inherit; }
+  /* Peek text: ALWAYS one line, ellipsized if too long. This is the source
+     of the layout jump — long category names like "湯米線/雲吞" were
+     wrapping and blowing the strip to 3-4 lines tall. */
+  .pivot--dim {
     font-size: 1rem;
     font-weight: 300;
-    color: var(--t-ink-dim);
-    text-decoration: none;
+    opacity: 0.4;
+    transition: opacity var(--fluent-duration-fast, .15s) var(--fluent-curve-easy-ease, ease);
     white-space: nowrap;
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-    padding: 0.4rem 0 0.75rem;
-    transition: color var(--fluent-duration-fast) ease, font-size var(--fluent-duration-normal) ease;
-    position: relative;
-    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
-  .pivot:hover { color: var(--t-ink); }
+  .pivot--dim:hover { opacity: 0.75; }
+  .pivot--dim[data-dir="prev"] { text-align: right; }
   .pivot--current {
-    font-size: clamp(1.5rem, 5.5vw, 2.25rem);
-    color: var(--t-ink);
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.05;
+    white-space: nowrap;
   }
-  /* Red underline sits on the STRIP's bottom-border line, not the
-     anchor's. Achieved with negative bottom matching the strip's
-     padding-bottom so the bar overlays the gray border. */
-  .pivot--current::after {
-    content: '';
-    position: absolute;
-    left: 0; right: 0;
-    bottom: -1px;
-    height: 2px;
-    background: var(--m-red);
-  }
-
   @media (max-width: 540px) {
-    .pivot-strip { gap: 1rem; padding: 1rem 1rem 0.625rem; margin: 0 -1rem 1rem; }
-    .pivot { font-size: 0.875rem; }
+    .pivot--dim { font-size: 0.85rem; }
   }
 </style>
 
 <script>
-  // Auto-scroll the current pivot tab into view on every page-load.
-  function centerCurrent() {
-    const strip = document.querySelector<HTMLElement>('.pivot-strip');
-    const current = strip?.querySelector<HTMLElement>('.pivot--current');
-    if (!strip || !current) return;
-    const target = current.offsetLeft + current.offsetWidth / 2 - strip.clientWidth / 2;
-    strip.scrollTo({ left: Math.max(0, target), behavior: 'auto' });
-  }
-  centerCurrent();
-  document.addEventListener('astro:page-load', centerCurrent);
+  // ClientRouter keeps document-level listeners across navigations, so each
+  // handler bails fast on pages where the pivot strip isn't present.
+  const hasPivot = () => !!document.querySelector('.pivot-strip');
 
-  // Keyboard nav between adjacent tabs
+  // Keyboard nav
   document.addEventListener('keydown', (e) => {
-    const strip = document.querySelector<HTMLElement>('.pivot-strip');
-    if (!strip) return;
+    if (!hasPivot()) return;
     const tag = (e.target as HTMLElement)?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-    const tabs = Array.from(strip.querySelectorAll<HTMLAnchorElement>('.pivot'));
-    const i = tabs.findIndex((t) => t.classList.contains('pivot--current'));
-    if (i < 0) return;
-    if (e.key === 'ArrowLeft' && i > 0) tabs[i - 1].click();
-    if (e.key === 'ArrowRight' && i < tabs.length - 1) tabs[i + 1].click();
+    if (e.key === 'ArrowLeft')
+      document.querySelector<HTMLAnchorElement>('.pivot[data-dir="prev"]')?.click();
+    if (e.key === 'ArrowRight')
+      document.querySelector<HTMLAnchorElement>('.pivot[data-dir="next"]')?.click();
+  });
+
+  // Touch swipe — horizontal only, threshold 60px and 2x more horizontal than vertical
+  let sx = 0, sy = 0;
+  document.addEventListener('touchstart', (e) => {
+    if (!hasPivot()) return;
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (!hasPivot()) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < 2 * Math.abs(dy)) return;
+    const dir = dx < 0 ? 'next' : 'prev';
+    document.querySelector<HTMLAnchorElement>(`.pivot[data-dir="${dir}"]`)?.click();
+  }, { passive: true });
+
+  // Tag direction onto <html> for CSS-driven slide (capture phase so it runs
+  // before ClientRouter intercepts the click). No hasPivot bail needed —
+  // the selector itself only matches pivot anchors.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('.pivot[data-dir]');
+    if (!a) return;
+    document.documentElement.classList.remove('nav-prev', 'nav-next');
+    document.documentElement.classList.add(a.dataset.dir === 'prev' ? 'nav-prev' : 'nav-next');
+  }, true);
+
+  // After every navigation completes, clear the direction class so non-pivot
+  // navigations that follow don't accidentally inherit the horizontal slide.
+  document.addEventListener('astro:page-load', () => {
+    document.documentElement.classList.remove('nav-prev', 'nav-next');
   });
 </script>
