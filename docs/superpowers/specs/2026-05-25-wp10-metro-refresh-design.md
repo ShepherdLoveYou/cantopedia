@@ -19,6 +19,37 @@ Current site (Astro 5 + hand-written CSS) hits WP10 aesthetics at the surface le
 2. Cover missing component types (toast / tooltip / accordion / carousel) via a CSS library so we don't hand-roll them.
 3. Borrow 1 specific Fluent (Win11) effect — Reveal highlight — that strengthens (not breaks) Metro flatness.
 4. Keep Astro's zero-runtime-JS-by-default posture. **No Vue.**
+5. **Apply SOLID across the new code**: motion logic split into single-responsibility modules; components accept config via props; CSS variables expose extension points instead of hard-coding values.
+6. **Unified i18n framework with per-language typography**: one CSS tree gated on `html[lang]` attribute. Per-language overrides for font stack, heading sizes, line-height, letter-spacing — driven from a single block of CSS variables, not scattered across pages.
+
+## i18n Typography Framework
+
+Real WP10 used different font stacks per region (Segoe UI in EN, 微软雅黑 in CN, 微软正黑體 in HK). The site currently treats zh / yue / en identically except for content. This makes Chinese headings feel **too heavy** (汉字方块结构 makes 3rem look like 4rem of English) and miss Cantonese-specific glyphs (嘅咁咗喺) on systems without an HK font.
+
+**Design:**
+
+- HTML `lang` is already set correctly: `zh-Hant` / `yue-Hant` / `en` ([BaseLayout.astro:58](../../site/src/layouts/BaseLayout.astro#L58)).
+- CSS overrides keyed on `html[lang="..."]` selectors, exposing per-language CSS variables (`--lang-h1-size`, `--lang-body-leading`, `--lang-font-primary`, ...).
+- Headings and body inherit from those vars instead of hard-coded values.
+- Single source of truth: one CSS block in [BaseLayout.astro](../../site/src/layouts/BaseLayout.astro) under `<style is:global>`.
+
+**Per-language values (rationale documented):**
+
+| | EN (`lang="en"`) | ZH (`lang="zh-Hant"`) | YUE (`lang="yue-Hant"`) |
+|---|---|---|---|
+| Primary stack | Segoe UI → Open Sans → system | Noto Sans SC → 微软雅黑 → PingFang SC | **Noto Sans HK** → 微软正黑體 → PingFang HK |
+| Serif stack | Crimson Pro → Georgia | Noto Serif SC → 思源宋體 | Noto Serif HK → 思源宋體香港 |
+| `--lang-h1-size` | 3rem | 2.4rem (80%) | 2.4rem (80%) |
+| `--lang-h2-size` | 2rem | 1.65rem | 1.65rem |
+| `--lang-body-leading` | 1.65 | 1.55 | 1.55 |
+| `--lang-h1-tracking` | -0.025em | 0.005em | 0.005em |
+| Lightest weight | 200 | **300** (200 illegible for hanzi) | **300** |
+| `font-size-adjust` | 0.5 | 0.55 | 0.55 |
+| `line-break` | normal | strict | strict |
+
+**Font loading change**: add Noto Sans HK + Noto Serif HK to Google Fonts URL. ~30 KB additional in font CDN, lazy-loaded only when `lang="yue-Hant"` page is shown (browsers de-prioritize unused weights/scripts).
+
+**Why a unified framework (vs per-page CSS)**: pages don't know their language at the CSS level. Centralizing the rule "heading sizes / leading vary by lang" in one place means adding a new language = one block of CSS variables, not edits across every page.
 
 ## Non-Goals
 
@@ -70,10 +101,14 @@ Current site (Astro 5 + hand-written CSS) hits WP10 aesthetics at the surface le
 
 ### New
 
-- **`site/src/components/Toast.astro`** — thin wrapper around MetroUI `.toast` class + 20-line lifecycle script (auto-dismiss).
-- **`site/src/components/Accordion.astro`** — wrapper with toggle script.
-- **`site/src/components/Tooltip.astro`** — pure CSS hover tooltip (no JS).
-- **`site/src/lib/motion.ts`** — small module exporting parallax-init and reveal-init for use in `BaseLayout` inline script.
+- **`site/src/components/Toast.astro`** — auto-dismiss toast triggered by global `cantopediaToast(msg)`.
+- **`site/src/components/Accordion.astro`** — collapsible section using `<details>`/`<summary>`.
+- **`site/src/components/Tooltip.astro`** — pure-CSS hover tooltip with 4 positions.
+- **`site/src/lib/motion/parallax.ts`** — single-responsibility: parallax on `[data-parallax]` targets.
+- **`site/src/lib/motion/reveal.ts`** — single-responsibility: pointer-tracked reveal highlight on `.wp-tile`.
+- **`site/src/lib/motion/liveTile.ts`** — single-responsibility: stagger live-tile flip animation delays.
+- **`site/src/lib/motion/index.ts`** — assembles the three above; exports `initMotion()`.
+- **`site/src/styles/i18n-typography.css`** — per-language CSS variable definitions + font stacks. (Inlined into BaseLayout's `<style is:global>` block at build time.)
 
 ### Unchanged
 
