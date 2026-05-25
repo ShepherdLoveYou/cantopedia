@@ -409,15 +409,16 @@ const dict = {
         --lang-font-size-adjust: 0.52;
         --lang-line-break: normal;
 
-        /* Damped, WP10-mobile-feel easing — softer than @fluentui/tokens' Office-app curves.
-           - decelerate: slow start, soft glide-to-stop (no wall)
-           - accelerate: gentle start, builds momentum
-           - spring: slight overshoot then settle, for press release
-           - easy-ease: symmetric in/out for flips & cross-fades */
+        /* WP10 spring family — slight overshoot then settle. Microsoft Lumia
+           "Continuum" used bezier(0.1, 0.9, 0.2, 1.15) for tile press, ~ease-out
+           with overshoot for pivot. We keep two springs (strong for tile release,
+           soft for content enter) plus a non-bouncy decel for page/drawer slide. */
         --fluent-curve-decelerate-mid: cubic-bezier(0.16, 1, 0.3, 1);
         --fluent-curve-accelerate-mid: cubic-bezier(0.55, 0, 0.9, 0.3);
         --fluent-curve-easy-ease:      cubic-bezier(0.4, 0, 0.2, 1);
-        --fluent-curve-spring:         cubic-bezier(0.34, 1.4, 0.55, 1);
+        --fluent-curve-spring:         cubic-bezier(0.34, 1.56, 0.64, 1);
+        --fluent-curve-spring-soft:    cubic-bezier(0.22, 1.2, 0.36, 1);
+        --fluent-curve-tile-press:     cubic-bezier(0.1, 0.9, 0.2, 1.15);
         --fluent-duration-fast:        180ms;
         --fluent-duration-normal:      280ms;
         --fluent-duration-gentle:      420ms;
@@ -713,7 +714,7 @@ const dict = {
                    rotateX(var(--tilt-x))
                    rotateY(var(--tilt-y))
                    scale(0.96);
-        transition: transform 140ms cubic-bezier(0.4, 0.05, 0.6, 0.95);
+        transition: transform 140ms var(--fluent-curve-tile-press);
       }
 
       /* Reduce motion friendly */
