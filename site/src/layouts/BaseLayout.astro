@@ -507,32 +507,36 @@ const dict = {
          Root cross-fade ONLY; per-tile shared-element morph + Continuum
          children cascade do the visible work. Layered slide-out + cascade
          used to fight each other and felt jerky. */
-      /* SEQUENTIAL nav: old <main> slides/blurs/fades AWAY first (380ms),
-         then new pseudo briefly fades in (180ms w/ 320ms delay). The
-         crossfade overlap is intentionally tiny so the user sees old
-         leave THEN new arrive — WP10 Continuum dominos pattern. The
-         per-child Continuum cascade is paused during this and resumed
-         on astro:page-load so it plays fresh and visible. */
+      /* WP10 PIVOT/HUB horizontal slide: forward nav slides old LEFT off,
+         new comes IN from the RIGHT. Back nav reverses. Feels like one
+         continuous hub with panels — not page-to-page navigation. */
       ::view-transition-old(root) {
-        animation: vt-exit-forward 380ms cubic-bezier(0.55, 0, 0.9, 0.3) forwards;
+        animation: vt-pivot-out-left 360ms cubic-bezier(0.55, 0, 0.9, 0.3) forwards;
       }
       ::view-transition-new(root) {
-        animation: vt-enter 180ms 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation: vt-pivot-in-right 460ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       html[data-nav="back"] ::view-transition-old(root) {
-        animation-name: vt-exit-back;
+        animation-name: vt-pivot-out-right;
       }
-      @keyframes vt-exit-forward {
-        0%   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
-        100% { transform: translateY(-36px) scale(0.97); opacity: 0; filter: blur(10px); }
+      html[data-nav="back"] ::view-transition-new(root) {
+        animation-name: vt-pivot-in-left;
       }
-      @keyframes vt-exit-back {
-        0%   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
-        100% { transform: translateY(36px) scale(0.97); opacity: 0; filter: blur(10px); }
+      @keyframes vt-pivot-out-left {
+        0%   { transform: translateX(0);     opacity: 1; }
+        100% { transform: translateX(-28%);  opacity: 0; }
       }
-      @keyframes vt-enter {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+      @keyframes vt-pivot-in-right {
+        0%   { transform: translateX(28%);   opacity: 0; }
+        100% { transform: translateX(0);     opacity: 1; }
+      }
+      @keyframes vt-pivot-out-right {
+        0%   { transform: translateX(0);     opacity: 1; }
+        100% { transform: translateX(28%);   opacity: 0; }
+      }
+      @keyframes vt-pivot-in-left {
+        0%   { transform: translateX(-28%);  opacity: 0; }
+        100% { transform: translateX(0);     opacity: 1; }
       }
 
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
@@ -732,13 +736,15 @@ const dict = {
       main > *:nth-child(5) { animation-delay: 320ms; }
       main > *:nth-child(6) { animation-delay: 380ms; }
       main > *:nth-child(n+7) { animation-delay: 420ms; }
+      /* Pivot-hub cascade: children come in from the side (matching the root
+         horizontal slide), not from below. Forward = from right, back = from left. */
       @keyframes continuum-in-forward {
-        0%   { transform: translateY(28px) scale(0.97); opacity: 0; filter: blur(3px); }
+        0%   { transform: translateX(24px); opacity: 0; filter: blur(3px); }
         60%  { opacity: 1; filter: blur(0); }
         100% { transform: none; opacity: 1; filter: none; }
       }
       @keyframes continuum-in-back {
-        0%   { transform: translateY(-18px) scale(0.985); opacity: 0; filter: blur(2px); }
+        0%   { transform: translateX(-24px); opacity: 0; filter: blur(2px); }
         60%  { opacity: 1; filter: blur(0); }
         100% { transform: none; opacity: 1; filter: none; }
       }
