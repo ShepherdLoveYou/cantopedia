@@ -151,10 +151,10 @@ const firstDishId = allDishes[0]?.id ?? '';
     aria-labelledby="hub-home-title"
   >
     <div class="tiles-grid start-tiles">
-      {/* Featured live tile — uses tile-2x1 (slim wide banner) + its own .featured-face show/hide cycle.
-          Do NOT add cat-face classes here — featured tile has its own display:none/block toggle
-          driven by initFeaturedTile() and would conflict with cat-face's rotateX/opacity rules. */}
-      <a id="featured-tile" class="tile-2x1 featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
+      {/* Featured live tile — uses tile-medium (2×2) since it features a dish. Has its own
+          .featured-face show/hide cycle driven by initFeaturedTile(). Do NOT add cat-face
+          classes here — they would conflict with featured-face's display:none/block toggle. */}
+      <a id="featured-tile" class="tile-medium featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
         <div class="featured-face featured-face--active" data-face="today">
           <div class="featured-img"></div>
           <div class="featured-overlay"></div>
@@ -180,8 +180,9 @@ const firstDishId = allDishes[0]?.id ?? '';
         const inCat = dishesByCat.get(cat.id) ?? [];
         if (inCat.length === 0) return null;
         const catName = nameOf(cat);
-        // 3-size grid (1×1 / 2×1 / 2×2): big cats are 2×2, mid are 2×1 slim, small are 1×1.
-        const size: 's' | 'm' | '2x1' = inCat.length >= 20 ? 'm' : inCat.length >= 7 ? '2x1' : 's';
+        // All category tiles are 2×2 (dish-related content). Only utility tiles (search,
+        // theme switchers, github link) below stay 1×1.
+        const size: 'm' = 'm';
         const photos = categoryPhotos(cat.id);
         return (
           <CatTile
