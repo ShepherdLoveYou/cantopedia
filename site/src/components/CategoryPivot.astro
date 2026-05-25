@@ -18,8 +18,9 @@ const nameOf = (c: typeof curr) =>
      href={`${base}/${locale}/browse/${prev.id}`}
      data-dir="prev"
      rel="prev">{nameOf(prev)}</a>
-  <h1 class="pivot pivot--current"
-      style="view-transition-name: pivot-title">{nameOf(curr)}</h1>
+  <div class="pivot pivot--current"
+       aria-current="page"
+       style="view-transition-name: pivot-title">{nameOf(curr)}</div>
   <a class="pivot pivot--dim"
      href={`${base}/${locale}/browse/${next.id}`}
      data-dir="next"
