@@ -307,11 +307,11 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   .hero-no {
     font-family: var(--sans);
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     letter-spacing: 0.22em;
-    opacity: 0.7;
+    opacity: 0.75;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 400;
   }
   .hero-name {
     font-family: var(--sans), var(--sans-zh);
@@ -324,27 +324,29 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   .hero-jyut {
     font-family: var(--mono);
-    font-size: 0.875rem;
-    opacity: 0.85;
+    font-size: 1rem;
+    opacity: 0.9;
   }
   .hero-alt {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     font-family: var(--sans), var(--sans-zh);
-    font-size: 1rem;
+    font-size: 1.15rem;
+    font-weight: 300;
     opacity: 0.95;
   }
   .alt-sep { margin: 0 0.5rem; opacity: 0.6; }
 
   .hero-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .htag {
-    background: rgba(255,255,255,0.18);
-    padding: 0.25rem 0.75rem;
+    background: rgba(255,255,255,0.16);
+    padding: 0.35rem 0.9rem;
     font-family: var(--sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    font-weight: 300;
   }
-  .htag-on   { background: rgba(255,255,255,0.95); color: var(--ink); font-weight: 600; }
-  .htag-warn { background: var(--m-yellow); color: #4a3800; font-weight: 600; }
+  .htag-on   { background: rgba(255,255,255,0.95); color: var(--ink); font-weight: 400; }
+  .htag-warn { background: var(--m-yellow); color: #4a3800; font-weight: 400; }
 
   .dish-grid {
     display: grid;
@@ -355,8 +357,8 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   /* Panorama aside — no bg fill, just an uppercase letter-spaced label + value. */
   .aside-card { background: transparent; padding: 0.5rem 0 1rem; margin-bottom: 0; border: 0; border-bottom: 1px solid var(--t-rule); }
   .aside-card:last-child { border-bottom: 0; }
-  .aside-card h3 { margin: 0 0 0.25rem; font-size: 0.65rem; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 500; }
-  .aside-val { font-family: var(--sans); font-weight: 200; font-size: 1.25rem; color: var(--t-ink); letter-spacing: -0.01em; }
+  .aside-card h3 { margin: 0 0 0.35rem; font-size: 0.8rem; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 400; text-transform: uppercase; }
+  .aside-val { font-family: var(--sans); font-weight: 200; font-size: 1.45rem; color: var(--t-ink); letter-spacing: -0.01em; }
 
   .alert { padding: 0.75rem 0 0.75rem 0.875rem; margin: 1rem 0 2rem; }
   .alert-warn { background: transparent; border-left: 3px solid var(--m-yellow); color: var(--t-ink-dim); }
@@ -377,8 +379,8 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     border-top: 1px solid var(--t-rule);
   }
   .sauce-card:hover { background: var(--t-plate); }
-  .sauce-label { font-family: var(--sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); margin-right: 0.75rem; font-weight: 500; }
-  .sauce-name { font-family: var(--sans), var(--sans-zh); font-size: 1.125rem; font-weight: 300; flex: 1; color: var(--t-ink); }
+  .sauce-label { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); margin-right: 0.875rem; font-weight: 400; }
+  .sauce-name { font-family: var(--sans), var(--sans-zh); font-size: 1.25rem; font-weight: 300; flex: 1; color: var(--t-ink); }
   .sauce-chev { font-size: 1.5rem; color: var(--t-ink-dim); }
 
   .method-list { list-style: none; padding: 0; counter-reset: step; }
@@ -391,13 +393,13 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     font-family: var(--sans); font-weight: 300; font-size: 1.5rem;
   }
   .step-body { padding-top: 0.125rem; }
-  .step-text { font-family: var(--sans), var(--sans-zh); font-size: 1rem; line-height: 1.65; }
+  .step-text { font-family: var(--sans), var(--sans-zh); font-size: 1.0625rem; line-height: 1.65; font-weight: 300; }
   .step-text.fallback { color: var(--ink-dim); font-style: italic; }
-  .step-fallback { font-family: var(--sans); font-size: 0.6875rem; color: var(--m-orange); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .step-meta { margin-top: 0.5rem; display: flex; gap: 0.5rem; }
-  .chip { background: var(--plate); padding: 0.125rem 0.625rem; font-family: var(--sans); font-size: 0.75rem; color: var(--ink-dim); }
-  .step-cite { margin-top: 0.5rem; }
-  .step-cite a { font-family: var(--mono); font-size: 0.75rem; margin-right: 0.5rem; color: var(--m-blue); }
+  .step-fallback { font-family: var(--sans); font-size: 0.78rem; color: var(--m-orange); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.18em; }
+  .step-meta { margin-top: 0.6rem; display: flex; gap: 0.5rem; }
+  .chip { background: var(--plate); padding: 0.2rem 0.7rem; font-family: var(--sans); font-size: 0.82rem; color: var(--ink-dim); }
+  .step-cite { margin-top: 0.6rem; }
+  .step-cite a { font-family: var(--mono); font-size: 0.85rem; margin-right: 0.5rem; color: var(--m-blue); }
 
   .tips { background: transparent; padding: 0.5rem 0 0.5rem 1.5rem; }
   .tips li { margin: 0.5rem 0; }
@@ -406,7 +408,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
 
   .sources { padding-left: 0; list-style: none; }
   .sources li { padding: 0.625rem 0; border-bottom: 1px dashed var(--rule); }
-  .src-title { font-weight: 600; }
+  .src-title { font-weight: 400; font-size: 1.0625rem; }
   .src-meta { margin-top: 0.125rem; }
   .src-meta .dot { margin: 0 0.5rem; opacity: 0.5; }
 
