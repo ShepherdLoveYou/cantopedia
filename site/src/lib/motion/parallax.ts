@@ -1,40 +1,33 @@
 // Parallax — scroll-driven background translation for [data-parallax] targets.
-// Single responsibility: only does parallax, nothing else. Idempotent and
-// ClientRouter-safe — re-init after navigation is a no-op if nothing changed.
+// Single responsibility. Idempotent and ClientRouter-safe — re-queries
+// targets inside the scroll callback to avoid stale references after nav.
 
 const WIRED_KEY = '__motionParallaxWired';
 
-export function initParallax(): void {
-  const targets = document.querySelectorAll<HTMLElement>('[data-parallax]');
-  if (targets.length === 0) return;
+function applyParallax(): void {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  let ticking = false;
-  const update = (): void => {
-    const y = window.scrollY;
-    targets.forEach((el) => {
-      const rate = parseFloat(el.dataset.parallax ?? '0.4');
-      const photo = el.querySelector<HTMLElement>('.hero-photo');
-      if (photo) {
-        // Use the `translate` property (NOT transform) so this composes
-        // with the Ken Burns @keyframes that own `transform`. CSS Transforms
-        // Level 2 treats translate/rotate/scale as independent of transform.
-        photo.style.translate = `0 ${y * rate}px 0`;
-      }
-    });
-    ticking = false;
-  };
-
-  const onScroll = (): void => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
+  const y = window.scrollY;
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    const rate = parseFloat(el.dataset.parallax ?? '0.4');
+    const photo = el.querySelector<HTMLElement>('.hero-photo');
+    if (photo) {
+      photo.style.translate = `0 ${y * rate}px 0`;
     }
-  };
+  });
+}
 
+export function initParallax(): void {
+  // Wire scroll listener once. The listener re-queries targets each tick.
   if (!(window as any)[WIRED_KEY]) {
-    window.addEventListener('scroll', onScroll, { passive: true });
     (window as any)[WIRED_KEY] = true;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { applyParallax(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
   }
-  update();
+  // Always run once on init to set initial position (handles ClientRouter nav).
+  applyParallax();
 }

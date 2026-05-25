@@ -56,7 +56,7 @@ const dict = {
 }[locale];
 ---
 <!doctype html>
-<html lang={locale === 'yue' ? 'yue-Hant' : locale}>
+<html lang={locale === 'yue' ? 'yue-Hant' : locale === 'zh' ? 'zh-Hant' : 'en'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -307,7 +307,19 @@ const dict = {
           drawer.removeAttribute('inert');
           burger!.setAttribute('aria-expanded', 'true');
           trap = createFocusTrap(drawer, {
-            onDeactivate: () => burger!.focus(),
+            onDeactivate: () => {
+              const d = getDrawer();
+              const s = getScrim();
+              if (d) {
+                d.classList.remove('open');
+                d.setAttribute('aria-hidden', 'true');
+                d.setAttribute('inert', '');
+              }
+              if (s) s.classList.remove('open');
+              burger!.setAttribute('aria-expanded', 'false');
+              burger!.focus();
+              trap = null;
+            },
             clickOutsideDeactivates: true,
             escapeDeactivates: true,
             returnFocusOnDeactivate: true,
@@ -316,16 +328,21 @@ const dict = {
           trap.activate();
         }
         function close() {
-          const drawer = getDrawer();
-          const scrim = getScrim();
-          if (!drawer || !scrim) return;
-          drawer.classList.remove('open');
-          scrim.classList.remove('open');
-          drawer.setAttribute('aria-hidden', 'true');
-          drawer.setAttribute('inert', '');
-          burger!.setAttribute('aria-expanded', 'false');
-          trap?.deactivate();
-          trap = null;
+          if (trap) {
+            // Trap deactivate triggers onDeactivate which does the DOM mutations.
+            trap.deactivate();
+          } else {
+            // Defensive: no trap yet but caller wants drawer closed.
+            const drawer = getDrawer();
+            const scrim = getScrim();
+            if (drawer) {
+              drawer.classList.remove('open');
+              drawer.setAttribute('aria-hidden', 'true');
+              drawer.setAttribute('inert', '');
+            }
+            if (scrim) scrim.classList.remove('open');
+            burger!.setAttribute('aria-expanded', 'false');
+          }
         }
         function toggle() {
           const drawer = getDrawer();
@@ -758,15 +775,20 @@ const dict = {
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
       .wp-tile {
         transition: transform 380ms var(--fluent-curve-spring);
-        will-change: transform;
         user-select: none;
         -webkit-tap-highlight-color: transparent;
         --tilt-x: 0deg;
         --tilt-y: 0deg;
       }
-      .wp-tile:hover:not(.pressing) {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      @media (hover: hover) {
+        .wp-tile:hover { will-change: transform; }
+      }
+      .wp-tile.pressing { will-change: transform; }
+      @media (hover: hover) {
+        .wp-tile:hover:not(.pressing) {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
       }
       .wp-tile.pressing {
         transform: perspective(800px)

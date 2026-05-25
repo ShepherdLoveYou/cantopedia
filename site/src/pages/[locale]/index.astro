@@ -432,25 +432,25 @@ const dict = {
     100% { opacity: 1; transform: translateY(0) scale(1); }
   }
   .wp-tile, .stat-tile {
-    animation: tile-enter 520ms var(--fluent-curve-decelerate-mid, ease-out) both;
+    animation: tile-enter 520ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
   }
   .stat-tile:nth-child(1) { animation-delay: 0ms; }
-  .stat-tile:nth-child(2) { animation-delay: 70ms; }
-  .stat-tile:nth-child(3) { animation-delay: 140ms; }
-  .stat-tile:nth-child(4) { animation-delay: 210ms; }
+  .stat-tile:nth-child(2) { animation-delay: 50ms; }
+  .stat-tile:nth-child(3) { animation-delay: 100ms; }
+  .stat-tile:nth-child(4) { animation-delay: 150ms; }
   /* Category tile stagger — assign delays to first 12 tiles in nth-child order. */
-  .start-screen > .wp-tile:nth-child(1)  { animation-delay: 280ms; }
-  .start-screen > .wp-tile:nth-child(2)  { animation-delay: 340ms; }
-  .start-screen > .wp-tile:nth-child(3)  { animation-delay: 400ms; }
-  .start-screen > .wp-tile:nth-child(4)  { animation-delay: 460ms; }
-  .start-screen > .wp-tile:nth-child(5)  { animation-delay: 520ms; }
-  .start-screen > .wp-tile:nth-child(6)  { animation-delay: 580ms; }
-  .start-screen > .wp-tile:nth-child(7)  { animation-delay: 640ms; }
-  .start-screen > .wp-tile:nth-child(8)  { animation-delay: 700ms; }
-  .start-screen > .wp-tile:nth-child(9)  { animation-delay: 760ms; }
-  .start-screen > .wp-tile:nth-child(10) { animation-delay: 820ms; }
-  .start-screen > .wp-tile:nth-child(11) { animation-delay: 880ms; }
-  .start-screen > .wp-tile:nth-child(12) { animation-delay: 940ms; }
+  .start-screen > .wp-tile:nth-child(1)  { animation-delay: 240ms; }
+  .start-screen > .wp-tile:nth-child(2)  { animation-delay: 270ms; }
+  .start-screen > .wp-tile:nth-child(3)  { animation-delay: 300ms; }
+  .start-screen > .wp-tile:nth-child(4)  { animation-delay: 330ms; }
+  .start-screen > .wp-tile:nth-child(5)  { animation-delay: 360ms; }
+  .start-screen > .wp-tile:nth-child(6)  { animation-delay: 380ms; }
+  .start-screen > .wp-tile:nth-child(7)  { animation-delay: 400ms; }
+  .start-screen > .wp-tile:nth-child(8)  { animation-delay: 420ms; }
+  .start-screen > .wp-tile:nth-child(9)  { animation-delay: 440ms; }
+  .start-screen > .wp-tile:nth-child(10) { animation-delay: 460ms; }
+  .start-screen > .wp-tile:nth-child(11) { animation-delay: 480ms; }
+  .start-screen > .wp-tile:nth-child(12) { animation-delay: 500ms; }
   /* Reduced motion: just fade, no slide. */
   @media (prefers-reduced-motion: reduce) {
     .wp-tile, .stat-tile {
