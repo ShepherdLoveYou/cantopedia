@@ -45,7 +45,9 @@ const dict = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
-    <script is:inline>
+    <script is:inline data-astro-rerun>
+      // `data-astro-rerun` makes Astro re-execute this on every ClientRouter
+      // navigation so the theme follows the user's saved choice on every page.
       (function () {
         try {
           const saved = localStorage.getItem('cantopedia-theme') || 'auto';
@@ -227,11 +229,30 @@ const dict = {
       // Drawer + theme — instantiated on every page load; uses focus-trap (MIT) for a11y.
       import { createFocusTrap } from 'focus-trap';
 
+      // Re-apply theme on every page-load — even when the drawer is already
+      // wired and setup() short-circuits. The inline pre-paint script sets
+      // <html data-theme> on each nav; this ensures the aria-pressed state
+      // on the theme buttons stays in sync too.
+      function reapplyTheme() {
+        try {
+          const choice = localStorage.getItem('cantopedia-theme') || 'auto';
+          const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          document.documentElement.dataset.themeChoice = choice;
+          document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]').forEach((b) => {
+            b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false');
+          });
+        } catch {}
+      }
+
       function setup() {
         const drawer = document.getElementById('nav-drawer');
         const scrim = document.getElementById('drawer-scrim');
         const burger = document.getElementById('hamburger');
         if (!drawer || !scrim || !burger) return;
+        // Always re-sync the theme even when wired (theme can be changed on
+        // a different page; <html> attr or button aria can drift).
+        reapplyTheme();
         // Drawer markup persists across ClientRouter navigations (transition:persist),
         // so guard against attaching duplicate listeners — without this, two clicks
         // worth of handlers fire per click and the drawer toggles itself shut.
