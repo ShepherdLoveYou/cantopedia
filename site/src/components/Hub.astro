@@ -113,9 +113,15 @@ const firstDishId = allDishes[0]?.id ?? '';
 ---
 <!-- Hub-aware pivot strip: title updates as user scrolls between panels -->
 <nav class="hub-pivot" aria-label="Hub pivot">
-  <a class="hub-pivot-link hub-pivot-link--prev" id="hub-pivot-prev" href="#" data-dir="prev">‹</a>
+  <a class="hub-pivot-link hub-pivot-link--prev" id="hub-pivot-prev" href="#" data-dir="prev" aria-label="Previous panel">
+    <span class="hub-pivot-peek hub-pivot-peek--prev" id="hub-pivot-peek-prev" aria-hidden="true"></span>
+    <span class="hub-pivot-arrow">‹</span>
+  </a>
   <h1 class="hub-pivot-title" id="hub-pivot-title">{initialTitle}</h1>
-  <a class="hub-pivot-link hub-pivot-link--next" id="hub-pivot-next" href="#" data-dir="next">›</a>
+  <a class="hub-pivot-link hub-pivot-link--next" id="hub-pivot-next" href="#" data-dir="next" aria-label="Next panel">
+    <span class="hub-pivot-arrow">›</span>
+    <span class="hub-pivot-peek hub-pivot-peek--next" id="hub-pivot-peek-next" aria-hidden="true"></span>
+  </a>
 </nav>
 
 <div class="hub" id="hub" data-initial-panel={initialPanel}>
@@ -427,20 +433,32 @@ const firstDishId = allDishes[0]?.id ?? '';
     overflow-wrap: break-word;
   }
   .hub-pivot-link {
-    font-size: 2rem;
-    color: var(--t-ink-dim);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    color: var(--ink);
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    line-height: 1;
-    border: 0;
-    user-select: none;
-    cursor: pointer;
-    transition: color var(--fluent-duration-fast, 150ms) ease;
   }
-  .hub-pivot-link:hover { color: var(--t-ink); }
+  .hub-pivot-arrow {
+    font-size: 1.6rem;
+    font-weight: 200;
+    line-height: 1;
+  }
+  .hub-pivot-peek {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink-dim);
+    opacity: 0.55;
+    max-width: 8ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
   @media (max-width: 540px) {
     .hub-pivot { min-height: 3.5rem; padding: 0.75rem 1rem 0.25rem; }
-    .hub-pivot-link { font-size: 1.5rem; padding: 0.25rem 0.5rem; }
+    .hub-pivot-peek { display: none; }
   }
 
   /* ===== Hub: horizontal scroll-snap container ===== */
