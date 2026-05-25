@@ -16,7 +16,10 @@ export function initParallax(): void {
       const rate = parseFloat(el.dataset.parallax ?? '0.4');
       const photo = el.querySelector<HTMLElement>('.hero-photo');
       if (photo) {
-        photo.style.transform = `translate3d(0, ${y * rate}px, 0) scale(1.04)`;
+        // Use the `translate` property (NOT transform) so this composes
+        // with the Ken Burns @keyframes that own `transform`. CSS Transforms
+        // Level 2 treats translate/rotate/scale as independent of transform.
+        photo.style.translate = `0 ${y * rate}px 0`;
       }
     });
     ticking = false;
