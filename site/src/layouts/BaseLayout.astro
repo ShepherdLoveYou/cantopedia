@@ -115,8 +115,8 @@ const dict = {
     )}
     {showNav && (
       <>
-        <div class="drawer-scrim" id="drawer-scrim" transition:persist></div>
-        <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" inert transition:persist>
+        <div class="drawer-scrim" id="drawer-scrim"></div>
+        <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" inert>
           <div class="drawer-inner">
             <div class="drawer-brand">
               <span class="brand-seal" aria-hidden="true">粵</span>
@@ -274,67 +274,93 @@ const dict = {
       }
 
       function setup() {
-        const drawer = document.getElementById('nav-drawer');
-        const scrim = document.getElementById('drawer-scrim');
         const burger = document.getElementById('hamburger');
-        if (!drawer || !scrim || !burger) return;
-        // Always re-sync the theme even when wired (theme can be changed on
-        // a different page; <html> attr or button aria can drift).
+        if (!burger) return;
+        // Re-apply theme on every page load (drawer markup may have just been re-rendered).
         reapplyTheme();
-        // Drawer markup persists across ClientRouter navigations (transition:persist),
-        // so guard against attaching duplicate listeners — without this, two clicks
-        // worth of handlers fire per click and the drawer toggles itself shut.
-        if (burger.dataset.wired === '1') return;
+        if (burger.dataset.wired === '1') {
+          // Burger persists across nav (it's inside transition:persist nav).
+          // Drawer/scrim are re-rendered each nav, so we need fresh references
+          // every time setup() runs even when burger is already wired.
+          initMotion();
+          return;
+        }
         burger.dataset.wired = '1';
 
+        // Trap holder. Re-acquired each open() since drawer node may have changed.
         let trap: ReturnType<typeof createFocusTrap> | null = null;
 
+        function getDrawer(): HTMLElement | null {
+          return document.getElementById('nav-drawer');
+        }
+        function getScrim(): HTMLElement | null {
+          return document.getElementById('drawer-scrim');
+        }
+
         function open() {
-          drawer!.classList.add('open');
-          scrim!.classList.add('open');
-          drawer!.setAttribute('aria-hidden', 'false');
-          drawer!.removeAttribute('inert');
+          const drawer = getDrawer();
+          const scrim = getScrim();
+          if (!drawer || !scrim) return;
+          drawer.classList.add('open');
+          scrim.classList.add('open');
+          drawer.setAttribute('aria-hidden', 'false');
+          drawer.removeAttribute('inert');
           burger!.setAttribute('aria-expanded', 'true');
-          if (!trap) {
-            trap = createFocusTrap(drawer!, {
-              onDeactivate: () => burger!.focus(),
-              clickOutsideDeactivates: true,
-              escapeDeactivates: true,
-              returnFocusOnDeactivate: true,
-              fallbackFocus: drawer!,
-            });
-          }
+          trap = createFocusTrap(drawer, {
+            onDeactivate: () => burger!.focus(),
+            clickOutsideDeactivates: true,
+            escapeDeactivates: true,
+            returnFocusOnDeactivate: true,
+            fallbackFocus: drawer,
+          });
           trap.activate();
         }
         function close() {
-          drawer!.classList.remove('open');
-          scrim!.classList.remove('open');
-          drawer!.setAttribute('aria-hidden', 'true');
-          drawer!.setAttribute('inert', '');
+          const drawer = getDrawer();
+          const scrim = getScrim();
+          if (!drawer || !scrim) return;
+          drawer.classList.remove('open');
+          scrim.classList.remove('open');
+          drawer.setAttribute('aria-hidden', 'true');
+          drawer.setAttribute('inert', '');
           burger!.setAttribute('aria-expanded', 'false');
           trap?.deactivate();
+          trap = null;
         }
         function toggle() {
-          drawer!.classList.contains('open') ? close() : open();
+          const drawer = getDrawer();
+          if (!drawer) return;
+          drawer.classList.contains('open') ? close() : open();
         }
 
         burger.addEventListener('click', toggle);
-        scrim.addEventListener('click', close);
-        drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+        // Document-level delegation — drawer DOM is recreated on every page nav.
+        document.addEventListener('click', (e) => {
+          const t = e.target as Element | null;
+          if (!t) return;
+          if (t.closest('#drawer-scrim')) { close(); return; }
+          if (t.closest('.nav-drawer a')) { close(); return; }
+        });
         document.addEventListener('astro:before-preparation', close);
 
-        // Theme toggle wiring
-        const buttons = drawer.querySelectorAll<HTMLButtonElement>('[data-theme-choice]');
+        // Theme toggle — also delegated, since the theme buttons live in the drawer.
+        document.addEventListener('click', (e) => {
+          const btn = (e.target as Element | null)?.closest<HTMLButtonElement>('[data-theme-choice]');
+          if (!btn) return;
+          applyChoice(btn.dataset.themeChoice!);
+        });
+
         function applyChoice(choice: string) {
           const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
           document.documentElement.dataset.theme = dark ? 'dark' : 'light';
           document.documentElement.dataset.themeChoice = choice;
           try { localStorage.setItem('cantopedia-theme', choice); } catch {}
-          buttons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false'));
+          document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]').forEach((b) => {
+            b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false');
+          });
         }
         const current = document.documentElement.dataset.themeChoice || 'auto';
         applyChoice(current);
-        buttons.forEach((b) => b.addEventListener('click', () => applyChoice(b.dataset.themeChoice!)));
         initMotion();
       }
 
