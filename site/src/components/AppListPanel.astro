@@ -51,8 +51,10 @@ const letters = Array.from(byLetter.keys()).sort();
           return (
             <a class="app-list-row" href={`${base}/${locale}/dishes/${d.id}`}>
               <span class="app-list-thumb" style={thumb ? `background-image: url('${thumb}');` : ''}></span>
-              <span class="app-list-name">{dishName}</span>
-              <span class="app-list-meta">{d.data.names.jyutping}</span>
+              <span class="app-list-text">
+                <span class="app-list-name">{dishName}</span>
+                <span class="app-list-meta">{d.data.names.jyutping}</span>
+              </span>
             </a>
           );
         })}
@@ -80,47 +82,61 @@ const letters = Array.from(byLetter.keys()).sort();
   .hub-panel--applist::-webkit-scrollbar-thumb { background: var(--t-rule); border-radius: 3px; }
   .app-list {
     padding: 1rem 1.5rem 3rem;
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
   }
   .app-list-letter {
     font-family: var(--sans);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 200;
     color: var(--m-red);
     letter-spacing: 0.12em;
-    margin: 1.5rem 0 0.5rem;
+    margin: 2rem 0 0.5rem;
     border-bottom: 1px solid var(--rule);
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.35rem;
   }
+  /* Row layout: 64px thumbnail + flex 1fr text block (name on top, jyutping below).
+     No third column — jyutping stacks below the name so long English dish names
+     don't get squeezed into a 6-line wrap. */
   .app-list-row {
     display: grid;
-    grid-template-columns: 48px 1fr auto;
-    gap: 0.75rem;
+    grid-template-columns: 64px 1fr;
+    gap: 1rem;
     align-items: center;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0.25rem;
     color: var(--ink);
     text-decoration: none;
     border-bottom: 1px solid var(--rule);
+    transition: background 120ms ease;
   }
   .app-list-row:hover {
     background: var(--plate);
     color: var(--ink);
   }
   .app-list-thumb {
-    width: 40px; height: 40px;
+    width: 64px; height: 64px;
     background: var(--plate-dark);
     background-size: cover;
     background-position: center;
+    flex-shrink: 0;
+  }
+  .app-list-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
   }
   .app-list-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: 1rem;
-    font-weight: 300;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
   }
   .app-list-meta {
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--ink-dim);
+    letter-spacing: 0.02em;
   }
 </style>

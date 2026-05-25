@@ -19,9 +19,9 @@ const clip = await p.evaluate(() => {
   return { x: Math.max(0, r.left), y: Math.max(0, r.top), width: Math.min(1280, r.width), height: Math.min(800 - r.top, r.height) };
 });
 
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < 16; i++) {
   await p.screenshot({ path: resolve(OUT, `flip-${String(i).padStart(2, '0')}.png`), clip });
-  await p.waitForTimeout(400);
+  await p.waitForTimeout(500);
 }
 
 // Also capture face transform state for the first tile across time
