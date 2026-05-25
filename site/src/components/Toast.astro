@@ -1,0 +1,53 @@
+---
+// Toast — fixed container; trigger via global window.cantopediaToast(msg).
+// Auto-dismiss after 3s. Stacks if multiple.
+// Persists across ClientRouter navigations.
+---
+<div class="toast-container" id="toast-container" transition:persist></div>
+
+<style>
+  .toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+  :global(.toast-item) {
+    background: #1d1d1d;
+    color: #fff;
+    padding: 0.65rem 1.25rem;
+    font-family: var(--lang-font-primary);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    border-left: 3px solid var(--m-red);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: toast-in 200ms var(--fluent-curve-decelerate-mid, ease) forwards,
+               toast-out 200ms var(--fluent-curve-accelerate-mid, ease) forwards;
+    animation-delay: 0s, 3s;
+    pointer-events: auto;
+  }
+  @keyframes toast-in  { to { opacity: 1; transform: translateY(0); } }
+  @keyframes toast-out { to { opacity: 0; transform: translateY(12px); } }
+</style>
+
+<script>
+  (function () {
+    function showToast(msg: string): void {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const item = document.createElement('div');
+      item.className = 'toast-item';
+      item.textContent = msg;
+      container.appendChild(item);
+      setTimeout(() => item.remove(), 3500);
+    }
+    (window as any).cantopediaToast = showToast;
+  })();
+</script>
