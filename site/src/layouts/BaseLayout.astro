@@ -468,6 +468,7 @@ const dict = {
          on the left as accent. Full-bleed via negative margin so it
          breaks out of main's max-width. */
       footer {
+        view-transition-name: site-footer;
         margin: 4rem calc(-50vw + 50%) 0;
         padding: 1.75rem 1.5rem 2rem 2.75rem;
         max-width: none !important;
@@ -508,7 +509,18 @@ const dict = {
         position: sticky;
         top: 0;
         z-index: 50;
+        /* Own view-transition-name so the status bar is animated independently
+           of the root pivot. Without this it travels with the page slide and
+           appears to resize / jiggle on mobile. */
+        view-transition-name: status-bar;
       }
+      ::view-transition-old(status-bar),
+      ::view-transition-new(status-bar) {
+        animation: none;   /* nav is persisted; no cross-fade needed */
+      }
+      .loading-bar { view-transition-name: loading-bar; }
+      ::view-transition-old(loading-bar),
+      ::view-transition-new(loading-bar) { animation: none; }
       html[data-theme="light"] .metro-nav { background: #1d1d1d; }
       .metro-nav .brand {
         flex: 1;
