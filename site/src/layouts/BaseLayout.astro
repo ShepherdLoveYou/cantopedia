@@ -224,32 +224,11 @@ const dict = {
         } catch {}
       });
 
-      // Direction-aware horizontal pivot — popstate => "back", else
-      // "forward". Also gates the children opacity-fade cascade via
-      // data-cascade so it plays AFTER the VT snapshot settles (otherwise
-      // the cascade would run behind the pseudo and the user wouldn't see it).
-      (function setupNavDirection() {
-        let isBack = false;
-        window.addEventListener('popstate', () => { isBack = true; });
-        document.addEventListener('astro:before-preparation', () => {
-          document.documentElement.dataset.nav = isBack ? 'back' : 'forward';
-          isBack = false;
-          document.documentElement.dataset.cascade = 'pause';
-        });
-        document.addEventListener('astro:page-load', () => {
-          if (!document.documentElement.dataset.nav) {
-            document.documentElement.dataset.nav = 'forward';
-          }
-          void document.documentElement.offsetHeight;
-          document.documentElement.dataset.cascade = 'go';
-        });
-        if (!document.documentElement.dataset.cascade) {
-          document.documentElement.dataset.cascade = 'go';
-        }
-        if (!document.documentElement.dataset.nav) {
-          document.documentElement.dataset.nav = 'forward';
-        }
-      })();
+      // Page transitions are now fully delegated to the View Transitions
+      // API: shared-element morphs on [view-transition-name] elements
+      // (tile-*, dish-*) do the WP Continuum tile-to-page zoom; everything
+      // else cross-fades by default. Back-navigation auto-reverses the
+      // morph because the browser pairs old/new by name. No JS gate needed.
 
       // 3D tilt press — directional rotation toward press point (max 3deg + scale 0.96).
       // Released on pointerup/cancel/leave. Doc-level delegation; per-tile setProperty.
@@ -647,55 +626,21 @@ const dict = {
       /* WP10 PIVOT/HUB horizontal slide: forward nav slides old LEFT off,
          new comes IN from the RIGHT. Back nav reverses. Feels like one
          continuous hub with panels — not page-to-page navigation. */
-      ::view-transition-old(root) {
-        animation: vt-pivot-out-left 340ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
+      /* WP Continuum tile-to-page morph.
+         No custom root keyframes — the browser's default cross-fade handles
+         full-page nav, and per-tile shared-element morphs (view-transition-
+         name: tile-{cat} / dish-{id} on tiles and hero-bands) do the
+         hardware-accelerated tile-zoom that Windows Phone Continuum is
+         famous for. We just slow the default animations so the motion is
+         visible — browser default is ~250ms which reads as a snap. */
+      ::view-transition-group(*) {
+        animation-duration: 520ms;
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
+      ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation: vt-pivot-in-right 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-      html[data-nav="back"] ::view-transition-old(root) {
-        animation-name: vt-pivot-out-right;
-      }
-      html[data-nav="back"] ::view-transition-new(root) {
-        animation-name: vt-pivot-in-left;
-      }
-      @keyframes vt-pivot-out-left {
-        0%   { transform: translateX(0);     opacity: 1; }
-        100% { transform: translateX(-22%);  opacity: 0; }
-      }
-      @keyframes vt-pivot-in-right {
-        0%   { transform: translateX(22%);   opacity: 0; }
-        100% { transform: translateX(0);     opacity: 1; }
-      }
-      @keyframes vt-pivot-out-right {
-        0%   { transform: translateX(0);     opacity: 1; }
-        100% { transform: translateX(22%);   opacity: 0; }
-      }
-      @keyframes vt-pivot-in-left {
-        0%   { transform: translateX(-22%);  opacity: 0; }
-        100% { transform: translateX(0);     opacity: 1; }
-      }
-
-      /* Progressive opacity-only reveal on the incoming page's content.
-         Pure fade — no transform, no blur — so it never visually "jumps".
-         Runs after the VT pseudo settles via the data-cascade gate. */
-      main > * {
-        animation: fade-in-soft 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
-        animation-play-state: paused;
-      }
-      html[data-cascade="go"] main > * { animation-play-state: running; }
-      main > *:nth-child(1) { animation-delay: 0ms; }
-      main > *:nth-child(2) { animation-delay: 70ms; }
-      main > *:nth-child(3) { animation-delay: 140ms; }
-      main > *:nth-child(4) { animation-delay: 210ms; }
-      main > *:nth-child(5) { animation-delay: 280ms; }
-      main > *:nth-child(n+6) { animation-delay: 340ms; }
-      @keyframes fade-in-soft {
-        from { opacity: 0; }
-        to   { opacity: 1; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        main > * { animation: none !important; }
+        animation-duration: 380ms;
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       /* ===== WP10 tile press effect (3D directional tilt toward press point) ===== */
