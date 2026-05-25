@@ -676,6 +676,27 @@ const dict = {
         100% { transform: translateX(400%); }
       }
 
+      /* ===== Ken Burns: slow drift + zoom for hero photos =====
+         22s cycle, alternates direction. Disable for reduced-motion. */
+      @keyframes ken-burns-a {
+        0%   { transform: scale(1.00) translate(0, 0); }
+        50%  { transform: scale(1.06) translate(-2%, -1.5%); }
+        100% { transform: scale(1.00) translate(0, 0); }
+      }
+      @keyframes ken-burns-b {
+        0%   { transform: scale(1.04) translate(1.5%, 1%); }
+        50%  { transform: scale(1.00) translate(-1%, -1%); }
+        100% { transform: scale(1.04) translate(1.5%, 1%); }
+      }
+      .kb {
+        animation: ken-burns-a 22s ease-in-out infinite;
+        will-change: transform;
+      }
+      .kb.kb-b { animation-name: ken-burns-b; }
+      @media (prefers-reduced-motion: reduce) {
+        .kb { animation: none; transform: scale(1.03); }
+      }
+
       /* ===== View Transitions (WP10 hub-slide / pane-pan feel) =====
          Root cross-fade ONLY; per-tile shared-element morph + Continuum
          children cascade do the visible work. Layered slide-out + cascade
