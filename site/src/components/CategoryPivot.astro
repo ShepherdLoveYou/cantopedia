@@ -29,15 +29,14 @@ const nameOf = (c: typeof cats[number]) =>
      Windows Phone hub-tab pattern. */
   .pivot-strip {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;       /* unify bottom edge so red bar sits on one line */
     gap: 1.5rem;
-    padding: 1.25rem 1.5rem 0.75rem;
+    padding: 1.25rem 1.5rem 0;
     margin: 0 -1.5rem 1.5rem;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    /* Hide scrollbar but keep scrollable */
     scrollbar-width: none;
     border-bottom: 1px solid var(--t-rule);
   }
@@ -52,9 +51,10 @@ const nameOf = (c: typeof cats[number]) =>
     white-space: nowrap;
     flex: 0 0 auto;
     scroll-snap-align: center;
-    padding-bottom: 0.5rem;
+    padding: 0.4rem 0 0.75rem;
     transition: color var(--fluent-duration-fast) ease, font-size var(--fluent-duration-normal) ease;
     position: relative;
+    line-height: 1;
   }
   .pivot:hover { color: var(--t-ink); }
   .pivot--current {
@@ -63,6 +63,9 @@ const nameOf = (c: typeof cats[number]) =>
     font-weight: 400;
     letter-spacing: -0.01em;
   }
+  /* Red underline sits on the STRIP's bottom-border line, not the
+     anchor's. Achieved with negative bottom matching the strip's
+     padding-bottom so the bar overlays the gray border. */
   .pivot--current::after {
     content: '';
     position: absolute;
