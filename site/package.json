@@ -18,7 +18,6 @@
     "@astrojs/sitemap": "^3.7.2",
     "@olton/metroui": "^5.1.20",
     "astro": "^5.16.0",
-    "focus-trap": "^8.2.1",
     "js-yaml": "^4.1.0",
     "typescript": "^5.7.0"
   },
