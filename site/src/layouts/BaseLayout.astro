@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import { getCollection } from 'astro:content';
 import CategoryIcon from '~/components/CategoryIcon.astro';
+import Toast from '~/components/Toast.astro';
 
 interface Props {
   title: string;
@@ -167,6 +168,7 @@ const dict = {
         </aside>
       </>
     )}
+    <Toast />
     <main>
       <slot />
     </main>
