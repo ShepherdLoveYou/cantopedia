@@ -44,7 +44,7 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
     if (nameEl) nameEl.textContent = pick.name;
   });
 
-  tile.addEventListener('click', () => {
+  const clickHandler = () => {
     const active = tile.querySelector<HTMLElement>('.featured-face--active');
     const f = active?.dataset.face;
     if (!f) return;
@@ -53,7 +53,9 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
       try { localStorage.setItem('cantopedia-last-dish', pick.id); } catch {}
       tile.href = `${base}/${locale}/dishes/${pick.id}`;
     }
-  });
+  };
+  tile.addEventListener('click', clickHandler);
+  (tile as any)._featuredClickHandler = clickHandler;
   tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -73,6 +75,11 @@ export function teardownFeaturedTile() {
   if (!tile) return;
   const id = (tile as any)._featuredInterval;
   if (typeof id === 'number') clearInterval(id);
+  const clickHandler = (tile as any)._featuredClickHandler;
+  if (typeof clickHandler === 'function') {
+    tile.removeEventListener('click', clickHandler);
+    delete (tile as any)._featuredClickHandler;
+  }
   delete tile.dataset.wired;
 }
 
@@ -157,9 +164,10 @@ export function initHubNav() {
     });
   }, { root: hub, threshold: [0.5] });
   panels.forEach((p) => io.observe(p));
+  (hub as any)._hubIo = io;
 
   let resizeT: number | undefined;
-  window.addEventListener('resize', () => {
+  const resizeHandler = () => {
     window.clearTimeout(resizeT);
     resizeT = window.setTimeout(() => {
       const i = getActiveIndex();
@@ -167,11 +175,36 @@ export function initHubNav() {
       hub.scrollLeft = offsetOf(i);
       requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
     }, 100);
-  });
+  };
+  window.addEventListener('resize', resizeHandler);
+  (hub as any)._hubResizeHandler = resizeHandler;
+
+  const popstateHandler = () => {
+    const url = location.pathname.replace(/\/$/, '');
+    const idx = panels.findIndex((p) => (p.dataset.url ?? '').replace(/\/$/, '') === url);
+    if (idx >= 0) scrollToIndex(idx);
+  };
+  window.addEventListener('popstate', popstateHandler);
+  (hub as any)._hubPopstateHandler = popstateHandler;
 }
 
 export function teardownHubNav() {
   const hub = document.getElementById('hub') as HTMLElement | null;
   if (!hub) return;
+  const handler = (hub as any)._hubResizeHandler;
+  if (typeof handler === 'function') {
+    window.removeEventListener('resize', handler);
+    delete (hub as any)._hubResizeHandler;
+  }
+  const popHandler = (hub as any)._hubPopstateHandler;
+  if (typeof popHandler === 'function') {
+    window.removeEventListener('popstate', popHandler);
+    delete (hub as any)._hubPopstateHandler;
+  }
+  const io = (hub as any)._hubIo;
+  if (io && typeof io.disconnect === 'function') {
+    io.disconnect();
+    delete (hub as any)._hubIo;
+  }
   delete hub.dataset.navWired;
 }
