@@ -908,6 +908,32 @@ const dict = {
         .nav-drawer, .drawer-scrim, .hamburger-bar { transition: none !important; }
         main > * { animation: none !important; }
       }
+
+      /* ===== Fluent borrow: Reveal highlight on tile hover ===== */
+      .wp-tile {
+        position: relative;
+        --reveal-x: 50%;
+        --reveal-y: 50%;
+      }
+      .wp-tile::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(
+          120px circle at var(--reveal-x) var(--reveal-y),
+          rgba(255, 255, 255, 0.18),
+          transparent 70%
+        );
+        transition: opacity 200ms ease-out;
+        z-index: 1;
+      }
+      .wp-tile.reveal-active::before { opacity: 1; }
+      .wp-tile > * { position: relative; z-index: 2; }
+      @media (prefers-reduced-motion: reduce) {
+        .wp-tile::before { display: none; }
+      }
     </style>
   </body>
 </html>
