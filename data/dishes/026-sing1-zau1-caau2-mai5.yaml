@@ -127,3 +127,8 @@ sources:
     note: "Item #26 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/2/26/Nasi_ambeng.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: Li Tsin Soon from KL, Malaysia

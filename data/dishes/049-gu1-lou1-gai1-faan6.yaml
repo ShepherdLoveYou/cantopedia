@@ -118,3 +118,8 @@ variants:
   - 049b-gu1-lou1-zyu1-faan6
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/0/0c/05130_sweet_and_sour_Chicken_with_Rise%2C_Polish_foods.JPG
+    source_id: wikimedia-commons
+    license: CC-BY-SA-3.0
+    credit: Silar

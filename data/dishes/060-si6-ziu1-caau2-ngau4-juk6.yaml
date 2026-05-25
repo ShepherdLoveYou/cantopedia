@@ -101,3 +101,8 @@ sources:
     note: "Item #60 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/a/a3/Beef_and_Broccoli.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: Laurel F

@@ -98,3 +98,8 @@ sources:
     note: "Item #54 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/f/fb/Freshippo_salt_%26_pepper_mantis_shrimps.jpg
+    source_id: wikimedia-commons
+    license: CC0
+    credit: Fumikas Sagisavas

@@ -97,3 +97,8 @@ sources:
     note: "Item #43 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/4/4c/Century_egg_porridge_with_lean_meat_by_sfllaw_in_Montreal.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: sfllaw from Restaurant Lotte Furama [1] in Montréal, Québec

@@ -93,3 +93,8 @@ sources:
     note: "Item #53 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/5/52/-2020-01-16_Lemon_Chicken_Risotto_with_Parmesan%2C_Trimingham_%282%29.JPG
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Kolforn (Kolforn) I'd appreciate if you could mail me (Kolforn@gmail.com) if you want to use this picture out of the Wikimedia project scope

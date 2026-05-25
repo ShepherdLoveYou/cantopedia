@@ -92,3 +92,8 @@ sources:
     note: "Item #13 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/d/df/%E5%92%B8%E9%B1%BC%E9%B8%A1%E7%B2%92%E7%82%92%E9%A5%AD_Fried_Rice_with_Salted_Fish_and_Diced_Chicken_-_Wonton_House_%28705415954%29.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: Alpha from Melbourne, Australia

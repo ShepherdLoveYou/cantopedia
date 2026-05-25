@@ -93,3 +93,8 @@ sources:
     note: "Item #14 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/5/57/Bowl_of_homemade_shrimp_fried_rice_-_Forsythe_0.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-4.0
+    credit: Forssa01

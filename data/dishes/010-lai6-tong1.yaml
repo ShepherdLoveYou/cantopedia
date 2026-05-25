@@ -92,3 +92,8 @@ sources:
     note: "Item #10 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/f/ff/Asparagus_soup_%28spargelsuppe%29.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Petar Milošević

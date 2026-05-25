@@ -131,3 +131,8 @@ variants:
   - 047c-si6-zap1-haa1
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/5/58/Beef_and_bitter_melon_in_black_bean_sauce.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: 83Gulf

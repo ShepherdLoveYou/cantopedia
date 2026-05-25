@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { commonsThumb, commonsPageUrl } from '~/lib/commonsImage';
 
 export async function getStaticPaths() {
   const dishes = await getCollection('dish');
@@ -101,7 +102,10 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     <span class="meta">#{String(dish.data.menu_no).padStart(2, '0')}</span>
   </nav>
 
-  <header class="hero-band" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
+  <header class={`hero-band ${dish.data.images?.[0] ? 'has-photo' : ''}`} style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
+    {dish.data.images?.[0] && (
+      <img class="hero-photo" src={commonsThumb(dish.data.images[0].path, 1400)} alt="" loading="eager" decoding="async" />
+    )}
     <div class="hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
     <h1 class="hero-name">{dish.data.names.yue_hant}</h1>
     <div class="hero-jyut">{dish.data.names.jyutping}</div>
@@ -120,6 +124,13 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
       {dish.data.method_status === 'complete' && <span class="htag htag-on">✓ {dict.method}</span>}
       {dish.data.method_status === 'draft' && <span class="htag htag-warn">{dict.method} draft</span>}
     </div>
+    {dish.data.images?.[0] && (
+      <div class="hero-credit">
+        <a href={commonsPageUrl(dish.data.images[0].path)} target="_blank" rel="noopener">
+          {dish.data.images[0].license} · {dish.data.images[0].credit || 'Wikimedia Commons'} ↗
+        </a>
+      </div>
+    )}
   </header>
 
   <div class="dish-grid">
@@ -304,7 +315,36 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     color: white;
     padding: 2rem 2rem 2rem;
     margin: 0 -1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
   }
+  .hero-band.has-photo { padding: 2.5rem 2rem 3rem; min-height: 320px; }
+  .hero-photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-band.has-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--cat-color, #000) 78%, transparent) 0%,
+      rgba(0,0,0,0.35) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-band.has-photo > *:not(.hero-photo) { position: relative; z-index: 2; }
+  .hero-credit {
+    margin-top: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .hero-credit a { color: rgba(255,255,255,0.85) !important; text-decoration: none; }
+  .hero-credit a:hover { color: white !important; text-decoration: underline; }
   .hero-no {
     font-family: var(--sans);
     font-size: 0.85rem;

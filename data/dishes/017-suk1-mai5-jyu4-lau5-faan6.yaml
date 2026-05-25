@@ -92,3 +92,8 @@ sources:
     note: "Item #17 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/c/c6/HK_restaurant_Cafe_de_Coral_food_%E7%B2%9F%E7%B1%B3%E9%AD%9A%E6%A0%81%E9%A3%AF_fish_fillet_with_sweet_corn_sauce_n_rice_October_2025_N13P_01.jpg
+    source_id: wikimedia-commons
+    license: CC0
+    credit: SIWMEWO paoiwnd 2266

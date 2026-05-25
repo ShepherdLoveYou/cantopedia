@@ -114,3 +114,8 @@ sources:
     note: "Item #12 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/c/c8/Hung_Hom_Station_Maxim%27s_MX_Yangzhou_fried_rice_11-01-2023.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: LN9267

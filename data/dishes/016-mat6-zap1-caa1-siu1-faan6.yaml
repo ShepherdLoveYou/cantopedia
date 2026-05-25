@@ -104,3 +104,8 @@ sources:
     accessed: 2026-05-24
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/e/e0/Honey-glazed_Pork_Chops_with_Black_Pepper_Sauce_-_Dragon_Boat_BBQ_King_AUD8.80_lunch_special_%283217921774%29.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: Alpha from Melbourne, Australia

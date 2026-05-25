@@ -120,3 +120,8 @@ sources:
     note: "Item #24 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/a/a2/Satay_Beef_Macaroni.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Neodymium+Nd

@@ -100,3 +100,8 @@ sources:
     note: "Item #65 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/f/fb/Salt_and_pepper_pork_ribs.jpg
+    source_id: wikimedia-commons
+    license: CC0
+    credit: Fumikas Sagisavas

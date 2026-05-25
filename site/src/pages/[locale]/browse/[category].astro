@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CategoryPivot from '~/components/CategoryPivot.astro';
+import { commonsThumb } from '~/lib/commonsImage';
 
 export async function getStaticPaths() {
   const cats = await getCollection('category');
@@ -64,17 +65,24 @@ const dict = {
       const statusLabel =
         dish.data.method_status === 'complete' ? dict.complete :
         dish.data.method_status === 'draft' ? dict.draft : dict.stub;
+      const heroImg = dish.data.images?.[0];
+      const thumb = heroImg ? commonsThumb(heroImg.path, 400) : null;
       return (
-        <a class="dish-card wp-tile"
+        <a class={`dish-card wp-tile ${thumb ? 'has-thumb' : ''}`}
            href={`${base}/${locale}/dishes/${dish.id}`}
            style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
-          <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-          <div class="card-name">{dishName}</div>
-          <div class="card-jyut">{dish.data.names.jyutping}</div>
-          <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
-          <div class="card-foot">
-            <span class={`badge ${statusClass}`}>{statusLabel}</span>
-            <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
+          {thumb && (
+            <img class="card-thumb" src={thumb} alt="" loading="lazy" decoding="async" />
+          )}
+          <div class="card-body">
+            <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+            <div class="card-name">{dishName}</div>
+            <div class="card-jyut">{dish.data.names.jyutping}</div>
+            <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
+            <div class="card-foot">
+              <span class={`badge ${statusClass}`}>{statusLabel}</span>
+              <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
+            </div>
           </div>
         </a>
       );
@@ -146,6 +154,44 @@ const dict = {
     transition: background var(--fluent-duration-fast) ease;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Photo card: bg fills with the dish photo, content gets a gradient overlay
+     for legibility, text turns white. */
+  .dish-card.has-thumb {
+    color: white !important;
+    min-height: 200px;
+    border-bottom: 0;
+  }
+  .dish-card.has-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--cat-color) 70%, transparent) 0%,
+      rgba(0,0,0,0.15) 45%,
+      rgba(0,0,0,0.85) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .card-thumb {
+    position: absolute; inset: 6px 0 0 0;  /* leave the 6px top stripe */
+    width: 100%; height: calc(100% - 6px);
+    object-fit: cover;
+    z-index: 0;
+    transition: transform var(--fluent-duration-rich) var(--fluent-curve-easy-ease);
+  }
+  .dish-card.has-thumb:hover .card-thumb { transform: scale(1.04); }
+  .dish-card .card-body { position: relative; z-index: 2; display: flex; flex-direction: column; flex: 1; }
+  .dish-card.has-thumb .card-jyut,
+  .dish-card.has-thumb .card-zh-en,
+  .dish-card.has-thumb .card-ings { color: rgba(255,255,255,0.88); }
+  .dish-card.has-thumb .card-name { color: white; }
+  .dish-card.has-thumb .card-no { color: rgba(255,255,255,0.9); }
+  .dish-card.has-thumb .badge {
+    background: rgba(255,255,255,0.18) !important;
+    color: white !important;
+    border: 0 !important;
   }
   .dish-card:nth-child(5n+1) .card-name { font-size: 1.5rem; }
   .dish-card:hover { background: var(--t-plate); color: var(--t-ink) !important; }

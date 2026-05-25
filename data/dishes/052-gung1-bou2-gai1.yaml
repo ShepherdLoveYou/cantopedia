@@ -128,3 +128,8 @@ sources:
     note: "Item #52 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/c/c2/Kung-pao-shanghai.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-3.0
+    credit: Steven G. Johnson

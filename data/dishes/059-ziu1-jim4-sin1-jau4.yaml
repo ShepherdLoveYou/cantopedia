@@ -98,3 +98,8 @@ sources:
     note: "Item #59 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/8/81/HK_Sai_Ying_Pun_Pokfulam_Road_%E9%B4%BB%E8%88%88%E8%8C%B6%E9%A4%90%E5%BB%B3_Hung_Hing_Restaurant_food_%E6%A4%92%E9%B9%BD%E9%AD%B7%E9%AD%9A_salt_and_pepper_squid_Aug_2016_DSC.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Moakeyaucheea

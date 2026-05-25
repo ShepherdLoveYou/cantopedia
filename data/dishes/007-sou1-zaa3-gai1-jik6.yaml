@@ -101,3 +101,8 @@ sources:
     note: "Item #7 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/9/9d/Crispy_Wing_Meal_%286_Wings%2C_Gravy_Mayo%2C_Fanta_Orange%29_-_Slim_Chickens_2025-04-20.jpg
+    source_id: wikimedia-commons
+    license: CC0
+    credit: Andy Li

@@ -126,3 +126,8 @@ sources:
     note: "Item #25 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/c/c8/Sinchew_fried_noodle_in_KL.JPG
+    source_id: wikimedia-commons
+    license: Public-Domain
+    credit: Brownc

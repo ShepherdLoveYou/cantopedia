@@ -95,3 +95,8 @@ sources:
     note: "Item #32 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/7/7e/My_Mum%27s_Laksa_-_Laksa_Me_%281193968200%29.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: Alpha from Melbourne, Australia

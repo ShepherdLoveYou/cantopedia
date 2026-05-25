@@ -105,3 +105,8 @@ sources:
     note: "Item #1 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/e/e5/DFC_5092_Crispy_golden_spring_rolls_served_hot_with_a_tangy_dipping_sauce_and_fresh_lettuce.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: PattayaPatrol

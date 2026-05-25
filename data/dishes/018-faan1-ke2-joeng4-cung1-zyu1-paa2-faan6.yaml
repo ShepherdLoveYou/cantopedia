@@ -96,3 +96,8 @@ sources:
     note: "Item #18 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/5/59/Borracho_bean_dip.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-2.0
+    credit: goblinbox_(queen_of_ad_hoc_bento) from Minneapolis, MN, US
