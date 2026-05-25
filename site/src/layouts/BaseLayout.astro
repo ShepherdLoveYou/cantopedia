@@ -220,6 +220,15 @@ const dict = {
           const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
           newDoc.documentElement.dataset.theme = dark ? 'dark' : 'light';
           newDoc.documentElement.dataset.themeChoice = choice;
+          // Propagate pivot nav direction class so ::view-transition-new(root)
+          // can match the slide-in keyframe. Without this the new <html> has
+          // no class and the slide animation never runs.
+          if (document.documentElement.classList.contains('nav-next')) {
+            newDoc.documentElement.classList.add('nav-next');
+          }
+          if (document.documentElement.classList.contains('nav-prev')) {
+            newDoc.documentElement.classList.add('nav-prev');
+          }
         } catch {}
       });
 
@@ -819,10 +828,13 @@ const dict = {
         animation: slide-in-left var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
       }
 
-      @keyframes slide-out-left  { to   { transform: translateX(-12%); opacity: 0; } }
-      @keyframes slide-in-right  { from { transform: translateX( 12%); opacity: 0; } }
-      @keyframes slide-out-right { to   { transform: translateX( 12%); opacity: 0; } }
-      @keyframes slide-in-left   { from { transform: translateX(-12%); opacity: 0; } }
+      /* WP10 pivot slide is a substantial travel (old fully exits, new comes
+         in from the side). Subtle 12% reads as a glitch; 40% gives a clear
+         hub-slide feel. Opacity tapers near the edge to mask any visual seam. */
+      @keyframes slide-out-left  { to   { transform: translateX(-40%); opacity: 0; } }
+      @keyframes slide-in-right  { from { transform: translateX( 40%); opacity: 0; } }
+      @keyframes slide-out-right { to   { transform: translateX( 40%); opacity: 0; } }
+      @keyframes slide-in-left   { from { transform: translateX(-40%); opacity: 0; } }
 
       @media (prefers-reduced-motion: reduce) {
         ::view-transition-old(*),
