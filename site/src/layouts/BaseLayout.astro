@@ -224,35 +224,16 @@ const dict = {
         } catch {}
       });
 
-      // Direction-aware Continuum cascade + cascade play gate.
-      // - Direction: popstate => "back", else "forward".
-      // - Play gate: pause cascade during nav so it doesn't burn cycles
-      //   behind the VT snapshot; resume on page-load so user sees it fresh.
-      (function setupNavCascade() {
+      // Direction-aware horizontal pivot — popstate => "back", else
+      // "forward". Affects ::view-transition-old/new(root) keyframes so
+      // back-nav reverses the swipe direction.
+      (function setupNavDirection() {
         let isBack = false;
         window.addEventListener('popstate', () => { isBack = true; });
         document.addEventListener('astro:before-preparation', () => {
           document.documentElement.dataset.nav = isBack ? 'back' : 'forward';
           isBack = false;
-          // Pause cascade so the new page's <main> children sit at the
-          // "from" keyframe (translateY 28px, opacity 0, blur 3px) and
-          // don't play behind the VT snapshot.
-          document.documentElement.dataset.cascade = 'pause';
         });
-        document.addEventListener('astro:page-load', () => {
-          if (!document.documentElement.dataset.nav) {
-            document.documentElement.dataset.nav = 'forward';
-          }
-          // Force reflow so the paused animation restarts from frame 0
-          // when we flip to "go".
-          void document.documentElement.offsetHeight;
-          document.documentElement.dataset.cascade = 'go';
-        });
-        // Initial load — also fire once before astro:page-load in case it
-        // arrives late, so first render's cascade plays.
-        if (!document.documentElement.dataset.cascade) {
-          document.documentElement.dataset.cascade = 'go';
-        }
         if (!document.documentElement.dataset.nav) {
           document.documentElement.dataset.nav = 'forward';
         }
@@ -643,10 +624,10 @@ const dict = {
          new comes IN from the RIGHT. Back nav reverses. Feels like one
          continuous hub with panels — not page-to-page navigation. */
       ::view-transition-old(root) {
-        animation: vt-pivot-out-left 360ms cubic-bezier(0.55, 0, 0.9, 0.3) forwards;
+        animation: vt-pivot-out-left 280ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
       }
       ::view-transition-new(root) {
-        animation: vt-pivot-in-right 460ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation: vt-pivot-in-right 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       html[data-nav="back"] ::view-transition-old(root) {
         animation-name: vt-pivot-out-right;
@@ -656,18 +637,18 @@ const dict = {
       }
       @keyframes vt-pivot-out-left {
         0%   { transform: translateX(0);     opacity: 1; }
-        100% { transform: translateX(-28%);  opacity: 0; }
+        100% { transform: translateX(-12%);  opacity: 0; }
       }
       @keyframes vt-pivot-in-right {
-        0%   { transform: translateX(28%);   opacity: 0; }
+        0%   { transform: translateX(12%);   opacity: 0; }
         100% { transform: translateX(0);     opacity: 1; }
       }
       @keyframes vt-pivot-out-right {
         0%   { transform: translateX(0);     opacity: 1; }
-        100% { transform: translateX(28%);   opacity: 0; }
+        100% { transform: translateX(12%);   opacity: 0; }
       }
       @keyframes vt-pivot-in-left {
-        0%   { transform: translateX(-28%);  opacity: 0; }
+        0%   { transform: translateX(-12%);  opacity: 0; }
         100% { transform: translateX(0);     opacity: 1; }
       }
 
@@ -846,40 +827,11 @@ const dict = {
       .drawer-foot { margin-top: 1.75rem; font-size: 0.9rem; opacity: 0.75; font-weight: 300; }
       .drawer-foot a { color: var(--t-drawer-ink); }
 
-      /* ===== Continuum domino — staggered children-in on every page.
-         Damped: 560ms duration + 80ms stagger + blur(3px->0) racking focus
-         + subtle scale (0.97->1). Direction-aware (popstate vs. forward).
-         Paused until <html data-cascade="go"> so the cascade plays AFTER
-         the VT old/new sequence completes — otherwise the snapshot
-         occludes it. */
-      main > * {
-        animation: continuum-in-forward var(--fluent-duration-rich) var(--fluent-curve-decelerate-mid) both;
-        animation-play-state: paused;
-        transform-origin: center top;
-      }
-      html[data-cascade="go"] main > * { animation-play-state: running; }
-      html[data-nav="back"] main > * {
-        animation-name: continuum-in-back;
-      }
-      main > *:nth-child(1) { animation-delay: 0ms; }
-      main > *:nth-child(2) { animation-delay: 80ms; }
-      main > *:nth-child(3) { animation-delay: 160ms; }
-      main > *:nth-child(4) { animation-delay: 240ms; }
-      main > *:nth-child(5) { animation-delay: 320ms; }
-      main > *:nth-child(6) { animation-delay: 380ms; }
-      main > *:nth-child(n+7) { animation-delay: 420ms; }
-      /* Pivot-hub cascade: children come in from the side (matching the root
-         horizontal slide), not from below. Forward = from right, back = from left. */
-      @keyframes continuum-in-forward {
-        0%   { transform: translateX(24px); opacity: 0; filter: blur(3px); }
-        60%  { opacity: 1; filter: blur(0); }
-        100% { transform: none; opacity: 1; filter: none; }
-      }
-      @keyframes continuum-in-back {
-        0%   { transform: translateX(-24px); opacity: 0; filter: blur(2px); }
-        60%  { opacity: 1; filter: blur(0); }
-        100% { transform: none; opacity: 1; filter: none; }
-      }
+      /* The horizontal root pivot (::view-transition-old/new) is the only
+         page-to-page motion now. The per-child Continuum cascade was layering
+         a second horizontal motion on top, causing jump + double-motion as
+         children snapped in at staggered times. Removed for clean WP10
+         hub-swipe feel. */
 
       @media (prefers-reduced-motion: reduce) {
         .nav-drawer, .drawer-scrim, .hamburger-bar { transition: none !important; }
