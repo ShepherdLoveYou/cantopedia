@@ -39,6 +39,7 @@
 
 <script>
   (function () {
+    if ((window as any).cantopediaToast) return;
     function showToast(msg: string): void {
       const container = document.getElementById('toast-container');
       if (!container) return;
