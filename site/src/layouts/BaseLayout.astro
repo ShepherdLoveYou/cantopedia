@@ -253,6 +253,7 @@ const dict = {
     <script>
       // Drawer + theme — instantiated on every page load; uses focus-trap (MIT) for a11y.
       import { createFocusTrap } from 'focus-trap';
+      import { initMotion } from '~/lib/motion';
 
       // Re-apply theme on every page-load — even when the drawer is already
       // wired and setup() short-circuits. The inline pre-paint script sets
@@ -332,6 +333,7 @@ const dict = {
         const current = document.documentElement.dataset.themeChoice || 'auto';
         applyChoice(current);
         buttons.forEach((b) => b.addEventListener('click', () => applyChoice(b.dataset.themeChoice!)));
+        initMotion();
       }
 
       setup();
