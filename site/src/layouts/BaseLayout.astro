@@ -118,7 +118,7 @@ const dict = {
     {showNav && (
       <>
         <div class="drawer-scrim" id="drawer-scrim" transition:persist></div>
-        <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" transition:persist>
+        <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" inert transition:persist>
           <div class="drawer-inner">
             <div class="drawer-brand">
               <span class="brand-seal" aria-hidden="true">粵</span>
@@ -293,6 +293,7 @@ const dict = {
           drawer!.classList.add('open');
           scrim!.classList.add('open');
           drawer!.setAttribute('aria-hidden', 'false');
+          drawer!.removeAttribute('inert');
           burger!.setAttribute('aria-expanded', 'true');
           if (!trap) {
             trap = createFocusTrap(drawer!, {
@@ -309,6 +310,7 @@ const dict = {
           drawer!.classList.remove('open');
           scrim!.classList.remove('open');
           drawer!.setAttribute('aria-hidden', 'true');
+          drawer!.setAttribute('inert', '');
           burger!.setAttribute('aria-expanded', 'false');
           trap?.deactivate();
         }
@@ -725,7 +727,6 @@ const dict = {
         .nav-drawer { background: var(--t-acrylic-fallback); }
       }
       .nav-drawer.open { transform: translateX(0); }
-      .nav-drawer[aria-hidden="true"] a, .nav-drawer[aria-hidden="true"] button { tab-index: -1; }
       .drawer-inner { padding: 1.25rem 1rem 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
 
       .drawer-brand { display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0 0.75rem; }

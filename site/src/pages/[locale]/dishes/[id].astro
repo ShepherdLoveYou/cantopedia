@@ -47,7 +47,7 @@ function tBody(body: any, prefer = locale): string {
   if (!body) return '';
   if (prefer === 'en' && body.en) return body.en;
   if (prefer === 'yue' && body.yue) return body.yue;
-  return body.zh;
+  return body.zh ?? body.yue ?? body.en ?? '';
 }
 
 function langOfBody(body: any, prefer = locale): 'yue' | 'zh' | 'en' {
@@ -159,7 +159,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
                 </a>
               </td>
               <td style="text-align: right; font-variant-numeric: tabular-nums;">{ing.qty} <span class="meta">{ing.unit}</span></td>
-              <td class="meta">{ing.prep ? tBody({ zh: ing.prep.zh ?? '', en: ing.prep.en, yue: ing.prep.yue }) : ''}</td>
+              <td class="meta">{ing.prep ? tBody(ing.prep) : ''}</td>
             </tr>
           ))}
         </tbody>

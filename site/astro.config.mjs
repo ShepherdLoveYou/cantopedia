@@ -1,13 +1,11 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import vue from '@astrojs/vue';
 
 export default defineConfig({
   site: 'https://shepherdloveyou.github.io',
   base: '/cantopedia',
   integrations: [
     sitemap({ i18n: { defaultLocale: 'zh', locales: { zh: 'zh-Hant', yue: 'yue-Hant', en: 'en' } } }),
-    vue(),
   ],
   trailingSlash: 'never',
   prefetch: {

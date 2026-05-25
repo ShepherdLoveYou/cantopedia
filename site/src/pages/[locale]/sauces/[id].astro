@@ -28,7 +28,7 @@ function tBody(body: any): string {
   if (!body) return '';
   if (locale === 'en' && body.en) return body.en;
   if (locale === 'yue' && body.yue) return body.yue;
-  return body.zh;
+  return body.zh ?? body.yue ?? body.en ?? '';
 }
 
 const title = locale === 'en' ? sauce.data.names.en : sauce.data.names.yue_hant;
@@ -41,7 +41,7 @@ const dict = {
 <BaseLayout title={title} locale={locale}>
   <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
 
-  <header>
+  <header style={`view-transition-name: sauce-${sauce.id};`}>
     <div class="meta" style="color: var(--seal); font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.8rem;">{locale === 'en' ? 'SAUCE' : '醬料'}</div>
     <h1 style="margin: 0.25rem 0;">{sauce.data.names.yue_hant}</h1>
     <div class="meta" style="font-family: var(--mono); color: var(--ink-dim);">{sauce.data.names.jyutping}</div>
