@@ -219,12 +219,17 @@ const nameOf = (c: typeof curr) =>
 
   // After every navigation completes, clear the direction class so non-pivot
   // navigations that follow don't accidentally inherit the horizontal slide.
-  // Also reset any leftover drag transform on <main> in case a nav was
-  // triggered mid-animation.
+  // BUT: astro:page-load fires BEFORE the View Transition's `finished` promise
+  // resolves. If we clear nav-prev/nav-next at page-load, the ::view-transition
+  // pseudo-elements lose their matching rule mid-animation and the slide stops
+  // visibly. Defer the cleanup until after the typical VT duration (gentle
+  // duration is 420ms; pad to 600ms for safety).
   document.addEventListener('astro:page-load', () => {
-    document.documentElement.classList.remove('nav-prev', 'nav-next');
     document.documentElement.classList.remove('pivot-dragging');
     const m = main();
     if (m) { m.style.transition = ''; m.style.transform = ''; }
+    setTimeout(() => {
+      document.documentElement.classList.remove('nav-prev', 'nav-next');
+    }, 600);
   });
 </script>
