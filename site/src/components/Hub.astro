@@ -194,7 +194,9 @@ const firstDishId = allDishes[0]?.id ?? '';
             photos={photos}
             viewTransitionName={`tile-${cat.id}`}
             ariaLabel={`${catName} (${inCat.length} ${dict.pieces})`}
-          />
+          >
+            <CategoryIcon cat={cat.id as CatId} size={56} />
+          </CatTile>
         );
       })}
 
