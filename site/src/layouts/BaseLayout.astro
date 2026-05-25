@@ -831,6 +831,24 @@ const dict = {
       html.nav-prev::view-transition-old(root) { animation-name: slide-out-right; }
       html.nav-prev::view-transition-new(root) { animation-name: slide-in-left; }
 
+      /* Pivot nav: suppress per-element view-transition-names so every
+         visible element JOINS the root snapshot and slides together as
+         one solid card. Without this, the cat-hero, pivot title, and dish
+         cards (which each have their own view-transition-name) are
+         EXTRACTED from the root snapshot and animated independently —
+         making the hero look "stuck" while the rest slides past. The
+         !important defeats the inline style="view-transition-name: ...". */
+      html.nav-next .cat-hero,
+      html.nav-prev .cat-hero,
+      html.nav-next .pivot--current,
+      html.nav-prev .pivot--current,
+      html.nav-next .dish-grid > a,
+      html.nav-prev .dish-grid > a,
+      html.nav-next .hero-band,
+      html.nav-prev .hero-band {
+        view-transition-name: none !important;
+      }
+
       /* Full-screen card slide — old goes ALL the way off, new comes ALL
          the way in. No opacity fade: solid cards moving together. The lockstep
          travel is the WP10 pivot signature (NOT a crossfade with slide). */
