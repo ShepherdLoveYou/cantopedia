@@ -15,6 +15,9 @@ import { getCollection } from 'astro:content';
 import CategoryIcon from '~/components/CategoryIcon.astro';
 import { tileColors, tileColor as tileColorFor } from '~/lib/categoryColors';
 import { commonsThumb } from '~/lib/commonsImage';
+import '@olton/metroui/lib/metro.css';
+import '@olton/metroui/lib/icons.css';
+import CatTile from '~/components/CatTile.astro';
 
 interface Props {
   locale: 'zh' | 'en' | 'yue';
@@ -31,6 +34,15 @@ for (const cat of allCats) {
   dishesByCat.set(cat.id, allDishes
     .filter((d) => d.data.category.id === cat.id)
     .sort((a, b) => a.data.menu_no - b.data.menu_no));
+}
+
+function categoryPhotos(catId: string, max = 4): string[] {
+  const dishes = dishesByCat.get(catId) ?? [];
+  return dishes
+    .map((d) => d.data.images?.[0]?.path)
+    .filter((p): p is string => !!p)
+    .slice(0, max)
+    .map((p) => commonsThumb(p, 800));
 }
 
 type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
@@ -133,141 +145,77 @@ const firstDishId = allDishes[0]?.id ?? '';
     data-url={`${base}/${locale}`}
     aria-labelledby="hub-home-title"
   >
-    <section class="panorama">
-      <div class="panorama-stripe" aria-hidden="true"></div>
-      <h2 id="hub-home-title" class="panorama-title">{dict.hero_title}</h2>
-      <p class="panorama-sub">
-        <span>{dict.hero_sub_a}</span>
-        <span class="panorama-dot">·</span>
-        <span>{dict.hero_sub_b}</span>
-      </p>
-    </section>
-
-    <section class="featured-section">
-      <a id="featured-tile" class="featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
+    <div class="tiles-grid start-tiles">
+      {/* Featured wide live tile — uses tile-wide for sizing + its own .featured-face show/hide cycle.
+          Do NOT add cat-face classes here — featured tile has its own display:none/block toggle
+          driven by initFeaturedTile() and would conflict with cat-face's rotateX/opacity rules. */}
+      <a id="featured-tile" class="tile-wide featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
         <div class="featured-face featured-face--active" data-face="today">
-          <div class="featured-img" data-img=""></div>
+          <div class="featured-img"></div>
           <div class="featured-overlay"></div>
-          <div class="featured-label">{dict.featured_today}</div>
-          <div class="featured-name"></div>
+          <span class="branding-bar featured-label">{dict.featured_today}</span>
+          <span class="featured-name"></span>
         </div>
         <div class="featured-face" data-face="random">
-          <div class="featured-img" data-img=""></div>
+          <div class="featured-img"></div>
           <div class="featured-overlay"></div>
-          <div class="featured-label">{dict.featured_random}</div>
-          <div class="featured-name"></div>
+          <span class="branding-bar featured-label">{dict.featured_random}</span>
+          <span class="featured-name"></span>
         </div>
         <div class="featured-face" data-face="recent">
-          <div class="featured-img" data-img=""></div>
+          <div class="featured-img"></div>
           <div class="featured-overlay"></div>
-          <div class="featured-label">{dict.featured_recent}</div>
-          <div class="featured-name"></div>
+          <span class="branding-bar featured-label">{dict.featured_recent}</span>
+          <span class="featured-name"></span>
         </div>
       </a>
-    </section>
 
-    <section class="pivot-section">
-      <div class="pivot-label">{dict.progress}</div>
-      <div class="stat-tiles">
-        <div class="stat-tile stat-complete live-tile">
-          <div class="live-tile-face front">
-            <div class="stat-num">{complete}</div>
-            <div class="stat-label">{dict.complete}</div>
-          </div>
-          <div class="live-tile-face back">
-            <div class="stat-num-small">{Math.round((complete / total) * 100)}%</div>
-            <div class="stat-label">{dict.complete}</div>
-          </div>
-        </div>
-        <div class="stat-tile stat-draft live-tile">
-          <div class="live-tile-face front">
-            <div class="stat-num">{draft}</div>
-            <div class="stat-label">{dict.draft}</div>
-          </div>
-          <div class="live-tile-face back">
-            <div class="stat-num-small">{Math.round((draft / total) * 100)}%</div>
-            <div class="stat-label">{dict.draft}</div>
-          </div>
-        </div>
-        <div class="stat-tile stat-stub live-tile">
-          <div class="live-tile-face front">
-            <div class="stat-num">{total - complete - draft}</div>
-            <div class="stat-label">{dict.stub}</div>
-          </div>
-          <div class="live-tile-face back">
-            <div class="stat-num-small">{Math.round(((total - complete - draft) / total) * 100)}%</div>
-            <div class="stat-label">{dict.stub}</div>
-          </div>
-        </div>
-        <div class="stat-tile stat-total live-tile">
-          <div class="live-tile-face front">
-            <div class="stat-num">{total}</div>
-            <div class="stat-label">{dict.pieces}</div>
-          </div>
-          <div class="live-tile-face back">
-            <div class="stat-num-small">100%</div>
-            <div class="stat-label">{dict.pieces}</div>
-          </div>
-        </div>
-      </div>
-      <div class="prog-track">
-        <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
-        <div class="prog-seg prog-draft" style={`width: ${(draft / total) * 100}%`}></div>
-      </div>
-    </section>
-
-    <h3 class="pivot-h">{dict.browse}</h3>
-
-    <div class="start-screen">
+      {/* 8 category tiles with face cycling */}
       {allCats.map((cat) => {
         const inCat = dishesByCat.get(cat.id) ?? [];
         if (inCat.length === 0) return null;
         const catName = nameOf(cat);
-        const tileColor = tileColors[cat.id] || '#37474F';
-        const size = sizeOf(cat.id, inCat.length);
-        const isWide = size === 'w';
+        const size: 's'|'m'|'w' = inCat.length >= 20 ? 'w' : inCat.length >= 7 ? 'm' : 's';
+        const photos = categoryPhotos(cat.id);
         return (
-          <a
-            class={`tile wp-tile size-${size}`}
+          <CatTile
+            size={size}
             href={`${base}/${locale}/browse/${cat.id}`}
-            data-cat={cat.id}
-            aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
-            style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}
-          >
-            {isWide ? (
-              <>
-                <div class="face front">
-                  <CategoryIcon cat={cat.id as CatId} size={88} />
-                  <div class="tile-name">{catName}</div>
-                  <div class="tile-count">{inCat.length} {dict.pieces}</div>
-                </div>
-                <div class="face back" aria-hidden="true">
-                  <div class="back-label">{locale === 'en' ? 'CANTOPEDIA · STATS' : '粵食典 · 數據'}</div>
-                  <div class="back-num">{total}</div>
-                  <div class="back-tagline">{
-                    locale === 'en'
-                      ? `${total} dishes · 8 categories · tri-lingual`
-                      : `${total} 道菜 · 8 大類 · 三語可溯`
-                  }</div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div class="face front">
-                  <CategoryIcon cat={cat.id as CatId} size={size === 's' ? 48 : 72} />
-                  <div class="tile-name">{catName}</div>
-                  <span class="tile-badge">{inCat.length}</span>
-                </div>
-                <div class="face back" aria-hidden="true">
-                  <div class="back-num-sm">{inCat.length}</div>
-                  <div class="back-label-sm">{locale === 'en' ? 'dishes' : '道菜'}</div>
-                  <div class="back-name-sm">{catName}</div>
-                </div>
-              </>
-            )}
-          </a>
+            color={tileColorFor(cat.id)}
+            label={catName}
+            badge={inCat.length}
+            photos={photos}
+            viewTransitionName={`tile-${cat.id}`}
+            ariaLabel={`${catName} (${inCat.length} ${dict.pieces})`}
+          />
         );
       })}
+
+      {/* 4 stat tiles (medium, no photos, inline-style backgrounds via --m-* tokens) */}
+      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
+        <div class="cat-face cat-face--solid active" style="background: var(--m-green);">
+          <span class="stat-num">{complete}</span>
+          <span class="branding-bar">{dict.complete}</span>
+        </div>
+      </a>
+      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
+        <div class="cat-face cat-face--solid active" style="background: var(--m-orange);">
+          <span class="stat-num">{draft}</span>
+          <span class="branding-bar">{dict.draft}</span>
+        </div>
+      </a>
+      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
+        <div class="cat-face cat-face--solid active" style="background: var(--m-steel);">
+          <span class="stat-num">{total - complete - draft}</span>
+          <span class="branding-bar">{dict.stub}</span>
+        </div>
+      </a>
+      <a class="tile-medium cat-tile wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-red);">
+        <div class="cat-face cat-face--solid active" style="background: var(--m-red);">
+          <span class="stat-num">{total}</span>
+          <span class="branding-bar">{dict.pieces}</span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -896,6 +844,73 @@ const firstDishId = allDishes[0]?.id ?? '';
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+  }
+
+  .tiles-grid.start-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 1rem;
+    align-content: flex-start;
+  }
+  .stat-num {
+    font-family: var(--sans);
+    font-size: 3rem;
+    font-weight: 200;
+    color: #fff;
+    line-height: 1;
+    position: absolute;
+    top: 12px; left: 12px;
+  }
+  .featured-tile {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+  .featured-tile .featured-face {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+  .featured-tile .featured-face--active {
+    display: block;
+  }
+  .featured-tile .featured-img {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .featured-tile .featured-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  }
+  .featured-tile .featured-name {
+    position: absolute;
+    bottom: 32px; left: 12px;
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 1.1rem;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+  .featured-tile .featured-label {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.85;
+    z-index: 2;
+  }
+  @media (max-width: 540px) {
+    /* Responsive scale via direct width/height override (NOT transform: scale).
+       Numbers: small 56, medium 120, wide 248, large 248. */
+    .tiles-grid .tile-small  { width: 56px;  height: 56px;  }
+    .tiles-grid .tile-medium { width: 120px; height: 120px; }
+    .tiles-grid .tile-wide   { width: 248px; height: 120px; }
+    .tiles-grid .tile-large  { width: 248px; height: 248px; }
   }
 </style>
 
