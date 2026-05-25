@@ -1,0 +1,1014 @@
+---
+/**
+ * 9-panel Hub component. Renders the home panel (panorama + featured tile +
+ * progress + start-screen) as panel 0, followed by 8 category panels (one per
+ * sorted category). Used by both /[locale]/ and /[locale]/browse/[category]/.
+ *
+ * Props:
+ *   locale: 'zh' | 'en' | 'yue'
+ *   initialPanel: 'home' | <category-id>   — which panel is initially in view
+ *
+ * The hub-pivot's prev/next arrows wrap modulo 9 (home <-> appetizer ... <-> main).
+ * URL is kept in sync via history.replaceState as the user scrolls between panels.
+ */
+import { getCollection } from 'astro:content';
+import CategoryIcon from '~/components/CategoryIcon.astro';
+import { tileColors, tileColor as tileColorFor } from '~/lib/categoryColors';
+import { commonsThumb } from '~/lib/commonsImage';
+
+interface Props {
+  locale: 'zh' | 'en' | 'yue';
+  initialPanel: string; // 'home' | category-id
+}
+const { locale, initialPanel } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const allCats = (await getCollection('category')).sort((a, b) => a.data.sort_order - b.data.sort_order);
+const allDishes = await getCollection('dish');
+
+const dishesByCat = new Map<string, typeof allDishes>();
+for (const cat of allCats) {
+  dishesByCat.set(cat.id, allDishes
+    .filter((d) => d.data.category.id === cat.id)
+    .sort((a, b) => a.data.menu_no - b.data.menu_no));
+}
+
+type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
+
+const total = allDishes.length;
+const complete = allDishes.filter((d) => d.data.method_status === 'complete').length;
+const draft = allDishes.filter((d) => d.data.method_status === 'draft').length;
+
+function sizeOf(_catId: string, dishCount: number): 'w' | 'm' | 's' {
+  if (dishCount >= 20) return 'w';
+  if (dishCount >= 7) return 'm';
+  return 's';
+}
+
+const dict = {
+  zh: {
+    hero_title: '粵食典',
+    hero_sub_a: '六張港式茶餐廳水牌',
+    hero_sub_b: '66 道菜 · 三語可溯源',
+    browse: '按類別瀏覽',
+    progress: '收錄進度',
+    complete: '完整做法', draft: '草稿', stub: '配料表', dish_complete: '已完成',
+    pieces: '道',
+    featured_today: '今日推介', featured_random: '隨機菜', featured_recent: '最近瀏覽',
+    dishes_text: '菜',
+    home_label: '粵食典',
+  },
+  en: {
+    hero_title: 'Cantopedia',
+    hero_sub_a: 'Six hand-written 茶餐廳 menus',
+    hero_sub_b: '66 dishes · tri-lingual · citation-traceable',
+    browse: 'Browse by category',
+    progress: 'Cataloging progress',
+    complete: 'with method', draft: 'draft', stub: 'ingredients only', dish_complete: 'complete',
+    pieces: 'dishes',
+    featured_today: "TODAY'S PICK", featured_random: 'RANDOM DISH', featured_recent: 'RECENTLY VIEWED',
+    dishes_text: 'dishes',
+    home_label: 'Cantopedia',
+  },
+  yue: {
+    hero_title: '粵食典',
+    hero_sub_a: '六張茶餐廳水牌',
+    hero_sub_b: '66 道菜 · 三語可溯源',
+    browse: '按類別瀏覽',
+    progress: '收錄進度',
+    complete: '完整做法', draft: '草稿', stub: '配料表', dish_complete: '已完成',
+    pieces: '道',
+    featured_today: '今日推介', featured_random: '隨機餸', featured_recent: '啱啱睇過',
+    dishes_text: '菜',
+    home_label: '粵食典',
+  },
+}[locale];
+
+function nameOf(c: typeof allCats[number]) {
+  return locale === 'en' ? c.data.names.en : c.data.names.yue_hant;
+}
+function descOf(c: typeof allCats[number]) {
+  if (locale === 'en') return c.data.description.en ?? c.data.description.zh;
+  if (locale === 'yue') return c.data.description.yue ?? c.data.description.zh;
+  return c.data.description.zh;
+}
+
+// Initial pivot title shown SSR
+const initialTitle = initialPanel === 'home'
+  ? dict.home_label
+  : (() => {
+      const c = allCats.find((c) => c.id === initialPanel);
+      return c ? nameOf(c) : dict.home_label;
+    })();
+
+// Build dishes data for featured tile inline script (home panel)
+const dishesData = allDishes.map((d) => ({
+  id: d.id,
+  name: locale === 'en' ? d.data.names.en : d.data.names.yue_hant,
+  img: d.data.images?.[0]?.path ? commonsThumb(d.data.images[0].path, 1200) : null,
+}));
+
+// Featured tile initial href fallback
+const firstDishId = allDishes[0]?.id ?? '';
+---
+<!-- Hub-aware pivot strip: title updates as user scrolls between panels -->
+<nav class="hub-pivot" aria-label="Hub pivot">
+  <a class="hub-pivot-link hub-pivot-link--prev" id="hub-pivot-prev" href="#" data-dir="prev">‹</a>
+  <h1 class="hub-pivot-title" id="hub-pivot-title">{initialTitle}</h1>
+  <a class="hub-pivot-link hub-pivot-link--next" id="hub-pivot-next" href="#" data-dir="next">›</a>
+</nav>
+
+<div class="hub" id="hub" data-initial-panel={initialPanel}>
+  <!-- Panel 0: HOME -->
+  <section
+    class="hub-panel hub-panel--home"
+    data-panel="home"
+    data-name={dict.home_label}
+    data-url={`${base}/${locale}`}
+    aria-labelledby="hub-home-title"
+  >
+    <section class="panorama">
+      <div class="panorama-stripe" aria-hidden="true"></div>
+      <h2 id="hub-home-title" class="panorama-title">{dict.hero_title}</h2>
+      <p class="panorama-sub">
+        <span>{dict.hero_sub_a}</span>
+        <span class="panorama-dot">·</span>
+        <span>{dict.hero_sub_b}</span>
+      </p>
+    </section>
+
+    <section class="featured-section">
+      <a id="featured-tile" class="featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
+        <div class="featured-face featured-face--active" data-face="today">
+          <div class="featured-img" data-img=""></div>
+          <div class="featured-overlay"></div>
+          <div class="featured-label">{dict.featured_today}</div>
+          <div class="featured-name"></div>
+        </div>
+        <div class="featured-face" data-face="random">
+          <div class="featured-img" data-img=""></div>
+          <div class="featured-overlay"></div>
+          <div class="featured-label">{dict.featured_random}</div>
+          <div class="featured-name"></div>
+        </div>
+        <div class="featured-face" data-face="recent">
+          <div class="featured-img" data-img=""></div>
+          <div class="featured-overlay"></div>
+          <div class="featured-label">{dict.featured_recent}</div>
+          <div class="featured-name"></div>
+        </div>
+      </a>
+    </section>
+
+    <section class="pivot-section">
+      <div class="pivot-label">{dict.progress}</div>
+      <div class="stat-tiles">
+        <div class="stat-tile stat-complete live-tile">
+          <div class="live-tile-face front">
+            <div class="stat-num">{complete}</div>
+            <div class="stat-label">{dict.complete}</div>
+          </div>
+          <div class="live-tile-face back">
+            <div class="stat-num-small">{Math.round((complete / total) * 100)}%</div>
+            <div class="stat-label">{dict.complete}</div>
+          </div>
+        </div>
+        <div class="stat-tile stat-draft live-tile">
+          <div class="live-tile-face front">
+            <div class="stat-num">{draft}</div>
+            <div class="stat-label">{dict.draft}</div>
+          </div>
+          <div class="live-tile-face back">
+            <div class="stat-num-small">{Math.round((draft / total) * 100)}%</div>
+            <div class="stat-label">{dict.draft}</div>
+          </div>
+        </div>
+        <div class="stat-tile stat-stub live-tile">
+          <div class="live-tile-face front">
+            <div class="stat-num">{total - complete - draft}</div>
+            <div class="stat-label">{dict.stub}</div>
+          </div>
+          <div class="live-tile-face back">
+            <div class="stat-num-small">{Math.round(((total - complete - draft) / total) * 100)}%</div>
+            <div class="stat-label">{dict.stub}</div>
+          </div>
+        </div>
+        <div class="stat-tile stat-total live-tile">
+          <div class="live-tile-face front">
+            <div class="stat-num">{total}</div>
+            <div class="stat-label">{dict.pieces}</div>
+          </div>
+          <div class="live-tile-face back">
+            <div class="stat-num-small">100%</div>
+            <div class="stat-label">{dict.pieces}</div>
+          </div>
+        </div>
+      </div>
+      <div class="prog-track">
+        <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
+        <div class="prog-seg prog-draft" style={`width: ${(draft / total) * 100}%`}></div>
+      </div>
+    </section>
+
+    <h3 class="pivot-h">{dict.browse}</h3>
+
+    <div class="start-screen">
+      {allCats.map((cat) => {
+        const inCat = dishesByCat.get(cat.id) ?? [];
+        if (inCat.length === 0) return null;
+        const catName = nameOf(cat);
+        const tileColor = tileColors[cat.id] || '#37474F';
+        const size = sizeOf(cat.id, inCat.length);
+        const isWide = size === 'w';
+        return (
+          <a
+            class={`tile wp-tile size-${size}`}
+            href={`${base}/${locale}/browse/${cat.id}`}
+            data-cat={cat.id}
+            aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
+            style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}
+          >
+            {isWide ? (
+              <>
+                <div class="face front">
+                  <CategoryIcon cat={cat.id as CatId} size={88} />
+                  <div class="tile-name">{catName}</div>
+                  <div class="tile-count">{inCat.length} {dict.pieces}</div>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="back-label">{locale === 'en' ? 'CANTOPEDIA · STATS' : '粵食典 · 數據'}</div>
+                  <div class="back-num">{total}</div>
+                  <div class="back-tagline">{
+                    locale === 'en'
+                      ? `${total} dishes · 8 categories · tri-lingual`
+                      : `${total} 道菜 · 8 大類 · 三語可溯`
+                  }</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="face front">
+                  <CategoryIcon cat={cat.id as CatId} size={size === 's' ? 48 : 72} />
+                  <div class="tile-name">{catName}</div>
+                  <span class="tile-badge">{inCat.length}</span>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="back-num-sm">{inCat.length}</div>
+                  <div class="back-label-sm">{locale === 'en' ? 'dishes' : '道菜'}</div>
+                  <div class="back-name-sm">{catName}</div>
+                </div>
+              </>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Panels 1-8: CATEGORIES -->
+  {allCats.map((cat) => {
+    const dishes = dishesByCat.get(cat.id) ?? [];
+    const tileColor = tileColorFor(cat.id);
+    const catName = nameOf(cat);
+    const catDesc = descOf(cat);
+    return (
+      <section
+        class="hub-panel"
+        data-panel={cat.id}
+        data-cat={cat.id}
+        data-name={catName}
+        data-url={`${base}/${locale}/browse/${cat.id}`}
+        aria-labelledby={`hub-title-${cat.id}`}
+      >
+        <header class="cat-hero" style={`background: ${tileColor};`}>
+          <div class="cat-no">{dishes.length}</div>
+          <h2 id={`hub-title-${cat.id}`} class="cat-name">{catName}</h2>
+          <p class="cat-desc">{catDesc}</p>
+          <p class="cat-langs">· {cat.data.names.zh} · {cat.data.names.en}</p>
+        </header>
+
+        <div class="dish-grid">
+          {dishes.map((dish) => {
+            const dishName = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
+            const statusClass =
+              dish.data.method_status === 'complete' ? 'badge--seal' :
+              dish.data.method_status === 'draft' ? 'badge--warn' : '';
+            const statusLabel =
+              dish.data.method_status === 'complete' ? dict.dish_complete :
+              dish.data.method_status === 'draft' ? dict.draft : dict.stub;
+            const heroImg = dish.data.images?.[0];
+            const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
+            return (
+              <a class={`dish-card wp-tile ${thumb ? 'has-back' : ''}`}
+                 href={`${base}/${locale}/dishes/${dish.id}`}
+                 style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
+                <div class="card-face card-front">
+                  <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+                  <div class="card-name">{dishName}</div>
+                  <div class="card-jyut">{dish.data.names.jyutping}</div>
+                  <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
+                  <div class="card-foot">
+                    <span class={`badge ${statusClass}`}>{statusLabel}</span>
+                    <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
+                  </div>
+                </div>
+                {thumb && (
+                  <div class="card-face card-back" aria-hidden="true">
+                    <img class="card-photo" src={thumb} alt="" loading="lazy" decoding="async" />
+                  </div>
+                )}
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    );
+  })}
+</div>
+
+<!-- Home-panel featured-tile script: needs dishesData via define:vars. -->
+<script define:vars={{ base, locale, dishesData, homeUrl: `${base}/${locale}` }}>
+  (function () {
+    const tile = document.getElementById('featured-tile');
+    if (!tile) return;
+    const faces = tile.querySelectorAll('.featured-face');
+    const withImg = dishesData.filter((d) => d.img);
+    if (withImg.length === 0) return;
+
+    // Today's pick — deterministic by day-of-year
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+    const todayDish = withImg[dayOfYear % withImg.length];
+
+    const randomDish = withImg[Math.floor(Math.random() * withImg.length)];
+
+    let recentDish = null;
+    try {
+      const recentId = localStorage.getItem('cantopedia-last-dish');
+      if (recentId) {
+        recentDish = dishesData.find((d) => d.id === recentId && d.img);
+      }
+    } catch {}
+    if (!recentDish) recentDish = todayDish;
+
+    const picks = { today: todayDish, random: randomDish, recent: recentDish };
+
+    faces.forEach((face) => {
+      const f = face.dataset.face;
+      const pick = picks[f];
+      if (!pick) return;
+      const imgEl = face.querySelector('.featured-img');
+      if (imgEl && pick.img) imgEl.style.backgroundImage = `url("${pick.img}")`;
+      face.querySelector('.featured-name').textContent = pick.name;
+    });
+
+    tile.addEventListener('click', () => {
+      const active = tile.querySelector('.featured-face--active');
+      const f = active?.dataset.face;
+      const pick = picks[f];
+      if (pick) {
+        try { localStorage.setItem('cantopedia-last-dish', pick.id); } catch {}
+        tile.href = `${base}/${locale}/dishes/${pick.id}`;
+      }
+    });
+    tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let i = 0;
+    setInterval(() => {
+      faces[i].classList.remove('featured-face--active');
+      i = (i + 1) % faces.length;
+      faces[i].classList.add('featured-face--active');
+      const f = faces[i].dataset.face;
+      if (picks[f]) tile.href = `${base}/${locale}/dishes/${picks[f].id}`;
+    }, 6000);
+  })();
+</script>
+
+<!-- Hub navigation: scroll-snap + URL sync + pivot prev/next (wraps modulo N). -->
+<script>
+  (function () {
+    const hub = document.getElementById('hub') as HTMLElement | null;
+    if (!hub) return;
+    const titleEl = document.getElementById('hub-pivot-title');
+    const prevLink = document.getElementById('hub-pivot-prev') as HTMLAnchorElement | null;
+    const nextLink = document.getElementById('hub-pivot-next') as HTMLAnchorElement | null;
+    const panels = Array.from(hub.querySelectorAll<HTMLElement>('.hub-panel'));
+    if (panels.length === 0) return;
+
+    function getActiveIndex() {
+      const w = hub!.clientWidth;
+      const i = Math.round(hub!.scrollLeft / w);
+      return Math.max(0, Math.min(panels.length - 1, i));
+    }
+
+    function updatePivot(i: number) {
+      const p = panels[i];
+      if (!p) return;
+      const name = p.dataset.name ?? '';
+      const url = p.dataset.url ?? '';
+      if (titleEl) titleEl.textContent = name;
+      // Update document title to match active panel
+      document.title = `${name} · 粵食典 Cantopedia`;
+      // Push URL without triggering nav
+      if (url && location.pathname + location.hash !== url) {
+        history.replaceState({ panelIndex: i }, '', url);
+      }
+      // Update prev/next link hrefs for non-JS users + middle-click (wraps).
+      const prev = panels[(i - 1 + panels.length) % panels.length];
+      const next = panels[(i + 1) % panels.length];
+      if (prevLink && prev?.dataset.url) prevLink.href = prev.dataset.url;
+      if (nextLink && next?.dataset.url) nextLink.href = next.dataset.url;
+    }
+
+    function scrollToIndex(i: number) {
+      const w = hub!.clientWidth;
+      hub!.scrollTo({ left: i * w, behavior: 'smooth' });
+    }
+
+    // Initial scroll position from data-initial-panel
+    const initialPanelId = hub.dataset.initialPanel;
+    const initialIdx = panels.findIndex((p) => p.dataset.panel === initialPanelId);
+    if (initialIdx > 0) {
+      hub.style.scrollBehavior = 'auto';
+      hub.scrollLeft = initialIdx * hub.clientWidth;
+      requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
+    }
+    updatePivot(initialIdx >= 0 ? initialIdx : 0);
+
+    // Pivot prev/next — wraps modulo N (home <-> appetizer ... <-> main)
+    prevLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const i = getActiveIndex();
+      scrollToIndex((i - 1 + panels.length) % panels.length);
+    });
+    nextLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const i = getActiveIndex();
+      scrollToIndex((i + 1) % panels.length);
+    });
+
+    // Keyboard arrows when focus is inside hub
+    hub.addEventListener('keydown', (e) => {
+      const k = (e as KeyboardEvent).key;
+      if (k === 'ArrowLeft') { e.preventDefault(); prevLink?.click(); }
+      if (k === 'ArrowRight') { e.preventDefault(); nextLink?.click(); }
+    });
+
+    // Snap detection via IntersectionObserver
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio > 0.5) {
+          const idx = panels.indexOf(entry.target as HTMLElement);
+          if (idx >= 0) updatePivot(idx);
+        }
+      });
+    }, { root: hub, threshold: [0.5] });
+    panels.forEach((p) => io.observe(p));
+
+    // Resize: re-snap to current panel
+    let resizeT: number | undefined;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeT);
+      resizeT = window.setTimeout(() => {
+        const i = getActiveIndex();
+        hub.style.scrollBehavior = 'auto';
+        hub.scrollLeft = i * hub.clientWidth;
+        requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
+      }, 100);
+    });
+
+    // popstate: scroll to URL's panel
+    window.addEventListener('popstate', () => {
+      const url = location.pathname.replace(/\/$/, '');
+      const idx = panels.findIndex((p) => (p.dataset.url ?? '').replace(/\/$/, '') === url);
+      if (idx >= 0) scrollToIndex(idx);
+    });
+  })();
+</script>
+
+<!-- Live Tile flip for category Start Screen tiles + stat tiles + dish cards.
+     Replaces the old start-screen and dish-card flip scripts; runs once
+     globally since the hub now owns all of them. -->
+<script>
+  (function () {
+    const PERIOD = 10000;
+    const STEP = 1400;
+    let timers: number[] = [];
+
+    function isPanelVisible(t: HTMLElement): boolean {
+      const panel = t.closest<HTMLElement>('.hub-panel');
+      if (!panel) return true;
+      const r = panel.getBoundingClientRect();
+      return !(r.right < 0 || r.left > window.innerWidth);
+    }
+
+    function flip(t: HTMLElement) {
+      if (document.hidden) return;
+      if (t.classList.contains('pressing')) return;
+      if (!isPanelVisible(t)) return;
+      t.classList.toggle('flipped');
+    }
+    function stopFlip() {
+      timers.forEach((id) => { window.clearTimeout(id); window.clearInterval(id); });
+      timers = [];
+    }
+    function startFlip() {
+      stopFlip();
+      // Category Start Screen tiles (home panel) + dish cards (category panels)
+      const tiles = Array.from(document.querySelectorAll<HTMLElement>('.start-screen .tile, .dish-card.has-back'));
+      tiles.forEach((t, i) => {
+        const offset = (i * STEP) % PERIOD;
+        const initial = window.setTimeout(() => {
+          flip(t);
+          const id = window.setInterval(() => flip(t), PERIOD);
+          timers.push(id);
+        }, offset);
+        timers.push(initial);
+      });
+    }
+    startFlip();
+    document.addEventListener('astro:before-preparation', stopFlip);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopFlip();
+      else if (document.querySelector('#hub')) startFlip();
+    });
+  })();
+</script>
+
+<style>
+  main { max-width: none !important; padding: 0 !important; }
+
+  /* ===== Hub-aware pivot strip ===== */
+  .hub-pivot {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.5rem 0.5rem;
+    font-family: var(--lang-font-primary);
+    min-height: 4.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hub-pivot-title {
+    font-size: clamp(1.6rem, 7vw, 3.25rem);
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: var(--lang-h1-tracking, -0.025em);
+    line-height: 1;
+    margin: 0;
+    text-align: center;
+    color: var(--t-ink);
+    overflow-wrap: break-word;
+  }
+  .hub-pivot-link {
+    font-size: 2rem;
+    color: var(--t-ink-dim);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    line-height: 1;
+    border: 0;
+    user-select: none;
+    cursor: pointer;
+    transition: color var(--fluent-duration-fast, 150ms) ease;
+  }
+  .hub-pivot-link:hover { color: var(--t-ink); }
+  @media (max-width: 540px) {
+    .hub-pivot { min-height: 3.5rem; padding: 0.75rem 1rem 0.25rem; }
+    .hub-pivot-link { font-size: 1.5rem; padding: 0.25rem 0.5rem; }
+  }
+
+  /* ===== Hub: horizontal scroll-snap container ===== */
+  .hub {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    height: calc(100vh - 120px);
+    min-height: 480px;
+    overscroll-behavior-x: contain;
+  }
+  .hub::-webkit-scrollbar { display: none; }
+
+  .hub-panel {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 1.5rem 4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .hub-panel::-webkit-scrollbar { width: 6px; }
+  .hub-panel::-webkit-scrollbar-thumb { background: var(--t-rule); border-radius: 3px; }
+
+  /* ===== Category panel hero ===== */
+  .cat-hero {
+    color: white;
+    padding: 1.5rem 1.5rem 1.25rem;
+    margin: 0 -1.5rem 1.5rem;
+    position: relative;
+  }
+  .cat-no {
+    font-family: var(--sans);
+    font-size: clamp(2.25rem, 8vw, 3.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .cat-name {
+    font-family: var(--lang-font-primary);
+    font-size: clamp(1.3rem, 4.5vw, 2rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0.25rem 0 0.5rem;
+    color: white;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .cat-desc { font-family: var(--lang-font-primary); font-size: 0.95rem; font-weight: 400; margin: 0.5rem 0 0; opacity: 0.92; max-width: 60ch; }
+  .cat-langs { font-family: var(--meta); font-size: 0.8rem; opacity: 0.8; margin-top: 0.75rem; letter-spacing: 0.04em; }
+
+  /* ===== Category panel dish grid ===== */
+  .dish-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) { .dish-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .dish-grid { grid-template-columns: 1fr; } }
+
+  .dish-card:nth-child(5n+1) { grid-column: span 2; }
+  .dish-card:nth-child(10n+7) { grid-row: span 2; }
+  @media (max-width: 900px) {
+    .dish-card:nth-child(5n+1) { grid-column: span 2; }
+    .dish-card:nth-child(10n+7) { grid-row: auto; }
+  }
+  @media (max-width: 520px) {
+    .dish-card:nth-child(5n+1) { grid-column: span 1; }
+  }
+
+  .dish-card {
+    background: var(--cat-color);
+    color: white !important;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    perspective: 1200px;
+  }
+  .dish-card:hover { color: white !important; }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    padding: 1rem 1.25rem 1.125rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s var(--fluent-curve-easy-ease);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-back { transform: rotateX(180deg); padding: 0; background: #000; }
+  .dish-card.flipped .card-front { transform: rotateX(180deg); }
+  .dish-card.flipped .card-back  { transform: rotateX(360deg); }
+
+  .card-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dish-card:not(.has-back) .card-front { position: static; }
+  .dish-card:not(.has-back) { min-height: 180px; }
+  .dish-card:nth-child(5n+1) .card-name { font-size: 1.5rem; }
+  .dish-card:nth-child(5n+1) { min-height: 220px; }
+  .card-no { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.22em; color: rgba(255,255,255,0.75); font-weight: 400; text-transform: uppercase; }
+  .card-name { font-family: var(--sans), var(--sans-zh); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.005em; margin: 0.4rem 0 0.3rem; color: white; line-height: 1.15; }
+  .card-jyut { font-family: var(--mono); font-size: 0.85rem; color: rgba(255,255,255,0.78); }
+  .card-zh-en { font-family: var(--sans), var(--sans-zh); font-size: 0.9rem; color: rgba(255,255,255,0.78); margin-top: 0.55rem; font-weight: 400; }
+  .card-foot { margin-top: auto; padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+  .card-ings { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+  .dish-card .badge { background: rgba(255,255,255,0.18) !important; color: white !important; border: 0 !important; font-size: 0.7rem; padding: 0.2rem 0.6rem; letter-spacing: 0.18em; }
+
+  /* ============================================================
+     HOME PANEL — panorama + featured tile + progress + start-screen
+     ============================================================ */
+  /* WP10 Panorama header */
+  .panorama {
+    position: relative;
+    padding: 2rem 0 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .panorama-stripe {
+    position: absolute;
+    left: -1.5rem;
+    top: 2rem;
+    width: 3px;
+    height: 5.5rem;
+    background: var(--m-red);
+  }
+  .panorama-title {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 400;
+    font-size: clamp(var(--lang-h1-size), 9vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--t-ink);
+  }
+  .panorama-sub {
+    margin: 0.75rem 0 0;
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--t-ink-dim);
+    letter-spacing: 0.02em;
+  }
+  .panorama-dot { margin: 0 0.5rem; opacity: 0.5; }
+
+  /* Pivot section — section label + content */
+  .pivot-section { margin: 0 0 3rem; }
+  .pivot-label {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--t-ink-dim);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 0.875rem;
+  }
+  @media (max-width: 520px) {
+    .stat-tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat-tile {
+    padding: 0.85rem 0.95rem 0.9rem;
+    color: white;
+    min-height: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .stat-complete { background: var(--m-green); }
+  .stat-draft    { background: var(--m-orange); }
+  .stat-stub     { background: #647687; }
+  .stat-total    { background: var(--m-red); }
+  .stat-num {
+    font-family: var(--sans);
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .prog-track {
+    height: 3px;
+    background: var(--t-rule);
+    overflow: hidden;
+    display: flex;
+  }
+  .prog-seg { height: 100%; }
+  .prog-complete { background: var(--m-green); }
+  .prog-draft { background: var(--m-orange); }
+
+  .pivot-h {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    margin: 0 0 1.25rem;
+    color: var(--t-ink);
+  }
+
+  .start-screen {
+    display: grid;
+    grid-template-columns: repeat(4, var(--tile-unit));
+    grid-auto-rows: var(--tile-unit);
+    gap: var(--start-gap, 6px);
+    justify-content: center;
+    margin: 1rem auto 2rem;
+    --tile-unit: clamp(72px, 18vw, 200px);
+  }
+  @media (min-width: 768px) {
+    .start-screen { --start-gap: 8px; }
+  }
+
+  /* Per-tile placement */
+  .start-screen .tile[data-cat="main"]        { grid-area: 1 / 1 / 3 / 5; }
+  .start-screen .tile[data-cat="rice"]        { grid-area: 3 / 1 / 5 / 3; }
+  .start-screen .tile[data-cat="noodle"]      { grid-area: 3 / 3 / 5 / 5; }
+  .start-screen .tile[data-cat="appetizer"]   { grid-area: 5 / 1 / 7 / 3; }
+  .start-screen .tile[data-cat="soup-noodle"] { grid-area: 5 / 3 / 6 / 4; }
+  .start-screen .tile[data-cat="baked-rice"]  { grid-area: 5 / 4 / 6 / 5; }
+  .start-screen .tile[data-cat="congee"]      { grid-area: 6 / 3 / 7 / 4; }
+  .start-screen .tile[data-cat="soup-wonton"] { grid-area: 6 / 4 / 7 / 5; }
+
+  .tile {
+    position: relative;
+    display: block;
+    color: white !important;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 10px;
+  }
+  .tile:hover { color: white !important; }
+
+  /* Live Tile flip — applied to ALL tiles */
+  .tile { perspective: 1200px; }
+  .tile .face {
+    position: absolute; inset: 0;
+    padding: 1rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s var(--fluent-curve-easy-ease, cubic-bezier(0.6, 0, 0.2, 1));
+  }
+  .tile .face.back { transform: rotateX(180deg); }
+  .tile.flipped .face.front { transform: rotateX(180deg); }
+  .tile.flipped .face.back  { transform: rotateX(360deg); }
+
+  /* WIDE front + back text */
+  .tile.size-w .face { padding: 1.25rem; }
+  .tile.size-w .face .tile-name  { font-size: 1.75rem; font-weight: 400; margin-top: 0.6rem; letter-spacing: 0.01em; }
+  .tile.size-w .face .tile-count { font-size: 1rem; opacity: 0.85; margin-top: 0.2rem; letter-spacing: 0.04em; }
+  .tile.size-w .face.back .back-label   { font-size: 0.78rem; letter-spacing: 0.22em; opacity: 0.75; font-weight: 400; text-transform: uppercase; }
+  .tile.size-w .face.back .back-num     { font-size: 4rem; font-weight: 400; line-height: 1.1; margin: 0.25rem 0; }
+  .tile.size-w .face.back .back-tagline { font-size: 0.9rem; opacity: 0.85; max-width: 320px; }
+
+  /* MEDIUM front + back text */
+  .tile.size-m .face .tile-name { font-size: 1rem; font-weight: 400; margin-top: 0.6rem; letter-spacing: 0.02em; }
+  .tile.size-m .face.back .back-num-sm   { font-size: 3rem; font-weight: 400; line-height: 1; }
+  .tile.size-m .face.back .back-label-sm { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.25rem; }
+  .tile.size-m .face.back .back-name-sm  { font-size: 0.85rem; opacity: 0.85; margin-top: 0.5rem; }
+
+  /* SMALL front + back text */
+  .tile.size-s .face { padding: 0.5rem; }
+  .tile.size-s .face .tile-name { font-size: 0.78rem; font-weight: 400; margin-top: 0.4rem; letter-spacing: 0.02em; line-height: 1.15; }
+  .tile.size-s .face.back .back-num-sm   { font-size: 2.25rem; font-weight: 400; line-height: 1; }
+  .tile.size-s .face.back .back-label-sm { font-size: 0.72rem; opacity: 0.85; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.2rem; font-weight: 400; }
+  .tile.size-s .face.back .back-name-sm  { font-size: 0.78rem; opacity: 0.85; margin-top: 0.3rem; }
+
+  .tile-badge {
+    position: absolute;
+    top: 6px; right: 8px;
+    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .tile.size-s .tile-badge { display: none; }
+
+  .live-tile {
+    position: relative;
+    perspective: 800px;
+    overflow: hidden;
+  }
+  .live-tile-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: inherit;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    animation: tile-flip-front 9s infinite;
+  }
+  .live-tile-face.back {
+    animation-name: tile-flip-back;
+    transform: rotateX(180deg);
+  }
+  @keyframes tile-flip-front {
+    0%, 50%   { transform: rotateX(0deg); }
+    60%, 100% { transform: rotateX(-180deg); }
+  }
+  @keyframes tile-flip-back {
+    0%, 50%   { transform: rotateX(180deg); }
+    60%, 100% { transform: rotateX(0deg); }
+  }
+  .stat-num-small {
+    font-family: var(--lang-font-primary);
+    font-size: 2.5rem;
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: -0.02em;
+    color: white;
+    line-height: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-tile-face { animation: none; }
+    .live-tile-face.back { display: none; }
+  }
+
+  /* Featured tile rotator */
+  .featured-section {
+    margin: 2rem 0 1.5rem;
+  }
+  .featured-tile {
+    position: relative;
+    display: block;
+    height: 220px;
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--t-plate);
+    border: 0;
+  }
+  .featured-face {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 700ms var(--fluent-curve-decelerate-mid, ease-out);
+    pointer-events: none;
+  }
+  .featured-face--active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .featured-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--m-blue-dark);
+  }
+  .featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.55) 60%,
+      rgba(0,0,0,0.8) 100%);
+  }
+  .featured-label {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.5rem;
+    font-family: var(--lang-font-primary);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: var(--lang-min-weight, 400);
+  }
+  .featured-name {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--lang-font-primary);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1.1;
+    color: #fff;
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: var(--lang-h2-tracking, 0);
+  }
+  @media (max-width: 540px) {
+    .featured-tile { height: 180px; }
+  }
+
+  /* Tile entrance: keep on stat tiles + featured tile (one-shot reveals).
+     Removed from .start-screen tiles since the hub no longer swaps when
+     navigating between panels — stagger animation would replay on every
+     scroll-snap and feel busy. */
+  @keyframes tile-enter {
+    0%   { opacity: 0; transform: translateY(20px) scale(0.92); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .stat-tile, .featured-tile {
+    animation: tile-enter 520ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
+  }
+  .stat-tile:nth-child(1) { animation-delay: 0ms; }
+  .stat-tile:nth-child(2) { animation-delay: 50ms; }
+  .stat-tile:nth-child(3) { animation-delay: 100ms; }
+  .stat-tile:nth-child(4) { animation-delay: 150ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .stat-tile, .featured-tile {
+      animation: tile-enter-fade 200ms ease-out both;
+    }
+    @keyframes tile-enter-fade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  }
+</style>
