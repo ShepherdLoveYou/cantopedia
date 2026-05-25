@@ -36,3 +36,5 @@ site/public/pagefind/
 
 # Drafts (must be promoted via `pipeline validate` before commit)
 data/**/*.yaml.draft
+site/smoke-out/
+site/contrast-out/
