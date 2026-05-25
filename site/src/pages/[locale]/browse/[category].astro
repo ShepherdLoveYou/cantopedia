@@ -68,7 +68,7 @@ const dict = {
            href={`${base}/${locale}/dishes/${dish.id}`}
            style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
           {thumb && (
-            <img class="card-thumb" src={thumb} alt="" loading="lazy" decoding="async" />
+            <img class="card-thumb" src={thumb} alt={dishName} loading="lazy" decoding="async" />
           )}
           <div class="card-body">
             <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>

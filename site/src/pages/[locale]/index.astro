@@ -314,20 +314,27 @@ const dict = {
 </style>
 
 <script>
-  // Live Tile flip — every tile flips every 10s, staggered by per-tile phase so
-  // the Start Screen has the WP10 "always-alive" rhythm without all tiles syncing.
-  (function setupLiveTiles() {
-    const tiles = Array.from(document.querySelectorAll<HTMLElement>('.start-screen .tile'));
-    if (tiles.length === 0) return;
+  // Live Tile flip — every tile flips every 10s, staggered by per-tile phase
+  // so the Start Screen has the WP10 "always-alive" rhythm without all tiles
+  // syncing. Re-initializes on every astro:page-load so navigating away and
+  // back doesn't leave the tiles frozen.
+  {
     const PERIOD = 10000;
     const STEP = 1400;
-    const timers: number[] = [];
+    let timers: number[] = [];
+
     function flip(t: HTMLElement) {
       if (document.hidden) return;
       if (t.classList.contains('pressing')) return;
       t.classList.toggle('flipped');
     }
-    function start() {
+    function stopFlip() {
+      timers.forEach((id) => { window.clearTimeout(id); window.clearInterval(id); });
+      timers = [];
+    }
+    function startFlip() {
+      stopFlip();
+      const tiles = Array.from(document.querySelectorAll<HTMLElement>('.start-screen .tile'));
       tiles.forEach((t, i) => {
         const offset = (i * STEP) % PERIOD;
         const initial = window.setTimeout(() => {
@@ -338,14 +345,16 @@ const dict = {
         timers.push(initial);
       });
     }
-    function stop() {
-      timers.forEach((id) => { window.clearTimeout(id); window.clearInterval(id); });
-      timers.length = 0;
-    }
-    start();
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stop();
-      else { stop(); start(); }
+    startFlip();
+    document.addEventListener('astro:page-load', () => {
+      // Only run on pages with a start screen (the homepage).
+      if (document.querySelector('.start-screen')) startFlip();
+      else stopFlip();
     });
-  })();
+    document.addEventListener('astro:before-preparation', stopFlip);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopFlip();
+      else if (document.querySelector('.start-screen')) startFlip();
+    });
+  }
 </script>

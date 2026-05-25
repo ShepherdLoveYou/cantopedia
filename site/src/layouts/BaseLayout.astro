@@ -189,17 +189,21 @@ const dict = {
       // .active state on all [data-loc] elements. Also update each switcher
       // link's href so it points to the equivalent page in the target locale.
       function refreshLocaleSwitchers() {
-        const path = location.pathname;
-        const base = document.querySelector('base')?.getAttribute('href') || '';
-        // Strip the configured base path; fall back to /cantopedia.
-        const baseStripped = path.replace(/^\/cantopedia/, '').replace(/\/$/, '');
+        const path = location.pathname.replace(/\/$/, '');
+        // Read the configured base from any existing locale link so we don't
+        // hardcode "/cantopedia" — supports alternate deployment roots.
+        const sample = document.querySelector<HTMLAnchorElement>('[data-loc]');
+        const sampleHref = sample?.getAttribute('href') ?? '';
+        const baseMatch = sampleHref.match(/^(\/[^/]*)?\/(zh|yue|en)\b/);
+        const sitebase = (baseMatch?.[1] ?? '').replace(/\/$/, '');
+        const baseStripped = sitebase ? path.replace(new RegExp('^' + sitebase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '') : path;
         const parts = baseStripped.split('/').filter(Boolean);
         const current = (['zh', 'yue', 'en'].includes(parts[0]) ? parts[0] : 'zh') as 'zh' | 'yue' | 'en';
         const rest = parts.slice(1).join('/');
         document.querySelectorAll<HTMLAnchorElement>('[data-loc]').forEach((a) => {
           const target = a.dataset.loc as 'zh' | 'yue' | 'en';
           a.classList.toggle('active', target === current);
-          a.href = `/cantopedia/${target}${rest ? '/' + rest : ''}`;
+          a.href = `${sitebase}/${target}${rest ? '/' + rest : ''}`;
         });
       }
       document.addEventListener('astro:page-load', refreshLocaleSwitchers);

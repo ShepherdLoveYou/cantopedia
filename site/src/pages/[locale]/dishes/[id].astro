@@ -99,7 +99,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
 
   <header class={`hero-band ${dish.data.images?.[0] ? 'has-photo' : ''}`} style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
     {dish.data.images?.[0] && (
-      <img class="hero-photo" src={commonsThumb(dish.data.images[0].path, 1400)} alt="" loading="eager" decoding="async" />
+      <img class="hero-photo" src={commonsThumb(dish.data.images[0].path, 1400)} alt={`${dish.data.names.yue_hant} · ${dish.data.names.en}`} loading="eager" decoding="async" />
     )}
     <div class="hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
     <h1 class="hero-name">{dish.data.names.yue_hant}</h1>
