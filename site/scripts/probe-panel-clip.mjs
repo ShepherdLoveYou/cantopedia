@@ -38,9 +38,14 @@ console.log(JSON.stringify(results, null, 2));
 
 let ok = true;
 for (const { vp, data } of results) {
-  const delta = Math.abs((data.panelWidth ?? 0) - vp.width);
+  // Check hubWidth (the scroll container) matches viewport — this is the
+  // metric that actually changes when main's max-width/padding escape
+  // works. panelWidth is grid-auto-columns: 100vw so always self-reports
+  // 100vw regardless of whether the scroll container (.hub) is clipped
+  // by main's max-width and padding, and is NOT a useful signal.
+  const delta = Math.abs((data.hubWidth ?? 0) - vp.width);
   if (delta > 2) {
-    console.error(`FAIL ${vp.width}x${vp.height}: panel width ${data.panelWidth} ≠ viewport ${vp.width} (Δ=${delta})`);
+    console.error(`FAIL ${vp.width}x${vp.height}: hub width ${data.hubWidth} ≠ viewport ${vp.width} (Δ=${delta}; main padding ${data.mainPaddingLeft}/${data.mainPaddingRight})`);
     ok = false;
   }
 }

@@ -877,15 +877,3 @@ const firstDishId = allDishes[0]?.id ?? '';
     }
   }
 </style>
-
-<style is:global>
-  /* Escape BaseLayout's main { max-width: 1200px; padding: 1.5rem 1.5rem 6rem }
-     so Hub panels can fill the viewport. Astro's component scope means
-     Hub's scoped <style> can't reach <main> in BaseLayout; is:global + :has()
-     is the escape hatch. */
-  main:has(#hub) {
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
-</style>
