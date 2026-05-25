@@ -350,7 +350,7 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   .hero-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: clamp(1.75rem, 6vw, 3rem);
+    font-size: clamp(var(--lang-h1-size), 6vw, 3rem);
     font-weight: 400;
     letter-spacing: -0.015em;
     color: white;
@@ -457,6 +457,6 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   @media (max-width: 540px) {
     .hero-band { padding: 1.5rem 1.5rem; }
-    .hero-name { font-size: 2.25rem; }
+    .hero-name { font-size: var(--lang-h1-size); }
   }
 </style>

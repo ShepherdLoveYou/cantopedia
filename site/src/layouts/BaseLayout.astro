@@ -394,19 +394,20 @@ const dict = {
         --mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
         --meta: var(--sans);
 
-  /* Per-language typography defaults (overridden by html[lang="..."] selectors below).
-     Pages should consume these vars in headings/body instead of hard-coding sizes. */
-  --lang-font-primary: var(--sans), var(--sans-zh);
-  --lang-font-serif:   var(--serif-en), var(--serif-zh);
-  --lang-h1-size: 3rem;
-  --lang-h2-size: 2rem;
-  --lang-h3-size: 1.25rem;
-  --lang-body-leading: 1.65;
-  --lang-h1-tracking: -0.025em;
-  --lang-h2-tracking: -0.015em;
-  --lang-min-weight: 200;
-  --lang-font-size-adjust: 0.5;
-  --lang-line-break: normal;
+        /* Per-language typography defaults — neutral fallback only, for unknown lang.
+           Real values live in the html[lang="..."] blocks below.
+           Pages should consume these vars in headings/body instead of hard-coding sizes. */
+        --lang-font-primary: var(--sans), var(--sans-zh);
+        --lang-font-serif:   var(--serif-en), var(--serif-zh);
+        --lang-h1-size: 2.7rem;       /* midway between EN 3rem and ZH 2.4rem */
+        --lang-h2-size: 1.8rem;
+        --lang-h3-size: 1.25rem;
+        --lang-body-leading: 1.6;
+        --lang-h1-tracking: -0.01em;
+        --lang-h2-tracking: -0.005em;
+        --lang-min-weight: 300;
+        --lang-font-size-adjust: 0.52;
+        --lang-line-break: normal;
 
         /* Damped, WP10-mobile-feel easing — softer than @fluentui/tokens' Office-app curves.
            - decelerate: slow start, soft glide-to-stop (no wall)
@@ -443,6 +444,7 @@ const dict = {
         --lang-font-serif: "Crimson Pro", "Iowan Old Style", Georgia, serif;
         --lang-h1-size: 3rem;
         --lang-h2-size: 2rem;
+        --lang-h3-size: 1.25rem;
         --lang-body-leading: 1.65;
         --lang-h1-tracking: -0.025em;
         --lang-h2-tracking: -0.015em;
@@ -455,6 +457,7 @@ const dict = {
         --lang-font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
         --lang-h1-size: 2.4rem;
         --lang-h2-size: 1.65rem;
+        --lang-h3-size: 1.1rem;
         --lang-body-leading: 1.55;
         --lang-h1-tracking: 0.005em;
         --lang-h2-tracking: 0.005em;
@@ -467,6 +470,7 @@ const dict = {
         --lang-font-serif: "Noto Serif HK", "Noto Serif SC", "Source Han Serif HK", serif;
         --lang-h1-size: 2.4rem;
         --lang-h2-size: 1.65rem;
+        --lang-h3-size: 1.1rem;
         --lang-body-leading: 1.55;
         --lang-h1-tracking: 0.005em;
         --lang-h2-tracking: 0.005em;
