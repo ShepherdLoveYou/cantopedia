@@ -133,3 +133,8 @@ sources:
     note: "Item #15 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/8/8b/A_Hokkien_Fried_Rice_from_Star_Seafood_Restuartrant.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Peachyeung316

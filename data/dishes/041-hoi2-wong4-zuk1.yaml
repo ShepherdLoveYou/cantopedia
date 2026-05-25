@@ -122,3 +122,8 @@ sources:
     note: "Item #41 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/5/5c/HK_KT_%E8%A7%80%E5%A1%98_Kwun_Tong_%E7%89%A9%E8%8F%AF%E8%A1%97_Mut_Wah_Street_Wah_On_House_%E6%B5%B7%E7%9A%87%E7%B2%A5%E5%BA%97_Ocean_Empire_Congee_shop_May_2022_Px3_01.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: Hoikwanluok Tsui

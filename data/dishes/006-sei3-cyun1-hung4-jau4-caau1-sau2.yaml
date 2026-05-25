@@ -98,3 +98,8 @@ sources:
     note: "Item #6 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/7/79/Food_%2842944030462%29.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-2.0
+    credit: bryan... from Taipei, Taiwan

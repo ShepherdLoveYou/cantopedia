@@ -105,3 +105,8 @@ sources:
     note: "Item #27 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/9/9a/Beef_chow_fun.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-4.0
+    credit: RightCowLeftCoast

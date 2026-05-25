@@ -103,3 +103,8 @@ sources:
     note: "Item #40 on the source menu"
 created: 2026-05-24
 updated: 2026-05-24
+images:
+  - path: https://upload.wikimedia.org/wikipedia/commons/1/12/HK_SYP_%E8%A5%BF%E7%92%B0_Sai_Ying_Pun_%E5%B1%88%E5%9C%B0%E8%A1%97_Whitty_Street_shop_%E6%AD%A3%E7%89%8C%E6%B2%99%E7%94%B0%E9%9B%9E%E7%B2%A5_Shatin_Congee_Restaurant_November_2022_Px3.jpg
+    source_id: wikimedia-commons
+    license: CC-BY-SA-4.0
+    credit: ZHOUSINGMOUA 1001

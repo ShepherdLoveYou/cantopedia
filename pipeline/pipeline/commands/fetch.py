@@ -105,7 +105,8 @@ def _strip_html(s: str) -> str:
 @click.option("--limit", default=66, help="Max dishes to process.")
 @click.option("--overwrite", is_flag=True, help="Replace existing images list.")
 @click.option("--no-cache", is_flag=True, help="Force re-fetch from Commons.")
-def attach_images(limit: int, overwrite: bool, no_cache: bool) -> None:
+@click.option("--lenient", is_flag=True, help="Drop keyword filter; also search Chinese name.")
+def attach_images(limit: int, overwrite: bool, no_cache: bool, lenient: bool) -> None:
     """For each dish, attach the top CC-licensed Wikimedia Commons hit.
 
     Writes `images: [{path, source_id, license, credit}]` to each dish YAML.
@@ -123,10 +124,11 @@ def attach_images(limit: int, overwrite: bool, no_cache: bool) -> None:
             skipped += 1
             continue
         en_name = raw["names"]["en"]
-        hits = wikimedia_commons.search_images(en_name, limit=8, use_cache=not no_cache)
-        # Require a meaningful name overlap with the image title: at least
-        # 2 of the dish's keywords (or its primary noun) appear in the title.
-        # This filters out e.g. "Shrimp Fried Rice" -> shrimp sandwich.
+        zh_name = raw["names"].get("yue_hant") or raw["names"].get("zh") or ""
+        queries = [en_name]
+        if lenient and zh_name:
+            queries.append(zh_name)
+
         import re
         stop = {"of", "the", "with", "and", "in", "a", "to", "rice", "noodle",
                 "noodles", "soup", "sauce", "fried", "stir", "deluxe", "style",
@@ -141,14 +143,18 @@ def attach_images(limit: int, overwrite: bool, no_cache: bool) -> None:
             return overlap >= 2 or (primary in tw and overlap >= 1)
 
         chosen = None
-        for h in hits:
-            lic = _normalize_license(h.get("license", ""))
-            if not lic:
-                continue
-            if not matches(h.get("title", "")):
-                continue
-            chosen = (h, lic)
-            break
+        for q in queries:
+            hits = wikimedia_commons.search_images(q, limit=8, use_cache=not no_cache)
+            for h in hits:
+                lic = _normalize_license(h.get("license", ""))
+                if not lic:
+                    continue
+                if not lenient and not matches(h.get("title", "")):
+                    continue
+                chosen = (h, lic)
+                break
+            if chosen:
+                break
         if not chosen:
             console.print(f"  [yellow]–[/yellow] #{raw['menu_no']:>2} {en_name}: no CC-licensed match")
             no_match += 1
