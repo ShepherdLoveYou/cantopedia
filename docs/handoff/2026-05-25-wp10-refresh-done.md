@@ -31,62 +31,66 @@
 | 3 | ★★★★★ Tile hover float + entrance stagger | Added per WP10 spec |
 | 4 | 6 fixes: html lang zh-Hant, drawer Escape, entrance vs hover, hover @media, will-change scoping, parallax stale targets | Caught by playwright smoke |
 | 5 | Acrylic dark/light contrast | All WCAG AA across 4 locale×theme combos |
-| 6 | A11y (Tab order, drawer Escape, inert, img alt, h1 count, reduced-motion) | Found + fixed duplicate h1 on browse pages |
+| 6 | A11y (Tab, Escape, inert, alt, h1, reduced-motion) | Found + fixed duplicate h1 + Ken Burns reduced-motion specificity |
 | 7 | Component dark mode polish | Toast shadow + Tooltip arrow indicator |
-| 8 | Performance | FCP 1020ms, LCP 1020ms, CLS 0, JS 13.6KB |
+| 8 | Performance | FCP 1020ms, LCP 1020ms, CLS 0 |
 | 9 | Cross-browser | Chromium ✅, Firefox ✅, WebKit ✅ |
 | 10 | Final smoke pass | All 5 harnesses green |
+
+## Phase 3 — Previously-deferred items (✅ all completed)
+
+| # | Feature | Status |
+|---|---|---|
+| 3a | Font weight pruning | ✅ EN min-weight 200→300; dropped 200 from Noto Sans SC + Open Sans; dropped unused 600s |
+| 3b | ★★ Search results slide-up entrance | ✅ stagger 30ms per hit, 280ms fade+8px slide |
+| 3c | Live-tile multi-face rotator (今日推介/隨機菜/最近瀏覽) | ✅ new featured tile on home, 6s rotation, image bg, localStorage-driven recent |
+| 3d | ★★★★ Pivot 1:1 finger-tracking | ✅ touchmove translates `<main>` 1:1 with finger, rubber-band past threshold, edge hints |
+
+## Phase 3 fix-ups
+
+| Issue | Detection | Fix |
+|---|---|---|
+| Featured tile 404s on WebKit | `cross.mjs` smoke | `commonsThumb()` called at SSG (was: broken inline URL builder) |
+| Ken Burns reduced-motion leak via `.kb-b` specificity | `a11y.mjs` smoke | Reduced-motion rule now `.kb, .kb.kb-b` (matches both) |
 
 ## Reusable test harness (committed)
 
 | Script | Purpose |
 |---|---|
-| `site/scripts/smoke.mjs` | Visits all locale homes + browse + dish; asserts lang, tile count, drawer i18n, hover lift |
-| `site/scripts/contrast.mjs` | Snapshots home + drawer in light/dark; computes WCAG ratios |
-| `site/scripts/a11y.mjs` | Tab order, drawer Escape, inert, img alt, button label, h1 count, reduced-motion |
+| `site/scripts/smoke.mjs` | Visits 5 pages, asserts lang, tile count, drawer i18n, hover lift |
+| `site/scripts/contrast.mjs` | WCAG contrast on body, nav, stat-label, drawer in light/dark × zh/en |
+| `site/scripts/a11y.mjs` | Tab order, drawer Escape, inert, drawer-Tab escape, img alt, button labels, h1 count, html lang, reduced-motion |
 | `site/scripts/perf.mjs` | FCP / LCP / CLS / transfer bytes |
-| `site/scripts/cross.mjs` | Chromium / Firefox / WebKit sanity |
+| `site/scripts/cross.mjs` | Chromium / Firefox / WebKit |
 
 Run `node site/scripts/<name>.mjs` to verify against live deploy.
 
-## Bundle
+## Final bundle (post Phase 3)
 
-- JS: 13.6 KB transferred (BaseLayout 23 KB + ClientRouter 13 KB pre-compression, gzipped to ~13.6 KB total)
-- CSS: 6.7 KB transferred
-- Fonts: 1.2 MB (Noto Sans SC + TC + HK + Serif variants + Crimson + Open Sans, `display=swap`)
-- Total transfer: ~1.26 MB
-
-Fonts dominate. Could subset by language for ~70% reduction if needed. Out of scope for now since FCP < 1.1s with `display=swap`.
+- JS: 13.6 KB transferred (gzipped)
+- CSS: 7.0 KB transferred
+- Fonts: ~900 KB (reduced from 1.2 MB after weight pruning)
+- Total transfer: ~1.0 MB
 
 ## i18n typography deltas
 
 | | EN (`lang="en"`) | ZH (`lang="zh-Hant"`) | YUE (`lang="yue-Hant"`) |
 |---|---|---|---|
-| Primary font | Segoe UI / Open Sans | **Noto Sans TC** / 微软正黑體 / Noto Sans SC | **Noto Sans HK** / 微软正黑體 |
+| Primary font | Segoe UI / Open Sans | **Noto Sans TC** / 微软正黑體 / SC | **Noto Sans HK** / 微软正黑體 |
 | h1 size | 3rem | 2.4rem (80%) | 2.4rem |
 | Body line-height | 1.65 | 1.55 | 1.55 |
-| Min font-weight | 200 | 300 | 300 |
+| Min font-weight | **300** (was 200, raised in Phase 3) | 300 | 300 |
 | h3 size | 1.25rem | 1.1rem | 1.1rem |
 
-## Deferred (Phase 2 / Phase 3)
+## What's still N/A
 
-- **Pivot 1:1 finger-tracking** — architectural change; needs adjacent-page prerender + custom gesture controller. Re-evaluate after user feedback.
-- **Live tile multi-face content** — Phase 1 flips front/back of same metric only. Could rotate "今日推介 / 隨機菜 / 最近瀏覽".
-- **Font subsetting** — perf optimization. Not urgent (FCP fine).
-- **Carousel component** — listed in spec but no consumer page yet; defer until needed.
+- ★★★★ "Bottom tab switch" — UI uses top status bar + side drawer, no bottom tabs
+- ★★ "Favorite heart bounce" — no favorite feature exists (would be a new feature, not polish)
 
-## Known minor items
+## Total commit count
 
-- 4 ★ "bottom tab switch" motion (user-requested table) is not applicable to this site's chrome — we use top status bar + side drawer, no bottom tab.
-- 2 ★ "favorite heart bounce" — no favorite/bookmark feature exists yet; defer.
-- 2 ★ "search slide-up" — search page exists but list animation not added; can be added when search page polish work happens.
-
-## Commit summary
-
-All changes from spec to final iteration: ~30 commits over Phase 1 + 2.
+From Phase 1 spec commit (`3db4675`) through Phase 3 final fix: **~40 commits**.
 
 ```
 git log --oneline 3db4675..HEAD
 ```
-
-shows the full sequence.
