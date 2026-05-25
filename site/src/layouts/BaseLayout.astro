@@ -423,6 +423,9 @@ const dict = {
         --fluent-duration-normal:      280ms;
         --fluent-duration-gentle:      420ms;
         --fluent-duration-rich:        560ms;
+
+        /* Subtle film grain noise for Acrylic — generated with feTurbulence. */
+        --acrylic-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.45'/></svg>");
       }
 
       html[data-theme="dark"] {
@@ -547,7 +550,8 @@ const dict = {
          app name in small uppercase letter-spaced text. The drawer keeps its
          acrylic; the bar is flat per WP10 status bar convention. */
       .metro-nav {
-        background: #000;
+        background: #000 var(--acrylic-noise);
+        background-blend-mode: overlay;
         color: #fff;
         padding: 0 0.75rem;
         height: 40px;
@@ -569,7 +573,7 @@ const dict = {
       .loading-bar { view-transition-name: loading-bar; }
       ::view-transition-old(loading-bar),
       ::view-transition-new(loading-bar) { animation: none; }
-      html[data-theme="light"] .metro-nav { background: #1d1d1d; }
+      html[data-theme="light"] .metro-nav { background: #1d1d1d var(--acrylic-noise); background-blend-mode: overlay; }
       .metro-nav .brand {
         flex: 1;
         justify-content: center;
@@ -784,16 +788,17 @@ const dict = {
       .nav-drawer {
         position: fixed; top: 0; bottom: 0; left: 0;
         width: clamp(260px, 78vw, 320px);
-        background: var(--t-drawer-bg);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        background: var(--acrylic-noise), var(--t-drawer-bg);
+        background-blend-mode: overlay, normal;
+        backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+        -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
         color: var(--t-drawer-ink);
         transform: translateX(-100%);
         transition: transform var(--fluent-duration-gentle) var(--fluent-curve-easy-ease);
         z-index: 100;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        box-shadow: 2px 0 16px rgba(0,0,0,0.35);
+        box-shadow: 2px 0 24px rgba(0,0,0,0.45);
       }
       @supports not (backdrop-filter: blur(1px)) {
         .nav-drawer { background: var(--t-acrylic-fallback); }
