@@ -95,6 +95,14 @@ const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName
     grid-column: span 2;
     grid-row: span 1;
   }
+  .tile-wide {
+    /* Wide hero tile — 4 cols × 2 rows (Metro "wide" proportions). Used by the
+       featured/today pick to give it visual prominence on the Start Menu. */
+    width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap)) !important;
+    height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+    grid-column: span 4;
+    grid-row: span 2;
+  }
 
   /* Sharp corners override — Metro is mostly square but defense-in-depth */
   [class*="tile-"].cat-tile { border-radius: 0 !important; }
