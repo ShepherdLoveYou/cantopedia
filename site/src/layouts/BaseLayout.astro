@@ -168,6 +168,19 @@ const dict = {
         });
       }
 
+      // Prevent FOUC of light theme on ClientRouter nav: set data-theme on
+      // the INCOMING document before its body is rendered.
+      document.addEventListener('astro:before-swap', (e) => {
+        try {
+          const newDoc = (e as any).newDocument as Document | undefined;
+          if (!newDoc) return;
+          const choice = localStorage.getItem('cantopedia-theme') || 'auto';
+          const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          newDoc.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          newDoc.documentElement.dataset.themeChoice = choice;
+        } catch {}
+      });
+
       // Direction-aware Continuum cascade + cascade play gate.
       // - Direction: popstate => "back", else "forward".
       // - Play gate: pause cascade during nav so it doesn't burn cycles
