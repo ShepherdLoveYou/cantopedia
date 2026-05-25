@@ -1,0 +1,117 @@
+---
+/**
+ * Reusable Metro live-tile with face cycling.
+ *
+ * Faces alternate: solid (icon + label + badge) → photo 1 → solid → photo 2 → …
+ * Each face holds 2s. JS driver in lib/hubScripts.ts (initCatTileCycle).
+ *
+ * Props:
+ *   size: 's' | 'm' | 'w' | 'l' — maps to tile-small/medium/wide/large
+ *   href: navigation target
+ *   color: solid-face background (CSS color string or var(--m-*) token)
+ *   label: text shown on solid face (branding-bar)
+ *   badge: optional count badge bottom-right
+ *   photos: array of image URLs for photo faces (empty array → no cycling)
+ *   viewTransitionName: optional inline view-transition-name for Continuum morph
+ *   ariaLabel: accessible label
+ */
+export interface Props {
+  size: 's' | 'm' | 'w' | 'l';
+  href: string;
+  color: string;
+  label?: string;
+  badge?: string | number;
+  photos?: string[];
+  viewTransitionName?: string;
+  ariaLabel: string;
+}
+const { size, href, color, label, badge, photos = [], viewTransitionName, ariaLabel } = Astro.props;
+const sizeClass = { s: 'tile-small', m: 'tile-medium', w: 'tile-wide', l: 'tile-large' }[size];
+const hasImgs = photos.length > 0;
+const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName};` : '';
+---
+<a
+  class={`${sizeClass} cat-tile ${hasImgs ? 'has-imgs' : ''} wp-tile`}
+  href={href}
+  aria-label={ariaLabel}
+  style={vtStyle}
+>
+  <div class="cat-face cat-face--solid active" style={`background: ${color};`}>
+    <span class="cat-tile-content"><slot /></span>
+    {label && <span class="branding-bar">{label}</span>}
+    {badge != null && <span class="badge-bottom">{badge}</span>}
+  </div>
+  {photos.map((src) => (
+    <div class="cat-face cat-face--photo" style={`background-image: url('${src}');`}>
+      {label && <span class="branding-bar">{label}</span>}
+    </div>
+  ))}
+</a>
+
+<style is:global>
+  /* Sharp corners override — Metro is mostly square but defense-in-depth */
+  [class*="tile-"].cat-tile { border-radius: 0 !important; }
+  .cat-tile {
+    position: relative;
+    overflow: hidden;
+    perspective: 800px;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+  .cat-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    transform: rotateX(90deg);
+    opacity: 0;
+    transition: transform 520ms cubic-bezier(0.6, 0, 0.2, 1), opacity 220ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 8px;
+    background-size: cover;
+    background-position: center;
+  }
+  .cat-face.active {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  .cat-face--photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 50%);
+    pointer-events: none;
+  }
+  .cat-tile-content {
+    position: absolute;
+    top: 8px; left: 8px;
+    color: #fff;
+  }
+  .branding-bar {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .badge-bottom {
+    position: absolute;
+    bottom: 6px; right: 8px;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    background: rgba(0,0,0,0.4);
+    padding: 1px 6px;
+    z-index: 2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cat-face { transition: none; }
+  }
+</style>
