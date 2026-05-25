@@ -45,5 +45,13 @@ for (const [k, v] of Object.entries(expected)) {
   }
 }
 if (dims.bodyHasCloak) { console.error('FAIL: body has m4-cloak class'); ok = false; }
-if (errors.length) { console.error(`FAIL: ${errors.length} console/page errors`); ok = false; }
+if (parseFloat(dims.bodyOpacity) < 1) {
+  console.error(`FAIL: body opacity is ${dims.bodyOpacity}, expected 1 (Metro may be hiding via opacity rule)`);
+  ok = false;
+}
+if (errors.length) {
+  console.error(`FAIL: ${errors.length} console/page errors:`);
+  errors.forEach((e, i) => console.error(`  [${i}] ${e}`));
+  ok = false;
+}
 process.exit(ok ? 0 : 1);
