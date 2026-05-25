@@ -246,12 +246,11 @@ const firstDishId = allDishes[0]?.id ?? '';
     </div>
   </section>
 
-  <!-- Panels 1-8: CATEGORIES -->
+  {/* Browse category panels — one per category, each with a Metro tiles grid of dishes */}
   {allCats.map((cat) => {
     const dishes = dishesByCat.get(cat.id) ?? [];
     const tileColor = tileColorFor(cat.id);
     const catName = nameOf(cat);
-    const catDesc = descOf(cat);
     return (
       <section
         class="hub-panel"
@@ -261,43 +260,22 @@ const firstDishId = allDishes[0]?.id ?? '';
         data-url={`${base}/${locale}/browse/${cat.id}`}
         aria-labelledby={`hub-title-${cat.id}`}
       >
-        <header class="cat-hero" style={`background: ${tileColor};`}>
-          <div class="cat-no">{dishes.length}</div>
-          <h2 id={`hub-title-${cat.id}`} class="cat-name">{catName}</h2>
-          <p class="cat-desc">{catDesc}</p>
-          <p class="cat-langs">· {cat.data.names.zh} · {cat.data.names.en}</p>
-        </header>
-
-        <div class="dish-grid">
+        <div class="tiles-grid browse-tiles">
           {dishes.map((dish) => {
             const dishName = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
-            const statusClass =
-              dish.data.method_status === 'complete' ? 'badge--seal' :
-              dish.data.method_status === 'draft' ? 'badge--warn' : '';
-            const statusLabel =
-              dish.data.method_status === 'complete' ? dict.dish_complete :
-              dish.data.method_status === 'draft' ? dict.draft : dict.stub;
             const heroImg = dish.data.images?.[0];
             const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
             return (
-              <a class={`dish-card wp-tile ${thumb ? 'has-back' : ''}`}
-                 href={`${base}/${locale}/dishes/${dish.id}`}
-                 style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
-                <div class="card-face card-front">
-                  <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-                  <div class="card-name">{dishName}</div>
-                  <div class="card-jyut">{dish.data.names.jyutping}</div>
-                  <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
-                  <div class="card-foot">
-                    <span class={`badge ${statusClass}`}>{statusLabel}</span>
-                    <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
-                  </div>
+              <a
+                class="tile-medium cat-tile wp-tile dish-tile"
+                href={`${base}/${locale}/dishes/${dish.id}`}
+                style={`background: ${tileColor}; ${thumb ? `background-image: url('${thumb}'); background-size: cover; background-position: center;` : ''} view-transition-name: dish-${dish.id};`}
+                aria-label={dishName}
+              >
+                <div class="cat-face cat-face--solid active" style={thumb ? '' : `background: ${tileColor};`}>
+                  <span class="dish-no">#{String(dish.data.menu_no).padStart(2, '0')}</span>
+                  <span class="branding-bar">{dishName}</span>
                 </div>
-                {thumb && (
-                  <div class="card-face card-back" aria-hidden="true">
-                    <img class="card-photo" src={thumb} alt="" loading="lazy" decoding="async" />
-                  </div>
-                )}
               </a>
             );
           })}
@@ -879,6 +857,38 @@ const firstDishId = allDishes[0]?.id ?? '';
     gap: 8px;
     padding: 1rem;
     align-content: flex-start;
+  }
+  .tiles-grid.browse-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 1rem;
+    align-content: flex-start;
+  }
+  .dish-tile {
+    position: relative;
+    overflow: hidden;
+  }
+  .dish-tile .cat-face--solid {
+    /* photo overlay if image set — solid color shows through when no image */
+    background: rgba(0,0,0,0.25);
+  }
+  .dish-no {
+    position: absolute;
+    top: 8px; right: 8px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 200;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 2px 6px;
+    z-index: 2;
+  }
+  .dish-tile .branding-bar {
+    position: absolute;
+    bottom: 8px; left: 8px; right: 8px;
+    z-index: 2;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   }
   .stat-num {
     font-family: var(--sans);
