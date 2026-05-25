@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CategoryIcon from '~/components/CategoryIcon.astro';
 import { tileColors } from '~/lib/categoryColors';
+import { commonsThumb } from '~/lib/commonsImage';
 
 export async function getStaticPaths() {
   return [
@@ -113,7 +114,7 @@ const dict = {
   <script define:vars={{ base, locale, dishesData: dishes.map(d => ({
     id: d.id,
     name: locale === 'en' ? d.data.names.en : d.data.names.yue_hant,
-    img: d.data.images?.[0]?.path ?? null,
+    img: d.data.images?.[0]?.path ? commonsThumb(d.data.images[0].path, 1200) : null,
   })) }}>
     (function () {
       const tile = document.getElementById('featured-tile');
@@ -142,25 +143,13 @@ const dict = {
 
       const picks = { today: todayDish, random: randomDish, recent: recentDish };
 
-      // Use Wikimedia thumb URL (matches commonsThumb pattern)
-      function thumbUrl(path) {
-        if (!path) return '';
-        const md5 = (() => {
-          // Quick: use the same algorithm used by commonsThumb. Since we can't
-          // call it client-side, fallback to using the original commons file URL.
-          return null;
-        })();
-        // path is like "Foo.jpg" — use the Special:FilePath redirect to render
-        return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(path)}?width=1200`;
-      }
-
+      // dishesData.img is already a thumb URL (commonsThumb applied in SSG).
       faces.forEach((face) => {
         const f = face.dataset.face;
         const pick = picks[f];
         if (!pick) return;
-        const imgUrl = thumbUrl(pick.img);
         const imgEl = face.querySelector('.featured-img');
-        if (imgEl && imgUrl) imgEl.style.backgroundImage = `url("${imgUrl}")`;
+        if (imgEl && pick.img) imgEl.style.backgroundImage = `url("${pick.img}")`;
         face.querySelector('.featured-name').textContent = pick.name;
       });
 
