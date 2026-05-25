@@ -216,6 +216,33 @@ const firstDishId = allDishes[0]?.id ?? '';
           <span class="branding-bar">{dict.pieces}</span>
         </div>
       </a>
+
+      {/* Utility row: search + 3 theme + github (all small) */}
+      <a class="tile-small cat-tile wp-tile util-tile" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
+        <div class="cat-face cat-face--solid active" style="background: var(--m-cyan);">
+          <span class="mif-search" style="font-size: 32px; color: #fff;"></span>
+        </div>
+      </a>
+      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="light" style="background: var(--m-yellow);" aria-label={dict.light ?? 'Light'}>
+        <div class="cat-face cat-face--solid active" style="background: var(--m-yellow);">
+          <span class="mif-sunny" style="font-size: 32px; color: #fff;"></span>
+        </div>
+      </button>
+      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="dark" style="background: var(--m-purple);" aria-label={dict.dark ?? 'Dark'}>
+        <div class="cat-face cat-face--solid active" style="background: var(--m-purple);">
+          <span class="mif-moon-right" style="font-size: 32px; color: #fff;"></span>
+        </div>
+      </button>
+      <button type="button" class="tile-small cat-tile wp-tile util-tile" data-theme-choice="auto" style="background: var(--m-steel);" aria-label={dict.auto ?? 'Auto'}>
+        <div class="cat-face cat-face--solid active" style="background: var(--m-steel);">
+          <span class="mif-cog" style="font-size: 32px; color: #fff;"></span>
+        </div>
+      </button>
+      <a class="tile-small cat-tile wp-tile util-tile" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
+        <div class="cat-face cat-face--solid active" style="background: var(--m-ink);">
+          <span class="mif-github" style="font-size: 32px; color: #fff;"></span>
+        </div>
+      </a>
     </div>
   </section>
 
