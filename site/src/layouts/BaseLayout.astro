@@ -482,7 +482,36 @@ const dict = {
       .badge--seal { background: var(--m-red); color: white; border-color: var(--m-red); }
       .badge--warn { background: var(--m-yellow); border-color: var(--m-yellow); color: #4a3800; }
       .badge--green { background: var(--m-green); color: white; border-color: var(--m-green); }
-      footer { max-width: 1200px; margin: 4rem auto 2rem; padding: 2rem 1.5rem 0; border-top: 1px solid var(--rule); font-family: var(--meta); font-size: 0.95rem; color: var(--ink-dim); text-align: center; font-weight: 300; }
+      /* WP10 Mobile footer — solid dark panel (matches the status bar at
+         top), small uppercase letter-spaced text, thin red Metro stripe
+         on the left as accent. Full-bleed via negative margin so it
+         breaks out of main's max-width. */
+      footer {
+        margin: 4rem calc(-50vw + 50%) 0;
+        padding: 1.75rem 1.5rem 2rem 2.75rem;
+        max-width: none !important;
+        background: #000;
+        color: rgba(255,255,255,0.7);
+        text-align: left;
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        line-height: 1.85;
+        border-top: 0;
+        position: relative;
+      }
+      footer::before {
+        content: '';
+        position: absolute;
+        left: 1.5rem; top: 1.75rem; bottom: 2rem;
+        width: 3px;
+        background: var(--m-red);
+      }
+      html[data-theme="light"] footer { background: #1d1d1d; color: rgba(255,255,255,0.7); }
+      footer a { color: #fff !important; text-decoration: none; }
+      footer a:hover { color: var(--m-red) !important; }
 
       /* WP10 Mobile status bar — slim, solid (no acrylic on the bar itself),
          app name in small uppercase letter-spaced text. The drawer keeps its
