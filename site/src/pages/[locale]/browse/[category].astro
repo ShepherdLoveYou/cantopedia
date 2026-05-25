@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import CategoryPivot from '~/components/CategoryPivot.astro';
 import { commonsThumb } from '~/lib/commonsImage';
 import { tileColor as tileColorFor } from '~/lib/categoryColors';
 
@@ -17,72 +16,102 @@ export async function getStaticPaths() {
 }
 
 const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
-const { cat } = Astro.props;
+const { cat: initialCat } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Fetch ALL categories + all dishes once for the hub.
+const allCats = (await getCollection('category')).sort((a, b) => a.data.sort_order - b.data.sort_order);
 const allDishes = await getCollection('dish');
-const dishes = allDishes
-  .filter((d) => d.data.category.id === cat.id)
-  .sort((a, b) => a.data.menu_no - b.data.menu_no);
 
-const tileColor = tileColorFor(cat.id);
+// Group dishes per category, sorted by menu_no.
+const dishesByCat = new Map<string, typeof allDishes>();
+for (const cat of allCats) {
+  dishesByCat.set(cat.id, allDishes
+    .filter((d) => d.data.category.id === cat.id)
+    .sort((a, b) => a.data.menu_no - b.data.menu_no));
+}
 
-const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
-const catDesc = locale === 'en'
-  ? (cat.data.description.en ?? cat.data.description.zh)
-  : locale === 'yue'
-    ? (cat.data.description.yue ?? cat.data.description.zh)
-    : cat.data.description.zh;
+const initialCatName = locale === 'en' ? initialCat.data.names.en : initialCat.data.names.yue_hant;
 
 const dict = {
-  zh: { back: '← 回到首頁', menu_no: '菜單編號', complete: '已完成', draft: '草稿', stub: '配料表' },
-  en: { back: '← Home', menu_no: 'Menu #', complete: 'complete', draft: 'draft', stub: 'ingredients only' },
-  yue: { back: '← 返首頁', menu_no: '菜單編號', complete: '已完成', draft: '草稿', stub: '配料表' },
+  zh: { back: '← 回到首頁', complete: '已完成', draft: '草稿', stub: '配料表' },
+  en: { back: '← Home', complete: 'complete', draft: 'draft', stub: 'ingredients only' },
+  yue: { back: '← 返首頁', complete: '已完成', draft: '草稿', stub: '配料表' },
 }[locale];
+
+function nameOf(c: typeof initialCat) {
+  return locale === 'en' ? c.data.names.en : c.data.names.yue_hant;
+}
+function descOf(c: typeof initialCat) {
+  if (locale === 'en') return c.data.description.en ?? c.data.description.zh;
+  if (locale === 'yue') return c.data.description.yue ?? c.data.description.zh;
+  return c.data.description.zh;
+}
 ---
-<BaseLayout title={catName} locale={locale}>
-  <CategoryPivot currentId={cat.id} locale={locale} />
+<BaseLayout title={initialCatName} locale={locale}>
+  <!-- Hub-aware pivot strip: title updates as user scrolls between panels -->
+  <nav class="hub-pivot" aria-label="Category pivot">
+    <a class="hub-pivot-link hub-pivot-link--prev" id="hub-pivot-prev" href="#" data-dir="prev">‹</a>
+    <h1 class="hub-pivot-title" id="hub-pivot-title">{initialCatName}</h1>
+    <a class="hub-pivot-link hub-pivot-link--next" id="hub-pivot-next" href="#" data-dir="next">›</a>
+  </nav>
 
-  <header class="cat-hero" style={`background: ${tileColor}; view-transition-name: tile-${cat.id};`}>
-    <div class="cat-no">{dishes.length}</div>
-    <h1 class="cat-name">{catName}</h1>
-    <p class="cat-desc">{catDesc}</p>
-    <p class="cat-langs">
-      · {cat.data.names.zh} · {cat.data.names.en}
-    </p>
-  </header>
-
-  <div class="dish-grid">
-    {dishes.map((dish) => {
-      const dishName = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
-      const statusClass =
-        dish.data.method_status === 'complete' ? 'badge--seal' :
-        dish.data.method_status === 'draft' ? 'badge--warn' : '';
-      const statusLabel =
-        dish.data.method_status === 'complete' ? dict.complete :
-        dish.data.method_status === 'draft' ? dict.draft : dict.stub;
-      const heroImg = dish.data.images?.[0];
-      const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
+  <div class="hub" id="hub" data-initial-cat={initialCat.id}>
+    {allCats.map((cat) => {
+      const dishes = dishesByCat.get(cat.id) ?? [];
+      const tileColor = tileColorFor(cat.id);
+      const catName = nameOf(cat);
+      const catDesc = descOf(cat);
       return (
-        <a class={`dish-card wp-tile ${thumb ? 'has-back' : ''}`}
-           href={`${base}/${locale}/dishes/${dish.id}`}
-           style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
-          <div class="card-face card-front">
-            <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-            <div class="card-name">{dishName}</div>
-            <div class="card-jyut">{dish.data.names.jyutping}</div>
-            <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
-            <div class="card-foot">
-              <span class={`badge ${statusClass}`}>{statusLabel}</span>
-              <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
-            </div>
+        <section
+          class="hub-panel"
+          data-cat={cat.id}
+          data-name={catName}
+          data-url={`${base}/${locale}/browse/${cat.id}`}
+          aria-labelledby={`hub-title-${cat.id}`}
+        >
+          <header class="cat-hero" style={`background: ${tileColor};`}>
+            <div class="cat-no">{dishes.length}</div>
+            <h2 id={`hub-title-${cat.id}`} class="cat-name">{catName}</h2>
+            <p class="cat-desc">{catDesc}</p>
+            <p class="cat-langs">· {cat.data.names.zh} · {cat.data.names.en}</p>
+          </header>
+
+          <div class="dish-grid">
+            {dishes.map((dish) => {
+              const dishName = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
+              const statusClass =
+                dish.data.method_status === 'complete' ? 'badge--seal' :
+                dish.data.method_status === 'draft' ? 'badge--warn' : '';
+              const statusLabel =
+                dish.data.method_status === 'complete' ? dict.complete :
+                dish.data.method_status === 'draft' ? dict.draft : dict.stub;
+              const heroImg = dish.data.images?.[0];
+              const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
+              return (
+                <a class={`dish-card wp-tile ${thumb ? 'has-back' : ''}`}
+                   href={`${base}/${locale}/dishes/${dish.id}`}
+                   style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
+                  <div class="card-face card-front">
+                    <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+                    <div class="card-name">{dishName}</div>
+                    <div class="card-jyut">{dish.data.names.jyutping}</div>
+                    <div class="card-zh-en">· {dish.data.names.zh} · {dish.data.names.en}</div>
+                    <div class="card-foot">
+                      <span class={`badge ${statusClass}`}>{statusLabel}</span>
+                      <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
+                    </div>
+                  </div>
+                  {thumb && (
+                    <div class="card-face card-back" aria-hidden="true">
+                      <img class="card-photo" src={thumb} alt="" loading="lazy" decoding="async" />
+                    </div>
+                  )}
+                </a>
+              );
+            })}
           </div>
-          {thumb && (
-            <div class="card-face card-back" aria-hidden="true">
-              <img class="card-photo" src={thumb} alt="" loading="lazy" decoding="async" />
-            </div>
-          )}
-        </a>
+        </section>
       );
     })}
   </div>
@@ -93,13 +122,84 @@ const dict = {
 </BaseLayout>
 
 <style>
-  main { max-width: 980px !important; }
+  main { max-width: none !important; padding: 0 !important; }
 
-  /* Category hero — color band kept as morph target from homepage tile, flattened. */
+  /* Hub-aware pivot: shows current panel's name, fed by JS on scroll. */
+  .hub-pivot {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.5rem 0.5rem;
+    font-family: var(--lang-font-primary);
+    min-height: 4.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hub-pivot-title {
+    font-size: clamp(1.6rem, 7vw, 3.25rem);
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: var(--lang-h1-tracking, -0.025em);
+    line-height: 1;
+    margin: 0;
+    text-align: center;
+    color: var(--t-ink);
+    overflow-wrap: break-word;
+  }
+  .hub-pivot-link {
+    font-size: 2rem;
+    color: var(--t-ink-dim);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    line-height: 1;
+    border: 0;
+    user-select: none;
+    cursor: pointer;
+    transition: color var(--fluent-duration-fast, 150ms) ease;
+  }
+  .hub-pivot-link:hover { color: var(--t-ink); }
+  @media (max-width: 540px) {
+    .hub-pivot { min-height: 3.5rem; padding: 0.75rem 1rem 0.25rem; }
+    .hub-pivot-link { font-size: 1.5rem; padding: 0.25rem 0.5rem; }
+  }
+
+  /* Hub: horizontal scroll-snap container. Vertical scroll lives INSIDE
+     each panel because mixing overflow-x:auto + overflow-y:visible is
+     invalid CSS. Each panel scrolls vertically independently. */
+  .hub {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    /* Height: leaves room for status bar (40px) + hub-pivot (~80px). */
+    height: calc(100vh - 120px);
+    min-height: 480px;
+    overscroll-behavior-x: contain;
+  }
+  .hub::-webkit-scrollbar { display: none; }
+
+  .hub-panel {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 1.5rem 4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .hub-panel::-webkit-scrollbar { width: 6px; }
+  .hub-panel::-webkit-scrollbar-thumb { background: var(--t-rule); border-radius: 3px; }
+
+  /* Category hero — color band kept as morph target from homepage tile. */
   .cat-hero {
     color: white;
-    padding: 2rem 2rem 1.75rem;
-    margin: 0.5rem 0 2.5rem;
+    padding: 1.5rem 1.5rem 1.25rem;
+    margin: 0 -1.5rem 1.5rem;
     position: relative;
   }
   .cat-no {
@@ -110,7 +210,7 @@ const dict = {
     letter-spacing: -0.02em;
   }
   .cat-name {
-    font-family: var(--sans), var(--sans-zh);
+    font-family: var(--lang-font-primary);
     font-size: clamp(1.3rem, 4.5vw, 2rem);
     font-weight: 400;
     letter-spacing: -0.01em;
@@ -119,22 +219,20 @@ const dict = {
     line-height: 1.1;
     overflow-wrap: break-word;
     word-break: break-word;
-    hyphens: auto;
   }
-  .cat-desc { font-family: var(--sans), var(--sans-zh); font-size: 0.95rem; font-weight: 400; margin: 0.5rem 0 0; opacity: 0.92; max-width: 60ch; }
+  .cat-desc { font-family: var(--lang-font-primary); font-size: 0.95rem; font-weight: 400; margin: 0.5rem 0 0; opacity: 0.92; max-width: 60ch; }
   .cat-langs { font-family: var(--meta); font-size: 0.8rem; opacity: 0.8; margin-top: 0.75rem; letter-spacing: 0.04em; }
 
   .dish-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   @media (max-width: 900px) { .dish-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .dish-grid { grid-template-columns: 1fr; } }
 
-  /* Start Screen size rhythm — every 5th card spans 2 columns (and the
-     7th in each set of 10 spans 2 rows) so a long category list still
-     looks lively. Stripe + transparent look from prior revision kept. */
   .dish-card:nth-child(5n+1) { grid-column: span 2; }
   .dish-card:nth-child(10n+7) { grid-row: span 2; }
   @media (max-width: 900px) {
@@ -145,9 +243,6 @@ const dict = {
     .dish-card:nth-child(5n+1) { grid-column: span 1; }
   }
 
-  /* WP10 Live Tile dish-card — solid cat-color front, photo back, X-axis flip.
-     Same dynamics as the homepage WIDE tile but applied to every dish-card
-     that has a photo. Staggered phase via JS. */
   .dish-card {
     background: var(--cat-color);
     color: white !important;
@@ -170,83 +265,127 @@ const dict = {
     display: flex;
     flex-direction: column;
   }
-  .card-back {
-    transform: rotateX(180deg);
-    padding: 0;
-    background: #000;
-  }
+  .card-back { transform: rotateX(180deg); padding: 0; background: #000; }
   .dish-card.flipped .card-front { transform: rotateX(180deg); }
   .dish-card.flipped .card-back  { transform: rotateX(360deg); }
 
-  .card-photo {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Cards with no photo: no flip; the .card-front fills the tile. */
+  .card-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
   .dish-card:not(.has-back) .card-front { position: static; }
   .dish-card:not(.has-back) { min-height: 180px; }
-
-  /* Size rhythm: every 5th card spans 2 cols (kept from prior design). */
   .dish-card:nth-child(5n+1) .card-name { font-size: 1.5rem; }
   .dish-card:nth-child(5n+1) { min-height: 220px; }
-  .dish-card:hover { background: var(--t-plate); color: var(--t-ink) !important; }
-  .card-no {
-    font-family: var(--sans);
-    font-size: 0.8rem;
-    letter-spacing: 0.22em;
-    color: rgba(255,255,255,0.75);
-    font-weight: 400;
-    text-transform: uppercase;
-  }
-  .card-name {
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 1.5rem;
-    font-weight: 400;
-    letter-spacing: 0.005em;
-    margin: 0.4rem 0 0.3rem;
-    color: white;
-    line-height: 1.15;
-  }
-  .card-jyut {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.78);
-  }
-  .card-zh-en {
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.78);
-    margin-top: 0.55rem;
-    font-weight: 400;
-  }
-  .card-foot {
-    margin-top: auto;
-    padding-top: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-  }
+  .card-no { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.22em; color: rgba(255,255,255,0.75); font-weight: 400; text-transform: uppercase; }
+  .card-name { font-family: var(--sans), var(--sans-zh); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.005em; margin: 0.4rem 0 0.3rem; color: white; line-height: 1.15; }
+  .card-jyut { font-family: var(--mono); font-size: 0.85rem; color: rgba(255,255,255,0.78); }
+  .card-zh-en { font-family: var(--sans), var(--sans-zh); font-size: 0.9rem; color: rgba(255,255,255,0.78); margin-top: 0.55rem; font-weight: 400; }
+  .card-foot { margin-top: auto; padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
   .card-ings { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
-  /* Badges inside colored tiles — translucent, no loud bg. */
-  .dish-card .badge {
-    background: rgba(255,255,255,0.18) !important;
-    color: white !important;
-    border: 0 !important;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
-    letter-spacing: 0.18em;
-  }
+  .dish-card .badge { background: rgba(255,255,255,0.18) !important; color: white !important; border: 0 !important; font-size: 0.7rem; padding: 0.2rem 0.6rem; letter-spacing: 0.18em; }
 </style>
 
 <script>
-  // Staggered Live Tile flip on every dish-card that has a back face.
-  // Same dynamics as the homepage WIDE tile: 10s period, 1.4s per-tile
-  // phase offset so the panel feels alive without all tiles syncing.
-  // Re-inits on astro:page-load and stops on astro:before-preparation.
-  {
+  // Hub navigation: scroll-snap + URL sync + pivot prev/next.
+  (function () {
+    const hub = document.getElementById('hub') as HTMLElement | null;
+    if (!hub) return;
+    const titleEl = document.getElementById('hub-pivot-title');
+    const prevLink = document.getElementById('hub-pivot-prev') as HTMLAnchorElement | null;
+    const nextLink = document.getElementById('hub-pivot-next') as HTMLAnchorElement | null;
+    const panels = Array.from(hub.querySelectorAll<HTMLElement>('.hub-panel'));
+    if (panels.length === 0) return;
+
+    function getActiveIndex() {
+      const w = hub!.clientWidth;
+      const i = Math.round(hub!.scrollLeft / w);
+      return Math.max(0, Math.min(panels.length - 1, i));
+    }
+
+    function updatePivot(i: number) {
+      const p = panels[i];
+      if (!p) return;
+      const name = p.dataset.name ?? '';
+      const url = p.dataset.url ?? '';
+      if (titleEl) titleEl.textContent = name;
+      // Update document title to match panel
+      document.title = `${name} · 粵食典 Cantopedia`;
+      // Push URL without triggering nav
+      if (url && location.pathname + location.hash !== url) {
+        history.replaceState({ panelIndex: i }, '', url);
+      }
+      // Update prev/next link hrefs for non-JS users + middle-click
+      const prev = panels[(i - 1 + panels.length) % panels.length];
+      const next = panels[(i + 1) % panels.length];
+      if (prevLink && prev?.dataset.url) prevLink.href = prev.dataset.url;
+      if (nextLink && next?.dataset.url) nextLink.href = next.dataset.url;
+    }
+
+    function scrollToIndex(i: number) {
+      const w = hub!.clientWidth;
+      hub!.scrollTo({ left: i * w, behavior: 'smooth' });
+    }
+
+    // Initial scroll position from data-initial-cat
+    const initialCat = hub.dataset.initialCat;
+    const initialIdx = panels.findIndex((p) => p.dataset.cat === initialCat);
+    if (initialIdx > 0) {
+      // Disable smooth for instant initial positioning
+      hub.style.scrollBehavior = 'auto';
+      hub.scrollLeft = initialIdx * hub.clientWidth;
+      // Re-enable smooth scroll on next tick
+      requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
+    }
+    updatePivot(initialIdx >= 0 ? initialIdx : 0);
+
+    // Pivot prev/next click
+    prevLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToIndex(Math.max(0, getActiveIndex() - 1));
+    });
+    nextLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToIndex(Math.min(panels.length - 1, getActiveIndex() + 1));
+    });
+
+    // Keyboard arrows when focus is inside hub
+    hub.addEventListener('keydown', (e) => {
+      const k = (e as KeyboardEvent).key;
+      if (k === 'ArrowLeft') { e.preventDefault(); prevLink?.click(); }
+      if (k === 'ArrowRight') { e.preventDefault(); nextLink?.click(); }
+    });
+
+    // Scroll-end detection via IntersectionObserver for precise snap detection
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio > 0.5) {
+          const idx = panels.indexOf(entry.target as HTMLElement);
+          if (idx >= 0) updatePivot(idx);
+        }
+      });
+    }, { root: hub, threshold: [0.5] });
+    panels.forEach((p) => io.observe(p));
+
+    // Resize: re-snap to current panel
+    let resizeT: number | undefined;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeT);
+      resizeT = window.setTimeout(() => {
+        const i = getActiveIndex();
+        hub.style.scrollBehavior = 'auto';
+        hub.scrollLeft = i * hub.clientWidth;
+        requestAnimationFrame(() => { hub.style.scrollBehavior = 'smooth'; });
+      }, 100);
+    });
+
+    // popstate: scroll to URL's panel
+    window.addEventListener('popstate', () => {
+      const url = location.pathname.replace(/\/$/, '');
+      const idx = panels.findIndex((p) => (p.dataset.url ?? '').replace(/\/$/, '') === url);
+      if (idx >= 0) scrollToIndex(idx);
+    });
+  })();
+
+  // Staggered dish-card flip (preserved from old implementation).
+  (function () {
     const PERIOD = 10000;
     const STEP = 1400;
     let timers: number[] = [];
@@ -254,6 +393,13 @@ const dict = {
     function flip(t: HTMLElement) {
       if (document.hidden) return;
       if (t.classList.contains('pressing')) return;
+      // Only flip cards in the currently-visible panel
+      const panel = t.closest<HTMLElement>('.hub-panel');
+      const hub = document.getElementById('hub');
+      if (panel && hub) {
+        const r = panel.getBoundingClientRect();
+        if (r.right < 0 || r.left > window.innerWidth) return;
+      }
       t.classList.toggle('flipped');
     }
     function stopFlip() {
@@ -274,14 +420,10 @@ const dict = {
       });
     }
     startFlip();
-    document.addEventListener('astro:page-load', () => {
-      if (document.querySelector('.dish-card.has-back')) startFlip();
-      else stopFlip();
-    });
     document.addEventListener('astro:before-preparation', stopFlip);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopFlip();
       else if (document.querySelector('.dish-card.has-back')) startFlip();
     });
-  }
+  })();
 </script>
