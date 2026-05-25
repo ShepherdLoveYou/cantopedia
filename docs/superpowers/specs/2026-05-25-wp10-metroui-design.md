@@ -120,6 +120,62 @@ Use class-based markup (`.tile-small/.tile-medium/.tile-wide/.tile-large`) — t
 1. **`m4-cloak`:** Metro sets `.m4-cloak { opacity: 0 !important }` to hide content until JS init. Without JS, content stays invisible. **Do NOT apply `class="m4-cloak"` to `<body>`.**
 2. **Metro `body { display: flex; overflow-x: hidden }`:** breaks Hub's horizontal scroll. The hub container ends up sized to fit all 9-10 panels (~11500px wide). **Mitigation:** first escape `<main>`'s max-width via `is:global` rule `main:has(#hub) { max-width: none; padding: 0 }`, then `.hub { width: 100%; overflow-x: auto !important }`. **Do NOT use `100vw`** — on Windows/Chrome that includes scrollbar gutter and overflows by ~15px. Also: Metro's body rules apply globally on every Hub-loading page, so audit the BaseLayout `<nav>`, `<footer>`, and locale switcher for unintended restyling in step 3 (see gotcha #6 below).
 3. **Metro `bg-*` palette doesn't match WP10 nomenclature 1:1:** last round we assumed `bg-darkBlue` existed — it doesn't. **Do NOT hand-author the palette list from memory.** Instead, as part of step 1's smoke test: grep the installed `node_modules/@olton/metroui/lib/metro.css` for `\.bg-[A-Za-z]+\b` and paste the extracted list back into this gotcha for reference. Until that's done, treat the palette as unknown. **Preferred:** use inline `style="background: var(--m-blue-dark)"` referencing existing `--m-*` tokens already defined in [BaseLayout.astro:402-420](site/src/layouts/BaseLayout.astro#L402-L420) (these include `--m-blue-dark` and `--m-orange-dark`, the two darker shades WP10 actually used). This avoids the Metro class-name mismatch entirely.
+
+   **Verified palette inventory (extracted from v5.1.20):**
+   ```
+   .bg-almost
+   .bg-amazon
+   .bg-amber
+   .bg-army
+   .bg-black
+   .bg-blue
+   .bg-bootstrap
+   .bg-bronze
+   .bg-brown
+   .bg-champagne
+   .bg-charcoal
+   .bg-clown
+   .bg-cobalt
+   .bg-coral
+   .bg-crimson
+   .bg-cyan
+   .bg-dark
+   .bg-default
+   .bg-emerald
+   .bg-facebook
+   .bg-github
+   .bg-gitlab
+   .bg-glassmorphism
+   .bg-gray
+   .bg-green
+   .bg-hover
+   .bg-indigo
+   .bg-khaki
+   .bg-light
+   .bg-lime
+   .bg-magenta
+   .bg-mauve
+   .bg-minor
+   .bg-nude
+   .bg-olive
+   .bg-orange
+   .bg-pattern
+   .bg-pink
+   .bg-red
+   .bg-sand
+   .bg-sat
+   .bg-seashell
+   .bg-steel
+   .bg-taupe
+   .bg-teal
+   .bg-terracotta
+   .bg-transparent
+   .bg-twitter
+   .bg-violet
+   .bg-white
+   .bg-windstorm
+   .bg-yellow
+   ```
 4. **Sharp corners:** Metro UI is mostly square already, but defense-in-depth: `[class*=tile-] { border-radius: 0 !important }`.
 5. **Fixed tile dimensions:** small=70×70, medium=150×150, wide=310×150, large=310×310. **NOT responsive** — gaps appear on resize. **Mitigation:** wrap in `.tiles-grid` with `flex-wrap: wrap` (Metro's default). For <540px viewports, do **NOT** use `transform: scale()` — it shrinks the rendered size but leaves the layout box at full dimension, producing dead gaps. Instead override `width`/`height` directly per breakpoint, or use non-standard `zoom: 0.85` (well-supported in Chromium/WebKit; Firefox now supports it). Pick concrete breakpoints in step 3 once tiles render.
 6. **Metro CSS imports are GLOBAL, not page-scoped:** Astro's frontmatter `import` of metro.css becomes a global stylesheet for every page that renders Hub.astro. That means Metro's `body{}`, `*{}`, `a{}` and other element-selector rules will restyle BaseLayout's `.metro-nav`, `<footer>`, locale switcher, `.brand`, etc. on the home + 8 browse + AppList pages — even though those elements live in BaseLayout, not Hub. **Mitigation:** during step 3 verification, screenshot-diff a Hub-page nav/footer against a dish-page nav/footer; for each Metro override that breaks our design, add a counter-override scoped to `.metro-nav`/`footer`/etc. in BaseLayout's global style block.
