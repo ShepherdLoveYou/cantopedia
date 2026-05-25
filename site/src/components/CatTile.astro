@@ -16,7 +16,15 @@
  *   ariaLabel: accessible label
  */
 export interface Props {
-  size: 's' | 'm' | 'w' | 'l';
+  /**
+   * Tile size in grid units. Only three sizes are supported:
+   *   's'   → 1×1 (.tile-small)        — single grid cell
+   *   '2x1' → 2×1 wide-slim (.tile-2x1) — wide banner, half-height of medium
+   *   'm'   → 2×2 (.tile-medium)       — square
+   * Pixel dimensions are derived from CSS variables --tile-unit + --tile-gap,
+   * so the grid is responsive without media-query forks.
+   */
+  size: 's' | '2x1' | 'm';
   href: string;
   color: string;
   label?: string;
@@ -26,7 +34,7 @@ export interface Props {
   ariaLabel: string;
 }
 const { size, href, color, label, badge, photos = [], viewTransitionName, ariaLabel } = Astro.props;
-const sizeClass = { s: 'tile-small', m: 'tile-medium', w: 'tile-wide', l: 'tile-large' }[size];
+const sizeClass = { s: 'tile-small', m: 'tile-medium', '2x1': 'tile-2x1' }[size];
 const hasImgs = photos.length > 0;
 const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName};` : '';
 ---
@@ -49,6 +57,45 @@ const vtStyle = viewTransitionName ? `view-transition-name: ${viewTransitionName
 </a>
 
 <style is:global>
+  /* Responsive tile grid pitch — single source of truth for all tile dimensions.
+     Pixel sizes for tile-small / tile-medium / tile-2x1 are derived from these,
+     so the grid scales fluidly across viewports without a media-query fork per class. */
+  :root {
+    --tile-unit: 70px;
+    --tile-gap: 10px;
+  }
+  @media (max-width: 540px) {
+    :root {
+      --tile-unit: 56px;
+      --tile-gap: 8px;
+    }
+  }
+
+  /* Override Metro UI's fixed-pixel tile sizes with variable-based dimensions.
+     Metro defaults: small=70, medium=150, wide=310, large=310×310. We keep only
+     three sizes (1×1, 2×1, 2×2). Each class has both EXPLICIT pixel sizing
+     (for flex contexts and the underlying Metro defaults) AND grid-row/-column
+     spans (so .tiles-grid using `display: grid` snaps tiles to a uniform
+     --tile-unit pitch with no jagged gaps). */
+  .tile-small {
+    width: var(--tile-unit) !important;
+    height: var(--tile-unit) !important;
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .tile-medium {
+    width: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+    height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .tile-2x1 {
+    width: calc(2 * var(--tile-unit) + var(--tile-gap));
+    height: var(--tile-unit);
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
   /* Sharp corners override — Metro is mostly square but defense-in-depth */
   [class*="tile-"].cat-tile { border-radius: 0 !important; }
   .cat-tile {

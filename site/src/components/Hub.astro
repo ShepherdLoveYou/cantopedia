@@ -151,10 +151,10 @@ const firstDishId = allDishes[0]?.id ?? '';
     aria-labelledby="hub-home-title"
   >
     <div class="tiles-grid start-tiles">
-      {/* Featured wide live tile — uses tile-wide for sizing + its own .featured-face show/hide cycle.
+      {/* Featured live tile — uses tile-2x1 (slim wide banner) + its own .featured-face show/hide cycle.
           Do NOT add cat-face classes here — featured tile has its own display:none/block toggle
           driven by initFeaturedTile() and would conflict with cat-face's rotateX/opacity rules. */}
-      <a id="featured-tile" class="tile-wide featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
+      <a id="featured-tile" class="tile-2x1 featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
         <div class="featured-face featured-face--active" data-face="today">
           <div class="featured-img"></div>
           <div class="featured-overlay"></div>
@@ -180,7 +180,8 @@ const firstDishId = allDishes[0]?.id ?? '';
         const inCat = dishesByCat.get(cat.id) ?? [];
         if (inCat.length === 0) return null;
         const catName = nameOf(cat);
-        const size: 's'|'m'|'w' = inCat.length >= 20 ? 'w' : inCat.length >= 7 ? 'm' : 's';
+        // 3-size grid (1×1 / 2×1 / 2×2): big cats are 2×2, mid are 2×1 slim, small are 1×1.
+        const size: 's' | 'm' | '2x1' = inCat.length >= 20 ? 'm' : inCat.length >= 7 ? '2x1' : 's';
         const photos = categoryPhotos(cat.id);
         return (
           <CatTile
@@ -401,6 +402,11 @@ const firstDishId = allDishes[0]?.id ?? '';
   .hub::-webkit-scrollbar { display: none; }
 
   .hub-panel {
+    /* Each panel fills exactly one snap column (100vw, matching .hub grid-auto-columns).
+       The width: 100% is needed because grid-auto-columns sets TRACK size, but the
+       panel ITEM defaults to min-content unless explicitly sized. */
+    width: 100%;
+    box-sizing: border-box;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     overflow-y: auto;
@@ -415,18 +421,14 @@ const firstDishId = allDishes[0]?.id ?? '';
   /* ============================================================
      HOME PANEL — featured tile
      ============================================================ */
-  /* Featured tile rotator */
+  /* Featured tile rotator — size comes from .tile-2x1 in CatTile.astro (height = --tile-unit). */
   .featured-tile {
     position: relative;
     display: block;
-    height: 220px;
     overflow: hidden;
     text-decoration: none;
     background: var(--t-plate);
     border: 0;
-  }
-  @media (max-width: 540px) {
-    .featured-tile { height: 180px; }
   }
 
   /* Tile entrance: one-shot reveal for featured tile. */
@@ -447,19 +449,24 @@ const firstDishId = allDishes[0]?.id ?? '';
     }
   }
 
-  .tiles-grid.start-tiles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 1rem;
-    align-content: flex-start;
-  }
+  .tiles-grid.start-tiles,
   .tiles-grid.browse-tiles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 1rem;
-    align-content: flex-start;
+    /* CSS Grid on a --tile-unit pitch. Tiles span columns/rows via grid-column/-row
+       defined per tile class in CatTile.astro. auto-flow:dense packs 1×1 tiles into
+       holes left by 2×2 tiles so the layout fills uniformly instead of jagging.
+       Width is capped to ~10 cols on wide viewports + margin auto so the whole
+       tile block is visibly centered; on narrow viewports the cap takes 100% and
+       the grid fills the panel. */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--tile-unit));
+    grid-auto-rows: var(--tile-unit);
+    grid-auto-flow: dense;
+    gap: var(--tile-gap);
+    padding: 1.5rem 1rem;
+    align-content: start;
+    width: min(100%, calc(10 * var(--tile-unit) + 11 * var(--tile-gap)));
+    margin-inline: auto;
+    box-sizing: border-box;
   }
   .dish-tile {
     position: relative;
@@ -537,14 +544,7 @@ const firstDishId = allDishes[0]?.id ?? '';
     opacity: 0.85;
     z-index: 2;
   }
-  @media (max-width: 540px) {
-    /* Responsive scale via direct width/height override (NOT transform: scale).
-       Numbers: small 56, medium 120, wide 248, large 248. */
-    .tiles-grid .tile-small  { width: 56px;  height: 56px;  }
-    .tiles-grid .tile-medium { width: 120px; height: 120px; }
-    .tiles-grid .tile-wide   { width: 248px; height: 120px; }
-    .tiles-grid .tile-large  { width: 248px; height: 248px; }
-  }
+  /* Tile sizes now derive from --tile-unit + --tile-gap in CatTile.astro. No media-query fork needed. */
 </style>
 
 <style is:global>
