@@ -291,7 +291,10 @@ const dict = {
           // Burger persists across nav (it's inside transition:persist nav).
           // Drawer/scrim are re-rendered each nav, so we need fresh references
           // every time setup() runs even when burger is already wired.
-          initMotion();
+          // Defer motion init past the view-transition animation so its
+          // querySelectorAll / event-attach work doesn't compete with the
+          // slide for the main thread. ~300ms covers the 260ms slide.
+          (window.requestIdleCallback ?? ((cb) => setTimeout(cb, 300)))(() => initMotion());
           return;
         }
         burger.dataset.wired = '1';
@@ -823,8 +826,10 @@ const dict = {
       html.nav-prev::view-transition-old(root),
       html.nav-prev::view-transition-new(root) {
         mix-blend-mode: normal;
-        animation-timing-function: cubic-bezier(0.3, 0, 0, 1);  /* WP10 Continuum native */
-        animation-duration: 380ms;
+        /* Shorter duration + GPU-friendly easing reduces jank window. */
+        animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+        animation-duration: 260ms;
+        will-change: transform;
       }
       html.nav-next::view-transition-old(root) { animation-name: slide-out-left; }
       html.nav-next::view-transition-new(root) { animation-name: slide-in-right; }
