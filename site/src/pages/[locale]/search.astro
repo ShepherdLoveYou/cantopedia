@@ -135,6 +135,24 @@ const dict = {
     color: var(--t-ink) !important;
     text-decoration: none;
     transition: background var(--fluent-duration-fast) ease;
+    animation: hit-enter 280ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
+  }
+  .search-hit:nth-child(1)  { animation-delay: 0ms; }
+  .search-hit:nth-child(2)  { animation-delay: 30ms; }
+  .search-hit:nth-child(3)  { animation-delay: 60ms; }
+  .search-hit:nth-child(4)  { animation-delay: 90ms; }
+  .search-hit:nth-child(5)  { animation-delay: 120ms; }
+  .search-hit:nth-child(6)  { animation-delay: 150ms; }
+  .search-hit:nth-child(7)  { animation-delay: 180ms; }
+  .search-hit:nth-child(8)  { animation-delay: 210ms; }
+  .search-hit:nth-child(9)  { animation-delay: 240ms; }
+  .search-hit:nth-child(n+10) { animation-delay: 270ms; }
+  @keyframes hit-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .search-hit { animation: none; }
   }
   .search-hit:hover { background: var(--t-plate); color: var(--t-ink) !important; }
   .hit-title {
