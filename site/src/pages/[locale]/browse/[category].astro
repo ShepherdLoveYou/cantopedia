@@ -62,15 +62,12 @@ const dict = {
         dish.data.method_status === 'complete' ? dict.complete :
         dish.data.method_status === 'draft' ? dict.draft : dict.stub;
       const heroImg = dish.data.images?.[0];
-      const thumb = heroImg ? commonsThumb(heroImg.path, 400) : null;
+      const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
       return (
-        <a class={`dish-card wp-tile ${thumb ? 'has-thumb' : ''}`}
+        <a class={`dish-card wp-tile ${thumb ? 'has-back' : ''}`}
            href={`${base}/${locale}/dishes/${dish.id}`}
            style={`--cat-color: ${tileColor}; view-transition-name: dish-${dish.id};`}>
-          {thumb && (
-            <img class="card-thumb" src={thumb} alt={dishName} loading="lazy" decoding="async" />
-          )}
-          <div class="card-body">
+          <div class="card-face card-front">
             <div class="card-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
             <div class="card-name">{dishName}</div>
             <div class="card-jyut">{dish.data.names.jyutping}</div>
@@ -80,6 +77,11 @@ const dict = {
               <span class="card-ings meta">{dish.data.ingredients.length} ingredients</span>
             </div>
           </div>
+          {thumb && (
+            <div class="card-face card-back" aria-hidden="true">
+              <img class="card-photo" src={thumb} alt="" loading="lazy" decoding="async" />
+            </div>
+          )}
         </a>
       );
     })}
@@ -139,63 +141,58 @@ const dict = {
     .dish-card:nth-child(5n+1) { grid-column: span 1; }
   }
 
-  /* Panorama dish-card — no fill bg, only a 6px top stripe (morph anchor), thin row rule. */
+  /* WP10 Live Tile dish-card — solid cat-color front, photo back, X-axis flip.
+     Same dynamics as the homepage WIDE tile but applied to every dish-card
+     that has a photo. Staggered phase via JS. */
   .dish-card {
-    background: transparent;
-    color: var(--t-ink);
-    padding: 1rem 1.25rem 1.125rem;
+    background: var(--cat-color);
+    color: white !important;
     text-decoration: none;
-    border-top: 6px solid var(--cat-color);
-    border-bottom: 1px solid var(--t-rule);
-    transition: background var(--fluent-duration-fast) ease;
-    display: flex;
-    flex-direction: column;
+    display: block;
     position: relative;
     overflow: hidden;
-  }
-  /* Photo card: bg fills with the dish photo, content gets a gradient overlay
-     for legibility, text turns white. */
-  .dish-card.has-thumb {
-    color: white !important;
     min-height: 200px;
-    border-bottom: 0;
+    perspective: 1200px;
   }
-  .dish-card.has-thumb::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg,
-      color-mix(in srgb, var(--cat-color) 70%, transparent) 0%,
-      rgba(0,0,0,0.15) 45%,
-      rgba(0,0,0,0.85) 100%);
-    pointer-events: none;
-    z-index: 1;
+  .dish-card:hover { color: white !important; }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    padding: 1rem 1.25rem 1.125rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.8s var(--fluent-curve-easy-ease);
+    display: flex;
+    flex-direction: column;
   }
-  .card-thumb {
-    position: absolute; inset: 6px 0 0 0;  /* leave the 6px top stripe */
-    width: 100%; height: calc(100% - 6px);
+  .card-back {
+    transform: rotateX(180deg);
+    padding: 0;
+    background: #000;
+  }
+  .dish-card.flipped .card-front { transform: rotateX(180deg); }
+  .dish-card.flipped .card-back  { transform: rotateX(360deg); }
+
+  .card-photo {
+    width: 100%; height: 100%;
     object-fit: cover;
-    z-index: 0;
-    transition: transform var(--fluent-duration-rich) var(--fluent-curve-easy-ease);
+    display: block;
   }
-  .dish-card.has-thumb:hover .card-thumb { transform: scale(1.04); }
-  .dish-card .card-body { position: relative; z-index: 2; display: flex; flex-direction: column; flex: 1; }
-  .dish-card.has-thumb .card-jyut,
-  .dish-card.has-thumb .card-zh-en,
-  .dish-card.has-thumb .card-ings { color: rgba(255,255,255,0.88); }
-  .dish-card.has-thumb .card-name { color: white; }
-  .dish-card.has-thumb .card-no { color: rgba(255,255,255,0.9); }
-  .dish-card.has-thumb .badge {
-    background: rgba(255,255,255,0.18) !important;
-    color: white !important;
-    border: 0 !important;
-  }
+
+  /* Cards with no photo: no flip; the .card-front fills the tile. */
+  .dish-card:not(.has-back) .card-front { position: static; }
+  .dish-card:not(.has-back) { min-height: 180px; }
+
+  /* Size rhythm: every 5th card spans 2 cols (kept from prior design). */
   .dish-card:nth-child(5n+1) .card-name { font-size: 1.5rem; }
+  .dish-card:nth-child(5n+1) { min-height: 220px; }
   .dish-card:hover { background: var(--t-plate); color: var(--t-ink) !important; }
   .card-no {
     font-family: var(--sans);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     letter-spacing: 0.22em;
-    color: var(--cat-color);
+    color: rgba(255,255,255,0.75);
     font-weight: 400;
     text-transform: uppercase;
   }
@@ -205,18 +202,18 @@ const dict = {
     font-weight: 300;
     letter-spacing: 0.005em;
     margin: 0.4rem 0 0.3rem;
-    color: var(--t-ink);
+    color: white;
     line-height: 1.15;
   }
   .card-jyut {
     font-family: var(--mono);
     font-size: 0.85rem;
-    color: var(--ink-dim);
+    color: rgba(255,255,255,0.78);
   }
   .card-zh-en {
     font-family: var(--sans), var(--sans-zh);
     font-size: 0.9rem;
-    color: var(--ink-dim);
+    color: rgba(255,255,255,0.78);
     margin-top: 0.55rem;
     font-weight: 300;
   }
@@ -228,5 +225,59 @@ const dict = {
     align-items: center;
     gap: 0.5rem;
   }
-  .card-ings { font-size: 0.85rem; color: var(--t-ink-dim); }
+  .card-ings { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+  /* Badges inside colored tiles — translucent, no loud bg. */
+  .dish-card .badge {
+    background: rgba(255,255,255,0.18) !important;
+    color: white !important;
+    border: 0 !important;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.18em;
+  }
 </style>
+
+<script>
+  // Staggered Live Tile flip on every dish-card that has a back face.
+  // Same dynamics as the homepage WIDE tile: 10s period, 1.4s per-tile
+  // phase offset so the panel feels alive without all tiles syncing.
+  // Re-inits on astro:page-load and stops on astro:before-preparation.
+  {
+    const PERIOD = 10000;
+    const STEP = 1400;
+    let timers: number[] = [];
+
+    function flip(t: HTMLElement) {
+      if (document.hidden) return;
+      if (t.classList.contains('pressing')) return;
+      t.classList.toggle('flipped');
+    }
+    function stopFlip() {
+      timers.forEach((id) => { window.clearTimeout(id); window.clearInterval(id); });
+      timers = [];
+    }
+    function startFlip() {
+      stopFlip();
+      const tiles = Array.from(document.querySelectorAll<HTMLElement>('.dish-card.has-back'));
+      tiles.forEach((t, i) => {
+        const offset = (i * STEP) % PERIOD;
+        const initial = window.setTimeout(() => {
+          flip(t);
+          const id = window.setInterval(() => flip(t), PERIOD);
+          timers.push(id);
+        }, offset);
+        timers.push(initial);
+      });
+    }
+    startFlip();
+    document.addEventListener('astro:page-load', () => {
+      if (document.querySelector('.dish-card.has-back')) startFlip();
+      else stopFlip();
+    });
+    document.addEventListener('astro:before-preparation', stopFlip);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopFlip();
+      else if (document.querySelector('.dish-card.has-back')) startFlip();
+    });
+  }
+</script>
