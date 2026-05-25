@@ -18,6 +18,7 @@ import { commonsThumb } from '~/lib/commonsImage';
 import '@olton/metroui/lib/metro.css';
 import '@olton/metroui/lib/icons.css';
 import CatTile from '~/components/CatTile.astro';
+import AppListPanel from '~/components/AppListPanel.astro';
 
 interface Props {
   locale: 'zh' | 'en' | 'yue';
@@ -69,6 +70,7 @@ const dict = {
     featured_today: '今日推介', featured_random: '隨機菜', featured_recent: '最近瀏覽',
     dishes_text: '菜',
     home_label: '粵食典',
+    applist_label: '所有菜式',
   },
   en: {
     hero_title: 'Cantopedia',
@@ -81,6 +83,7 @@ const dict = {
     featured_today: "TODAY'S PICK", featured_random: 'RANDOM DISH', featured_recent: 'RECENTLY VIEWED',
     dishes_text: 'dishes',
     home_label: 'Cantopedia',
+    applist_label: 'All dishes',
   },
   yue: {
     hero_title: '粵食典',
@@ -93,6 +96,7 @@ const dict = {
     featured_today: '今日推介', featured_random: '隨機餸', featured_recent: '啱啱睇過',
     dishes_text: '菜',
     home_label: '粵食典',
+    applist_label: '所有菜式',
   },
 }[locale];
 
@@ -106,8 +110,9 @@ function descOf(c: typeof allCats[number]) {
 }
 
 // Initial pivot title shown SSR
-const initialTitle = initialPanel === 'home'
-  ? dict.home_label
+const initialTitle =
+  initialPanel === 'home' ? dict.home_label
+  : initialPanel === 'all' ? dict.applist_label
   : (() => {
       const c = allCats.find((c) => c.id === initialPanel);
       return c ? nameOf(c) : dict.home_label;
@@ -245,6 +250,15 @@ const firstDishId = allDishes[0]?.id ?? '';
       </a>
     </div>
   </section>
+
+  {/* Panel 1: APPLIST */}
+  <AppListPanel
+    locale={locale}
+    dishes={allDishes}
+    base={base}
+    dataUrl={`${base}/${locale}/all`}
+    panelName={dict.applist_label}
+  />
 
   {/* Browse category panels — one per category, each with a Metro tiles grid of dishes */}
   {allCats.map((cat) => {

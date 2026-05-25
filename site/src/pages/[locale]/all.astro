@@ -1,0 +1,22 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hub from '~/components/Hub.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'zh' } },
+    { params: { locale: 'yue' } },
+    { params: { locale: 'en' } },
+  ];
+}
+
+const { locale } = Astro.params;
+const dict = {
+  zh: { title: '所有菜式' },
+  yue: { title: '所有菜式' },
+  en: { title: 'All dishes' },
+}[locale as 'zh'|'yue'|'en'];
+---
+<BaseLayout title={dict.title} locale={locale as 'zh'|'yue'|'en'}>
+  <Hub locale={locale as 'zh'|'yue'|'en'} initialPanel="all" />
+</BaseLayout>
