@@ -1,0 +1,62 @@
+---
+interface Props {
+  title: string;
+  open?: boolean;
+}
+const { title, open = false } = Astro.props;
+---
+<details class="accordion" open={open}>
+  <summary class="accordion-head">
+    <span class="accordion-title">{title}</span>
+    <span class="accordion-chev" aria-hidden="true">›</span>
+  </summary>
+  <div class="accordion-body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .accordion {
+    border-top: 1px solid var(--t-rule);
+    border-bottom: 1px solid var(--t-rule);
+    margin: 1rem 0;
+  }
+  .accordion + .accordion { margin-top: -1px; border-top: 0; }
+  .accordion-head {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.875rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--lang-font-primary);
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    user-select: none;
+  }
+  .accordion-head::-webkit-details-marker { display: none; }
+  .accordion-chev {
+    font-size: 1.25rem;
+    color: var(--t-ink-dim);
+    transition: transform 240ms var(--fluent-curve-easy-ease, ease);
+  }
+  .accordion[open] .accordion-chev { transform: rotate(90deg); }
+  .accordion-body {
+    padding: 0 0 1rem;
+    font-family: var(--lang-font-primary);
+    font-size: 0.9375rem;
+    line-height: var(--lang-body-leading);
+    color: var(--t-ink);
+  }
+  .accordion[open] .accordion-body {
+    animation: accordion-in 260ms var(--fluent-curve-decelerate-mid, ease) both;
+  }
+  @keyframes accordion-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-chev, .accordion[open] .accordion-body { animation: none; transition: none; }
+  }
+</style>
