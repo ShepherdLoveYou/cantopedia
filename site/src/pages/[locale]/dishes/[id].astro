@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { commonsThumb, commonsPageUrl } from '~/lib/commonsImage';
+import { tileColor as tileColorFor } from '~/lib/categoryColors';
 
 export async function getStaticPaths() {
   const dishes = await getCollection('dish');
@@ -34,13 +35,7 @@ const ingredientRefs = await Promise.all(
   }))
 );
 
-// Same Metro palette as homepage
-const tileColors: Record<string, string> = {
-  appetizer: '#e51400', 'soup-wonton': '#2d89ef', rice: '#f09609',
-  noodle: '#008a00', 'soup-noodle': '#00aba9', 'baked-rice': '#a05000',
-  congee: '#9f00a7', main: '#1d1d1d',
-};
-const catColor = tileColors[dish.data.category.id] || '#37474F';
+const catColor = tileColorFor(dish.data.category.id);
 
 function tNames(names: any, prefer = locale): string {
   if (prefer === 'en') return names.en;

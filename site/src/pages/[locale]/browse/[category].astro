@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CategoryPivot from '~/components/CategoryPivot.astro';
 import { commonsThumb } from '~/lib/commonsImage';
+import { tileColor as tileColorFor } from '~/lib/categoryColors';
 
 export async function getStaticPaths() {
   const cats = await getCollection('category');
@@ -24,12 +25,7 @@ const dishes = allDishes
   .filter((d) => d.data.category.id === cat.id)
   .sort((a, b) => a.data.menu_no - b.data.menu_no);
 
-const tileColors: Record<string, string> = {
-  appetizer: '#B71C1C', 'soup-wonton': '#1565C0', rice: '#E65100',
-  noodle: '#2E7D32', 'soup-noodle': '#00838F', 'baked-rice': '#6D4C41',
-  congee: '#6A1B9A', main: '#263238',
-};
-const tileColor = tileColors[cat.id] ?? '#37474F';
+const tileColor = tileColorFor(cat.id);
 
 const catName = locale === 'en' ? cat.data.names.en : cat.data.names.yue_hant;
 const catDesc = locale === 'en'

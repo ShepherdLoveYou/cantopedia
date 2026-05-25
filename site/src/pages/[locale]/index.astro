@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CategoryIcon from '~/components/CategoryIcon.astro';
+import { tileColors } from '~/lib/categoryColors';
 
 export async function getStaticPaths() {
   return [
@@ -27,17 +28,6 @@ for (const arr of dishesByCategory.values()) {
   arr.sort((a, b) => a.data.menu_no - b.data.menu_no);
 }
 
-// Authentic Metro / W3CSS palette
-const tileColors: Record<string, string> = {
-  appetizer:    '#e51400',  // Metro red — 印章
-  'soup-wonton':'#2d89ef',  // Metro blue — clear stock
-  rice:         '#f09609',  // Metro orange — wok hei
-  noodle:       '#008a00',  // Metro green — gai lan + scallion
-  'soup-noodle':'#00aba9',  // Metro teal — laksa
-  'baked-rice': '#a05000',  // Metro brown — gratin crust
-  congee:       '#9f00a7',  // Metro purple — long simmer
-  main:         '#1d1d1d',  // Metro near-black — banquet
-};
 type CatId = 'appetizer' | 'soup-wonton' | 'rice' | 'noodle' | 'soup-noodle' | 'baked-rice' | 'congee' | 'main';
 // Tile size mapping: dishes >=20 -> WIDE, 7-19 -> MEDIUM, <7 -> SMALL.
 function sizeOf(_catId: string, dishCount: number): 'w' | 'm' | 's' {
