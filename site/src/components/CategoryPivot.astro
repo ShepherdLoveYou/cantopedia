@@ -53,15 +53,20 @@ const nameOf = (c: typeof curr) =>
   .pivot--dim:hover { opacity: 0.75; }
   .pivot--dim[data-dir="prev"] { text-align: right; }
   .pivot--current {
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-size: clamp(1.15rem, 4.5vw, 2.5rem);
     font-weight: 300;
     letter-spacing: -0.02em;
     margin: 0;
-    line-height: 1.05;
-    white-space: nowrap;
+    line-height: 1.1;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
   }
   @media (max-width: 540px) {
-    .pivot--dim { font-size: 0.85rem; }
+    .pivot--dim { font-size: 0.75rem; }
+    .pivot-strip { min-height: 3rem; gap: 0.5rem; padding: 1rem 0 0.5rem; }
   }
 </style>
 

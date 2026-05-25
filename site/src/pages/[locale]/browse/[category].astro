@@ -104,18 +104,22 @@ const dict = {
   }
   .cat-no {
     font-family: var(--sans);
-    font-size: 3.5rem;
+    font-size: clamp(2.25rem, 8vw, 3.5rem);
     font-weight: 400;
     line-height: 0.95;
     letter-spacing: -0.02em;
   }
   .cat-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: 2rem;
+    font-size: clamp(1.3rem, 4.5vw, 2rem);
     font-weight: 400;
     letter-spacing: -0.01em;
     margin: 0.25rem 0 0.5rem;
     color: white;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
   .cat-desc { font-family: var(--sans), var(--sans-zh); font-size: 0.95rem; font-weight: 400; margin: 0.5rem 0 0; opacity: 0.92; max-width: 60ch; }
   .cat-langs { font-family: var(--meta); font-size: 0.8rem; opacity: 0.8; margin-top: 0.75rem; letter-spacing: 0.04em; }

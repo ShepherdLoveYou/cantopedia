@@ -350,12 +350,15 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   }
   .hero-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: 3rem;
+    font-size: clamp(1.75rem, 6vw, 3rem);
     font-weight: 400;
     letter-spacing: -0.015em;
     color: white;
     margin: 0.25rem 0 0.25rem;
     line-height: 1.05;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
   .hero-jyut {
     font-family: var(--mono);
