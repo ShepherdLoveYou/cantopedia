@@ -1,106 +1,136 @@
-# Cantopedia · 粵食典 — Handoff (latest: 2026-05-25)
+# Cantopedia · 粵食典 — Handoff (2026-05-25, clean state after experiment cleanup)
 
 ## Status snapshot
 
-- **Live**: <https://shepherdloveyou.github.io/cantopedia> — latest deploy from commit `5441872`
+- **Live**: <https://shepherdloveyou.github.io/cantopedia> — deploys from `main` on push
 - **Repo**: <https://github.com/ShepherdLoveYou/cantopedia> (public)
-- **Last release tag**: `v0.4.0` (Phase 4 — drawer + dark mode). v0.5.0 not tagged yet despite Phase 5 + many polish commits.
-- **Dishes**: 66/66 method_status: complete; **38/66 now have CC-licensed photos from Wikimedia Commons**
-- **CI/Deploy**: green; deploy workflow auto-runs on changes to `site/` or `data/`
+- **Last release tag**: `v0.4.0` — many shippable commits since but no new tag yet
+- **Dishes**: 66/66 method_status: complete; **38/66 have CC photos** from Wikimedia Commons
+- **CI/Deploy**: green; auto-runs on changes to `site/` or `data/`
 
-## What shipped since v0.4.0 (not yet tagged)
+## ⚠ Read this first — session lessons
 
-Roughly in order of commit, latest first:
+The previous session shipped 50+ commits in rapid iteration and accumulated bug-fix-on-top-of-bug-fix churn. Two experimental dep additions were attempted then rolled back:
 
-1. **CategoryPivot fix (`5441872`)** — peek names were wrapping to 3-4 lines, pivot strip resized per category, caused visible jump on left/right swipe. Locked min-height, ellipsized peek text, single-line current title with `clamp(1.75..2.5rem)`.
-2. **Damped transitions (`ee14756`)** — root horizontal pivot 12% → **22% translate** over 340/500ms damped curves. Added opacity-only fade-in cascade on `main > *` (520ms, 70ms stagger). Gated via `<html data-cascade>` so it plays AFTER VT settles.
-3. **Top nav isolation (`eb4c16b`)** — gave `.metro-nav`, `.loading-bar`, `footer` their own `view-transition-name` so they're independent of the root pivot. Fixes "top bar resizes during mobile swipe."
-4. **Progress stats → tiles (`e337e16`)** — homepage "CATALOGING PROGRESS" inline counts replaced by 4 colored Live Tiles (complete green / draft orange / stub steel / total red).
-5. **WP10 footer (`99aa9a6`)** — full-bleed `#000` panel with red Metro stripe accent, uppercase letter-spaced text. Symmetric with the top status bar.
-6. **WP10 status bar (`9be771f`)** — top nav slimmed to 40px solid `#000`, "CANTOPEDIA" uppercase letter-spaced, red `::after` underline on active locale pivot, no acrylic blur.
-7. **Typography weight bump (`d746481`)** — site-wide 200→300 / 300→400. WP10 uses Segoe UI Semilight (300) for heads, not Light (200).
-8. **Vue 3 + MetroUI 4 experiment (`d905daa`)** — `@astrojs/vue@5` + `vue@3.5` installed. `NavDrawer.vue` built **but NOT wired** (BaseLayout still uses vanilla drawer). MetroUI 4.5.12 CSS loaded via CDN in `<head>` before our styles. Bundle +~240KB CSS.
-9. **Dish-card live tile flip (`0309be0`)** — every dish-card on browse with a photo flips like the homepage WIDE tile. Front = solid cat-color + white text. Back = full-bleed photo, no tint. Same 10s/1.4s-stagger cycle.
-10. **Bug sweep (`b40d889`)** — 404 page locale (was hardcoded `/zh/`), refreshLocaleSwitchers hardcoded `/cantopedia`, missing alt text, Live Tile flip lifecycle.
-11. **Locale switcher bugs (`b050e5e`)** — links went to locale home not equivalent page; red active bar didn't move (nav has `transition:persist`).
-12. **Dark mode FOUC (`7423d30`)** — white flash on every page nav. Fix: stamp `data-theme` onto `e.newDocument` in `astro:before-swap`.
-13. **Phase 5A (`e57c778`)** — `pipeline fetch attach-images --lenient` adds Chinese-name fallback + drops keyword filter. **38 of 66 dishes** have photos.
-14. **Commons thumb fix (`62ec0ee`)** — `/thumb/W/file.jpg/600px-file.jpg` URLs were 400s. Switched to `Special:FilePath/<file>?width=N` which 302-redirects to the nearest allowed thumb.
-15. **Pagefind search + SEO + 404 (`f87f13d`)** — `/[locale]/search` route, drawer search link, `@astrojs/sitemap`, OG/Twitter meta, custom 404, `og-default.svg`.
+- **Vue 3 + `@astrojs/vue`** — installed, `NavDrawer.vue` written, never wired. Deps removed in cleanup.
+- **MetroUI 4 CSS via CDN** — `<link>` added to `<head>`, no markup ever used Metro classes. Removed in cleanup.
 
-## Stack as it stands
+The codebase is now back to pure Astro 5 + vanilla JS + `focus-trap` + `Pagefind` + `@astrojs/sitemap`. **Do not re-add Vue or MetroUI unless there's a specific feature that genuinely needs them** — the per-iteration cost was high and the user repeatedly pivoted.
 
-- **Astro 5.16** static, `pnpm`, Node 22
-- **`@astrojs/vue@5` + `vue@3.5`** — installed for experimentation, ONE component built (`src/components/NavDrawer.vue`) but not wired. BaseLayout still uses the vanilla Astro drawer.
-- **MetroUI 4.5.12** loaded via CDN `<link>` in BaseLayout `<head>` — CSS only, no JS. We let our `:root` vars and selectors override Metro's defaults. Not actively using Metro classes yet; loaded so authors can use `.tile`, `.pivot`, etc.
-- **focus-trap 8** for drawer a11y, **Pagefind** for search, **@astrojs/sitemap** for sitemap.
-- **No Vue 2, no Fluent UI** (proposed but rejected — Vue 2 EOL, Fluent UI is Win11 not WP10).
+**Engineering posture for the next session:**
+- Before making UI changes, write a 2-3 sentence design note in the spec or commit message — what's the intent, what should happen
+- Verify in a browser BEFORE committing for any visual/UX change (the user has been the QA layer; that's not scalable)
+- Don't keep adding deps unless they earn their keep concretely
+- Resist the urge to keep tweaking when user says "doesn't feel right" — ask **exactly what** isn't right before changing
 
-## Open threads / known unfinished
+## Stack as it stands (clean)
 
-- **NavDrawer.vue** exists but is NOT mounted in BaseLayout. BaseLayout still renders the vanilla drawer + scripts. If the next session wants to ship the Vue migration, swap the drawer markup in BaseLayout for `<NavDrawer client:load transition:persist locale={locale} ... />` and remove the duplicate drawer/script blocks.
-- **MetroUI integration** is half-done — CSS is loaded but no markup uses `.tile`, `.panorama`, `.navview` classes yet. Either commit to porting our hand-styled components onto Metro classes OR remove the CDN `<link>`. Currently it's loaded for the styles to be available but inert.
-- **28 of 66 dishes still have no photo** — specialty HK dishes (Portuguese-sauce baked rice, Chu Hou brisket, laksa variants, etc.) Commons doesn't have. Could try `pipeline fetch attach-images --lenient --no-cache` again with a third pass that uses primary-noun-only queries, or manually upload our own to Commons.
-- **110 of 116 ingredients are still stubs** — nutrition (USDA), procurement (海外采购) not filled.
-- **v0.5.0 tag** not yet pushed despite many shippable commits since v0.4.0.
+- Astro 5.16 static, pnpm, Node 22, 576 built pages
+- View Transitions API via Astro `<ClientRouter />` — shared-element morphs work (tile/dish/sauce names), browser handles cross-fade
+- focus-trap 8 (drawer a11y)
+- Pagefind (built-in search index, runs as post-build step)
+- @astrojs/sitemap (sitemap.xml + i18n)
+- No Vue, no MetroUI, no other frameworks
 
-## Likely next user feedback (recurring patterns this session)
+## What's working as of this handoff
 
-- "feels too thin / too light" → weights have been bumped to 300/400 floor; if user still complains push to 400/500
-- "doesn't feel WP10" → MetroUI 4 CSS now loaded; can actually port markup to Metro classes for stronger authenticity
-- "transitions feel jumpy/abrupt" → just fixed by isolating nav/footer + opacity-only fade cascade gated behind VT. If issue persists, look at the `setupNavDirection` IIFE and the `data-cascade` gate.
-- "dark mode bug" → most known cases fixed (FOUC, locale-stuck active class, `main` color invisible). New ones likely come from individual page CSS that hasn't been audited.
+| Surface | State |
+|---|---|
+| Homepage Start Screen | 8 category tiles, WP10 size-variety, monoline SVG icons (CategoryIcon.astro), Live Tile flip on WIDE main (10s + 1.4s stagger) |
+| Progress stats | 4 colored WP10 stat tiles (complete green / draft orange / stub steel / total red) + thin progress bar |
+| Browse page | CategoryPivot strip (prev/current/next w/ 3:1 ratio + height-locked), colored cat-hero band, dish-cards with cat-color front + photo back flip, 5n+1 size rhythm |
+| Dish detail page | Colored hero-band with optional Commons photo backdrop + credit, ingredient table, method steps, sauce link, history, sources |
+| Top nav | 40px solid black status bar, "CANTOPEDIA" uppercase letter-spaced brand, hamburger left, locale pivot right (red underline on active via `::after`), isolated from root pivot via `view-transition-name: status-bar` |
+| Drawer | Acrylic blur dark, focus-trap on open, 8 category links + search + locale + theme toggle |
+| Footer | Full-bleed dark panel with red Metro stripe, uppercase letter-spaced text |
+| Theme | data-theme on `<html>`, inline pre-paint script (data-astro-rerun), persists in localStorage, FOUC fix on `astro:before-swap` |
+| Locale switch | Stays on same page (localeHref), refreshLocaleSwitchers re-applies .active on each page-load |
+| Search | /[locale]/search route, Pagefind index, drawer search link, ?q= deep link |
+| 404 | Custom WP10 Panorama, all 3 locale home links |
+| Transitions | View Transitions API browser default cross-fade + slowed durations; per-tile/dish shared element morph |
 
-## Restart prompt for the new window
+## Known unfinished
 
-Copy this verbatim into the next session:
+- **NavDrawer.vue removed** but the vanilla drawer in BaseLayout works fine — no action needed
+- **28 of 66 dishes have no photo** — specialty HK dishes Commons doesn't have (Portuguese-sauce baked rice, Chu Hou brisket, laksa variants, Béchamel chicken chop). Could try a 3rd pass with primary-noun queries OR upload our own to Commons.
+- **110 of 116 ingredients are stubs** — nutrition, procurement not filled
+- **v0.5.0 tag** not pushed — many shippable commits since v0.4.0
+
+## Recent commits since v0.4.0 (highlights, latest first)
 
 ```
-# Cantopedia restart context (2026-05-25)
+Cleanup: remove MetroUI CDN + NavDrawer.vue (this commit)
+a93262b CategoryPivot — authentic WP10 Pivot proportions (3:1 current/peek)
+84b670c Revert CategoryPivot to prev/current/next 3-item layout
+534ca19 CategoryPivot — classic WP10 tab strip, all 8 categories at once (REVERTED)
+9b82ad0 Mobile overflow — long category/dish names breaking out of viewport
+1f96b74 WP Continuum tile-zoom morph — delegate fully to View Transitions API
+0117952 HANDOFF — refresh for new-window handoff after v0.4.0 polish session
+5441872 CategoryPivot — lock height, ellipsize long peek names
+ee14756 Damped transitions — bigger pivot + opacity-only fade-in cascade
+eb4c16b Top nav resize jiggle on mobile — isolate from root pivot
+20e8e32 Smoother page nav — drop competing cascade, soften pivot
+e337e16 Progress stats as WP10 tiles — 4 colored Live Tiles
+99aa9a6 WP10 footer — full-bleed dark bar matching status bar at top
+9be771f WP10 status bar — slim solid top nav, uppercase CANTOPEDIA mark
+d746481 WP10 typography weight bump — 200/300 -> 300/400
+0309be0 Dish-card live tile flip — solid front, photo back, staggered
+b40d889 Bug sweep — 404 locale, hardcoded base, alt text, tile flip lifecycle
+b050e5e Locale switcher bugs — wrong href + active indicator stuck
+7423d30 Dark mode bug — white flash on every page navigation
+e57c778 Phase 5A — lenient image pass: 38/66 dishes now have photos
+62ec0ee Fix dish image 404s — Commons rejects arbitrary thumb widths
+f87f13d Phase 5 (B+C) — Pagefind search + SEO basics + 404 page
+```
 
-I'm continuing work on Cantopedia (粵食典). Project root: d:/Cantonese Cuisine.
-Repo: https://github.com/ShepherdLoveYou/cantopedia.
+## Restart prompt for new window
+
+```
+# Cantopedia restart context (2026-05-25, post-experiment cleanup)
+
+Project root: d:/Cantonese Cuisine.
+Repo: https://github.com/ShepherdLoveYou/cantopedia
 Live: https://shepherdloveyou.github.io/cantopedia
 
-Read docs/HANDOFF.md first — it has the full state since v0.4.0 (many
-polish commits, no new tag yet). Latest commit on main: 5441872.
+Read docs/HANDOFF.md FIRST — it has full state + lessons from the
+previous session's iteration thrash.
 
-What's live now:
-- 66 dishes complete, 38 with Wikimedia Commons photos (28 still without)
-- WP10 Mobile styling: 40px solid black status bar at top, full-bleed
-  dark footer, drawer w/ acrylic blur, dark mode, horizontal-pivot
-  page transitions with opacity fade-in cascade
-- Pagefind search at /<locale>/search, sitemap.xml, OG meta, 404 page
-- Vue 3 + MetroUI 4 CSS both INSTALLED but mostly inert — see
-  HANDOFF.md "Open threads"
+CRITICAL POSTURE NOTES (from the lessons):
+- The user iterates aggressively on UI feedback — resist the urge to
+  ship per-comment tweaks. Ask EXACTLY what's wrong before changing.
+- Do NOT re-add Vue, MetroUI, or other frameworks. They were tried
+  and rolled back. The current vanilla stack works.
+- Verify in a browser BEFORE committing UI changes. The user has
+  been the visual QA; that's not sustainable.
+
+Stack:
+- Astro 5.16 static, pnpm, Node 22
+- focus-trap (drawer a11y), Pagefind (search), @astrojs/sitemap
+- View Transitions API via <ClientRouter />, shared-element morphs
 
 Conventions:
-- Site dev: cd site && pnpm dev → http://localhost:4321/cantopedia/
+- Dev: cd site && pnpm dev → http://localhost:4321/cantopedia/
 - Build: pnpm build (runs astro build + pagefind index)
 - Validate data: cd pipeline && python -m pipeline validate
 - Pipeline image attach: PYTHONIOENCODING=utf-8 python -X utf8 -m
   pipeline fetch attach-images [--lenient]
-- Schema parity: site/src/content.config.ts (Zod) and
-  pipeline/pipeline/models.py (pydantic) must stay in sync
-- Auto-deploys on push if site/ or data/ changed
+- Schema parity: site/src/content.config.ts (Zod) ↔
+  pipeline/pipeline/models.py (pydantic). Keep them in sync.
 
-User patterns to know (from memory):
-- High autonomy: defers tech decisions to recommendations
-- "Don't reinvent the wheel" — use existing GitHub libs (focus-trap,
-  Pagefind, MetroUI, etc.) over hand-rolled when feasible
-- Recurring feedback: "doesn't feel WP10 enough" — be aggressive with
-  Metro-styling, don't under-shoot
-- Will revert if a change looks worse than what came before — don't
-  fear shipping bold changes, but always keep the prior commit hash
-  in the commit message for easy revert
+User patterns:
+- High autonomy, will accept recommendations but switches direction
+  fast if a result looks worse than the prior state
+- "Don't reinvent the wheel" — but ONLY use existing libs that earn
+  their keep. Don't load a CDN framework just to have it.
+- Recurring "doesn't feel WP10" feedback — be aggressive with Metro
+  styling but commit to a direction once decided
 
-Suggested first task: either
-(a) Decide whether to actually wire NavDrawer.vue into BaseLayout, OR
-(b) Port homepage tile markup onto MetroUI's data-role="tile" classes
-to actually exercise the Metro UI CSS we already loaded.
-
-DO NOT keep both Vue + MetroUI loaded but unused — pick one direction
-and either commit to it or remove the dep.
+Suggested next tasks (in order of value):
+1. Tag v0.5.0 — many shippable commits accumulated since v0.4.0
+2. Try a 3rd image-attach pass on the 28 unimaged dishes using
+   primary-noun-only queries
+3. Begin ingredient nutrition enrichment (USDA adapter exists)
+4. Add an /about page (or section) explaining the project + license
 ```
 
 ## Repo at a glance
@@ -108,23 +138,21 @@ and either commit to it or remove the dep.
 ```
 cantopedia/
 ├── data/                         ★ source of truth — 66 dishes, 116 ingredients, 8 categories, 1 sauce
-├── pipeline/                     Python CLI (conda env: cantopedia)
-│   └── pipeline/commands/fetch.py    ← attach-images CLI lives here
-├── site/                         Astro 5 (pnpm, Node 22) — ~580 built pages
+├── pipeline/                     Python CLI
+│   └── pipeline/commands/fetch.py    ← attach-images --lenient lives here
+├── site/                         Astro 5 (pnpm, Node 22)
 │   ├── src/lib/
 │   │   ├── categoryColors.ts     unified Metro WP10 palette
 │   │   ├── categoryOrder.ts      pivot prev/next math
-│   │   └── commonsImage.ts       Commons thumb URL builder (Special:FilePath)
+│   │   └── commonsImage.ts       Commons thumb URL via Special:FilePath
 │   ├── src/components/
-│   │   ├── NavDrawer.vue         ★ Vue 3 SFC — built but NOT yet wired
 │   │   ├── CategoryPivot.astro
 │   │   └── CategoryIcon.astro
 │   └── src/pages/                index, browse, dishes, ingredients, sauces, search, 404
 ├── docs/
-│   ├── superpowers/specs/        design docs (Phase 2, 3, 4 design specs)
+│   ├── superpowers/specs/        design docs (Phase 2-4)
 │   └── HANDOFF.md                ← this file
-├── .github/workflows/            deploy.yml + ci.yml
-└── README.md / CHANGELOG.md / LICENSE-CODE (MIT) / LICENSE-CONTENT (CC BY-SA 4.0)
+└── .github/workflows/            deploy.yml + ci.yml
 ```
 
 — Claude
