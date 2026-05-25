@@ -49,6 +49,7 @@ const dict = {
     progress: '收錄進度',
     complete: '完整做法', draft: '草稿', stub: '配料表',
     pieces: '道',
+    featured_today: '今日推介', featured_random: '隨機菜', featured_recent: '最近瀏覽',
     dishes_text: '菜',
   },
   en: {
@@ -59,6 +60,7 @@ const dict = {
     progress: 'Cataloging progress',
     complete: 'with method', draft: 'draft', stub: 'ingredients only',
     pieces: 'dishes',
+    featured_today: 'TODAY\'S PICK', featured_random: 'RANDOM DISH', featured_recent: 'RECENTLY VIEWED',
     dishes_text: 'dishes',
   },
   yue: {
@@ -69,6 +71,7 @@ const dict = {
     progress: '收錄進度',
     complete: '完整做法', draft: '草稿', stub: '配料表',
     pieces: '道',
+    featured_today: '今日推介', featured_random: '隨機餸', featured_recent: '啱啱睇過',
     dishes_text: '菜',
   },
 }[locale];
@@ -83,6 +86,110 @@ const dict = {
       <span>{dict.hero_sub_b}</span>
     </p>
   </section>
+
+  <section class="featured-section">
+    <a id="featured-tile" class="featured-tile wp-tile" href={`${base}/${locale}/dishes/${dishes[0].id}`}>
+      <div class="featured-face featured-face--active" data-face="today">
+        <div class="featured-img" data-img=""></div>
+        <div class="featured-overlay"></div>
+        <div class="featured-label">{dict.featured_today}</div>
+        <div class="featured-name"></div>
+      </div>
+      <div class="featured-face" data-face="random">
+        <div class="featured-img" data-img=""></div>
+        <div class="featured-overlay"></div>
+        <div class="featured-label">{dict.featured_random}</div>
+        <div class="featured-name"></div>
+      </div>
+      <div class="featured-face" data-face="recent">
+        <div class="featured-img" data-img=""></div>
+        <div class="featured-overlay"></div>
+        <div class="featured-label">{dict.featured_recent}</div>
+        <div class="featured-name"></div>
+      </div>
+    </a>
+  </section>
+
+  <script define:vars={{ base, locale, dishesData: dishes.map(d => ({
+    id: d.id,
+    name: locale === 'en' ? d.data.names.en : d.data.names.yue_hant,
+    img: d.data.images?.[0]?.path ?? null,
+  })) }}>
+    (function () {
+      const tile = document.getElementById('featured-tile');
+      if (!tile) return;
+      const faces = tile.querySelectorAll('.featured-face');
+      const withImg = dishesData.filter(d => d.img);
+      if (withImg.length === 0) return;
+
+      // Today's pick — deterministic by day-of-year
+      const today = new Date();
+      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+      const todayDish = withImg[dayOfYear % withImg.length];
+
+      // Random
+      const randomDish = withImg[Math.floor(Math.random() * withImg.length)];
+
+      // Recent from localStorage
+      let recentDish = null;
+      try {
+        const recentId = localStorage.getItem('cantopedia-last-dish');
+        if (recentId) {
+          recentDish = dishesData.find(d => d.id === recentId && d.img);
+        }
+      } catch {}
+      if (!recentDish) recentDish = todayDish;
+
+      const picks = { today: todayDish, random: randomDish, recent: recentDish };
+
+      // Use Wikimedia thumb URL (matches commonsThumb pattern)
+      function thumbUrl(path) {
+        if (!path) return '';
+        const md5 = (() => {
+          // Quick: use the same algorithm used by commonsThumb. Since we can't
+          // call it client-side, fallback to using the original commons file URL.
+          return null;
+        })();
+        // path is like "Foo.jpg" — use the Special:FilePath redirect to render
+        return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(path)}?width=1200`;
+      }
+
+      faces.forEach((face) => {
+        const f = face.dataset.face;
+        const pick = picks[f];
+        if (!pick) return;
+        const imgUrl = thumbUrl(pick.img);
+        const imgEl = face.querySelector('.featured-img');
+        if (imgEl && imgUrl) imgEl.style.backgroundImage = `url("${imgUrl}")`;
+        face.querySelector('.featured-name').textContent = pick.name;
+      });
+
+      // Link click → track the currently active face's dish
+      tile.addEventListener('click', () => {
+        const active = tile.querySelector('.featured-face--active');
+        const f = active?.dataset.face;
+        const pick = picks[f];
+        if (pick) {
+          try { localStorage.setItem('cantopedia-last-dish', pick.id); } catch {}
+          tile.href = `${base}/${locale}/dishes/${pick.id}`;
+        }
+      });
+      // Initial href
+      tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
+
+      // Rotate every 6s
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let i = 0;
+      setInterval(() => {
+        faces[i].classList.remove('featured-face--active');
+        i = (i + 1) % faces.length;
+        faces[i].classList.add('featured-face--active');
+        // Update tile href to current face's dish
+        const f = faces[i].dataset.face;
+        if (picks[f]) tile.href = `${base}/${locale}/dishes/${picks[f].id}`;
+      }, 6000);
+    })();
+  </script>
 
   <section class="pivot-section">
     <div class="pivot-label">{dict.progress}</div>
@@ -460,6 +567,72 @@ const dict = {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+  }
+
+  .featured-section {
+    margin: 2rem 0 1.5rem;
+    /* tile entrance stagger lives on .wp-tile globally, applies here too */
+  }
+  .featured-tile {
+    position: relative;
+    display: block;
+    height: 220px;
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--t-plate);
+    border: 0;
+  }
+  .featured-face {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 700ms var(--fluent-curve-decelerate-mid, ease-out);
+    pointer-events: none;
+  }
+  .featured-face--active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .featured-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--m-blue-dark);
+  }
+  .featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.55) 60%,
+      rgba(0,0,0,0.8) 100%);
+  }
+  .featured-label {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.5rem;
+    font-family: var(--lang-font-primary);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: var(--lang-min-weight, 400);
+  }
+  .featured-name {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--lang-font-primary);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1.1;
+    color: #fff;
+    font-weight: var(--lang-min-weight, 300);
+    letter-spacing: var(--lang-h2-tracking, 0);
+  }
+  @media (max-width: 540px) {
+    .featured-tile { height: 180px; }
   }
 </style>
 

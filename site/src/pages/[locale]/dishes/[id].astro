@@ -293,6 +293,10 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     <span style="margin: 0 0.5rem; color: var(--rule);">·</span>
     <a href={`${base}/${locale}`}>{dict.back_home}</a>
   </footer>
+
+  <script define:vars={{ dishId: dish.id }}>
+    try { localStorage.setItem('cantopedia-last-dish', dishId); } catch {}
+  </script>
 </BaseLayout>
 
 <style>
