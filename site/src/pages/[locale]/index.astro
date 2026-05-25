@@ -86,11 +86,23 @@ const dict = {
 
   <section class="pivot-section">
     <div class="pivot-label">{dict.progress}</div>
-    <div class="pivot-counts">
-      <span class="ct"><b style="color:var(--m-green)">{complete}</b> {dict.complete}</span>
-      <span class="ct"><b style="color:var(--m-orange)">{draft}</b> {dict.draft}</span>
-      <span class="ct"><b>{total - complete - draft}</b> {dict.stub}</span>
-      <span class="ct ct-total">{total} {dict.pieces}</span>
+    <div class="stat-tiles">
+      <div class="stat-tile stat-complete">
+        <div class="stat-num">{complete}</div>
+        <div class="stat-label">{dict.complete}</div>
+      </div>
+      <div class="stat-tile stat-draft">
+        <div class="stat-num">{draft}</div>
+        <div class="stat-label">{dict.draft}</div>
+      </div>
+      <div class="stat-tile stat-stub">
+        <div class="stat-num">{total - complete - draft}</div>
+        <div class="stat-label">{dict.stub}</div>
+      </div>
+      <div class="stat-tile stat-total">
+        <div class="stat-num">{total}</div>
+        <div class="stat-label">{dict.pieces}</div>
+      </div>
     </div>
     <div class="prog-track">
       <div class="prog-seg prog-complete" style={`width: ${(complete / total) * 100}%`}></div>
@@ -203,10 +215,45 @@ const dict = {
     margin-bottom: 1rem;
     font-weight: 400;
   }
-  .pivot-counts { display: flex; gap: 1.75rem; flex-wrap: wrap; font-family: var(--sans); font-size: 0.875rem; margin-bottom: 0.75rem; }
-  .ct { color: var(--t-ink-dim); }
-  .ct b { font-size: 1.5rem; color: var(--t-ink); margin-right: 0.35rem; font-weight: 400; letter-spacing: -0.02em; }
-  .ct-total b { color: var(--m-red); }
+  /* WP10 stat tiles — 4 small colored Live Tiles showing dataset progress.
+     Big number weight 300, small uppercase letter-spaced label, solid bg
+     per status. Same vocabulary as Start Screen tiles below. */
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 0.875rem;
+  }
+  @media (max-width: 520px) {
+    .stat-tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat-tile {
+    padding: 0.85rem 0.95rem 0.9rem;
+    color: white;
+    min-height: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .stat-complete { background: var(--m-green); }
+  .stat-draft    { background: var(--m-orange); }
+  .stat-stub     { background: #647687; }   /* steel */
+  .stat-total    { background: var(--m-red); }
+  .stat-num {
+    font-family: var(--sans);
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
   .prog-track {
     height: 3px;
     background: var(--t-rule);
