@@ -814,27 +814,30 @@ const dict = {
         .loading-bar.loading::before { animation: none; opacity: 0.5; }
       }
 
-      /* Pivot horizontal slide — only when <html> has nav-prev / nav-next */
-      html.nav-next::view-transition-old(root) {
-        animation: slide-out-left var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
-      }
-      html.nav-next::view-transition-new(root) {
-        animation: slide-in-right var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
-      }
-      html.nav-prev::view-transition-old(root) {
-        animation: slide-out-right var(--fluent-duration-gentle) var(--fluent-curve-accelerate-mid) both;
-      }
+      /* Pivot horizontal slide — both old and new use the SAME easing so
+         they travel in perfect lockstep, like two cards sliding together.
+         Override the UA's default mix-blend-mode: plus-lighter (which adds
+         brightness wash during overlap) so each card stays solid. */
+      html.nav-next::view-transition-old(root),
+      html.nav-next::view-transition-new(root),
+      html.nav-prev::view-transition-old(root),
       html.nav-prev::view-transition-new(root) {
-        animation: slide-in-left var(--fluent-duration-gentle) var(--fluent-curve-decelerate-mid) both;
+        mix-blend-mode: normal;
+        animation-timing-function: cubic-bezier(0.3, 0, 0, 1);  /* WP10 Continuum native */
+        animation-duration: 380ms;
       }
+      html.nav-next::view-transition-old(root) { animation-name: slide-out-left; }
+      html.nav-next::view-transition-new(root) { animation-name: slide-in-right; }
+      html.nav-prev::view-transition-old(root) { animation-name: slide-out-right; }
+      html.nav-prev::view-transition-new(root) { animation-name: slide-in-left; }
 
-      /* WP10 pivot slide is a substantial travel (old fully exits, new comes
-         in from the side). Subtle 12% reads as a glitch; 40% gives a clear
-         hub-slide feel. Opacity tapers near the edge to mask any visual seam. */
-      @keyframes slide-out-left  { to   { transform: translateX(-40%); opacity: 0; } }
-      @keyframes slide-in-right  { from { transform: translateX( 40%); opacity: 0; } }
-      @keyframes slide-out-right { to   { transform: translateX( 40%); opacity: 0; } }
-      @keyframes slide-in-left   { from { transform: translateX(-40%); opacity: 0; } }
+      /* Full-screen card slide — old goes ALL the way off, new comes ALL
+         the way in. No opacity fade: solid cards moving together. The lockstep
+         travel is the WP10 pivot signature (NOT a crossfade with slide). */
+      @keyframes slide-out-left  { from { transform: translateX(   0%); } to { transform: translateX(-100%); } }
+      @keyframes slide-in-right  { from { transform: translateX( 100%); } to { transform: translateX(   0%); } }
+      @keyframes slide-out-right { from { transform: translateX(   0%); } to { transform: translateX( 100%); } }
+      @keyframes slide-in-left   { from { transform: translateX(-100%); } to { transform: translateX(   0%); } }
 
       @media (prefers-reduced-motion: reduce) {
         ::view-transition-old(*),
