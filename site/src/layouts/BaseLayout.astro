@@ -650,6 +650,11 @@ const currentYear = new Date().getFullYear();
         --t-plate-dark: #25252a;
         --t-card: #161618;
         --t-ink-dim: #9a9a9a;
+        /* Defensive override: spec §5.2 requires pure black bg + pure white ink.
+           Metro's --body-background in dark mode may be near-black (#1e1f22).
+           These explicit values guarantee exact spec compliance. */
+        --t-bg: #000000;
+        --t-ink: #FFFFFF;
       }
 
       /* ===== i18n typography overrides ===== */
@@ -708,7 +713,15 @@ const currentYear = new Date().getFullYear();
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 6rem; }
+      main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 88px; }
+      /* Phase A: reserve room for fixed bottom AppBar (72px) + 16 buffer. */
+      main {
+        padding-bottom: 88px;
+      }
+      /* Hub home panel has its own layout — it manages bottom space via .hub height calc. */
+      main:has(#hub) {
+        padding-bottom: 0;
+      }
       h1 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h1-size); line-height: 1.1; letter-spacing: var(--lang-h1-tracking); margin: 0 0 0.5rem; }
       h2 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h2-size); margin: 2.5rem 0 1rem; line-height: 1.2; letter-spacing: var(--lang-h2-tracking); }
       h3 { font-family: var(--lang-font-primary); font-weight: var(--fw-medium); font-size: var(--lang-h3-size); text-transform: none; letter-spacing: 0.01em; color: var(--ink); margin: 2rem 0 0.75rem; }
