@@ -235,21 +235,23 @@ const firstDishId = allDishes[0]?.id ?? '';
         );
       })}
 
-      {/* 4 stat tiles (medium, single-face, no flip — they show stats not pictures) */}
+      {/* 4 stat tiles (medium, single-face, no flip — they show stats not pictures).
+          Empty counts render as em-dash (—) to signal "no items in this state" typographically
+          instead of a bare 0 which reads as a broken counter (UI_AUDIT_2026-05-26 P2.1). */}
       <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
-        <span class="stat-num">{complete}</span>
+        <span class="stat-num">{complete === 0 ? '—' : complete}</span>
         <span class="stat-label">{dict.complete}</span>
       </a>
       <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
-        <span class="stat-num">{draft}</span>
+        <span class="stat-num">{draft === 0 ? '—' : draft}</span>
         <span class="stat-label">{dict.draft}</span>
       </a>
       <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
-        <span class="stat-num">{total - complete - draft}</span>
+        <span class="stat-num">{(total - complete - draft) === 0 ? '—' : (total - complete - draft)}</span>
         <span class="stat-label">{dict.stub}</span>
       </a>
       <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-red);">
-        <span class="stat-num">{total}</span>
+        <span class="stat-num">{total === 0 ? '—' : total}</span>
         <span class="stat-label">{dict.pieces}</span>
       </a>
 
