@@ -111,6 +111,41 @@ const sealBg = await p.evaluate(() => {
 });
 if (sealBg) assert(`[cobalt] .brand-seal stays brand red`, '#E51400', norm(sealBg));
 
+// Part 1.C — HubPivot mobile chevron tap target ≥ 44×44
+const mobileCtx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+const mp = await mobileCtx.newPage();
+await mp.goto(`${BASE}/zh`, { waitUntil: 'networkidle' });
+const dishHref = await mp.$eval('a[href*="/dishes/"]', a => a.getAttribute('href')).catch(() => null);
+if (dishHref) {
+  const ORIGIN = 'http://localhost:4321';
+  const dishUrl = dishHref.startsWith('http') ? dishHref :
+                  dishHref.startsWith('/') ? ORIGIN + dishHref :
+                  BASE + '/' + dishHref;
+  await mp.goto(dishUrl, { waitUntil: 'networkidle' });
+  await mp.waitForTimeout(200);
+  const dims = await mp.evaluate(() => {
+    const btn = document.querySelector('.hub-pivot-link');
+    if (!btn) return null;
+    const r = btn.getBoundingClientRect();
+    return { w: r.width, h: r.height };
+  });
+  if (dims) {
+    results.push({
+      label: '[mobile] .hub-pivot-link width ≥ 44',
+      expected: '≥ 44',
+      actual: String(dims.w),
+      ok: dims.w >= 44,
+    });
+    results.push({
+      label: '[mobile] .hub-pivot-link height ≥ 44',
+      expected: '≥ 44',
+      actual: String(dims.h),
+      ok: dims.h >= 44,
+    });
+  }
+}
+await mobileCtx.close();
+
 console.log(JSON.stringify(results, null, 2));
 const failed = results.filter(r => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} passed`);

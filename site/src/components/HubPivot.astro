@@ -82,7 +82,20 @@ const { initialTitle, prevId = 'hub-pivot-prev', nextId = 'hub-pivot-next', titl
     letter-spacing: var(--ls-meta);
   }
   @media (max-width: 540px) {
-    .hub-pivot { min-height: 3.5rem; padding: var(--sp-3) var(--sp-4) var(--sp-1); }
+    .hub-pivot {
+      min-height: 3.5rem;
+      padding: var(--sp-3) var(--sp-4) var(--sp-1);
+      gap: var(--sp-3);
+    }
+    .hub-pivot-link {
+      padding: var(--sp-3) var(--sp-2);
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+    }
+    .hub-pivot-arrow {
+      font-size: var(--fs-h2);
+    }
     .hub-pivot-peek { display: none; }
   }
 </style>
