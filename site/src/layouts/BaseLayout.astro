@@ -477,9 +477,12 @@ const dict = {
       /* Override Metro UI's body bg vars so dark/light theme works on Hub-loading pages.
          Metro defines `body { background-color: var(--body-background) }` with --body-background
          hardcoded to #fff. We point those vars at our theme tokens so Metro's body rule reads
-         the right color in both modes. !important is needed because Metro CSS loads after
-         BaseLayout and sets the same vars on :root. */
-      :root, html { --body-background: var(--t-bg) !important; --body-color: var(--t-ink) !important; }
+         the right color in both modes. :where() gives zero specificity so Metro's :root defaults
+         still win at equal specificity unless our theme tokens override them. */
+      :where(:root, html) {
+        --body-background: var(--t-bg);
+        --body-color: var(--t-ink);
+      }
       body {
         font-family: var(--lang-font-primary);
         font-size: 16px;
