@@ -1298,6 +1298,7 @@ const currentYear = new Date().getFullYear();
           trigger?.setAttribute('aria-expanded', 'true');
           if (prefersReduced()) {
             menu.style.transform = 'translateY(0%)';
+            menu.querySelector<HTMLElement>('button, a[href]')?.focus();
             return;
           }
           if (currentAnim) currentAnim.stop();
@@ -1307,6 +1308,10 @@ const currentYear = new Date().getFullYear();
             { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
           );
           await currentAnim.finished;
+          /* a11y (spec §4.4): move focus to first interactive item after
+             open animation completes, so screen readers + keyboard users
+             land in the menu rather than the trigger. */
+          menu.querySelector<HTMLElement>('button, a[href]')?.focus();
         }
 
         async function closeMenu() {
@@ -1318,6 +1323,7 @@ const currentYear = new Date().getFullYear();
           if (prefersReduced()) {
             menu.style.transform = 'translateY(100%)';
             menu.setAttribute('aria-hidden', 'true');
+            trigger?.focus();
             return;
           }
           if (currentAnim) currentAnim.stop();
@@ -1328,6 +1334,9 @@ const currentYear = new Date().getFullYear();
           );
           await currentAnim.finished;
           menu.setAttribute('aria-hidden', 'true');
+          /* a11y (spec §4.4): return focus to the ⋯ trigger so the user
+             continues the keyboard journey from where they invoked the menu. */
+          trigger?.focus();
         }
 
         document.addEventListener('click', (e) => {
