@@ -79,9 +79,21 @@ const dict = {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+HK:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=Noto+Serif+HK:wght@400;500;700&family=Open+Sans:wght@300;400;500;700&display=swap" />
     <ClientRouter />
     <script>
-      import '@olton/metroui/lib/metro.css';
-      import '@olton/metroui/lib/icons.css';
-      import '@olton/metroui/lib/metro.js';
+      // Tree-shaken Metro UI v5 — only the components Cantopedia actually uses
+      // (app-bar / tile / listview / hero / flip-card + their deps). Switched
+      // from `lib/metro.js` bundle (~642 KB gzip total) to per-component imports
+      // from source/. Vite compiles .less and tree-shakes 160+ unused widgets,
+      // yielding ~378 KB gzip total (40% smaller).
+      import '@olton/metroui/source/reset/index.js';
+      import '@olton/metroui/source/runtime.js';
+      import '@olton/metroui/source/common-css/index.js';
+      import '@olton/metroui/source/colors-css/index.js';
+      import '@olton/metroui/source/icons/index.js';
+      import '@olton/metroui/source/components/app-bar/index.js';
+      import '@olton/metroui/source/components/tile/index.js';
+      import '@olton/metroui/source/components/listview/index.js';
+      import '@olton/metroui/source/components/hero/index.js';
+      import '@olton/metroui/source/components/flip-card/index.js';
     </script>
   </head>
   <body>
