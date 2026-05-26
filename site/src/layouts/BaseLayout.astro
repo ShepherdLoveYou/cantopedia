@@ -99,7 +99,7 @@ const dict = {
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <div class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" transition:persist>
+      <nav class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" aria-label="Site navigation" transition:persist>
         <a class="brand app-bar-brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
@@ -112,7 +112,7 @@ const dict = {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
     )}
     <Toast />
     <main>
@@ -491,8 +491,8 @@ const dict = {
         background: #000 var(--acrylic-noise);
         background-blend-mode: overlay;
         color: #fff;
-        padding: 0 0.75rem;
-        height: 40px;
+        padding: 0 var(--sp-3);
+        height: var(--sp-6);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -504,27 +504,29 @@ const dict = {
            appears to resize / jiggle on mobile. */
         view-transition-name: status-bar;
       }
-      /* Metro v5 app-bar overrides — cancel Metro defaults that conflict with
-         WP10 status-bar styling. Metro sets min-height:52px, height:auto,
-         flex-flow:row wrap, and collapses .app-bar-menu into a vertical column.
-         We force the bar to stay 40px and the locale switcher to stay horizontal
-         at all viewports (data-expand-point="0" handles JS side; this handles CSS). */
+      /* Metro v5 app-bar overrides — restore WP10 status-bar look.
+       * Compound selector `.metro-nav.app-bar` (0,2,0) beats Metro's `.app-bar` (0,1,0)
+       * specificity-wise, so plain declarations win without !important. The TWO uses of
+       * !important below are necessary because Metro's JS writes inline display styles
+       * on `.collapsed` and injects `.hamburger` with inline styles after init. */
       .metro-nav.app-bar {
-        min-height: 40px !important;
-        height: 40px !important;
-        flex-flow: row nowrap !important;
-        background-color: #000 !important;
-        padding-right: 0.75rem !important;
+        min-height: var(--sp-6);
+        height: var(--sp-6);
+        flex-flow: row nowrap;
+        /* mirrors .metro-nav base rule above — needed to beat Metro's .app-bar background */
+        background-color: #000;
+        padding-right: var(--sp-3);
       }
       html[data-theme="light"] .metro-nav.app-bar {
-        background-color: #1d1d1d !important;
+        /* mirrors light-theme .metro-nav rule above — see line ~558 */
+        background-color: #1d1d1d;
       }
       .metro-nav.app-bar .app-bar-menu {
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        width: auto !important;
-        position: static !important;
-        order: unset !important;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: auto;
+        position: static;
+        order: unset;
       }
       .metro-nav.app-bar .app-bar-menu.collapsed {
         display: flex !important;
@@ -533,20 +535,20 @@ const dict = {
         display: none !important;
       }
       .metro-nav.app-bar .app-bar-menu > li {
-        list-style: none !important;
+        list-style: none;
       }
       /* Override Metro's light-theme color vars on app-bar items inside our dark nav */
       .metro-nav.app-bar .app-bar-menu > li > a {
-        background-color: transparent !important;
-        color: rgba(255,255,255,0.5) !important;
-        padding: 0.55rem 0.6rem !important;
-        font-size: 0.7rem !important;
-        line-height: 1 !important;
-        border-radius: 0 !important;
+        background-color: transparent;
+        color: rgba(255,255,255,0.5);
+        padding: 0.55rem 0.6rem;
+        font-size: var(--fs-caption);
+        line-height: 1;
+        border-radius: 0;
       }
       .metro-nav.app-bar .brand {
-        font-size: inherit !important;
-        flex: 1 !important;
+        font-size: inherit;
+        flex: 1;
       }
       ::view-transition-old(status-bar),
       ::view-transition-new(status-bar) {
@@ -586,10 +588,10 @@ const dict = {
       .locale-switcher { display: flex; gap: 0; align-items: center; }
       .pivot-tab {
         font-family: var(--sans);
-        font-size: 0.7rem;
+        font-size: var(--fs-caption);
         padding: 0.55rem 0.6rem;
         color: rgba(255,255,255,0.5) !important;
-        letter-spacing: 0.22em;
+        letter-spacing: var(--ls-caps);
         font-weight: 500;
         text-transform: uppercase;
         text-decoration: none;
