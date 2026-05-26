@@ -143,3 +143,57 @@ grep -rE "background[^:]*:\s*(#|rgb|white|black)" site/src --include="*.astro" -
 | [site/scripts/probe-theme-truth.mjs](../../site/scripts/probe-theme-truth.mjs) | 主题 bug 诊断 probe |
 | [site/scripts/probe-flip-truth.mjs](../../site/scripts/probe-flip-truth.mjs) | 翻转 bug 诊断 probe |
 | [site/node_modules/@olton/metroui/lib/metro.css](../../site/node_modules/@olton/metroui/lib/metro.css) | Metro v5 source — grep `.dark-side` 看暗模式 token 定义 |
+
+---
+
+## 8. 未提交的 working-tree 改动（上 session 遗留）
+
+`git status` 显示一个 modified file 没 commit：
+
+```
+modified:   site/src/pages/[locale]/dishes/[id].astro
+```
+
+**改动内容**（与 dark-mode brainstorm **无关**，是独立的 hero 布局调整）：
+
+- 把原先三个 absolute-positioned 兄弟（`.dish-hero-name` / `.dish-hero-alt` / `.dish-hero-jyut`）包进一个新的 `.dish-hero-text` flex 容器
+- 容器用 `position: absolute; bottom: var(--sp-5); left: var(--sp-4); right: var(--sp-5)` 定位 + `flex-direction: column; gap: var(--sp-1)`
+- Hero 高度从 `calc(2 * var(--tile-unit) + var(--tile-gap))` 提到 `calc(3 * var(--tile-unit) + 2 * var(--tile-gap))`（多一行 tile）
+- 三个文字节点去掉各自的 `position: absolute / bottom / left / z-index`，由父容器统一定位；`.dish-hero-name` 加 `line-height: 1.1`
+
+**判断**：看起来是为了用 flex gap 替代手算 `bottom: calc(... + 3rem)` 这种 stack 偏移，并给 hero 多一行高度。Diff 自身 self-contained，没引入新依赖。
+
+**接力决策**（下个 session 第一步要做）：
+1. **打开本地 dev**（见 §4）跑 [dishes/zh/01](http://localhost:4321/cantopedia/zh/dishes/01)，目视确认改后效果
+2. **若 OK** → 单独 commit，commit message 类似 `refactor(dish-hero): wrap text in flex container; bump hero to 3 tile-units`，让 working tree 干净后再开 dark-mode 工作
+3. **若想丢弃** → `git restore site/src/pages/[locale]/dishes/[id].astro`
+4. **不要混进 dark-mode commit** —— 这是无关改动，混提交会污染 dark-mode 的 diff review
+
+---
+
+## 9. Dark mode work — COMPLETE in this session
+
+Spec + plan + implementation all landed:
+- Spec: `docs/superpowers/specs/2026-05-26-dark-mode-darkside-design.md` (commits a4267cf + e1eae14)
+- Plan: `docs/superpowers/plans/2026-05-26-dark-mode-darkside.md` (commit f5989d5)
+- Implementation: 7 commits via subagent-driven-development —
+  - 3cee417 + bc60ce9: probe scripts rewrite (TDD red)
+  - 9a0aa7c + 44bd27b: CSS foundation (--t-* alias to Metro tokens)
+  - 77dc655: inline FOUC script + auto migration
+  - b98dbd2: delegated click handler + astro:before-swap listener
+  - 1a0fe85: nav theme toggle button (markup + CSS)
+  - 75f7032: Hub 2-tile + i18n rename (probes GREEN)
+
+All 3 theme probes (`probe-theme-truth.mjs` / `probe-theme-tiles.mjs` /
+`probe-theme-visual.mjs`) pass. §1-§7 above are historical context for the
+in-progress state at session start; §1 (cat-tile flip fixes 5a01f0a +
+0fc9c3e) was already shipped at session start, and §2-§6 (dark-mode
+brainstorm) are now done.
+
+Sidequest: codegraph initialized for this repo (commit f80594c) —
+`@colbymchenry/codegraph@0.9.4`. `.codegraph/` scaffold committed; run
+`codegraph index` locally to populate the SQLite knowledge graph.
+
+Next session: pick up `feat/wp10-metroui` and merge to `main` if desired,
+or continue with other WP10 polish (e.g., the nav flex squeeze on
+sub-360px viewport — spec risk #8 — was deferred).

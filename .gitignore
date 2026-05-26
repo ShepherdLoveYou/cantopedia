@@ -39,3 +39,6 @@ data/**/*.yaml.draft
 site/smoke-out/
 site/contrast-out/
 site/probe-out/
+
+# Playwright probe screenshot outputs (transient — not source)
+site/probe-*.png
