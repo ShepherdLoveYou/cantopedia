@@ -1,0 +1,88 @@
+---
+/**
+ * Hub-style top pivot title strip — title centered, prev/next peek labels
+ * on the sides. Used by Hub (panels) and PivotPage (tabs). Renders SSR
+ * title from initialTitle; JS updates as user scrolls/clicks.
+ *
+ * Props:
+ *   initialTitle: string  — SSR-rendered title
+ *   prevId?: string       — DOM id of prev link (default 'hub-pivot-prev')
+ *   nextId?: string       — DOM id of next link (default 'hub-pivot-next')
+ *   titleId?: string      — DOM id of title element (default 'hub-pivot-title')
+ */
+interface Props {
+  initialTitle: string;
+  prevId?: string;
+  nextId?: string;
+  titleId?: string;
+}
+const { initialTitle, prevId = 'hub-pivot-prev', nextId = 'hub-pivot-next', titleId = 'hub-pivot-title' } = Astro.props;
+---
+<nav class="hub-pivot" aria-label="Pivot">
+  <button type="button" class="hub-pivot-link hub-pivot-link--prev" id={prevId} data-dir="prev" aria-label="Previous">
+    <span class="hub-pivot-peek hub-pivot-peek--prev" id={`${prevId}-peek`} aria-hidden="true"></span>
+    <span class="hub-pivot-arrow">‹</span>
+  </button>
+  <h1 class="hub-pivot-title" id={titleId}>{initialTitle}</h1>
+  <button type="button" class="hub-pivot-link hub-pivot-link--next" id={nextId} data-dir="next" aria-label="Next">
+    <span class="hub-pivot-arrow">›</span>
+    <span class="hub-pivot-peek hub-pivot-peek--next" id={`${nextId}-peek`} aria-hidden="true"></span>
+  </button>
+</nav>
+
+<style>
+  .hub-pivot {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: var(--sp-4);
+    padding: var(--sp-4) var(--sp-5) var(--sp-2);
+    font-family: var(--lang-font-primary);
+    min-height: 4.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hub-pivot-title {
+    font-size: clamp(var(--fs-title), 7vw, var(--fs-panorama));
+    font-weight: var(--fw-light);
+    letter-spacing: var(--ls-meta);
+    line-height: 1;
+    margin: 0;
+    text-align: center;
+    color: var(--t-ink);
+    overflow-wrap: break-word;
+  }
+  .hub-pivot-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-1);
+    color: var(--ink);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .hub-pivot-arrow {
+    font-size: var(--fs-title);
+    font-weight: var(--fw-light);
+    line-height: 1;
+  }
+  .hub-pivot-peek {
+    font-family: var(--sans), var(--sans-zh);
+    font-weight: var(--fw-light);
+    font-size: var(--fs-body);
+    color: var(--ink-dim);
+    opacity: 0.55;
+    max-width: 8ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: var(--ls-meta);
+  }
+  @media (max-width: 540px) {
+    .hub-pivot { min-height: 3.5rem; padding: var(--sp-3) var(--sp-4) var(--sp-1); }
+    .hub-pivot-peek { display: none; }
+  }
+</style>

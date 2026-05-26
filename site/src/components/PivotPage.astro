@@ -1,0 +1,117 @@
+---
+/**
+ * WP10 Pivot container — horizontal scroll-snap of N tabs.
+ * Mimics WP10 Mobile Pivot pattern (Mail/Calendar): tabs swipe sideways.
+ *
+ * Children: <PivotTab id name> ... </PivotTab>
+ *
+ * Props:
+ *   initialTab?: string  — id of the tab to show first (default: first child)
+ *   pivotTitle?: string  — top strip title (if absent, no HubPivot rendered)
+ *   prevHref?: string    — URL for prev (e.g. prev dish)
+ *   nextHref?: string    — URL for next
+ *   prevLabel?: string
+ *   nextLabel?: string
+ */
+import HubPivot from '~/components/HubPivot.astro';
+
+interface Props {
+  initialTab?: string;
+  pivotTitle?: string;
+  prevHref?: string;
+  nextHref?: string;
+  prevLabel?: string;
+  nextLabel?: string;
+}
+const { initialTab, pivotTitle, prevHref, nextHref, prevLabel, nextLabel } = Astro.props;
+---
+{pivotTitle && <HubPivot initialTitle={pivotTitle} />}
+
+<div class="pivot-page" data-initial-tab={initialTab ?? ''}>
+  <nav class="pivot-tabs" id="pivot-tabs" aria-label="Tabs">
+    {/* Tab labels JS-rendered from children on mount */}
+  </nav>
+  <div class="pivot-panels" id="pivot-panels">
+    <slot />
+  </div>
+</div>
+
+{(prevHref || nextHref) && (
+  <nav class="pivot-page-nav" aria-label="Previous/Next">
+    {prevHref && <a class="pivot-page-prev" href={prevHref} rel="prev">‹ {prevLabel ?? 'Prev'}</a>}
+    {nextHref && <a class="pivot-page-next" href={nextHref} rel="next">{nextLabel ?? 'Next'} ›</a>}
+  </nav>
+)}
+
+<script>
+  import { initPivotPage, teardownPivotPage } from '~/lib/pivotScripts';
+  function boot() { initPivotPage(); }
+  function teardown() { teardownPivotPage(); }
+  boot();
+  document.addEventListener('astro:after-swap', boot);
+  document.addEventListener('astro:page-load', boot);
+  document.addEventListener('astro:before-preparation', teardown);
+</script>
+
+<style>
+  .pivot-page {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .pivot-tabs {
+    display: flex;
+    gap: var(--sp-5);
+    padding: var(--sp-3) var(--sp-5) 0;
+    border-bottom: 1px solid var(--t-rule);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pivot-tabs::-webkit-scrollbar { display: none; }
+  .pivot-tabs :global(.pivot-tab-label) {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: var(--fs-title);
+    font-weight: var(--fw-light);
+    color: var(--t-ink-dim);
+    letter-spacing: var(--ls-body);
+    padding: var(--sp-2) 0 var(--sp-3);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 200ms ease;
+    background: none;
+    border: 0;
+  }
+  .pivot-tabs :global(.pivot-tab-label[aria-selected="true"]) {
+    color: var(--t-ink);
+    border-bottom: 3px solid var(--m-red);
+  }
+  .pivot-panels {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pivot-panels::-webkit-scrollbar { display: none; }
+  .pivot-page-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--sp-5);
+    border-top: 1px solid var(--t-rule);
+    margin-top: var(--sp-5);
+  }
+  .pivot-page-nav a {
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    text-decoration: none;
+  }
+  .pivot-page-nav a:hover { color: var(--m-red); }
+</style>

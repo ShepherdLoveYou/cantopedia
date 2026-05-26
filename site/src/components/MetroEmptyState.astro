@@ -1,0 +1,72 @@
+---
+/**
+ * WP10 Metro-style empty state. Used by 404 and "no search results".
+ *
+ * Props:
+ *   bigText: string    — large display text (e.g. "404")
+ *   subtitle: string   — explanation under the big text
+ *   actionHref: string — URL for the action tile
+ *   actionLabel: string — label inside the tile
+ */
+interface Props {
+  bigText: string;
+  subtitle: string;
+  actionHref: string;
+  actionLabel: string;
+}
+const { bigText, subtitle, actionHref, actionLabel } = Astro.props;
+---
+<section class="metro-empty">
+  <div class="metro-empty-big">{bigText}</div>
+  <p class="metro-empty-sub">{subtitle}</p>
+  <a
+    class="tile-medium wp-tile metro-empty-action"
+    data-role="tile"
+    data-size="medium"
+    href={actionHref}
+    style="background: var(--m-red);"
+  >
+    <span class="metro-empty-action-label">{actionLabel}</span>
+  </a>
+</section>
+
+<style>
+  .metro-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--sp-6) var(--sp-5);
+    text-align: center;
+    min-height: 60vh;
+  }
+  .metro-empty-big {
+    font-family: var(--sans);
+    font-size: 8rem;
+    font-weight: var(--fw-light);
+    line-height: 1;
+    color: var(--t-ink);
+    margin: 0 0 var(--sp-5);
+    letter-spacing: -0.02em;
+  }
+  .metro-empty-sub {
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-panel);
+    color: var(--t-ink-dim);
+    margin: 0 0 var(--sp-6);
+    max-width: 30ch;
+  }
+  .metro-empty-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+  }
+  .metro-empty-action-label {
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+/**
+ * Single PivotPage tab. Wraps slot content in a scroll-snap panel.
+ *
+ * Props:
+ *   id: string         — unique tab identifier (used in URL hash)
+ *   name: string       — tab label rendered in PivotPage's <nav>
+ *   selected?: boolean — initial selected state
+ */
+interface Props {
+  id: string;
+  name: string;
+  selected?: boolean;
+}
+const { id, name, selected } = Astro.props;
+---
+<section
+  class="pivot-tab-panel"
+  data-pivot-tab
+  data-tab-id={id}
+  data-tab-name={name}
+  data-selected={selected ? 'true' : 'false'}
+  role="tabpanel"
+  aria-labelledby={`pivot-tab-label-${id}`}
+>
+  <slot />
+</section>
+
+<style>
+  .pivot-tab-panel {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--sp-4) var(--sp-5) var(--sp-6);
+    min-height: 50vh;
+  }
+</style>
