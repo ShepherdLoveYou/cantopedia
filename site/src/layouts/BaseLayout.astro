@@ -99,16 +99,20 @@ const dict = {
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="metro-nav" transition:persist>
-        <a class="brand" href={`${base}/${locale}`}>
+      <div class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" transition:persist>
+        <a class="brand app-bar-brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
-        <div class="locale-switcher">
+        <ul class="app-bar-menu locale-switcher">
           {(['zh', 'yue', 'en'] as const).map((loc) => (
-            <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>{loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}</a>
+            <li>
+              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
+                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
+              </a>
+            </li>
           ))}
-        </div>
-      </nav>
+        </ul>
+      </div>
     )}
     <Toast />
     <main>
@@ -499,6 +503,50 @@ const dict = {
            of the root pivot. Without this it travels with the page slide and
            appears to resize / jiggle on mobile. */
         view-transition-name: status-bar;
+      }
+      /* Metro v5 app-bar overrides — cancel Metro defaults that conflict with
+         WP10 status-bar styling. Metro sets min-height:52px, height:auto,
+         flex-flow:row wrap, and collapses .app-bar-menu into a vertical column.
+         We force the bar to stay 40px and the locale switcher to stay horizontal
+         at all viewports (data-expand-point="0" handles JS side; this handles CSS). */
+      .metro-nav.app-bar {
+        min-height: 40px !important;
+        height: 40px !important;
+        flex-flow: row nowrap !important;
+        background-color: #000 !important;
+        padding-right: 0.75rem !important;
+      }
+      html[data-theme="light"] .metro-nav.app-bar {
+        background-color: #1d1d1d !important;
+      }
+      .metro-nav.app-bar .app-bar-menu {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        width: auto !important;
+        position: static !important;
+        order: unset !important;
+      }
+      .metro-nav.app-bar .app-bar-menu.collapsed {
+        display: flex !important;
+      }
+      .metro-nav.app-bar .hamburger {
+        display: none !important;
+      }
+      .metro-nav.app-bar .app-bar-menu > li {
+        list-style: none !important;
+      }
+      /* Override Metro's light-theme color vars on app-bar items inside our dark nav */
+      .metro-nav.app-bar .app-bar-menu > li > a {
+        background-color: transparent !important;
+        color: rgba(255,255,255,0.5) !important;
+        padding: 0.55rem 0.6rem !important;
+        font-size: 0.7rem !important;
+        line-height: 1 !important;
+        border-radius: 0 !important;
+      }
+      .metro-nav.app-bar .brand {
+        font-size: inherit !important;
+        flex: 1 !important;
       }
       ::view-transition-old(status-bar),
       ::view-transition-new(status-bar) {
