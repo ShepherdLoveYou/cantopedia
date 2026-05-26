@@ -188,24 +188,30 @@ const firstDishId = allDishes[0]?.id ?? '';
         </div>
       </a>
 
-      {/* 8 category tiles with face cycling */}
-      {allCats.map((cat) => {
+      {/* 8 category tiles with CSS 3D card-flip. Metro v5 data-effect="switch" was
+          replaced with our own animation so we can:
+            (1) add transition timing (Metro's switch is instant — looks "生硬");
+            (2) per-tile stagger via --flip-delay (Metro applies the same phase to
+                every tile — they all flip in unison, "刷新时间一致");
+            (3) keep all tiles square (Metro's effect inherits border-radius). */}
+      {allCats.map((cat, idx) => {
         const inCat = dishesByCat.get(cat.id) ?? [];
         if (inCat.length === 0) return null;
         const catName = nameOf(cat);
         const photo = categoryPhoto(cat.id);
         const color = tileColorFor(cat.id);
+        const flipDelay = (idx * 0.55).toFixed(2);
+        const tileStyle = photo
+          ? `background: ${color}; view-transition-name: tile-${cat.id}; --flip-delay: ${flipDelay}s;`
+          : `background: ${color}; view-transition-name: tile-${cat.id};`;
         return (
           <a
-            class="tile-medium wp-tile cat-tile-v5"
-            data-role="tile"
-            data-size="medium"
-            data-effect={photo ? 'switch' : ''}
+            class={`tile-medium wp-tile cat-tile-v5${photo ? ' has-back' : ''}`}
             href={`${base}/${locale}/browse/${cat.id}`}
-            style={`background: ${color}; view-transition-name: tile-${cat.id};`}
+            style={tileStyle}
             aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
           >
-            <div class="slide slide--front">
+            <div class="slide slide--front" style={`background: ${color};`}>
               <span class="tile-icon"><CategoryIcon cat={cat.id as CatId} size={48} /></span>
               <span class="tile-name">{catName}</span>
               <span class="tile-badge">{inCat.length}</span>
@@ -596,13 +602,53 @@ const firstDishId = allDishes[0]?.id ?? '';
   }
   /* Tile sizes now derive from --tile-unit + --tile-gap in BaseLayout.astro. No media-query fork needed. */
 
-  /* ===== New WP10 Metro cat-tile (replaces hand-rolled CatTile component) ===== */
+  /* ===== Tile defaults — all tiles are square WP10-style, no Metro radius ===== */
+  .tiles-grid {
+    /* 3D perspective for child tile flips */
+    perspective: 1200px;
+  }
+  .tile-small,
+  .tile-medium,
+  .tile-2x1,
+  .tile-wide,
+  .tile-large,
+  .cat-tile-v5,
+  .stat-tile-mt,
+  .util-tile,
+  .dish-tile,
+  .featured-tile {
+    border-radius: 0 !important;
+  }
+
+  /* ===== WP10 Metro cat-tile with CSS 3D card-flip ===== */
   .cat-tile-v5 {
     position: relative;
     overflow: hidden;
     color: #fff;
     text-decoration: none;
     display: block;
+    transform-style: preserve-3d;
+    /* When .has-back, animate the whole tile rotating about X axis to reveal back.
+       PERIOD = 7s (3s front + 1s flip-out + 3s back-implicit), STAGGER via inline
+       --flip-delay per tile so tiles don't all flip in sync. */
+  }
+  .cat-tile-v5.has-back {
+    animation: cat-tile-flip 7s cubic-bezier(0.6, 0, 0.2, 1) infinite;
+    animation-delay: var(--flip-delay, 0s);
+    will-change: transform;
+  }
+  @keyframes cat-tile-flip {
+    /* 0–40% front facing viewer */
+    0%, 40% { transform: rotateX(0deg); }
+    /* 40–50% flip front → back (with subtle Z lift so the rotation reads better) */
+    50%     { transform: rotateX(-180deg); }
+    /* 50–90% back facing viewer */
+    90%     { transform: rotateX(-180deg); }
+    /* 90–100% flip back → front to close the loop */
+    100%    { transform: rotateX(-360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cat-tile-v5.has-back { animation: none; }
   }
   .cat-tile-v5 .slide {
     position: absolute;
@@ -612,6 +658,13 @@ const firstDishId = allDishes[0]?.id ?? '';
     flex-direction: column;
     background-size: cover;
     background-position: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  /* Back face starts rotated 180° away; the parent's rotateX(-180deg) brings it
+     to the viewer halfway through the cycle. */
+  .cat-tile-v5 .slide--back {
+    transform: rotateX(180deg);
   }
   .cat-tile-v5 .tile-icon {
     align-self: flex-start;
