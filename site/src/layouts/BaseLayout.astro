@@ -1095,7 +1095,12 @@ const currentYear = new Date().getFullYear();
         content: '';
         position: absolute;
         left: 0.6rem; right: 0.6rem;
-        bottom: 0.35rem;
+        /* Underline anchored to the parent .pivot-tab's bottom border.
+           Bottom 0.15rem (was 0.35rem) shifts the chip ~3px lower so the
+           gap above the underline is visually consistent across CJK glyphs
+           (中/粵 — which extend lower in their em-box) and Latin (EN) labels.
+           Fixes UI_AUDIT_2026-05-26 P2.2. */
+        bottom: 0.15rem;
         height: 2px;
         background: var(--accent);
       }
