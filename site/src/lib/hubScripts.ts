@@ -8,6 +8,21 @@
 
 type DishLite = { id: string; name: string; img: string | null };
 
+// ── Module-level WeakMaps for DOM state (no property pollution on elements) ──
+
+type FeaturedState = { intervalId: number; clickHandler: () => void };
+const featuredState = new WeakMap<HTMLElement, FeaturedState>();
+
+type HubState = {
+  prevClick: (e: Event) => void;
+  nextClick: (e: Event) => void;
+  keydownHandler: (e: KeyboardEvent) => void;
+  resizeHandler: () => void;
+  popstateHandler: () => void;
+  io: IntersectionObserver;
+};
+const hubState = new WeakMap<HTMLElement, HubState>();
+
 export function initFeaturedTile(base: string, locale: string, dishesData: DishLite[]) {
   const tile = document.getElementById('featured-tile') as HTMLAnchorElement | null;
   if (!tile || tile.dataset.wired === '1') return;
@@ -53,10 +68,12 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
     }
   };
   tile.addEventListener('click', clickHandler);
-  (tile as any)._featuredClickHandler = clickHandler;
   tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
 
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    featuredState.set(tile, { intervalId: -1, clickHandler });
+    return;
+  }
   const slides = tile.querySelectorAll<HTMLElement>('.slide.featured-slide');
   let i = 0;
   const intervalId = window.setInterval(() => {
@@ -64,18 +81,17 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
     const f = slides[i].dataset.face;
     if (f && picks[f]) tile.href = `${base}/${locale}/dishes/${picks[f].id}`;
   }, 6000);
-  (tile as any)._featuredInterval = intervalId;
+  featuredState.set(tile, { intervalId, clickHandler });
 }
 
 export function teardownFeaturedTile() {
   const tile = document.getElementById('featured-tile') as HTMLElement | null;
   if (!tile) return;
-  const id = (tile as any)._featuredInterval;
-  if (typeof id === 'number') clearInterval(id);
-  const clickHandler = (tile as any)._featuredClickHandler;
-  if (typeof clickHandler === 'function') {
-    tile.removeEventListener('click', clickHandler);
-    delete (tile as any)._featuredClickHandler;
+  const state = featuredState.get(tile);
+  if (state) {
+    if (state.intervalId >= 0) clearInterval(state.intervalId);
+    tile.removeEventListener('click', state.clickHandler);
+    featuredState.delete(tile);
   }
   delete tile.dataset.wired;
 }
@@ -148,15 +164,12 @@ export function initHubNav() {
   };
   prevLink?.addEventListener('click', prevClick);
   nextLink?.addEventListener('click', nextClick);
-  (hub as any)._prevClick = prevClick;
-  (hub as any)._nextClick = nextClick;
 
   const keydownHandler = (e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); prevLink?.click(); }
     if (e.key === 'ArrowRight') { e.preventDefault(); nextLink?.click(); }
   };
   hub.addEventListener('keydown', keydownHandler);
-  (hub as any)._keydownHandler = keydownHandler;
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -167,7 +180,6 @@ export function initHubNav() {
     });
   }, { root: hub, threshold: [0.5] });
   panels.forEach((p) => io.observe(p));
-  (hub as any)._hubIo = io;
 
   let resizeT: number | undefined;
   const resizeHandler = () => {
@@ -180,7 +192,6 @@ export function initHubNav() {
     }, 100);
   };
   window.addEventListener('resize', resizeHandler);
-  (hub as any)._hubResizeHandler = resizeHandler;
 
   const popstateHandler = () => {
     const url = location.pathname.replace(/\/$/, '');
@@ -188,43 +199,24 @@ export function initHubNav() {
     if (idx >= 0) scrollToIndex(idx);
   };
   window.addEventListener('popstate', popstateHandler);
-  (hub as any)._hubPopstateHandler = popstateHandler;
+
+  hubState.set(hub, { prevClick, nextClick, keydownHandler, resizeHandler, popstateHandler, io });
 }
 
 export function teardownHubNav() {
   const hub = document.getElementById('hub') as HTMLElement | null;
   if (!hub) return;
-  const prevClick = (hub as any)._prevClick;
-  const nextClick = (hub as any)._nextClick;
-  const keydownHandler = (hub as any)._keydownHandler;
   const prevLink = document.getElementById('hub-pivot-prev');
   const nextLink = document.getElementById('hub-pivot-next');
-  if (typeof prevClick === 'function' && prevLink) {
-    prevLink.removeEventListener('click', prevClick);
-    delete (hub as any)._prevClick;
-  }
-  if (typeof nextClick === 'function' && nextLink) {
-    nextLink.removeEventListener('click', nextClick);
-    delete (hub as any)._nextClick;
-  }
-  if (typeof keydownHandler === 'function') {
-    hub.removeEventListener('keydown', keydownHandler);
-    delete (hub as any)._keydownHandler;
-  }
-  const handler = (hub as any)._hubResizeHandler;
-  if (typeof handler === 'function') {
-    window.removeEventListener('resize', handler);
-    delete (hub as any)._hubResizeHandler;
-  }
-  const popHandler = (hub as any)._hubPopstateHandler;
-  if (typeof popHandler === 'function') {
-    window.removeEventListener('popstate', popHandler);
-    delete (hub as any)._hubPopstateHandler;
-  }
-  const io = (hub as any)._hubIo;
-  if (io && typeof io.disconnect === 'function') {
-    io.disconnect();
-    delete (hub as any)._hubIo;
+  const state = hubState.get(hub);
+  if (state) {
+    if (prevLink) prevLink.removeEventListener('click', state.prevClick);
+    if (nextLink) nextLink.removeEventListener('click', state.nextClick);
+    hub.removeEventListener('keydown', state.keydownHandler);
+    window.removeEventListener('resize', state.resizeHandler);
+    window.removeEventListener('popstate', state.popstateHandler);
+    state.io.disconnect();
+    hubState.delete(hub);
   }
   delete hub.dataset.navWired;
 }
