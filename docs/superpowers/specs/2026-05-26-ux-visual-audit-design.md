@@ -55,7 +55,7 @@ Theme is set by adding/removing `.dark-side` on `<html>` and writing `localStora
 
 ### Sample page resolution
 
-Dish-detail href is read from home page anchors. Category href is constructed deterministically as `/cantopedia/zh/categories/main` — the home page does not link to category pages directly in the current tile layout (this gap was noted in `UI_AUDIT_2026-05-26.md` out-of-band). The `main` category id is one of the 8 fixed categories declared in `pipeline/pipeline/models.py` `CategoryId` literal and is guaranteed to render.
+Dish-detail href is read from home page anchors. Category href is constructed deterministically as `/cantopedia/zh/browse/main` — the home page does not link to category pages directly in the current tile layout (this gap was noted in `UI_AUDIT_2026-05-26.md` out-of-band). The actual category route in the codebase is `[locale]/browse/[category].astro`; `main` is one of the 8 fixed categories declared in `pipeline/pipeline/models.py` `CategoryId` literal and is guaranteed to render.
 
 The probe's `toUrl()` helper must handle root-relative paths correctly (regression-tested by last session's bug fix in commit `d8cfb10`).
 

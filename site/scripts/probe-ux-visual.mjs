@@ -52,7 +52,7 @@ const PAGES = [
   { name: 'search-empty',   path: '/zh/search' },
   { name: 'search-results', path: '/zh/search?q=chicken' },
   { name: 'dish-detail',    path: DISH_PATH },
-  { name: 'category',       path: '/zh/categories/main' },
+  { name: 'category',       path: '/zh/browse/main' },
   { name: 'notfound',       path: '/zh/this-page-does-not-exist' },
 ];
 
