@@ -232,7 +232,7 @@ Run from `d:/Cantonese Cuisine/site`:
 npm run dev
 ```
 
-In a fresh browser (Chrome DevTools → Application → Clear storage → Clear site data), navigate to `http://localhost:4321/cantopedia/zh/`. Expected:
+In a fresh browser (Chrome DevTools → Application → Clear storage → Clear site data), navigate to `http://localhost:4321/cantopedia/zh`. Expected:
 - `<html class="dark-side" data-accent="cobalt" ...>`
 - localStorage `cantopedia-theme` === `'dark'`, `cantopedia-accent` === `'cobalt'`
 
@@ -288,7 +288,7 @@ Immediately after the `}` closing the `:root` block, add:
 
 - [ ] **Step 3: Verify in dev server**
 
-Open `http://localhost:4321/cantopedia/zh/` in browser. In DevTools console:
+Open `http://localhost:4321/cantopedia/zh` in browser. In DevTools console:
 ```js
 getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
 ```
@@ -338,7 +338,7 @@ const OUT = resolve(__dirname, '..', 'probe-out');
 mkdirSync(OUT, { recursive: true });
 
 const PORT = process.env.PORT || '4321';
-const URL = `http://localhost:${PORT}/cantopedia/zh/`;
+const URL = `http://localhost:${PORT}/cantopedia/zh`;
 
 const browser = await chromium.launch();
 let ok = true;
@@ -480,7 +480,7 @@ In `<style is:global>` (after the existing `:root` block), add:
 
 - [ ] **Step 3: Verify the strip renders and the old nav is gone**
 
-In dev server, navigate to `http://localhost:4321/cantopedia/zh/`. Visually verify:
+In dev server, navigate to `http://localhost:4321/cantopedia/zh`. Visually verify:
 - A thin 24px strip at top showing `CANTOPEDIA` in uppercase small caps.
 - No theme button, no locale tabs in the top region.
 - Hub home tiles still render below.
@@ -700,7 +700,7 @@ This depends on `window.__hubBoot` which is set by [Hub.astro:319-321](../../../
 
 - [ ] **Step 5: Verify visually**
 
-Reload `http://localhost:4321/cantopedia/zh/` in dev server. Expected:
+Reload `http://localhost:4321/cantopedia/zh` in dev server. Expected:
 - Fixed bottom bar with 4 circular buttons.
 - Acrylic blur visible behind the bar (translate the page to scroll content under).
 - Tap Random → navigates to a random dish (browser console can log: `Object.keys(window.__hubBoot)`).
@@ -1261,7 +1261,7 @@ If no `.loading-bar` rule exists in `BaseLayout.astro` (it may be defined elsewh
 With dev server running, navigate through each surface:
 
 1. `http://localhost:4321/cantopedia/zh/all` → tap each of the 4 accent swatches in `⋯` menu → AppList letter headers recolor.
-2. `http://localhost:4321/cantopedia/zh/` → hover the Featured wide tile (top-left of Hub home) → its lower label band ("今日推介" etc.) recolors to the accent.
+2. `http://localhost:4321/cantopedia/zh` → hover the Featured wide tile (top-left of Hub home) → its lower label band ("今日推介" etc.) recolors to the accent.
 3. From home, click any dish tile → during navigation, the loading bar at the top is the accent color.
 4. AppBar home button's active underline (when on home) and locale pivot tab's active pill (in More menu) — already accent-driven from Tasks 7 + 8 — should also visibly track the swatch.
 
@@ -1318,7 +1318,7 @@ height: calc(100vh - 24px - 56px - 72px);  /* top strip 24 + hub-pivot 56 + AppB
 
 - [ ] **Step 2: Verify Hub scroll-snap restored**
 
-Reload `http://localhost:4321/cantopedia/zh/`. Expected:
+Reload `http://localhost:4321/cantopedia/zh`. Expected:
 - Hub home panel fills viewport height down to the AppBar (no overlap, no truncation).
 - Horizontal scroll-snap between panels works.
 - Tiles render fully visible (not partially clipped at the bottom).
@@ -1505,7 +1505,7 @@ let ok = true;
 
 try {
   const page = await browser.newPage({ viewport: { width: 414, height: 896 } });  // iPhone-ish
-  await page.goto(`http://localhost:${PORT}/cantopedia/zh/`, { waitUntil: 'networkidle' });
+  await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
 
   const data = await page.evaluate(() => {
     const bar = document.querySelector('.app-bar--bottom');
@@ -1607,7 +1607,7 @@ let ok = true;
 try {
   const ctx = await browser.newContext({ viewport: { width: 414, height: 896 } });
   const page = await ctx.newPage();
-  await page.goto(`http://localhost:${PORT}/cantopedia/zh/`, { waitUntil: 'networkidle' });
+  await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
 
   // 1. Tap the More button.
   await page.locator('[data-appbar="more"]').click();
@@ -1717,7 +1717,7 @@ Expected: all three exit 0. JSON dumps written to `site/probe-out/`.
 - [ ] **Step 2: Sanity-check non-AppBar features didn't regress**
 
 In dev server, manually verify (visual + click):
-1. Home (`/cantopedia/zh/`) — Hub 9-panel horizontal scroll-snap still works (drag/scroll left-right between home, applist, 8 categories).
+1. Home (`/cantopedia/zh`) — Hub 9-panel horizontal scroll-snap still works (drag/scroll left-right between home, applist, 8 categories).
 2. Cat-tile 3D card-flip still animates on home (categories tiles flip image ↔ icon every ~7s).
 3. Featured wide tile slide-up cycle still rotates between Today's Pick / Random / Recently Viewed.
 4. View Transition tile→page morph still works (tap any dish tile, observe the zoom-in transition).
