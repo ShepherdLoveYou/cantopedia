@@ -35,30 +35,9 @@ const ogDescription = description ?? (locale === 'en'
 const pageTitle = `${title} · 粵食典 Cantopedia`;
 
 const dict = {
-  zh: {
-    yue: '粵語', zh: '中文', en: 'English',
-    theme_toggle: '切换主题',
-    nav_home: '首页', nav_search: '搜索', nav_random: '随机一菜', nav_more: '更多',
-    menu_theme: '主题', menu_accent: '主题色', menu_language: '语言', menu_about: '关于',
-    theme_light: '浅色', theme_dark: '深色',
-    accent_cobalt: '钴蓝', accent_red: '番茄红', accent_orange: '香橙', accent_emerald: '翡翠绿',
-  },
-  en: {
-    yue: '粵語', zh: '中文', en: 'English',
-    theme_toggle: 'Toggle theme',
-    nav_home: 'Home', nav_search: 'Search', nav_random: 'Random dish', nav_more: 'More',
-    menu_theme: 'Theme', menu_accent: 'Accent', menu_language: 'Language', menu_about: 'About',
-    theme_light: 'Light', theme_dark: 'Dark',
-    accent_cobalt: 'Cobalt', accent_red: 'Red', accent_orange: 'Orange', accent_emerald: 'Emerald',
-  },
-  yue: {
-    yue: '粵語', zh: '中文', en: 'English',
-    theme_toggle: '切換主題',
-    nav_home: '主頁', nav_search: '搵嘢', nav_random: '隨機餸', nav_more: '更多',
-    menu_theme: '主題', menu_accent: '主題色', menu_language: '語言', menu_about: '關於',
-    theme_light: '淺色', theme_dark: '深色',
-    accent_cobalt: '鈷藍', accent_red: '番茄紅', accent_orange: '香橙', accent_emerald: '翡翠綠',
-  },
+  zh: { theme_toggle: '切换主题' },
+  en: { theme_toggle: 'Toggle theme' },
+  yue: { theme_toggle: '切換主題' },
 }[locale];
 const currentYear = new Date().getFullYear();
 ---
@@ -81,13 +60,6 @@ const currentYear = new Date().getFullYear();
           }
           const isDark = saved === 'dark';
           document.documentElement.classList.toggle('dark-side', isDark);
-
-          /* Phase F: accent persistence. data-accent drives --accent CSS var.
-             Default cobalt. Reading this in the inline script (FOIT guard) avoids
-             a flash of wrong accent on first paint. */
-          let accent = localStorage.getItem('cantopedia-accent');
-          if (!['cobalt', 'red', 'orange', 'emerald'].includes(accent)) accent = 'cobalt';
-          document.documentElement.setAttribute('data-accent', accent);
         } catch (e) {}
       })();
     </script>
@@ -140,50 +112,12 @@ const currentYear = new Date().getFullYear();
             </a>
           ))}
         </div>
-        <button type="button" class="metro-nav-more-btn" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
-          <span class="mif-more-vert" aria-hidden="true"></span>
-        </button>
       </nav>
     )}
     <Toast />
     <main>
       <slot />
     </main>
-    <div
-      id="appbar-more-menu"
-      class="appbar-more"
-      role="dialog"
-      aria-label={dict.nav_more}
-      aria-hidden="true"
-      transition:persist
-    >
-      <div class="appbar-more-inner">
-        <section class="appbar-more-section">
-          <div class="menu-label">{dict.menu_accent}</div>
-          <div class="accent-swatches">
-            <button type="button" class="accent-swatch" data-accent-swatch="cobalt" aria-pressed="true" aria-label={dict.accent_cobalt}>
-              <span class="swatch-dot" style="background: #3E65FF"></span>
-            </button>
-            <button type="button" class="accent-swatch" data-accent-swatch="red" aria-pressed="false" aria-label={dict.accent_red}>
-              <span class="swatch-dot" style="background: #E51400"></span>
-            </button>
-            <button type="button" class="accent-swatch" data-accent-swatch="orange" aria-pressed="false" aria-label={dict.accent_orange}>
-              <span class="swatch-dot" style="background: #FA6800"></span>
-            </button>
-            <button type="button" class="accent-swatch" data-accent-swatch="emerald" aria-pressed="false" aria-label={dict.accent_emerald}>
-              <span class="swatch-dot" style="background: #008A00"></span>
-            </button>
-          </div>
-        </section>
-
-        <section class="appbar-more-section appbar-more-about">
-          <a href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" class="about-row">
-            <span class="mif-github" aria-hidden="true"></span>
-            <span>GitHub · MIT · CC BY-SA 4.0</span>
-          </a>
-        </section>
-      </div>
-    </div>
     <footer>
       <p>
         &copy; {currentYear} ShepherdLoveYou ·
@@ -312,53 +246,25 @@ const currentYear = new Date().getFullYear();
     </script>
 
     <script>
-  import { bootThemeAndAccent, applyTheme, applyAccent, type Accent } from '~/lib/theme';
+  import { applyTheme, bootTheme } from '~/lib/theme';
 
-  /* Phase F: delegated click handlers for theme tiles + accent swatches.
-     applyTheme/applyAccent live in lib/theme.ts (single source of truth);
-     SPA-swap copies dark-side class + data-accent across, Astro's persist
-     keeps the menu DOM. */
+  /* Top-nav theme toggle: flip dark-side and persist. */
   document.addEventListener('click', (e) => {
     const target = e.target instanceof Element ? e.target : null;
-    if (!target) return;
-    /* metro-nav-theme-btn flip toggle (in the top nav). */
-    const toggle = target.closest<HTMLButtonElement>('[data-theme-toggle]');
-    if (toggle) {
-      const next = document.documentElement.classList.contains('dark-side') ? 'light' : 'dark';
-      applyTheme(next);
-      return;
-    }
-    /* explicit-theme tiles (inside MoreMenu, if any survive). */
-    const themeTile = target.closest<HTMLButtonElement>('button[data-theme]');
-    if (themeTile && (themeTile.dataset.theme === 'light' || themeTile.dataset.theme === 'dark')) {
-      applyTheme(themeTile.dataset.theme);
-      return;
-    }
-    const swatch = target.closest<HTMLButtonElement>('button[data-accent-swatch]');
-    if (swatch) {
-      const a = swatch.dataset.accentSwatch as Accent | undefined;
-      if (a === 'cobalt' || a === 'red' || a === 'orange' || a === 'emerald') {
-        applyAccent(a);
-      }
+    if (target?.closest('[data-theme-toggle]')) {
+      applyTheme(document.documentElement.classList.contains('dark-side') ? 'light' : 'dark');
     }
   });
 
-  /* Carry theme + accent across SPA swap before the new doc paints. */
+  /* Carry theme across SPA swap before the new doc paints. */
   document.addEventListener('astro:before-swap', (e: any) => {
     if (document.documentElement.classList.contains('dark-side')) {
       e.newDocument.documentElement.classList.add('dark-side');
     }
-    const accent = document.documentElement.getAttribute('data-accent');
-    if (accent) e.newDocument.documentElement.setAttribute('data-accent', accent);
   });
 
-  /* On each page load, re-sync aria-pressed on theme tiles + accent swatches. */
-  document.addEventListener('astro:page-load', () => {
-    bootThemeAndAccent();
-  });
-
-  /* Initial sync — runs once at script load. */
-  bootThemeAndAccent();
+  document.addEventListener('astro:page-load', () => { bootTheme(); });
+  bootTheme();
 </script>
     <style is:global>
       :root {
@@ -489,11 +395,6 @@ const currentYear = new Date().getFullYear();
         --tile-unit: 70px;
         --tile-gap: 10px;
       }
-
-      :root[data-accent="cobalt"]  { --accent: #3E65FF; }
-      :root[data-accent="red"]     { --accent: #E51400; }
-      :root[data-accent="orange"]  { --accent: #FA6800; }
-      :root[data-accent="emerald"] { --accent: #008A00; }
 
       /* Restored Metro top nav (~40px + iOS notch). Use --nav-h so a
          device with a notch passes its safe-area inset down to Hub. */
@@ -643,138 +544,6 @@ const currentYear = new Date().getFullYear();
         .appbar-actions { gap: 6px; }
         .appbar-brand { font-size: 9px; letter-spacing: 0.18em; }
       }
-
-      /* Phase A §4.4: More menu overlay. Slides DOWN from below the top AppBar.
-         Initial state hidden (translateY -100%). Open state translateY 0,
-         pointer-events all. Animation driven by Motion One in inline script. */
-      .appbar-more {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: var(--nav-h, 40px);
-        z-index: 1001;
-        max-height: 50vh;
-        overflow-y: auto;
-        transform: translateY(-100%);
-        pointer-events: none;
-        background: rgba(255, 255, 255, 0.92);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      }
-      .dark-side .appbar-more {
-        background: rgba(0, 0, 0, 0.92);
-        border-bottom-color: rgba(255, 255, 255, 0.08);
-      }
-      @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
-        .appbar-more {
-          backdrop-filter: blur(30px) saturate(125%);
-          -webkit-backdrop-filter: blur(30px) saturate(125%);
-          background: rgba(255, 255, 255, 0.7);
-        }
-        .dark-side .appbar-more {
-          background: rgba(0, 0, 0, 0.6);
-        }
-      }
-      .appbar-more[aria-hidden="false"] {
-        pointer-events: auto;
-      }
-      .appbar-more-inner {
-        padding: var(--sp-5) var(--sp-4);
-        display: flex;
-        flex-direction: column;
-        gap: var(--sp-5);
-      }
-      .appbar-more-section {
-        display: flex;
-        flex-direction: column;
-        gap: var(--sp-3);
-      }
-      .menu-label {
-        font-family: var(--sans);
-        font-size: var(--fs-tiny);
-        font-weight: var(--fw-regular);
-        letter-spacing: var(--ls-caps);
-        text-transform: uppercase;
-        color: var(--t-ink-dim);
-      }
-      .theme-tiles {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--sp-3);
-      }
-      .theme-tile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--sp-2);
-        height: 48px;
-        padding: 0 var(--sp-4);
-        background: var(--t-plate);
-        color: var(--t-ink);
-        border: 0;
-        font-family: var(--sans);
-        font-size: var(--fs-body);
-        cursor: pointer;
-      }
-      .theme-tile[aria-pressed="true"] {
-        background: var(--accent);
-        color: var(--accent-fg);
-      }
-      .theme-tile [class^="mif-"] {
-        font-size: 18px;
-      }
-      .accent-swatches {
-        display: flex;
-        gap: var(--sp-3);
-      }
-      .accent-swatch {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        border: 2px solid transparent;
-        background: transparent;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .accent-swatch[aria-pressed="true"] {
-        border-color: var(--t-ink);
-      }
-      .swatch-dot {
-        display: block;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-      }
-      .locale-pivot {
-        display: flex;
-        gap: var(--sp-3);
-      }
-      .locale-pivot .pivot-tab {
-        padding: var(--sp-2) var(--sp-4);
-        background: var(--t-plate);
-        color: var(--t-ink);
-        text-decoration: none;
-        font-family: var(--sans);
-        font-size: var(--fs-body);
-      }
-      .locale-pivot .pivot-tab.active {
-        background: var(--accent);
-        color: var(--accent-fg);
-      }
-      .about-row {
-        display: flex;
-        align-items: center;
-        gap: var(--sp-3);
-        color: var(--t-ink-dim);
-        text-decoration: none;
-        font-family: var(--sans);
-        font-size: var(--fs-tiny);
-        letter-spacing: var(--ls-meta);
-        padding-top: var(--sp-3);
-        border-top: 1px solid var(--t-rule);
-      }
-      .about-row:hover { color: var(--t-ink); }
 
       @media (max-width: 540px) {
         :root {
@@ -1006,10 +775,8 @@ const currentYear = new Date().getFullYear();
         flex: 1;
         color: var(--nav-fg);
       }
-      /* Theme + More buttons reuse Metro's .app-bar-button geometry (52×52)
-         and theme-aware --appbar-color. */
-      .metro-nav-theme-btn,
-      .metro-nav-more-btn {
+      /* Theme button reuses Metro's .app-bar-button geometry. */
+      .metro-nav-theme-btn {
         background: transparent;
         border: 0;
         color: var(--nav-fg);
@@ -1023,8 +790,7 @@ const currentYear = new Date().getFullYear();
         padding: 0;
         transition: background-color 120ms ease;
       }
-      .metro-nav-theme-btn:hover,
-      .metro-nav-more-btn:hover {
+      .metro-nav-theme-btn:hover {
         background: var(--nav-hover-bg);
       }
       /* Theme button icon swap — show sun in dark mode (to switch to light),
@@ -1321,95 +1087,5 @@ const currentYear = new Date().getFullYear();
       }
     </style>
 
-    <script>
-      import { animate } from 'motion';
-
-      /* Phase A §4.4: open/close the AppBar More menu with Motion One.
-         Uses --fluent-duration-normal (open, decel) and --fluent-duration-fast
-         (close, accel). All async waits via Animation.finished, no setTimeout. */
-      (function setupMoreMenu() {
-        let isOpen = false;
-        let currentAnim: any = null;
-        const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        function getMenu() { return document.getElementById('appbar-more-menu'); }
-        function getTrigger() {
-          return document.querySelector<HTMLButtonElement>('[data-appbar="more"]');
-        }
-
-        async function openMenu() {
-          const menu = getMenu();
-          const trigger = getTrigger();
-          if (!menu || isOpen) return;
-          isOpen = true;
-          menu.setAttribute('aria-hidden', 'false');
-          trigger?.setAttribute('aria-expanded', 'true');
-          if (prefersReduced()) {
-            menu.style.transform = 'translateY(0%)';
-            menu.querySelector<HTMLElement>('button, a[href]')?.focus();
-            return;
-          }
-          if (currentAnim) currentAnim.stop();
-          currentAnim = animate(
-            menu as any,
-            { transform: ['translateY(-100%)', 'translateY(0%)'] } as any,
-            { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
-          );
-          await currentAnim.finished;
-          /* a11y (spec §4.4): move focus to first interactive item after
-             open animation completes, so screen readers + keyboard users
-             land in the menu rather than the trigger. */
-          menu.querySelector<HTMLElement>('button, a[href]')?.focus();
-        }
-
-        async function closeMenu() {
-          const menu = getMenu();
-          const trigger = getTrigger();
-          if (!menu || !isOpen) return;
-          isOpen = false;
-          trigger?.setAttribute('aria-expanded', 'false');
-          if (prefersReduced()) {
-            menu.style.transform = 'translateY(-100%)';
-            menu.setAttribute('aria-hidden', 'true');
-            trigger?.focus();
-            return;
-          }
-          if (currentAnim) currentAnim.stop();
-          currentAnim = animate(
-            menu as any,
-            { transform: ['translateY(0%)', 'translateY(-100%)'] } as any,
-            { duration: 0.18, ease: [0.55, 0, 0.9, 0.3] }
-          );
-          await currentAnim.finished;
-          menu.setAttribute('aria-hidden', 'true');
-          /* a11y (spec §4.4): return focus to the ⋯ trigger so the user
-             continues the keyboard journey from where they invoked the menu. */
-          trigger?.focus();
-        }
-
-        document.addEventListener('click', (e) => {
-          const target = e.target instanceof Element ? e.target : null;
-          if (!target) return;
-          // Open / close on trigger button
-          if (target.closest('[data-appbar="more"]')) {
-            isOpen ? closeMenu() : openMenu();
-            return;
-          }
-          // Click outside menu while open → close
-          if (isOpen && !target.closest('#appbar-more-menu')) {
-            closeMenu();
-          }
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && isOpen) closeMenu();
-        });
-
-        /* SPA-swap: close menu on navigation; pivot/dish pages don't carry it open. */
-        document.addEventListener('astro:before-preparation', () => {
-          if (isOpen) closeMenu();
-        });
-      })();
-    </script>
   </body>
 </html>
