@@ -3,6 +3,8 @@ import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { commonsThumb, commonsPageUrl } from '~/lib/commonsImage';
 import { tileColor as tileColorFor } from '~/lib/categoryColors';
+import PivotPage from '~/components/PivotPage.astro';
+import PivotTab from '~/components/PivotTab.astro';
 
 export async function getStaticPaths() {
   const dishes = await getCollection('dish');
@@ -65,6 +67,8 @@ const dict = {
     cite: '引用', back_home: '首頁', back_cat: category?.data.names.yue_hant ?? 'Category',
     fallback_note: '此段以普通話呈現（粵文待補）',
     item_no: '菜單編號',
+    no_tips: '尚無小貼士。',
+    no_history: '尚無由來資料。',
   },
   en: {
     ingredients: 'Ingredients', method: 'Method', tips: 'Tips', history: 'History', sources: 'Sources',
@@ -74,6 +78,8 @@ const dict = {
     cite: 'cite', back_home: 'Home', back_cat: category?.data.names.en ?? 'Category',
     fallback_note: 'Translation pending — showing Chinese original',
     item_no: 'Menu #',
+    no_tips: 'No tips yet.',
+    no_history: 'No history information yet.',
   },
   yue: {
     ingredients: '配料', method: '做法', tips: '貼士', history: '由來', sources: '引用源',
@@ -83,65 +89,58 @@ const dict = {
     cite: '引用', back_home: '首頁', back_cat: category?.data.names.yue_hant ?? 'Category',
     fallback_note: '此段以普通話呈現（粵文待補）',
     item_no: '菜單編號',
+    no_tips: '尚無貼士。',
+    no_history: '尚無由來資料。',
   },
 }[locale];
 
 const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
+
+// Compute prev/next dish in menu_no order within same category
+const sameCat = (await getCollection('dish'))
+  .filter((d) => d.data.category.id === dish.data.category.id)
+  .sort((a, b) => a.data.menu_no - b.data.menu_no);
+const myIdx = sameCat.findIndex((d) => d.id === dish.id);
+const prevDish = myIdx > 0 ? sameCat[myIdx - 1] : null;
+const nextDish = myIdx >= 0 && myIdx < sameCat.length - 1 ? sameCat[myIdx + 1] : null;
+
+const prevName = prevDish ? (locale === 'en' ? prevDish.data.names.en : prevDish.data.names.yue_hant) : '';
+const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish.data.names.yue_hant) : '';
 ---
 <BaseLayout title={title} locale={locale}>
-  <nav class="crumbs">
-    <a href={`${base}/${locale}`}>{dict.back_home}</a>
-    <span class="sep">›</span>
-    <a href={`${base}/${locale}/browse/${dish.data.category.id}`}>{dict.back_cat}</a>
-    <span class="sep">›</span>
-    <span class="meta">#{String(dish.data.menu_no).padStart(2, '0')}</span>
-  </nav>
-
-  <header class={`hero-band ${dish.data.images?.[0] ? 'has-photo' : ''}`} data-parallax="0.35" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
-    {dish.data.images?.[0] && (
-      <img class={`hero-photo kb ${(dish.data.menu_no % 2 === 0) ? 'kb-b' : ''}`} src={commonsThumb(dish.data.images[0].path, 1400)} alt={`${dish.data.names.yue_hant} · ${dish.data.names.en}`} loading="eager" decoding="async" />
-    )}
-    <div class="hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-    <h1 class="hero-name">{dish.data.names.yue_hant}</h1>
-    <div class="hero-jyut">{dish.data.names.jyutping}</div>
-    <div class="hero-alt">
-      <span class="alt-zh">{dish.data.names.zh}</span>
-      <span class="alt-sep">·</span>
-      <span class="alt-en">{dish.data.names.en}</span>
-    </div>
-    <div class="hero-tags">
-      <span class="htag">{category?.data.names[locale === 'en' ? 'en' : 'yue_hant']}</span>
-      {dish.data.difficulty && <span class="htag">{dict.difficulty}: {dish.data.difficulty}</span>}
-      {dish.data.time_minutes && (
-        <span class="htag">⏱ {dish.data.time_minutes.prep + dish.data.time_minutes.cook} {dict.minutes}</span>
+  <PivotPage
+    pivotTitle={dish.data.names.yue_hant}
+    prevHref={prevDish ? `${base}/${locale}/dishes/${prevDish.id}` : undefined}
+    nextHref={nextDish ? `${base}/${locale}/dishes/${nextDish.id}` : undefined}
+    prevLabel={prevName}
+    nextLabel={nextName}
+    initialTab="ingredients"
+  >
+    {/* Hero tile-banner — WP10 Metro wide tile (4×2) with dish photo */}
+    <div slot="hero" class="dish-hero-banner" data-role="tile" data-size="wide" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
+      {dish.data.images?.[0] && (
+        <div class="dish-hero-img" style={`background-image: url('${commonsThumb(dish.data.images[0].path, 1400)}'); background-size: cover; background-position: center;`}></div>
       )}
-      <span class="htag">👥 {dish.data.servings}</span>
-      {dish.data.method_status === 'complete' && <span class="htag htag-on">✓ {dict.method}</span>}
-      {dish.data.method_status === 'draft' && <span class="htag htag-warn">{dict.method} draft</span>}
-    </div>
-    {dish.data.images?.[0] && (
-      <div class="hero-credit">
-        <a href={commonsPageUrl(dish.data.images[0].path)} target="_blank" rel="noopener">
-          {dish.data.images[0].license} · {dish.data.images[0].credit || 'Wikimedia Commons'} ↗
-        </a>
-      </div>
-    )}
-  </header>
-
-  <div class="dish-grid">
-    <main class="dish-main">
-      {dish.data.method_status === 'stub' && (
-        <div class="alert alert-warn">
-          <strong>⚠️</strong> {dict.stub_warn}
+      <div class="dish-hero-overlay"></div>
+      <div class="dish-hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+      <h2 class="dish-hero-name">{dish.data.names.yue_hant}</h2>
+      <div class="dish-hero-jyut">{dish.data.names.jyutping}</div>
+      {dish.data.images?.[0] && (
+        <div class="dish-hero-credit">
+          <a href={commonsPageUrl(dish.data.images[0].path)} target="_blank" rel="noopener">
+            {dish.data.images[0].license} · {dish.data.images[0].credit || 'Wikimedia Commons'} ↗
+          </a>
         </div>
       )}
-      {dish.data.method_status === 'draft' && (
+    </div>
+
+    <PivotTab id="ingredients" name={dict.ingredients} selected>
+      {(dish.data.method_status === 'stub' || dish.data.method_status === 'draft') && (
         <div class="alert alert-warn">
-          <strong>⚠️</strong> {dict.draft_warn}
+          <strong>⚠️</strong> {dish.data.method_status === 'stub' ? dict.stub_warn : dict.draft_warn}
         </div>
       )}
 
-      <h2>{dict.ingredients}</h2>
       <table class="ing-table">
         <thead>
           <tr>
@@ -173,126 +172,143 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
         </a>
       )}
 
-      {dish.data.method_status !== 'stub' && dish.data.method && (
-        <>
-          <h2>{dict.method}</h2>
-          <ol class="method-list">
-            {dish.data.method.map((step: any) => {
-              const lang = langOfBody(step.body);
-              const fallback = (locale !== 'zh' && lang === 'zh');
-              return (
-                <li class="method-step">
-                  <div class="step-no" style={`background: ${catColor}`}>{step.order}</div>
-                  <div class="step-body">
-                    <div class={`step-text ${fallback ? 'fallback' : ''}`}>{tBody(step.body)}</div>
-                    {fallback && <div class="step-fallback">{dict.fallback_note}</div>}
-                    {(step.temperature_c || step.time_seconds) && (
-                      <div class="step-meta">
-                        {step.temperature_c && <span class="chip">🌡 {step.temperature_c}°C</span>}
-                        {step.time_seconds && <span class="chip">⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
-                      </div>
-                    )}
-                    {step.cite && step.cite.length > 0 && (
-                      <div class="step-cite">
-                        {step.cite.map((c: string) => (
-                          <a href={`#source-${c}`}>[{c}]</a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
-
-      {dish.data.tips && dish.data.tips.length > 0 && (
-        <>
-          <h2>{dict.tips}</h2>
-          <ul class="tips">
-            {dish.data.tips.map((tip: any) => (
-              <li>{tBody(tip)}</li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {dish.data.history && (
-        <>
-          <h2>{dict.history}</h2>
-          <p class="history">{tBody(dish.data.history)}</p>
-        </>
-      )}
-
       {dish.data.allergens && dish.data.allergens.length > 0 && (
-        <>
+        <div class="allergens-block">
           <h3>{dict.allergens}</h3>
           <div>
             {dish.data.allergens.map((a: string) => <span class="badge">{a}</span>)}
           </div>
-        </>
-      )}
-
-      <h2>{dict.sources}</h2>
-      <ol class="sources">
-        {sources.map(({ ref, entry }) => (
-          <li id={`source-${ref.source_id}`}>
-            <div class="src-title">
-              {entry ? (
-                <>
-                  {entry.data.url ? (
-                    <a href={entry.data.url}>{entry.data.title}</a>
-                  ) : entry.data.title}
-                </>
-              ) : ref.source_id}
-            </div>
-            <div class="src-meta meta">
-              {entry?.data.license && <span>{entry.data.license}</span>}
-              <span class="dot">·</span>
-              <span>accessed {ref.accessed}</span>
-              {ref.note && <><span class="dot">·</span><span>{ref.note}</span></>}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </main>
-
-    <aside class="dish-aside">
-      <div class="aside-card">
-        <h3 style="margin-top: 0;">{dict.item_no}</h3>
-        <div class="aside-val">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-      </div>
-      {dish.data.time_minutes && (
-        <div class="aside-card">
-          <h3 style="margin-top: 0;">{dict.prep} · {dict.cook}</h3>
-          <div class="aside-val">{dish.data.time_minutes.prep} + {dish.data.time_minutes.cook} {dict.minutes}</div>
         </div>
       )}
-      {dish.data.equipment && dish.data.equipment.length > 0 && (
-        <div class="aside-card">
-          <h3 style="margin-top: 0;">{dict.equipment}</h3>
+
+      <div class="ing-meta-cards">
+        <div class="ing-meta-card">
+          <div class="ing-meta-label">{dict.item_no}</div>
+          <div class="ing-meta-val">#{String(dish.data.menu_no).padStart(2, '0')}</div>
+        </div>
+        {dish.data.time_minutes && (
+          <div class="ing-meta-card">
+            <div class="ing-meta-label">{dict.prep} · {dict.cook}</div>
+            <div class="ing-meta-val">{dish.data.time_minutes.prep} + {dish.data.time_minutes.cook} {dict.minutes}</div>
+          </div>
+        )}
+        {dish.data.equipment && dish.data.equipment.length > 0 && (
+          <div class="ing-meta-card">
+            <div class="ing-meta-label">{dict.equipment}</div>
+            <div>
+              {dish.data.equipment.map((e: string) => <span class="badge">{e}</span>)}
+            </div>
+          </div>
+        )}
+        <div class="ing-meta-card">
+          <div class="ing-meta-label">{locale === 'en' ? 'Status' : '狀態'}</div>
           <div>
-            {dish.data.equipment.map((e: string) => <span class="badge">{e}</span>)}
+            {dish.data.method_status === 'complete' && <span class="badge badge--green">✓ {dict.method}</span>}
+            {dish.data.method_status === 'draft' && <span class="badge badge--warn">{dict.method} · draft</span>}
+            {dish.data.method_status === 'stub' && <span class="badge">{dict.ingredients} {locale === 'en' ? 'only' : '僅有'}</span>}
           </div>
         </div>
-      )}
-      <div class="aside-card">
-        <h3 style="margin-top: 0;">{locale === 'en' ? 'Status' : '狀態'}</h3>
-        <div>
-          {dish.data.method_status === 'complete' && <span class="badge badge--green">✓ {dict.method}</span>}
-          {dish.data.method_status === 'draft' && <span class="badge badge--warn">{dict.method} · draft</span>}
-          {dish.data.method_status === 'stub' && <span class="badge">{dict.ingredients} {locale === 'en' ? 'only' : '僅有'}</span>}
-        </div>
       </div>
-    </aside>
-  </div>
+    </PivotTab>
 
-  <footer>
-    <a href={`${base}/${locale}/browse/${dish.data.category.id}`}>‹ {dict.back_cat}</a>
-    <span style="margin: 0 0.5rem; color: var(--rule);">·</span>
-    <a href={`${base}/${locale}`}>{dict.back_home}</a>
-  </footer>
+    <PivotTab id="method" name={dict.method}>
+      {dish.data.method_status === 'stub' && (
+        <div class="alert alert-warn">
+          <strong>⚠️</strong> {dict.stub_warn}
+        </div>
+      )}
+      {dish.data.method_status === 'draft' && (
+        <div class="alert alert-warn">
+          <strong>⚠️</strong> {dict.draft_warn}
+        </div>
+      )}
+
+      {dish.data.method_status !== 'stub' && dish.data.method && dish.data.method.length > 0 ? (
+        <ol class="method-list">
+          {dish.data.method.map((step: any) => {
+            const lang = langOfBody(step.body);
+            const fallback = (locale !== 'zh' && lang === 'zh');
+            return (
+              <li class="method-step">
+                <div class="step-no" style={`background: ${catColor}`}>{step.order}</div>
+                <div class="step-body">
+                  <div class={`step-text ${fallback ? 'fallback' : ''}`}>{tBody(step.body)}</div>
+                  {fallback && <div class="step-fallback">{dict.fallback_note}</div>}
+                  {(step.temperature_c || step.time_seconds) && (
+                    <div class="step-meta">
+                      {step.temperature_c && <span class="chip">🌡 {step.temperature_c}°C</span>}
+                      {step.time_seconds && <span class="chip">⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
+                    </div>
+                  )}
+                  {step.cite && step.cite.length > 0 && (
+                    <div class="step-cite">
+                      {step.cite.map((c: string) => (
+                        <a href={`#source-${c}`}>[{c}]</a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      ) : (
+        !dish.data.method_status || dish.data.method_status === 'stub' ? null : (
+          <p class="no-content">{dict.stub_warn}</p>
+        )
+      )}
+    </PivotTab>
+
+    <PivotTab id="tips" name={dict.tips}>
+      {dish.data.tips && dish.data.tips.length > 0 ? (
+        <ul class="tips">
+          {dish.data.tips.map((tip: any) => (
+            <li>{tBody(tip)}</li>
+          ))}
+        </ul>
+      ) : (
+        <p class="no-content">{dict.no_tips}</p>
+      )}
+    </PivotTab>
+
+    <PivotTab id="history" name={dict.history}>
+      {dish.data.history ? (
+        <>
+          <h2>{dict.history}</h2>
+          <p class="history">{tBody(dish.data.history)}</p>
+        </>
+      ) : (
+        <p class="no-content">{dict.no_history}</p>
+      )}
+
+      {sources.length > 0 && (
+        <>
+          <h2>{dict.sources}</h2>
+          <ol class="sources">
+            {sources.map(({ ref, entry }) => (
+              <li id={`source-${ref.source_id}`}>
+                <div class="src-title">
+                  {entry ? (
+                    <>
+                      {entry.data.url ? (
+                        <a href={entry.data.url}>{entry.data.title}</a>
+                      ) : entry.data.title}
+                    </>
+                  ) : ref.source_id}
+                </div>
+                <div class="src-meta meta">
+                  {entry?.data.license && <span>{entry.data.license}</span>}
+                  <span class="dot">·</span>
+                  <span>accessed {ref.accessed}</span>
+                  {ref.note && <><span class="dot">·</span><span>{ref.note}</span></>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+    </PivotTab>
+  </PivotPage>
 
   <script define:vars={{ dishId: dish.id }}>
     try { localStorage.setItem('cantopedia-last-dish', dishId); } catch {}
@@ -300,115 +316,64 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
 </BaseLayout>
 
 <style>
-  .crumbs {
-    font-family: var(--sans);
-    font-size: 0.8125rem;
-    margin: -0.5rem 0 1.5rem;
-    color: var(--ink-dim);
-  }
-  .crumbs a { color: var(--ink-dim); }
-  .crumbs a:hover { color: var(--m-red); }
-  .crumbs .sep { margin: 0 0.5rem; opacity: 0.5; }
-
-  .hero-band {
-    color: white;
-    padding: 2rem 2rem 2rem;
-    margin: 0 -1.5rem 2rem;
+  /* ── Dish hero banner (WP10 Metro wide 4×2 tile) ── */
+  .dish-hero-banner {
     position: relative;
     overflow: hidden;
+    color: #fff;
+    margin: 0 0 var(--sp-5);
+    height: calc(2 * var(--tile-unit) + var(--tile-gap));
+    width: 100%;
+    display: block;
   }
-  .hero-band.has-photo { padding: 2.5rem 2rem 3rem; min-height: 320px; }
-  .hero-photo {
+  .dish-hero-img { position: absolute; inset: 0; }
+  .dish-hero-overlay {
     position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0) 100%);
   }
-  .hero-band.has-photo::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg,
-      color-mix(in srgb, var(--cat-color, #000) 78%, transparent) 0%,
-      rgba(0,0,0,0.35) 100%);
-    z-index: 1;
-    pointer-events: none;
+  .dish-hero-no {
+    position: absolute; top: var(--sp-3); right: var(--sp-4);
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    background: rgba(0,0,0,0.45);
+    padding: var(--sp-1) var(--sp-3);
+    z-index: 2;
   }
-  .hero-band.has-photo > *:not(.hero-photo) { position: relative; z-index: 2; }
-  .hero-credit {
-    margin-top: 1.25rem;
+  .dish-hero-name {
+    position: absolute; bottom: calc(var(--sp-6) + var(--sp-3)); left: var(--sp-4);
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-panorama-sm);
+    font-weight: var(--fw-light);
+    margin: 0;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .dish-hero-jyut {
+    position: absolute; bottom: var(--sp-4); left: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    opacity: 0.85;
+    z-index: 2;
+  }
+  .dish-hero-credit {
+    position: absolute; bottom: var(--sp-2); right: var(--sp-4);
     font-family: var(--sans);
     font-size: 0.72rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     opacity: 0.75;
+    z-index: 2;
   }
-  .hero-credit a { color: rgba(255,255,255,0.85) !important; text-decoration: none; }
-  .hero-credit a:hover { color: white !important; text-decoration: underline; }
-  .hero-no {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    letter-spacing: 0.22em;
-    opacity: 0.75;
-    text-transform: uppercase;
-    font-weight: 400;
-  }
-  .hero-name {
-    font-family: var(--sans), var(--sans-zh);
-    font-size: clamp(var(--lang-h1-size), 6vw, 3rem);
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    color: white;
-    margin: 0.25rem 0 0.25rem;
-    line-height: 1.05;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-  }
-  .hero-jyut {
-    font-family: var(--mono);
-    font-size: 1rem;
-    opacity: 0.9;
-  }
-  .hero-alt {
-    margin-top: 0.6rem;
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 1.15rem;
-    font-weight: 400;
-    opacity: 0.95;
-  }
-  .alt-sep { margin: 0 0.5rem; opacity: 0.6; }
+  .dish-hero-credit a { color: rgba(255,255,255,0.85) !important; text-decoration: none; }
+  .dish-hero-credit a:hover { color: white !important; text-decoration: underline; }
 
-  .hero-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .htag {
-    background: rgba(255,255,255,0.16);
-    padding: 0.35rem 0.9rem;
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    letter-spacing: 0.04em;
-    font-weight: 400;
-  }
-  .htag-on   { background: rgba(255,255,255,0.95); color: var(--ink); font-weight: 400; }
-  .htag-warn { background: var(--m-yellow); color: #4a3800; font-weight: 400; }
-
-  .dish-grid {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 2rem;
-  }
-  .dish-aside { font-size: 0.875rem; }
-  /* Panorama aside — no bg fill, just an uppercase letter-spaced label + value. */
-  .aside-card { background: transparent; padding: 0.5rem 0 1rem; margin-bottom: 0; border: 0; border-bottom: 1px solid var(--t-rule); }
-  .aside-card:last-child { border-bottom: 0; }
-  .aside-card h3 { margin: 0 0 0.35rem; font-size: 0.8rem; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 400; text-transform: uppercase; }
-  .aside-val { font-family: var(--sans); font-weight: 400; font-size: 1.45rem; color: var(--t-ink); letter-spacing: -0.01em; }
-
-  .alert { padding: 0.75rem 0 0.75rem 0.875rem; margin: 1rem 0 2rem; }
+  /* ── Shared tab content styles ── */
+  .alert { padding: 0.75rem 0 0.75rem 0.875rem; margin: 0 0 2rem; }
   .alert-warn { background: transparent; border-left: 3px solid var(--m-yellow); color: var(--t-ink-dim); }
 
-  .ing-table { background: transparent; }
+  .ing-table { background: transparent; width: 100%; }
   .ing-table th { background: transparent; border-bottom: 1px solid var(--t-rule); }
 
-  /* Panorama sauce row — no card, just a clickable underlined row with chevron. */
   .sauce-card {
     display: flex;
     align-items: center;
@@ -419,13 +384,33 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
     border: 0;
     border-bottom: 1px solid var(--t-rule);
     border-top: 1px solid var(--t-rule);
+    text-decoration: none;
   }
   .sauce-card:hover { background: var(--t-plate); }
   .sauce-label { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); margin-right: 0.875rem; font-weight: 400; }
   .sauce-name { font-family: var(--sans), var(--sans-zh); font-size: 1.25rem; font-weight: 400; flex: 1; color: var(--t-ink); }
   .sauce-chev { font-size: 1.5rem; color: var(--t-ink-dim); }
 
-  .method-list { list-style: none; padding: 0; counter-reset: step; }
+  .allergens-block { margin-top: 1.5rem; }
+  .allergens-block h3 { margin: 0 0 0.5rem; font-size: 0.8rem; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 400; text-transform: uppercase; }
+
+  /* Inline meta cards (replaces sidebar aside) */
+  .ing-meta-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0;
+    margin-top: 2rem;
+    border-top: 1px solid var(--t-rule);
+  }
+  .ing-meta-card {
+    padding: 0.875rem 0 0.875rem;
+    border-bottom: 1px solid var(--t-rule);
+    padding-right: 1rem;
+  }
+  .ing-meta-label { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: 400; margin-bottom: 0.25rem; }
+  .ing-meta-val { font-family: var(--sans); font-weight: 400; font-size: 1.45rem; color: var(--t-ink); letter-spacing: -0.01em; }
+
+  .method-list { list-style: none; padding: 0; }
   .method-step { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
   .method-step:last-child { border-bottom: none; }
   .step-no {
@@ -454,13 +439,5 @@ const title = locale === 'en' ? dish.data.names.en : dish.data.names.yue_hant;
   .src-meta { margin-top: 0.125rem; }
   .src-meta .dot { margin: 0 0.5rem; opacity: 0.5; }
 
-  @media (max-width: 900px) {
-    .dish-grid { grid-template-columns: 1fr; }
-    .dish-aside { order: -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
-    .aside-card { margin-bottom: 0; }
-  }
-  @media (max-width: 540px) {
-    .hero-band { padding: 1.5rem 1.5rem; }
-    .hero-name { font-size: var(--lang-h1-size); }
-  }
+  .no-content { color: var(--t-ink-dim); font-style: italic; }
 </style>
