@@ -31,6 +31,9 @@ site/.astro/
 Thumbs.db
 *.swp
 
+# Superpowers brainstorming session artifacts (mockups, transient state)
+.superpowers/
+
 # Pagefind output
 site/public/pagefind/
 
