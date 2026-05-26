@@ -147,6 +147,66 @@ const currentYear = new Date().getFullYear();
         <span class="mif-more-vert" aria-hidden="true"></span>
       </button>
     </nav>
+    <div
+      id="appbar-more-menu"
+      class="appbar-more"
+      role="dialog"
+      aria-label={dict.nav_more}
+      aria-hidden="true"
+      transition:persist
+    >
+      <div class="appbar-more-inner">
+        <section class="appbar-more-section">
+          <div class="menu-label">{dict.menu_theme}</div>
+          <div class="theme-tiles">
+            <button type="button" class="theme-tile wp-tile" data-theme="light" aria-pressed="false">
+              <span class="mif-sunny" aria-hidden="true"></span>
+              <span class="theme-tile-text">{dict.theme_light}</span>
+            </button>
+            <button type="button" class="theme-tile wp-tile" data-theme="dark" aria-pressed="true">
+              <span class="mif-moon-right" aria-hidden="true"></span>
+              <span class="theme-tile-text">{dict.theme_dark}</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="appbar-more-section">
+          <div class="menu-label">{dict.menu_accent}</div>
+          <div class="accent-swatches">
+            <button type="button" class="accent-swatch" data-accent-swatch="cobalt" aria-pressed="true" aria-label={dict.accent_cobalt}>
+              <span class="swatch-dot" style="background: #3E65FF"></span>
+            </button>
+            <button type="button" class="accent-swatch" data-accent-swatch="red" aria-pressed="false" aria-label={dict.accent_red}>
+              <span class="swatch-dot" style="background: #E51400"></span>
+            </button>
+            <button type="button" class="accent-swatch" data-accent-swatch="orange" aria-pressed="false" aria-label={dict.accent_orange}>
+              <span class="swatch-dot" style="background: #FA6800"></span>
+            </button>
+            <button type="button" class="accent-swatch" data-accent-swatch="emerald" aria-pressed="false" aria-label={dict.accent_emerald}>
+              <span class="swatch-dot" style="background: #008A00"></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="appbar-more-section">
+          <div class="menu-label">{dict.menu_language}</div>
+          <div class="locale-pivot">
+            {(['zh', 'yue', 'en'] as const).map((loc) => (
+              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
+                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="appbar-more-section appbar-more-about">
+          <a href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" class="about-row">
+            <span class="mif-github" aria-hidden="true"></span>
+            <span>GitHub · MIT · CC BY-SA 4.0</span>
+          </a>
+        </section>
+      </div>
+    </div>
     <footer>
       <p>
         &copy; {currentYear} ShepherdLoveYou ·
@@ -1069,6 +1129,138 @@ const currentYear = new Date().getFullYear();
       @media print {
         .app-bar--bottom, .top-strip { display: none; }
       }
+
+      /* Phase A §4.4: More menu overlay. Slides up from below the AppBar.
+         Initial state hidden (translateY 100%). Open state translateY 0,
+         pointer-events all. Animation driven by Motion One in inline script. */
+      .appbar-more {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 72px;
+        z-index: 999;
+        max-height: 60vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.92);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .dark-side .appbar-more {
+        background: rgba(0, 0, 0, 0.92);
+        border-top-color: rgba(255, 255, 255, 0.08);
+      }
+      @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
+        .appbar-more {
+          backdrop-filter: blur(30px) saturate(125%);
+          -webkit-backdrop-filter: blur(30px) saturate(125%);
+          background: rgba(255, 255, 255, 0.7);
+        }
+        .dark-side .appbar-more {
+          background: rgba(0, 0, 0, 0.6);
+        }
+      }
+      .appbar-more[aria-hidden="false"] {
+        pointer-events: auto;
+      }
+      .appbar-more-inner {
+        padding: var(--sp-5) var(--sp-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-5);
+      }
+      .appbar-more-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-3);
+      }
+      .menu-label {
+        font-family: var(--sans);
+        font-size: var(--fs-tiny);
+        font-weight: var(--fw-regular);
+        letter-spacing: var(--ls-caps);
+        text-transform: uppercase;
+        color: var(--t-ink-dim);
+      }
+      .theme-tiles {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-3);
+      }
+      .theme-tile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp-2);
+        height: 48px;
+        padding: 0 var(--sp-4);
+        background: var(--t-plate);
+        color: var(--t-ink);
+        border: 0;
+        font-family: var(--sans);
+        font-size: var(--fs-body);
+        cursor: pointer;
+      }
+      .theme-tile[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+      .theme-tile [class^="mif-"] {
+        font-size: 18px;
+      }
+      .accent-swatches {
+        display: flex;
+        gap: var(--sp-3);
+      }
+      .accent-swatch {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 2px solid transparent;
+        background: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .accent-swatch[aria-pressed="true"] {
+        border-color: var(--t-ink);
+      }
+      .swatch-dot {
+        display: block;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+      }
+      .locale-pivot {
+        display: flex;
+        gap: var(--sp-3);
+      }
+      .locale-pivot .pivot-tab {
+        padding: var(--sp-2) var(--sp-4);
+        background: var(--t-plate);
+        color: var(--t-ink);
+        text-decoration: none;
+        font-family: var(--sans);
+        font-size: var(--fs-body);
+      }
+      .locale-pivot .pivot-tab.active {
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+      .about-row {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        color: var(--t-ink-dim);
+        text-decoration: none;
+        font-family: var(--sans);
+        font-size: var(--fs-tiny);
+        letter-spacing: var(--ls-meta);
+        padding-top: var(--sp-3);
+        border-top: 1px solid var(--t-rule);
+      }
+      .about-row:hover { color: var(--t-ink); }
     </style>
   </body>
 </html>
