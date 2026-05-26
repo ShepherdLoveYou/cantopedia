@@ -48,18 +48,19 @@ const currentYear = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <script is:inline data-astro-rerun>
-      // `data-astro-rerun` makes Astro re-execute this on every ClientRouter
-      // navigation so the theme follows the user's saved choice on every page.
       (function () {
         try {
-          const saved = localStorage.getItem('cantopedia-theme') || 'auto';
-          const dark = saved === 'dark' || (saved === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
-          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-          document.documentElement.dataset.themeChoice = saved;
-        } catch (e) {
-          document.documentElement.dataset.theme = 'light';
-          document.documentElement.dataset.themeChoice = 'auto';
-        }
+          let saved = localStorage.getItem('cantopedia-theme');
+          /* Migration: legacy 'auto' value is treated as 'light' (matches default
+             behavior on first ever visit). Write back so Metro/probes see the
+             normalized value on next read. */
+          if (saved === 'auto') {
+            saved = 'light';
+            localStorage.setItem('cantopedia-theme', 'light');
+          }
+          const isDark = saved === 'dark';
+          document.documentElement.classList.toggle('dark-side', isDark);
+        } catch (e) {}
       })();
     </script>
     <title>{pageTitle}</title>
@@ -111,19 +112,6 @@ const currentYear = new Date().getFullYear();
         </ul>
       </nav>
     )}
-    <script is:inline>
-      (function () {
-        try {
-          const choice = localStorage.getItem('cantopedia-theme') || 'auto';
-          const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
-          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-          document.documentElement.dataset.themeChoice = choice;
-          document.querySelectorAll('[data-theme-choice]').forEach(function (b) {
-            b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false');
-          });
-        } catch (e) {}
-      })();
-    </script>
     <Toast />
     <main>
       <slot />
