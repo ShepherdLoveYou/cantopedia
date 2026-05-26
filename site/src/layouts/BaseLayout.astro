@@ -1262,5 +1262,77 @@ const currentYear = new Date().getFullYear();
         .wp-tile::before { display: none; }
       }
     </style>
+
+    <script>
+      import { animate } from 'motion';
+
+      /* Phase A §4.4: open/close the AppBar More menu with Motion One.
+         Uses --fluent-duration-normal (open, decel) and --fluent-duration-fast
+         (close, accel). All async waits via Animation.finished, no setTimeout. */
+      (function setupMoreMenu() {
+        let isOpen = false;
+        let currentAnim: any = null;
+
+        function getMenu() { return document.getElementById('appbar-more-menu'); }
+        function getTrigger() {
+          return document.querySelector<HTMLButtonElement>('[data-appbar="more"]');
+        }
+
+        async function openMenu() {
+          const menu = getMenu();
+          const trigger = getTrigger();
+          if (!menu || isOpen) return;
+          isOpen = true;
+          menu.setAttribute('aria-hidden', 'false');
+          trigger?.setAttribute('aria-expanded', 'true');
+          if (currentAnim) currentAnim.stop();
+          currentAnim = animate(
+            menu,
+            { transform: ['translateY(100%)', 'translateY(0)'] },
+            { duration: 0.28, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+          );
+          await currentAnim.finished;
+        }
+
+        async function closeMenu() {
+          const menu = getMenu();
+          const trigger = getTrigger();
+          if (!menu || !isOpen) return;
+          isOpen = false;
+          trigger?.setAttribute('aria-expanded', 'false');
+          if (currentAnim) currentAnim.stop();
+          currentAnim = animate(
+            menu,
+            { transform: ['translateY(0)', 'translateY(100%)'] },
+            { duration: 0.18, easing: 'cubic-bezier(0.55, 0, 0.9, 0.3)' }
+          );
+          await currentAnim.finished;
+          menu.setAttribute('aria-hidden', 'true');
+        }
+
+        document.addEventListener('click', (e) => {
+          const target = e.target instanceof Element ? e.target : null;
+          if (!target) return;
+          // Open / close on trigger button
+          if (target.closest('[data-appbar="more"]')) {
+            isOpen ? closeMenu() : openMenu();
+            return;
+          }
+          // Click outside menu while open → close
+          if (isOpen && !target.closest('#appbar-more-menu')) {
+            closeMenu();
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && isOpen) closeMenu();
+        });
+
+        /* SPA-swap: close menu on navigation; pivot/dish pages don't carry it open. */
+        document.addEventListener('astro:before-preparation', () => {
+          if (isOpen) closeMenu();
+        });
+      })();
+    </script>
   </body>
 </html>
