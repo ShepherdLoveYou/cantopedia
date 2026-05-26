@@ -45,3 +45,4 @@ site/probe-out/
 
 # Playwright probe screenshot outputs (transient — not source)
 site/probe-*.png
+site/audit-output/
