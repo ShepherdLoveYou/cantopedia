@@ -319,6 +319,12 @@ const currentYear = new Date().getFullYear();
         --rule: var(--t-rule);
         --seal: #B71C1C;
 
+        /* WP10 Mobile accent palette — hex values from Microsoft's 20-color
+           Themes and accent colors doc (§2.8). data-accent attribute (set by
+           bootThemeAndAccent in lib/theme.ts) selects one of four. */
+        --accent: #3E65FF;        /* Cobalt — default per spec §5.4 */
+        --accent-fg: #FFFFFF;
+
         /* Type stacks — Segoe UI primary (Microsoft Metro) with serif Chinese for body */
         --sans: "Segoe UI", "Open Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
         --sans-zh: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
@@ -394,6 +400,11 @@ const currentYear = new Date().getFullYear();
         --tile-unit: 70px;
         --tile-gap: 10px;
       }
+
+      :root[data-accent="cobalt"]  { --accent: #3E65FF; }
+      :root[data-accent="red"]     { --accent: #E51400; }
+      :root[data-accent="orange"]  { --accent: #FA6800; }
+      :root[data-accent="emerald"] { --accent: #008A00; }
 
       @media (max-width: 540px) {
         :root {
