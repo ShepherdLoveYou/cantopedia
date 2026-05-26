@@ -1281,9 +1281,9 @@ const currentYear = new Date().getFullYear();
           trigger?.setAttribute('aria-expanded', 'true');
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
-            menu,
-            { transform: ['translateY(100%)', 'translateY(0)'] },
-            { duration: 0.28, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+            menu as any,
+            { transform: ['translateY(100%)', 'translateY(0%)'] } as any,
+            { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
           );
           await currentAnim.finished;
         }
@@ -1296,9 +1296,9 @@ const currentYear = new Date().getFullYear();
           trigger?.setAttribute('aria-expanded', 'false');
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
-            menu,
-            { transform: ['translateY(0)', 'translateY(100%)'] },
-            { duration: 0.18, easing: 'cubic-bezier(0.55, 0, 0.9, 0.3)' }
+            menu as any,
+            { transform: ['translateY(0%)', 'translateY(100%)'] } as any,
+            { duration: 0.18, ease: [0.55, 0, 0.9, 0.3] }
           );
           await currentAnim.finished;
           menu.setAttribute('aria-hidden', 'true');
