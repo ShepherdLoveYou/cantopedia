@@ -183,7 +183,28 @@ const firstDishId = allDishes[0]?.id ?? '';
         // (search, theme switchers, github link) below stay 1×1.
         const size: 'm' = 'm';
         const photo = categoryPhoto(cat.id);
-        return (
+        return cat.id === 'appetizer' ? (
+          <a
+            class="tile-medium wp-tile cat-tile-v5"
+            data-role="tile"
+            data-size="medium"
+            data-effect="switch"
+            href={`${base}/${locale}/browse/${cat.id}`}
+            style={`background: ${tileColorFor(cat.id)}; view-transition-name: tile-${cat.id};`}
+            aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
+          >
+            <div class="tile-slide">
+              <span class="tile-icon"><CategoryIcon cat={cat.id as CatId} size={48} /></span>
+              <span class="tile-name">{catName}</span>
+              <span class="tile-badge">{inCat.length}</span>
+            </div>
+            {photo && (
+              <div class="tile-slide" style={`background-image: url('${photo}'); background-size: cover; background-position: center;`}>
+                <span class="tile-name">{catName}</span>
+              </div>
+            )}
+          </a>
+        ) : (
           <CatTile
             size={size}
             href={`${base}/${locale}/browse/${cat.id}`}
