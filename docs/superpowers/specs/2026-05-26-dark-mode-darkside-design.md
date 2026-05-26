@@ -330,6 +330,40 @@ Run order:
 
 0 files renamed, 0 files deleted, 0 new files, 0 new dependencies.
 
+## Metro Reuse Audit
+
+Per user reinforcement (2026-05-26): "尽可能多使用 metro UI 的组件". Below is an explicit enumeration of every Metro v5 hook this spec leverages, plus what we evaluated and rejected (with reasons).
+
+### Metro components / styles **used** by this spec
+
+| Metro asset | Where | Role |
+|---|---|---|
+| `data-role="tile"` + `data-size="small"` + `.tile-small .wp-tile` classes | [Hub.astro:251-256](../../../site/src/components/Hub.astro#L251) | Hub Start Menu utility row tiles — Metro `tile` component drives sizing, grid placement, hover affordance |
+| `mif-sunny` (☀ icon) | Hub light tile + nav toggle (light state) | Metro icon font glyph U+ED14 |
+| `mif-moon-right` (☾ icon) | Hub dark tile + nav toggle (dark state) | Metro icon font glyph U+ED15 |
+| `.dark-side` class selector | `<html>` root | Metro [base-theme.less:41](../../../site/node_modules/@olton/metroui/source/common-css/base-theme.less#L41) defines `.dark-side { --default-background, --default-color, --border-color, --default-background-disabled, ... }`. Adding the class flips Metro's token cascade. |
+| `--body-background` / `--body-color` / `--border-color` / `--default-background-disabled` CSS custom properties | `:root` aliases in BaseLayout `:root` block | Direct source for our `--t-bg` / `--t-ink` / `--t-rule` / `--t-plate`. Metro defines them; we forward. |
+| Metro's `body { background: var(--body-background); color: var(--body-color); }` rule | base-theme.less:59-62 | We do **not** override or duplicate this. Metro applies it; we benefit. |
+| `.metro-nav` / `.metro-nav.app-bar` class | BaseLayout nav `<header>` (already in use) | Metro `app-bar` styling; theme button mounts inside it. |
+| `--m-yellow`, `--m-purple` brand palette tokens | Hub tile `style="background: var(--m-yellow)"` | Brand-fixed (don't respond to theme), but defined as Metro/W3CSS Metro palette tokens. |
+
+### Metro components / plugins **evaluated and rejected**
+
+| Metro asset | Evaluated for | Reject reason |
+|---|---|---|
+| `theme-switcher` plugin | Hub & nav toggle UI + storage + class management | See Appendix A — 3 blockers (emoji visual, observer leak, storage key incompatibility). Workarounds (CSS override for icons, monkey-patch destroy(), accept legacy-user migration flash) net to **more code** than hand-written approach, not less. |
+| `command-button` component | Nav toggle button | [command-button.less:50-52](../../../site/node_modules/@olton/metroui/source/components/command-button/command-button.less#L50) icon is 43×43, total button ~60px tall. Our nav status bar is 40px (`--sp-6`). Adopting requires 5+ CSS override rules to shrink, plus disabling the `.dark-side` hover token (nav is brand-fixed dark, doesn't respond to theme). Net cost > hand-written. |
+| `action-button` component | Nav toggle button | Material-Design FAB-style (circular, floating). Non-WP10 vernacular. |
+| `hamburger` component | Nav toggle button | Three-line menu icon. Semantically wrong (we're not opening a menu). |
+| `drop-menu` / `d-menu` component | Nav toggle as dropdown of 2 options | Hover-based reveal — bad for touch. 2 options is too few to justify dropdown UI overhead. |
+| `button-group` component | Hub 2 buttons as radio-style mutually-exclusive group | Would add Metro group spacing/border rules that conflict with `.tile-small` grid cell sizing. Hub already groups its tiles via the utility row's flex layout. |
+| `switch` component | Nav toggle as iOS-style switch | Non-WP10 vernacular (iOS aesthetic). |
+| `Metro.storage` utility | localStorage read/write | JSON-encodes values + prefixes keys with `:`. Incompatible with our existing `cantopedia-theme` raw-string convention. Native `localStorage.getItem/setItem` is 2 lines and zero migration. |
+
+### Conclusion
+
+Within the dark-mode scope, Metro UI reuse is maximized. Every dependency the spec adds is at the **CSS variable / class-selector / component-markup-role** level. The only logic written by hand is ~30 lines of click-delegation + ~10 lines of FOUC inline scripts — both of which use no Metro-replaceable abstraction (event delegation on `document` and localStorage R/W are platform primitives, not component-shaped concerns).
+
 ---
 
 ## Appendix A — Why we don't use Metro `theme-switcher` plugin
