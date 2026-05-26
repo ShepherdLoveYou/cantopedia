@@ -8,7 +8,8 @@ const OUT = './probe-out';
 mkdirSync(OUT, { recursive: true });
 
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+const page = await ctx.newPage();
 
 await page.goto(BASE + '/zh/browse/rice', { waitUntil: 'networkidle' });
 await page.waitForTimeout(800);
