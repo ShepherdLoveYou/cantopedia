@@ -36,10 +36,18 @@ for (const cat of allCats) {
 
 function categoryPhoto(catId: string): string | undefined {
   const dishes = dishesByCat.get(catId) ?? [];
+  // Try first dish with image in this category
   for (const d of dishes) {
     const p = d.data.images?.[0]?.path;
     if (p) return commonsThumb(p, 800);
   }
+  // Fallback: ANY dish with image (cross-category)
+  for (const d of allDishes) {
+    const p = d.data.images?.[0]?.path;
+    if (p) return commonsThumb(p, 800);
+  }
+  // Last resort: no image, return undefined (tile shows solid color)
+  console.warn(`[Hub] no photo found for category ${catId}; showing solid color`);
   return undefined;
 }
 
