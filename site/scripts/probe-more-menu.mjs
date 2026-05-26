@@ -67,6 +67,7 @@ try {
   if (afterOpen.triggerExpanded !== 'true') { console.error(`FAIL: trigger aria-expanded not true: ${afterOpen.triggerExpanded}`); ok = false; }
   if (!afterOpen.hasThemeTiles) { console.error('FAIL: theme tiles missing in menu'); ok = false; }
   if (!afterOpen.hasAccentSwatches) { console.error('FAIL: accent swatches missing in menu'); ok = false; }
+  if (!afterOpen.hasLocalePivot) { console.error('FAIL: locale pivot missing in menu'); ok = false; }
   if (afterAccent.dataAccent !== 'red') { console.error(`FAIL: data-accent after red click: ${afterAccent.dataAccent}`); ok = false; }
   if (afterAccent.storedAccent !== 'red') { console.error(`FAIL: localStorage cantopedia-accent: ${afterAccent.storedAccent}`); ok = false; }
   if (afterAccent.pressedSwatch !== 'red') { console.error(`FAIL: pressed swatch should be red: ${afterAccent.pressedSwatch}`); ok = false; }
