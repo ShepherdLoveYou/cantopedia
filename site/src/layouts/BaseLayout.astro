@@ -384,6 +384,7 @@ const currentYear = new Date().getFullYear();
       (function setupMoreMenu() {
         let isOpen = false;
         let currentAnim: any = null;
+        const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function getMenu() { return document.getElementById('appbar-more-menu'); }
         function getTrigger() {
@@ -397,6 +398,10 @@ const currentYear = new Date().getFullYear();
           isOpen = true;
           menu.setAttribute('aria-hidden', 'false');
           trigger?.setAttribute('aria-expanded', 'true');
+          if (prefersReduced()) {
+            menu.style.transform = 'translateY(0)';
+            return;
+          }
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
             menu,
@@ -412,6 +417,11 @@ const currentYear = new Date().getFullYear();
           if (!menu || !isOpen) return;
           isOpen = false;
           trigger?.setAttribute('aria-expanded', 'false');
+          if (prefersReduced()) {
+            menu.style.transform = 'translateY(100%)';
+            menu.setAttribute('aria-hidden', 'true');
+            return;
+          }
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
             menu,
