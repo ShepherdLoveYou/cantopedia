@@ -1,0 +1,142 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { commonsThumb } from '~/lib/commonsImage';
+
+interface Props {
+  locale: 'zh' | 'yue' | 'en';
+  dishes: CollectionEntry<'dish'>[];
+  base: string;
+  dataUrl: string;
+  panelName: string;
+}
+const { locale, dishes, base, dataUrl, panelName } = Astro.props;
+
+function sortKey(d: CollectionEntry<'dish'>): string {
+  if (locale === 'en') return (d.data.names.en ?? '').toLowerCase();
+  // For zh + yue: sort by jyutping (already a Latin-script romanization)
+  return (d.data.names.jyutping ?? '').toLowerCase();
+}
+function firstLetter(d: CollectionEntry<'dish'>): string {
+  const k = sortKey(d);
+  return k.charAt(0).toUpperCase() || '#';
+}
+
+const sorted = [...dishes].sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+
+// Group by first letter
+const byLetter = new Map<string, typeof sorted>();
+for (const d of sorted) {
+  const L = firstLetter(d);
+  const arr = byLetter.get(L) ?? [];
+  arr.push(d);
+  byLetter.set(L, arr);
+}
+const letters = Array.from(byLetter.keys()).sort();
+---
+<section
+  class="hub-panel hub-panel--applist"
+  data-panel="all"
+  data-name={panelName}
+  data-url={dataUrl}
+  aria-label={panelName}
+>
+  <div class="app-list">
+    {letters.map((L) => (
+      <div class="app-list-section" data-letter={L}>
+        <h3 class="app-list-letter">{L}</h3>
+        {byLetter.get(L)!.map((d) => {
+          const dishName = locale === 'en' ? d.data.names.en : d.data.names.yue_hant;
+          const heroImg = d.data.images?.[0];
+          const thumb = heroImg ? commonsThumb(heroImg.path, 80) : null;
+          return (
+            <a class="app-list-row" href={`${base}/${locale}/dishes/${d.id}`}>
+              <span class="app-list-thumb" style={thumb ? `background-image: url('${thumb}');` : ''}></span>
+              <span class="app-list-text">
+                <span class="app-list-name">{dishName}</span>
+                <span class="app-list-meta">{d.data.names.jyutping}</span>
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style is:global>
+  .hub-panel--applist {
+    /* Ensure the panel fills the full snap-column width, matching Hub.astro's
+       grid-auto-columns: 100vw. Scoped .hub-panel styles from Hub.astro don't
+       reach Astro child-component elements, so we re-apply critical sizing here. */
+    width: 100vw;
+    min-width: 100vw;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 1.5rem 4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .hub-panel--applist::-webkit-scrollbar { width: 6px; }
+  .hub-panel--applist::-webkit-scrollbar-thumb { background: var(--t-rule); border-radius: 3px; }
+  .app-list {
+    padding: 1rem 1.5rem 3rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .app-list-letter {
+    font-family: var(--sans);
+    font-size: var(--fs-title);
+    font-weight: var(--fw-light);
+    color: var(--m-red);
+    letter-spacing: 0.12em;
+    margin: 2rem 0 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.35rem;
+  }
+  /* Row layout: 64px thumbnail + flex 1fr text block (name on top, jyutping below).
+     No third column — jyutping stacks below the name so long English dish names
+     don't get squeezed into a 6-line wrap. */
+  .app-list-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 0.25rem;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: background 120ms ease;
+  }
+  .app-list-row:hover {
+    background: var(--plate);
+    color: var(--ink);
+  }
+  .app-list-thumb {
+    width: 64px; height: 64px;
+    background: var(--plate-dark);
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+  .app-list-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .app-list-name {
+    font-family: var(--sans), var(--sans-zh);
+    font-size: var(--fs-panel);
+    font-weight: var(--fw-regular);
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .app-list-meta {
+    font-family: var(--mono);
+    font-size: var(--fs-tiny);
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import HubPivot from '~/components/HubPivot.astro';
 
 export async function getStaticPaths() {
   return [
@@ -19,11 +20,7 @@ const dict = {
 }[locale];
 ---
 <BaseLayout title={dict.title} locale={locale}>
-  <section class="panorama">
-    <div class="panorama-stripe" aria-hidden="true"></div>
-    <h1 class="panorama-title">{dict.title}</h1>
-    <p class="panorama-sub">{dict.hint}</p>
-  </section>
+  <HubPivot initialTitle={dict.title} />
 
   <section class="search-section">
     <input
@@ -36,9 +33,9 @@ const dict = {
       placeholder={dict.placeholder}
       aria-label={dict.title}
     />
-    <div id="results" class="search-results" data-empty={dict.empty} data-noresults={dict.no_results}>
-      <p class="search-status">{dict.empty}</p>
-    </div>
+    <ul id="results" class="search-results" data-empty={dict.empty} data-noresults={dict.no_results}>
+      <li class="search-status">{dict.empty}</li>
+    </ul>
   </section>
 </BaseLayout>
 
@@ -59,14 +56,14 @@ const dict = {
 
   async function runSearch(term) {
     if (!term.trim()) {
-      results.innerHTML = `<p class="search-status">${emptyMsg}</p>`;
+      results.innerHTML = `<li class="search-status">${emptyMsg}</li>`;
       return;
     }
     try {
       const pf = await ensurePagefind();
       const { results: hits } = await pf.search(term);
       if (hits.length === 0) {
-        results.innerHTML = `<p class="search-status">${noResultsMsg}</p>`;
+        results.innerHTML = `<li class="search-status">${noResultsMsg}</li>`;
         return;
       }
       const top = hits.slice(0, 20);
@@ -74,17 +71,22 @@ const dict = {
         top.map(async (h) => {
           const data = await h.data();
           return `
-            <a class="search-hit" href="${data.url.replace(/\/$/, '')}">
-              <span class="hit-title">${data.meta?.title ?? data.url}</span>
-              <span class="hit-excerpt">${data.excerpt}</span>
-            </a>
+            <li class="search-hit">
+              <a href="${data.url.replace(/\/$/, '')}">
+                <span class="app-list-thumb" aria-hidden="true"></span>
+                <span class="app-list-text">
+                  <span class="app-list-name">${data.meta?.title ?? data.url}</span>
+                  <span class="app-list-meta">${data.excerpt}</span>
+                </span>
+              </a>
+            </li>
           `;
         })
       );
       results.innerHTML = html.join('');
     } catch (err) {
       // Pagefind not yet built locally (dev mode) — show friendly notice
-      results.innerHTML = `<p class="search-status">Search index not available in dev. Run <code>pnpm build</code>.</p>`;
+      results.innerHTML = `<li class="search-status">Search index not available in dev. Run <code>pnpm build</code>.</li>`;
     }
   }
 
@@ -101,78 +103,74 @@ const dict = {
 </script>
 
 <style>
-  .search-section { margin: 0 0 3rem; }
+  .search-section { max-width: 760px; margin: 0 auto; padding: var(--sp-4) var(--sp-5); }
+
   .search-input {
     width: 100%;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid var(--t-rule);
+    padding: var(--sp-3) var(--sp-4);
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-panel);
+    background: var(--t-card);
     color: var(--t-ink);
-    font-family: var(--sans), var(--sans-zh);
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    padding: 0.5rem 0 0.5rem;
-    margin-bottom: 1.5rem;
+    border: 1px solid var(--t-ink);
+    border-radius: 0;
     outline: none;
-    transition: border-color var(--fluent-duration-fast) ease;
+    transition: border-color 120ms ease;
   }
   .search-input::placeholder { color: var(--t-ink-dim); opacity: 0.6; }
-  .search-input:focus { border-bottom-color: var(--m-red); }
+  .search-input:focus { border-color: var(--m-red); background: var(--t-ink); color: #fff; }
 
-  .search-results { display: flex; flex-direction: column; }
-  .search-status {
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: var(--t-ink-dim);
-    padding: 1rem 0;
-  }
-  .search-hit {
-    display: block;
-    padding: 0.9rem 0 1rem;
-    border-bottom: 1px solid var(--t-rule);
-    color: var(--t-ink) !important;
+  .search-results { list-style: none; padding: 0; margin: var(--sp-4) 0 0; }
+  .search-status { padding: var(--sp-5); text-align: center; color: var(--t-ink-dim); }
+
+  .search-hit { display: block; }
+  .search-hit a {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: var(--sp-4);
+    align-items: center;
+    padding: var(--sp-3) var(--sp-2);
+    color: var(--t-ink);
     text-decoration: none;
-    transition: background var(--fluent-duration-fast) ease;
+    border-bottom: 1px solid var(--t-rule);
+    transition: background 120ms ease;
     animation: hit-enter 280ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
   }
-  .search-hit:nth-child(1)  { animation-delay: 0ms; }
-  .search-hit:nth-child(2)  { animation-delay: 30ms; }
-  .search-hit:nth-child(3)  { animation-delay: 60ms; }
-  .search-hit:nth-child(4)  { animation-delay: 90ms; }
-  .search-hit:nth-child(5)  { animation-delay: 120ms; }
-  .search-hit:nth-child(6)  { animation-delay: 150ms; }
-  .search-hit:nth-child(7)  { animation-delay: 180ms; }
-  .search-hit:nth-child(8)  { animation-delay: 210ms; }
-  .search-hit:nth-child(9)  { animation-delay: 240ms; }
-  .search-hit:nth-child(n+10) { animation-delay: 270ms; }
+  .search-hit:nth-child(1)  a { animation-delay: 0ms; }
+  .search-hit:nth-child(2)  a { animation-delay: 30ms; }
+  .search-hit:nth-child(3)  a { animation-delay: 60ms; }
+  .search-hit:nth-child(4)  a { animation-delay: 90ms; }
+  .search-hit:nth-child(5)  a { animation-delay: 120ms; }
+  .search-hit:nth-child(6)  a { animation-delay: 150ms; }
+  .search-hit:nth-child(7)  a { animation-delay: 180ms; }
+  .search-hit:nth-child(8)  a { animation-delay: 210ms; }
+  .search-hit:nth-child(9)  a { animation-delay: 240ms; }
+  .search-hit:nth-child(n+10) a { animation-delay: 270ms; }
   @keyframes hit-enter {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .search-hit { animation: none; }
+    .search-hit a { animation: none; }
   }
-  .search-hit:hover { background: var(--t-plate); color: var(--t-ink) !important; }
-  .hit-title {
-    display: block;
+  .search-hit a:hover { background: var(--t-plate); }
+
+  .app-list-thumb { width: 64px; height: 64px; background: var(--t-plate-dark); flex-shrink: 0; }
+  .app-list-text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+  .app-list-name {
     font-family: var(--sans), var(--sans-zh);
-    font-size: 1.25rem;
-    font-weight: 400;
+    font-size: var(--fs-panel);
+    font-weight: var(--fw-regular);
+    line-height: 1.25;
     color: var(--t-ink);
-    margin-bottom: 0.25rem;
-    letter-spacing: 0.005em;
   }
-  .hit-excerpt {
-    display: block;
-    font-family: var(--sans), var(--sans-zh);
-    font-size: 0.9rem;
-    font-weight: 400;
+  .app-list-meta {
+    font-family: var(--mono);
+    font-size: var(--fs-caption);
     color: var(--t-ink-dim);
-    line-height: 1.5;
+    letter-spacing: var(--ls-meta);
   }
-  .hit-excerpt :global(mark) {
+  .app-list-meta :global(mark) {
     background: var(--m-yellow);
     color: var(--t-ink);
     padding: 0 2px;

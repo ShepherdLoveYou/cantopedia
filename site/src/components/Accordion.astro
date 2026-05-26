@@ -6,7 +6,10 @@ interface Props {
 const { title, open = false } = Astro.props;
 ---
 <details class="accordion" open={open}>
-  <summary class="accordion-head">
+  <summary
+    class="accordion-head"
+    onkeydown="if(event.key === ' '){event.preventDefault(); this.click();}"
+  >
     <span class="accordion-title">{title}</span>
     <span class="accordion-chev" aria-hidden="true">›</span>
   </summary>
@@ -30,14 +33,14 @@ const { title, open = false } = Astro.props;
     align-items: center;
     justify-content: space-between;
     font-family: var(--lang-font-primary);
-    font-weight: 400;
-    font-size: 1rem;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-panel);
     letter-spacing: 0.02em;
     user-select: none;
   }
   .accordion-head::-webkit-details-marker { display: none; }
   .accordion-chev {
-    font-size: 1.25rem;
+    font-size: var(--fs-title);
     color: var(--t-ink-dim);
     transition: transform 240ms var(--fluent-curve-easy-ease, ease);
   }
@@ -45,7 +48,7 @@ const { title, open = false } = Astro.props;
   .accordion-body {
     padding: 0 0 1rem;
     font-family: var(--lang-font-primary);
-    font-size: 0.9375rem;
+    font-size: var(--fs-body);
     line-height: var(--lang-body-leading);
     color: var(--t-ink);
   }

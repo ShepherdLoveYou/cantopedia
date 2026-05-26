@@ -1,6 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import PivotPage from '~/components/PivotPage.astro';
+import PivotTab from '~/components/PivotTab.astro';
+import { tileColor as tileColorFor } from '~/lib/categoryColors';
+import { commonsThumb } from '~/lib/commonsImage';
 
 export async function getStaticPaths() {
   const ingredients = await getCollection('ingredient');
@@ -15,51 +19,218 @@ export async function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: 'zh' | 'en' | 'yue' };
 const { ing } = Astro.props;
+const ingredient = ing; // alias for clarity
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const allDishes = await getCollection('dish');
+const usedInDishes = allDishes.filter((d) =>
+  d.data.ingredients.some((i: { ref: { id: string } }) => i.ref.id === ingredient.id)
+);
 
 const title = locale === 'en' ? ing.data.names.en : ing.data.names.yue_hant;
 const dict = {
-  zh: { back: '← 首頁', nutrition: '營養（每 100 克）', procurement: '採購', kcal: '熱量', protein: '蛋白', fat: '脂肪', carb: '碳水', sources: '引用源' },
-  en: { back: '← Home', nutrition: 'Nutrition (per 100 g)', procurement: 'Procurement', kcal: 'kcal', protein: 'protein', fat: 'fat', carb: 'carbs', sources: 'Sources' },
-  yue: { back: '← 返首頁', nutrition: '營養（每 100 克）', procurement: '採購', kcal: '熱量', protein: '蛋白', fat: '脂肪', carb: '碳水', sources: '引用源' },
+  zh: {
+    back: '← 首頁',
+    nutrition: '營養（每 100 克）',
+    procurement: '採購',
+    kcal: '熱量',
+    protein: '蛋白',
+    fat: '脂肪',
+    carb: '碳水',
+    sources: '引用源',
+    intro: '介紹',
+    used_in: '用在哪些菜',
+  },
+  en: {
+    back: '← Home',
+    nutrition: 'Nutrition (per 100 g)',
+    procurement: 'Procurement',
+    kcal: 'kcal',
+    protein: 'protein',
+    fat: 'fat',
+    carb: 'carbs',
+    sources: 'Sources',
+    intro: 'About',
+    used_in: 'Used in',
+  },
+  yue: {
+    back: '← 返首頁',
+    nutrition: '營養（每 100 克）',
+    procurement: '採購',
+    kcal: '熱量',
+    protein: '蛋白',
+    fat: '脂肪',
+    carb: '碳水',
+    sources: '引用源',
+    intro: '介紹',
+    used_in: '用在哪些菜',
+  },
 }[locale];
 ---
 <BaseLayout title={title} locale={locale}>
-  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
-
-  <header>
-    <h1 style="margin-bottom: 0.25rem;">{ing.data.names.yue_hant}</h1>
-    <div class="meta" style="font-family: var(--mono); color: var(--ink-dim);">{ing.data.names.jyutping}</div>
-    <div class="meta" style="margin-top: 0.5rem;">· {ing.data.names.zh} · {ing.data.names.en}</div>
-    <div style="margin-top: 1rem;">
-      <span class="badge">{ing.data.category}</span>
-    </div>
-  </header>
-
-  {ing.data.nutrition_per_100g && (
-    <>
-      <h2>{dict.nutrition}</h2>
-      <table>
-        <tr><th>{dict.kcal}</th><td>{ing.data.nutrition_per_100g.kcal}</td></tr>
-        <tr><th>{dict.protein}</th><td>{ing.data.nutrition_per_100g.protein_g} g</td></tr>
-        <tr><th>{dict.fat}</th><td>{ing.data.nutrition_per_100g.fat_g} g</td></tr>
-        <tr><th>{dict.carb}</th><td>{ing.data.nutrition_per_100g.carb_g} g</td></tr>
-      </table>
-    </>
-  )}
-
-  {ing.data.procurement && (
-    <>
-      <h2>{dict.procurement}</h2>
-      <p class="meta">{ing.data.procurement.availability.join(' · ')}</p>
-      {ing.data.procurement.notes && (
-        <p>{locale === 'en' ? (ing.data.procurement.notes.en ?? ing.data.procurement.notes.zh) : ing.data.procurement.notes.zh}</p>
+  <PivotPage
+    pivotTitle={ing.data.names.yue_hant}
+    initialTab="intro"
+  >
+    {/* Hero banner — orange (Metro warm color for ingredients) */}
+    <div slot="hero" class="ing-hero-banner" data-role="tile" data-size="wide" style="background: var(--m-orange);">
+      <div class="ing-hero-overlay"></div>
+      <h2 class="ing-hero-name">{ing.data.names.yue_hant}</h2>
+      {ing.data.names.en && (
+        <div class="ing-hero-alt">{ing.data.names.en}</div>
       )}
-    </>
-  )}
+    </div>
 
-  <h2>{dict.sources}</h2>
-  <ul class="meta">
-    {ing.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
-  </ul>
+    <PivotTab id="intro" name={dict.intro} selected>
+      <header class="ing-header">
+        <div class="meta" style="font-family: var(--mono); color: var(--t-ink-dim);">{ing.data.names.jyutping}</div>
+        <div class="meta" style="margin-top: 0.5rem;">· {ing.data.names.zh} · {ing.data.names.en}</div>
+        <div style="margin-top: 1rem;">
+          <span class="badge">{ing.data.category}</span>
+        </div>
+      </header>
+
+      {ing.data.nutrition_per_100g && (
+        <>
+          <h2>{dict.nutrition}</h2>
+          <table>
+            <tr><th>{dict.kcal}</th><td>{ing.data.nutrition_per_100g.kcal}</td></tr>
+            <tr><th>{dict.protein}</th><td>{ing.data.nutrition_per_100g.protein_g} g</td></tr>
+            <tr><th>{dict.fat}</th><td>{ing.data.nutrition_per_100g.fat_g} g</td></tr>
+            <tr><th>{dict.carb}</th><td>{ing.data.nutrition_per_100g.carb_g} g</td></tr>
+          </table>
+        </>
+      )}
+
+      {ing.data.procurement && (
+        <>
+          <h2>{dict.procurement}</h2>
+          <p class="meta">{ing.data.procurement.availability.join(' · ')}</p>
+          {ing.data.procurement.notes && (
+            <p>{locale === 'en' ? (ing.data.procurement.notes.en ?? ing.data.procurement.notes.zh) : ing.data.procurement.notes.zh}</p>
+          )}
+        </>
+      )}
+
+      <h2>{dict.sources}</h2>
+      <ul class="meta">
+        {ing.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
+      </ul>
+    </PivotTab>
+
+    <PivotTab id="used-in" name={dict.used_in}>
+      {usedInDishes.length === 0 ? (
+        <p class="no-content">{locale === 'en' ? 'Not used in any dish yet.' : '尚未用在任何菜式。'}</p>
+      ) : (
+        <div class="tiles-grid browse-tiles">
+          {usedInDishes.map((d) => {
+            const dishName = locale === 'en' ? d.data.names.en : d.data.names.yue_hant;
+            const heroImg = d.data.images?.[0];
+            const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
+            const tileColor = tileColorFor(d.data.category.id);
+            return (
+              <a
+                class="tile-medium wp-tile dish-tile"
+                data-role="tile"
+                data-size="medium"
+                href={`${base}/${locale}/dishes/${d.id}`}
+                style={`background: ${tileColor}; ${thumb ? `background-image: url('${thumb}'); background-size: cover; background-position: center;` : ''} view-transition-name: dish-${d.id};`}
+                aria-label={dishName}
+              >
+                <span class="dish-scrim" aria-hidden="true"></span>
+                <span class="dish-no">#{String(d.data.menu_no).padStart(2, '0')}</span>
+                <span class="dish-name">{dishName}</span>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </PivotTab>
+  </PivotPage>
 </BaseLayout>
+
+<style>
+  .ing-header {
+    padding: var(--sp-3) 0 var(--sp-4);
+  }
+
+  /* ── Ingredient hero banner ── */
+  .ing-hero-banner {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    margin: 0 0 var(--sp-5);
+    height: calc(2 * var(--tile-unit) + var(--tile-gap));
+    width: 100%;
+    display: block;
+  }
+  .ing-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0) 100%);
+  }
+  .ing-hero-name {
+    position: absolute;
+    bottom: calc(var(--sp-4) + 1.5rem);
+    left: var(--sp-4);
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-panorama-sm);
+    font-weight: var(--fw-light);
+    margin: 0;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .ing-hero-alt {
+    position: absolute;
+    bottom: var(--sp-4);
+    left: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    opacity: 0.85;
+    z-index: 2;
+    color: #fff;
+  }
+
+  /* ── Used-in dish tile grid ── */
+  .tiles-grid.browse-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--tile-unit));
+    grid-auto-rows: var(--tile-unit);
+    grid-auto-flow: dense;
+    gap: var(--tile-gap);
+    padding: var(--sp-4) 0;
+  }
+  .dish-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--sp-2) var(--sp-3);
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+  }
+  .dish-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 55%);
+    z-index: 0;
+  }
+  .dish-no {
+    font-family: var(--sans);
+    font-size: var(--fs-caption);
+    opacity: 0.8;
+    z-index: 1;
+  }
+  .dish-name {
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: 1.2;
+    z-index: 1;
+  }
+
+  .no-content {
+    text-align: center;
+    color: var(--t-ink-dim);
+    padding: var(--sp-6) 0;
+  }
+</style>
