@@ -110,6 +110,19 @@ const dict = {
         </ul>
       </nav>
     )}
+    <script is:inline>
+      (function () {
+        try {
+          const choice = localStorage.getItem('cantopedia-theme') || 'auto';
+          const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+          document.documentElement.dataset.themeChoice = choice;
+          document.querySelectorAll('[data-theme-choice]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.dataset.themeChoice === choice ? 'true' : 'false');
+          });
+        } catch (e) {}
+      })();
+    </script>
     <Toast />
     <main>
       <slot />
