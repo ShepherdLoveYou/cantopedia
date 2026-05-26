@@ -39,6 +39,7 @@ const dict = {
   en: { yue: '粵語', zh: '中文', en: 'English' },
   yue: { yue: '粵語', zh: '中文', en: 'English' },
 }[locale];
+const currentYear = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang={locale === 'yue' ? 'yue-Hant' : locale === 'zh' ? 'zh-Hant' : 'en'}>
@@ -129,7 +130,7 @@ const dict = {
     </main>
     <footer>
       <p>
-        &copy; 2025 ShepherdLoveYou ·
+        &copy; {currentYear} ShepherdLoveYou ·
         <a href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener">GitHub</a> ·
         MIT (code) / CC BY-SA 4.0 (content)
       </p>
@@ -474,11 +475,12 @@ const dict = {
       html, body { background: var(--t-bg); color: var(--t-ink); transition: background-color var(--fluent-duration-gentle) ease, color var(--fluent-duration-gentle) ease; }
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
-      /* Override Metro UI's body bg vars so dark/light theme works on Hub-loading pages.
-         Metro defines `body { background-color: var(--body-background) }` with --body-background
-         hardcoded to #fff. We point those vars at our theme tokens so Metro's body rule reads
-         the right color in both modes. :where() gives zero specificity so Metro's :root defaults
-         still win at equal specificity unless our theme tokens override them. */
+      /* Belt-and-suspenders: the primary theme enforcement is the `html, body { background }`
+         rule below (sets background DIRECTLY, beating Metro's body { background: var(--body-background) }).
+         This :where() block additionally sets the Metro CSS vars from our tokens for any Metro
+         component that reads --body-background / --body-color directly. :where() has zero
+         specificity so we don't fight Metro's own :root defaults — if Metro changes its load
+         order or specificity we may need to revisit. */
       :where(:root, html) {
         --body-background: var(--t-bg);
         --body-color: var(--t-ink);
