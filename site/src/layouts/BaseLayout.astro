@@ -356,7 +356,50 @@ const dict = {
 
         /* Subtle film grain noise for Acrylic — generated with feTurbulence. */
         --acrylic-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.45'/></svg>");
+
+        /* WP10 Mobile tile grid pitch — single source of truth for all tile sizes */
+        --tile-unit: 70px;
+        --tile-gap: 10px;
       }
+
+      @media (max-width: 540px) {
+        :root {
+          --tile-unit: 56px;
+          --tile-gap: 8px;
+        }
+      }
+
+      /* Tile size classes — width/height for flex parents, grid-column/-row spans
+         for CSS Grid parents (.tiles-grid uses display:grid). */
+      .tile-small {
+        width: var(--tile-unit) !important;
+        height: var(--tile-unit) !important;
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      .tile-medium {
+        width: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+        height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+      .tile-2x1 {
+        width: calc(2 * var(--tile-unit) + var(--tile-gap));
+        height: var(--tile-unit);
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .tile-wide {
+        /* 4 cols × 2 rows — Metro "wide" banner, for featured/hero tiles */
+        width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap)) !important;
+        height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
+        grid-column: span 4;
+        grid-row: span 2;
+      }
+      /* Cat-tile flat (Metro): no border radius. Covers both new (.cat-tile-v5) and
+         legacy (.cat-tile) — legacy selector removed when CatTile.astro is deleted in Task 3.4. */
+      [class*="tile-"].cat-tile-v5,
+      [class*="tile-"].cat-tile { border-radius: 0 !important; }
 
       html[data-theme="dark"] {
         --t-bg: #0e0e10;

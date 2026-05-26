@@ -185,18 +185,18 @@ const firstDishId = allDishes[0]?.id ?? '';
             class="tile-medium wp-tile cat-tile-v5"
             data-role="tile"
             data-size="medium"
-            data-effect={photo ? 'switch' : 'none'}
+            data-effect={photo ? 'switch' : ''}
             href={`${base}/${locale}/browse/${cat.id}`}
             style={`background: ${color}; view-transition-name: tile-${cat.id};`}
             aria-label={`${catName} (${inCat.length} ${dict.pieces})`}
           >
-            <div class="tile-slide tile-slide--front">
+            <div class="slide slide--front">
               <span class="tile-icon"><CategoryIcon cat={cat.id as CatId} size={48} /></span>
               <span class="tile-name">{catName}</span>
               <span class="tile-badge">{inCat.length}</span>
             </div>
             {photo && (
-              <div class="tile-slide tile-slide--back" style={`background-image: url('${photo}'); background-size: cover; background-position: center;`}>
+              <div class="slide slide--back" style={`background-image: url('${photo}'); background-size: cover; background-position: center;`}>
                 <span class="dish-scrim"></span>
                 <span class="tile-name tile-name--back">{catName}</span>
               </div>
@@ -410,7 +410,7 @@ const firstDishId = allDishes[0]?.id ?? '';
   /* ============================================================
      HOME PANEL — featured tile
      ============================================================ */
-  /* Featured tile rotator — size comes from .tile-2x1 in CatTile.astro (height = --tile-unit). */
+  /* Featured tile rotator — size comes from .tile-wide in BaseLayout.astro (height = 2×--tile-unit + --tile-gap). */
   .featured-tile {
     position: relative;
     display: block;
@@ -584,7 +584,65 @@ const firstDishId = allDishes[0]?.id ?? '';
     opacity: 0.85;
     z-index: 2;
   }
-  /* Tile sizes now derive from --tile-unit + --tile-gap in CatTile.astro. No media-query fork needed. */
+  /* Tile sizes now derive from --tile-unit + --tile-gap in BaseLayout.astro. No media-query fork needed. */
+
+  /* ===== New WP10 Metro cat-tile (replaces hand-rolled CatTile component) ===== */
+  .cat-tile-v5 {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+  .cat-tile-v5 .slide {
+    position: absolute;
+    inset: 0;
+    padding: var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+  }
+  .cat-tile-v5 .tile-icon {
+    align-self: flex-start;
+    color: #fff;
+    line-height: 0;
+  }
+  .cat-tile-v5 .tile-name {
+    margin-top: auto;
+    font-family: var(--lang-font-primary);
+    font-weight: var(--fw-regular);
+    font-size: 1.1rem;
+    line-height: 1.2;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    color: #fff;
+  }
+  .cat-tile-v5 .tile-name--back {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .cat-tile-v5 .tile-badge {
+    position: absolute;
+    top: 8px; right: 10px;
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.28);
+    padding: 1px 8px;
+    line-height: 1.2;
+    letter-spacing: var(--ls-meta);
+    z-index: 2;
+  }
+  .cat-tile-v5 .dish-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
 </style>
 
 <style is:global>

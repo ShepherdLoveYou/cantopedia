@@ -55,48 +55,10 @@ const backBg = photo
 </a>
 
 <style is:global>
-  /* ============================================================
-     Tile grid pitch (single source of truth for all tile sizes)
-     ============================================================ */
-  :root {
-    --tile-unit: 70px;
-    --tile-gap: 10px;
-  }
-  @media (max-width: 540px) {
-    :root {
-      --tile-unit: 56px;
-      --tile-gap: 8px;
-    }
-  }
-
-  /* Tile size classes — width/height for flex parents, grid-column/-row spans
-     for CSS Grid parents (.tiles-grid uses display:grid). */
-  .tile-small {
-    width: var(--tile-unit) !important;
-    height: var(--tile-unit) !important;
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-  .tile-medium {
-    width: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-    height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-  .tile-2x1 {
-    width: calc(2 * var(--tile-unit) + var(--tile-gap));
-    height: var(--tile-unit);
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .tile-wide {
-    /* 4 cols × 2 rows — Metro "wide" banner, for featured/hero tiles */
-    width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap)) !important;
-    height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-    grid-column: span 4;
-    grid-row: span 2;
-  }
-  [class*="tile-"].cat-tile { border-radius: 0 !important; }
+  /* NOTE: tile grid pitch (--tile-unit, --tile-gap) and tile size classes
+     (.tile-small, .tile-medium, .tile-2x1, .tile-wide) were moved to
+     BaseLayout.astro — they are global and must load on every page regardless
+     of whether CatTile is rendered. (Code review fix C3, Task 3.2.) */
 
   /* ============================================================
      Cat-tile flip — rotateX 180° card-flip (matches master cee6736)
