@@ -431,18 +431,24 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
   .allergens-block { margin-top: 1.5rem; }
   .allergens-block h3 { margin: 0 0 0.5rem; font-size: var(--fs-tiny); letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: var(--fw-regular); text-transform: uppercase; }
 
-  /* Inline meta cards (replaces sidebar aside) */
+  /* Inline meta cards (replaces sidebar aside). On mobile: 2 cols; ≥640px auto-fit. */
   .ing-meta-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 0;
     margin-top: 2rem;
     border-top: 1px solid var(--t-rule);
   }
+  @media (min-width: 640px) {
+    .ing-meta-cards { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  }
   .ing-meta-card {
-    padding: 0.875rem 0 0.875rem;
+    padding: 0.875rem 1rem 0.875rem 0;
     border-bottom: 1px solid var(--t-rule);
-    padding-right: 1rem;
+    min-height: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .ing-meta-label { font-family: var(--sans); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: 0.22em; color: var(--t-ink-dim); font-weight: var(--fw-regular); margin-bottom: 0.25rem; }
   .ing-meta-val { font-family: var(--sans); font-weight: var(--fw-regular); font-size: var(--fs-title); color: var(--t-ink); letter-spacing: -0.01em; }
@@ -463,12 +469,12 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
   .step-meta { margin-top: 0.6rem; display: flex; gap: 0.5rem; }
   .chip { background: var(--plate); padding: 0.2rem 0.7rem; font-family: var(--sans); font-size: var(--fs-tiny); color: var(--ink-dim); }
   .step-cite { margin-top: 0.6rem; }
-  .step-cite a { font-family: var(--mono); font-size: var(--fs-body); margin-right: 0.5rem; color: var(--m-blue); }
+  .step-cite a { font-family: var(--mono); font-size: var(--fs-body); margin-right: 0.5rem; color: var(--accent); }
 
   .tips { background: transparent; padding: 0.5rem 0 0.5rem 1.5rem; }
   .tips li { margin: 0.5rem 0; }
 
-  .history { background: transparent; padding: 0.5rem 0 0.5rem 0.875rem; border-left: 3px solid var(--m-red); line-height: 1.75; font-family: var(--serif-en), var(--serif-zh); font-size: var(--fs-panel); }
+  .history { background: transparent; padding: 0.5rem 0 0.5rem 0.875rem; border-left: 3px solid var(--accent); line-height: 1.75; font-family: var(--serif-en), var(--serif-zh); font-size: var(--fs-panel); }
 
   .sources { padding-left: 0; list-style: none; }
   .sources li { padding: 0.625rem 0; border-bottom: 1px dashed var(--rule); }
