@@ -636,6 +636,10 @@ const firstDishId = allDishes[0]?.id ?? '';
     text-decoration: none;
     display: block;
     overflow: hidden;
+    /* Perspective provides 3D depth during slide rotateX animation.
+       Without it, rotateX appears as flat scaleY fold (orthographic) instead
+       of a card flip with depth cue. Match master's .live-tile { perspective: 800px }. */
+    perspective: 800px;
   }
   .cat-tile-v5 .slide {
     position: absolute;
