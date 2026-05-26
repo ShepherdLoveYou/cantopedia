@@ -396,10 +396,8 @@ const dict = {
         grid-column: span 4;
         grid-row: span 2;
       }
-      /* Cat-tile flat (Metro): no border radius. Covers both new (.cat-tile-v5) and
-         legacy (.cat-tile) — legacy selector removed when CatTile.astro is deleted in Task 3.4. */
-      [class*="tile-"].cat-tile-v5,
-      [class*="tile-"].cat-tile { border-radius: 0 !important; }
+      /* Cat-tile flat (Metro): no border radius. */
+      [class*="tile-"].cat-tile-v5 { border-radius: 0 !important; }
 
       html[data-theme="dark"] {
         --t-bg: #0e0e10;
