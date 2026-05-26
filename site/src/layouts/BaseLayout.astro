@@ -101,6 +101,10 @@ const currentYear = new Date().getFullYear();
         <a class="brand app-bar-brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
+        <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label="Toggle theme">
+          <span class="mif-sunny" aria-hidden="true"></span>
+          <span class="mif-moon-right" aria-hidden="true"></span>
+        </button>
         <ul class="app-bar-menu locale-switcher">
           {(['zh', 'yue', 'en'] as const).map((loc) => (
             <li>
@@ -601,6 +605,24 @@ const currentYear = new Date().getFullYear();
         font-size: inherit;
         flex: 1;
       }
+      .metro-nav-theme-btn {
+        background: transparent;
+        border: 0;
+        color: rgba(255, 255, 255, 0.7);
+        width: var(--sp-6);
+        height: var(--sp-6);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0;
+      }
+      .metro-nav-theme-btn:hover { color: #fff; }
+      .metro-nav-theme-btn .mif-sunny { display: none; }
+      .metro-nav-theme-btn .mif-moon-right { display: inline-flex; }
+      .dark-side .metro-nav-theme-btn .mif-sunny { display: inline-flex; }
+      .dark-side .metro-nav-theme-btn .mif-moon-right { display: none; }
       ::view-transition-old(status-bar),
       ::view-transition-new(status-bar) {
         animation: none;   /* nav is persisted; no cross-fade needed */
