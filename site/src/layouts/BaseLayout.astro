@@ -125,7 +125,7 @@ const currentYear = new Date().getFullYear();
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" aria-label="Site navigation" transition:persist>
+      <nav class="metro-nav app-bar" data-role="app-bar" data-expand-point="md" aria-label="Site navigation" transition:persist>
         <a class="brand app-bar-brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
@@ -988,21 +988,31 @@ const currentYear = new Date().getFullYear();
         padding-right: var(--sp-3);
         box-sizing: border-box;
       }
-      .metro-nav.app-bar .app-bar-menu {
+      /* At md+ (≥768px) the menu expands inline horizontally.
+         Below md, Metro auto-collapses the menu to a hamburger dropdown
+         which positions absolutely below the bar. */
+      .metro-nav.app-bar.app-bar-expand .app-bar-menu {
         flex-direction: row;
         flex-wrap: nowrap;
         width: auto;
         position: static;
         order: unset;
       }
-      .metro-nav.app-bar .app-bar-menu.collapsed {
-        display: flex !important;
-      }
-      .metro-nav.app-bar .hamburger {
-        display: none !important;
-      }
       .metro-nav.app-bar .app-bar-menu > li {
         list-style: none;
+      }
+      /* Hamburger color override — match nav dark background. */
+      .metro-nav.app-bar .hamburger .line {
+        background-color: rgba(255,255,255,0.7);
+      }
+      /* When collapsed (mobile), the menu drops down from below the bar
+         with our nav dark background. */
+      .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
+        background-color: #000;
+        padding: var(--sp-2) 0;
+      }
+      .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu > li > a {
+        padding: 0.75rem var(--sp-4);
       }
       /* Override Metro's light-theme color vars on app-bar items inside our dark nav */
       .metro-nav.app-bar .app-bar-menu > li > a {
