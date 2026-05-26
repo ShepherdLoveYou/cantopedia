@@ -119,11 +119,20 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     {/* Hero tile-banner — WP10 Metro wide tile (4×2) with dish photo */}
     <div slot="hero" class="dish-hero-banner" data-role="tile" data-size="wide" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
       {dish.data.images?.[0] && (
-        <div class="dish-hero-img" style={`background-image: url('${commonsThumb(dish.data.images[0].path, 1400)}'); background-size: cover; background-position: center;`}></div>
+        <div class="dish-hero-img" style={`background-image: url('${commonsThumb(dish.data.images[0].path, 1400)}'); background-size: cover; background-position: center;`} role="img" aria-label={`${dish.data.names.yue_hant} · ${dish.data.names.en}`}></div>
       )}
       <div class="dish-hero-overlay"></div>
       <div class="dish-hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
       <h2 class="dish-hero-name">{dish.data.names.yue_hant}</h2>
+      {locale !== 'en' && (
+        <div class="dish-hero-alt">
+          {dish.data.names.zh && dish.data.names.zh !== dish.data.names.yue_hant && (
+            <span class="alt-zh">{dish.data.names.zh}</span>
+          )}
+          {dish.data.names.zh && dish.data.names.en && <span class="alt-sep">·</span>}
+          {dish.data.names.en && <span class="alt-en">{dish.data.names.en}</span>}
+        </div>
+      )}
       <div class="dish-hero-jyut">{dish.data.names.jyutping}</div>
       {dish.data.images?.[0] && (
         <div class="dish-hero-credit">
@@ -192,6 +201,18 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
             <div class="ing-meta-val">{dish.data.time_minutes.prep} + {dish.data.time_minutes.cook} {dict.minutes}</div>
           </div>
         )}
+        {dish.data.servings && (
+          <div class="ing-meta-card">
+            <div class="ing-meta-label">{dict.servings}</div>
+            <div class="ing-meta-val">{dish.data.servings} 👥</div>
+          </div>
+        )}
+        {dish.data.difficulty && (
+          <div class="ing-meta-card">
+            <div class="ing-meta-label">{dict.difficulty}</div>
+            <div class="ing-meta-val">{dish.data.difficulty}</div>
+          </div>
+        )}
         {dish.data.equipment && dish.data.equipment.length > 0 && (
           <div class="ing-meta-card">
             <div class="ing-meta-label">{dict.equipment}</div>
@@ -253,8 +274,8 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
           })}
         </ol>
       ) : (
-        !dish.data.method_status || dish.data.method_status === 'stub' ? null : (
-          <p class="no-content">{dict.stub_warn}</p>
+        (!dish.data.method || dish.data.method.length === 0) && (
+          <p class="no-content">{dict.stub_warn ?? '尚無做法。'}</p>
         )
       )}
     </PivotTab>
@@ -340,7 +361,7 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     z-index: 2;
   }
   .dish-hero-name {
-    position: absolute; bottom: calc(var(--sp-6) + var(--sp-3)); left: var(--sp-4);
+    position: absolute; bottom: calc(var(--sp-4) + 3rem); left: var(--sp-4);
     font-family: var(--lang-font-primary);
     font-size: var(--fs-panorama-sm);
     font-weight: var(--fw-light);
@@ -355,6 +376,17 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     opacity: 0.85;
     z-index: 2;
   }
+  .dish-hero-alt {
+    position: absolute;
+    bottom: calc(var(--sp-4) + 1.5rem);
+    left: var(--sp-4);
+    z-index: 2;
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-body);
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .dish-hero-alt .alt-sep { margin: 0 0.4em; opacity: 0.6; }
   .dish-hero-credit {
     position: absolute; bottom: var(--sp-2); right: var(--sp-4);
     font-family: var(--sans);
