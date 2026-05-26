@@ -149,9 +149,9 @@ const firstDishId = allDishes[0]?.id ?? '';
   >
     <div class="tiles-grid start-tiles">
       {/* Featured live tile — tile-wide (4 cols × 2 rows, Metro "wide" banner) for
-          dish-of-the-day prominence. Has its own .featured-face show/hide cycle driven
-          by initFeaturedTile(). Do NOT add cat-face classes — they would conflict with
-          featured-face's display:none/block toggle. */}
+          dish-of-the-day prominence. Visual slide-up cycle is driven by Metro v5
+          data-effect="slide-up"; initFeaturedTile() only populates dish data and
+          keeps tile.href in sync with the currently-visible slide. */}
       <a
         id="featured-tile"
         class="tile-wide featured-tile wp-tile"
