@@ -125,28 +125,28 @@ const currentYear = new Date().getFullYear();
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <header class="top-strip" aria-label="Site brand" transition:persist>
-        <a class="top-strip-brand" href={`${base}/${locale}`}>CANTOPEDIA</a>
-      </header>
+      <nav class="app-bar app-bar--top" aria-label="Application bar" transition:persist>
+        <a class="appbar-brand" href={`${base}/${locale}`}>CANTOPEDIA</a>
+        <div class="appbar-actions">
+          <a class="appbar-btn wp-tile" data-appbar="home" href={`${base}/${locale}`} aria-label={dict.nav_home}>
+            <span class="mif-home" aria-hidden="true"></span>
+          </a>
+          <a class="appbar-btn wp-tile" data-appbar="search" href={`${base}/${locale}/search`} aria-label={dict.nav_search}>
+            <span class="mif-search" aria-hidden="true"></span>
+          </a>
+          <button type="button" class="appbar-btn wp-tile" data-appbar="random" aria-label={dict.nav_random}>
+            <span class="mif-shuffle" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="appbar-btn wp-tile" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
+            <span class="mif-more-vert" aria-hidden="true"></span>
+          </button>
+        </div>
+      </nav>
     )}
     <Toast />
     <main>
       <slot />
     </main>
-    <nav class="app-bar app-bar--bottom" aria-label="Application bar" transition:persist>
-      <a class="appbar-btn wp-tile" data-appbar="home" href={`${base}/${locale}`} aria-label={dict.nav_home}>
-        <span class="mif-home" aria-hidden="true"></span>
-      </a>
-      <a class="appbar-btn wp-tile" data-appbar="search" href={`${base}/${locale}/search`} aria-label={dict.nav_search}>
-        <span class="mif-search" aria-hidden="true"></span>
-      </a>
-      <button type="button" class="appbar-btn wp-tile" data-appbar="random" aria-label={dict.nav_random}>
-        <span class="mif-shuffle" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="appbar-btn wp-tile" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
-        <span class="mif-more-vert" aria-hidden="true"></span>
-      </button>
-    </nav>
     <div
       id="appbar-more-menu"
       class="appbar-more"
@@ -510,13 +510,14 @@ const currentYear = new Date().getFullYear();
       :root[data-accent="orange"]  { --accent: #FA6800; }
       :root[data-accent="emerald"] { --accent: #008A00; }
 
-      /* Phase A: reserve room for fixed bottom AppBar (72px) + 16 buffer. */
+      /* Phase A (top variant): reserve room for fixed top AppBar (72px) + 16 buffer. */
       main {
-        padding-bottom: 88px;
+        padding-top: 88px;
       }
-      /* Hub home panel has its own layout — it manages bottom space via .hub height calc. */
+      /* Hub home panel: clear exactly the 72px AppBar; .hub takes the rest
+         via calc(100vh - 72px - 56px) accounting for hub-pivot title. */
       main:has(#hub) {
-        padding-bottom: 0;
+        padding-top: 72px;
       }
 
       /* Phase A: slim 24px brand strip replacing the former top nav.
@@ -541,40 +542,43 @@ const currentYear = new Date().getFullYear();
       }
       .top-strip-brand:hover { color: var(--t-ink); }
 
-      /* Phase A: bottom AppBar — WP10 Mobile geometry, Acrylic backdrop.
-         Spec ref: §4.1, §4.3. Tilt-press inherited from .wp-tile global delegation. */
-      .app-bar.app-bar--bottom {
+      /* Phase A (top variant): top-anchored AppBar with brand wordmark +
+         4 circular action buttons. Acrylic backdrop. Moved from bottom to
+         top to avoid iOS Safari's bottom URL bar occluding the MoreMenu.
+         Spec ref: §4.1, §4.3. Tilt-press inherited from .wp-tile. */
+      .app-bar.app-bar--top {
         /* Override Metro .app-bar defaults (position:sticky, top:0, padding:0 10px,
            flex-flow:row wrap, align-self/justify-self !important). */
         position: fixed;
-        top: auto;
-        bottom: 0;
+        top: 0;
+        bottom: auto;
         left: 0;
         right: 0;
         height: 72px;
         min-height: 72px;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        padding: 0 var(--sp-4);
+        display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: var(--sp-3);
         z-index: 1000;
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         background: rgba(255, 255, 255, 0.85);
       }
-      .dark-side .app-bar.app-bar--bottom {
-        border-top-color: rgba(255, 255, 255, 0.08);
+      .dark-side .app-bar.app-bar--top {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
         background: rgba(0, 0, 0, 0.85);
       }
       @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
-        .app-bar.app-bar--bottom {
+        .app-bar.app-bar--top {
           backdrop-filter: blur(30px) saturate(125%);
           -webkit-backdrop-filter: blur(30px) saturate(125%);
           background: rgba(255, 255, 255, 0.7);
         }
-        .dark-side .app-bar.app-bar--bottom {
+        .dark-side .app-bar.app-bar--top {
           background: rgba(0, 0, 0, 0.6);
         }
-        .app-bar.app-bar--bottom::before {
+        .app-bar.app-bar--top::before {
           /* Acrylic grain overlay using existing --acrylic-noise SVG token */
           content: '';
           position: absolute;
@@ -585,6 +589,26 @@ const currentYear = new Date().getFullYear();
           mix-blend-mode: overlay;
         }
       }
+      .appbar-brand {
+        font-family: var(--sans);
+        font-size: var(--fs-tiny);
+        font-weight: var(--fw-regular);
+        letter-spacing: var(--ls-caps);
+        text-transform: uppercase;
+        color: var(--t-ink-dim);
+        text-decoration: none;
+        position: relative;
+        z-index: 1;
+        white-space: nowrap;
+      }
+      .appbar-brand:hover { color: var(--t-ink); }
+      .appbar-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        position: relative;
+        z-index: 1;
+      }
       .appbar-btn {
         position: relative;
         display: flex;
@@ -592,7 +616,6 @@ const currentYear = new Date().getFullYear();
         justify-content: center;
         width: 44px;
         height: 44px;
-        margin: 0 auto;
         border: 1.5px solid currentColor;
         border-radius: 50%;
         background: transparent;
@@ -614,39 +637,45 @@ const currentYear = new Date().getFullYear();
         font-size: 22px;
         line-height: 1;
       }
-      /* Active route indicator — 2px accent underline */
+      /* Active route indicator — 2px accent underline below the bar */
       .appbar-btn[aria-current="page"]::after {
         content: '';
         position: absolute;
-        bottom: -10px;
+        bottom: -14px;
         left: 25%;
         right: 25%;
         height: 2px;
         background: var(--accent);
       }
       @media print {
-        .app-bar.app-bar--bottom, .top-strip { display: none; }
+        .app-bar.app-bar--top { display: none; }
+      }
+      /* Narrow viewport: shrink brand padding + button gap */
+      @media (max-width: 414px) {
+        .app-bar.app-bar--top { padding: 0 12px; gap: 6px; }
+        .appbar-actions { gap: 6px; }
+        .appbar-brand { font-size: 9px; letter-spacing: 0.18em; }
       }
 
-      /* Phase A §4.4: More menu overlay. Slides up from below the AppBar.
-         Initial state hidden (translateY 100%). Open state translateY 0,
+      /* Phase A §4.4: More menu overlay. Slides DOWN from below the top AppBar.
+         Initial state hidden (translateY -100%). Open state translateY 0,
          pointer-events all. Animation driven by Motion One in inline script. */
       .appbar-more {
         position: fixed;
         left: 0;
         right: 0;
-        bottom: 72px;
+        top: 72px;
         z-index: 1001;
         max-height: 60vh;
         overflow-y: auto;
-        transform: translateY(100%);
+        transform: translateY(-100%);
         pointer-events: none;
         background: rgba(255, 255, 255, 0.92);
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       }
       .dark-side .appbar-more {
         background: rgba(0, 0, 0, 0.92);
-        border-top-color: rgba(255, 255, 255, 0.08);
+        border-bottom-color: rgba(255, 255, 255, 0.08);
       }
       @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
         .appbar-more {
@@ -869,7 +898,7 @@ const currentYear = new Date().getFullYear();
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 6rem; }
+      main { max-width: 1200px; margin: 0 auto; padding: 6rem 1.5rem 1.5rem; }
       h1 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h1-size); line-height: 1.1; letter-spacing: var(--lang-h1-tracking); margin: 0 0 0.5rem; }
       h2 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h2-size); margin: 2.5rem 0 1rem; line-height: 1.2; letter-spacing: var(--lang-h2-tracking); }
       h3 { font-family: var(--lang-font-primary); font-weight: var(--fw-medium); font-size: var(--lang-h3-size); text-transform: none; letter-spacing: 0.01em; color: var(--ink); margin: 2rem 0 0.75rem; }
@@ -1307,7 +1336,7 @@ const currentYear = new Date().getFullYear();
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
             menu as any,
-            { transform: ['translateY(100%)', 'translateY(0%)'] } as any,
+            { transform: ['translateY(-100%)', 'translateY(0%)'] } as any,
             { duration: 0.28, ease: [0.16, 1, 0.3, 1] }
           );
           await currentAnim.finished;
@@ -1324,7 +1353,7 @@ const currentYear = new Date().getFullYear();
           isOpen = false;
           trigger?.setAttribute('aria-expanded', 'false');
           if (prefersReduced()) {
-            menu.style.transform = 'translateY(100%)';
+            menu.style.transform = 'translateY(-100%)';
             menu.setAttribute('aria-hidden', 'true');
             trigger?.focus();
             return;
@@ -1332,7 +1361,7 @@ const currentYear = new Date().getFullYear();
           if (currentAnim) currentAnim.stop();
           currentAnim = animate(
             menu as any,
-            { transform: ['translateY(0%)', 'translateY(100%)'] } as any,
+            { transform: ['translateY(0%)', 'translateY(-100%)'] } as any,
             { duration: 0.18, ease: [0.55, 0, 0.9, 0.3] }
           );
           await currentAnim.finished;
