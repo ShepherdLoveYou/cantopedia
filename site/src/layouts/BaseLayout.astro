@@ -125,22 +125,26 @@ const currentYear = new Date().getFullYear();
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="app-bar app-bar--top" aria-label="Application bar" transition:persist>
-        <a class="appbar-brand" href={`${base}/${locale}`}>CANTOPEDIA</a>
-        <div class="appbar-actions">
-          <a class="appbar-btn wp-tile" data-appbar="home" href={`${base}/${locale}`} aria-label={dict.nav_home}>
-            <span class="mif-home" aria-hidden="true"></span>
-          </a>
-          <a class="appbar-btn wp-tile" data-appbar="search" href={`${base}/${locale}/search`} aria-label={dict.nav_search}>
-            <span class="mif-search" aria-hidden="true"></span>
-          </a>
-          <button type="button" class="appbar-btn wp-tile" data-appbar="random" aria-label={dict.nav_random}>
-            <span class="mif-shuffle" aria-hidden="true"></span>
-          </button>
-          <button type="button" class="appbar-btn wp-tile" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
-            <span class="mif-more-vert" aria-hidden="true"></span>
-          </button>
-        </div>
+      <nav class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" aria-label="Site navigation" transition:persist>
+        <a class="brand app-bar-brand" href={`${base}/${locale}`}>
+          <span class="brand-name">CANTOPEDIA</span>
+        </a>
+        <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label={dict.theme_toggle ?? 'Toggle theme'}>
+          <span class="mif-sunny" aria-hidden="true"></span>
+          <span class="mif-moon-right" aria-hidden="true"></span>
+        </button>
+        <ul class="app-bar-menu locale-switcher">
+          {(['zh', 'yue', 'en'] as const).map((loc) => (
+            <li>
+              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
+                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="metro-nav-more-btn" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
+          <span class="mif-more-vert" aria-hidden="true"></span>
+        </button>
       </nav>
     )}
     <Toast />
@@ -157,20 +161,6 @@ const currentYear = new Date().getFullYear();
     >
       <div class="appbar-more-inner">
         <section class="appbar-more-section">
-          <div class="menu-label">{dict.menu_theme}</div>
-          <div class="theme-tiles">
-            <button type="button" class="theme-tile wp-tile" data-theme="light" aria-pressed="false">
-              <span class="mif-sunny" aria-hidden="true"></span>
-              <span class="theme-tile-text">{dict.theme_light}</span>
-            </button>
-            <button type="button" class="theme-tile wp-tile" data-theme="dark" aria-pressed="true">
-              <span class="mif-moon-right" aria-hidden="true"></span>
-              <span class="theme-tile-text">{dict.theme_dark}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="appbar-more-section">
           <div class="menu-label">{dict.menu_accent}</div>
           <div class="accent-swatches">
             <button type="button" class="accent-swatch" data-accent-swatch="cobalt" aria-pressed="true" aria-label={dict.accent_cobalt}>
@@ -185,17 +175,6 @@ const currentYear = new Date().getFullYear();
             <button type="button" class="accent-swatch" data-accent-swatch="emerald" aria-pressed="false" aria-label={dict.accent_emerald}>
               <span class="swatch-dot" style="background: #008A00"></span>
             </button>
-          </div>
-        </section>
-
-        <section class="appbar-more-section">
-          <div class="menu-label">{dict.menu_language}</div>
-          <div class="locale-pivot">
-            {(['zh', 'yue', 'en'] as const).map((loc) => (
-              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
-                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
-              </a>
-            ))}
           </div>
         </section>
 
@@ -344,6 +323,14 @@ const currentYear = new Date().getFullYear();
   document.addEventListener('click', (e) => {
     const target = e.target instanceof Element ? e.target : null;
     if (!target) return;
+    /* metro-nav-theme-btn flip toggle (in the top nav). */
+    const toggle = target.closest<HTMLButtonElement>('[data-theme-toggle]');
+    if (toggle) {
+      const next = document.documentElement.classList.contains('dark-side') ? 'light' : 'dark';
+      applyTheme(next);
+      return;
+    }
+    /* explicit-theme tiles (inside MoreMenu, if any survive). */
     const themeTile = target.closest<HTMLButtonElement>('button[data-theme]');
     if (themeTile && (themeTile.dataset.theme === 'light' || themeTile.dataset.theme === 'dark')) {
       applyTheme(themeTile.dataset.theme);
@@ -510,14 +497,13 @@ const currentYear = new Date().getFullYear();
       :root[data-accent="orange"]  { --accent: #FA6800; }
       :root[data-accent="emerald"] { --accent: #008A00; }
 
-      /* Phase A (top variant): reserve room for fixed top AppBar (72px) + 16 buffer. */
+      /* Restored Metro top nav (~40px). main has small top buffer; Hub
+         home clears just the nav (40px), then hub-pivot title (56px). */
       main {
-        padding-top: 88px;
+        padding-top: 56px;
       }
-      /* Hub home panel: clear exactly the 72px AppBar; .hub takes the rest
-         via calc(100vh - 72px - 56px) accounting for hub-pivot title. */
       main:has(#hub) {
-        padding-top: 72px;
+        padding-top: 40px;
       }
 
       /* Phase A: slim 24px brand strip replacing the former top nav.
@@ -664,9 +650,9 @@ const currentYear = new Date().getFullYear();
         position: fixed;
         left: 0;
         right: 0;
-        top: 72px;
+        top: 40px;
         z-index: 1001;
-        max-height: 60vh;
+        max-height: 50vh;
         overflow-y: auto;
         transform: translateY(-100%);
         pointer-events: none;
@@ -1029,6 +1015,20 @@ const currentYear = new Date().getFullYear();
       .metro-nav-theme-btn .mif-moon-right { display: inline-flex; }
       .dark-side .metro-nav-theme-btn .mif-sunny { display: inline-flex; }
       .dark-side .metro-nav-theme-btn .mif-moon-right { display: none; }
+      .metro-nav-more-btn {
+        background: transparent;
+        border: 0;
+        color: rgba(255, 255, 255, 0.7);
+        width: var(--sp-6);
+        height: var(--sp-6);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-panel);
+        cursor: pointer;
+        padding: 0;
+      }
+      .metro-nav-more-btn:hover { color: #fff; }
       ::view-transition-old(status-bar),
       ::view-transition-new(status-bar) {
         animation: none;   /* nav is persisted; no cross-fade needed */
