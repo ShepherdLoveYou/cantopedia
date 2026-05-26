@@ -66,7 +66,7 @@ const currentYear = new Date().getFullYear();
 <html lang={locale === 'yue' ? 'yue-Hant' : locale === 'zh' ? 'zh-Hant' : 'en'}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <script is:inline data-astro-rerun>
       (function () {
@@ -497,13 +497,16 @@ const currentYear = new Date().getFullYear();
       :root[data-accent="orange"]  { --accent: #FA6800; }
       :root[data-accent="emerald"] { --accent: #008A00; }
 
-      /* Restored Metro top nav (~40px). main has small top buffer; Hub
-         home clears just the nav (40px), then hub-pivot title (56px). */
+      /* Restored Metro top nav (~40px + iOS notch). Use --nav-h so a
+         device with a notch passes its safe-area inset down to Hub. */
+      :root {
+        --nav-h: calc(40px + env(safe-area-inset-top, 0px));
+      }
       main {
-        padding-top: 56px;
+        padding-top: calc(var(--nav-h) + 16px);
       }
       main:has(#hub) {
-        padding-top: 40px;
+        padding-top: var(--nav-h);
       }
 
       /* Phase A: slim 24px brand strip replacing the former top nav.
@@ -650,7 +653,7 @@ const currentYear = new Date().getFullYear();
         position: fixed;
         left: 0;
         right: 0;
-        top: 40px;
+        top: var(--nav-h, 40px);
         z-index: 1001;
         max-height: 50vh;
         overflow-y: auto;
@@ -961,12 +964,14 @@ const currentYear = new Date().getFullYear();
        * !important below are necessary because Metro's JS writes inline display styles
        * on `.collapsed` and injects `.hamburger` with inline styles after init. */
       .metro-nav.app-bar {
-        min-height: var(--sp-6);
-        height: var(--sp-6);
+        min-height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
+        height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
+        padding-top: env(safe-area-inset-top, 0px);
         flex-flow: row nowrap;
         /* mirrors .metro-nav base rule above — needed to beat Metro's .app-bar background */
         background-color: #000;
         padding-right: var(--sp-3);
+        box-sizing: border-box;
       }
       .metro-nav.app-bar .app-bar-menu {
         flex-direction: row;
