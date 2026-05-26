@@ -391,9 +391,13 @@ const currentYear = new Date().getFullYear();
         /* Subtle film grain noise for Acrylic — generated with feTurbulence. */
         --acrylic-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.45'/></svg>");
 
-        /* WP10 Mobile tile grid pitch — single source of truth for all tile sizes */
-        --tile-unit: 70px;
-        --tile-gap: 10px;
+        /* WP10 Mobile tile grid pitch — single source of truth for all tile sizes.
+           INTEGER pixel values only — fractional units (calc/division) cause
+           CSS Grid to round inconsistently across rows, producing 1-3 px tile
+           overlaps when an item spans multiple rows. See L<tile-classes> for
+           the INVARIANT that goes with this. */
+        --tile-unit: 90px;
+        --tile-gap: 8px;
       }
 
       /* Restored Metro top nav (~40px + iOS notch). Use --nav-h so a
@@ -545,42 +549,33 @@ const currentYear = new Date().getFullYear();
         .appbar-brand { font-size: 9px; letter-spacing: 0.18em; }
       }
 
-      @media (max-width: 540px) {
-        :root {
-          /* Mobile: 2 medium tiles per row each ~half viewport wide.
-             Grid has 4 unit-tracks across; medium (2×2) = half row.
-             Side padding 16px each + 3 inner gaps. */
-          --tile-unit: calc((100vw - 32px - 3 * 8px) / 4);
-          --tile-gap: 8px;
-        }
-      }
+      /* INVARIANT: Tile size classes declare grid spans ONLY.
+         Never add width / height here — the grid is the sole sizing
+         authority via grid-template-columns + grid-auto-rows (both equal
+         to --tile-unit). Item dimension EMERGES from track × span +
+         gap × (span - 1). Hardcoded width/height creates a second source
+         of truth that drifts under fractional pixel rounding (the
+         2026-05-26 overlap bug). Adding a new tile size = adding a new
+         span class. That's it. */
+      .tile-small  { grid-column: span 1; grid-row: span 1; }
+      .tile-medium { grid-column: span 2; grid-row: span 2; }
+      .tile-2x1    { grid-column: span 2; grid-row: span 1; }
+      .tile-wide   { grid-column: span 4; grid-row: span 2; }
 
-      /* Tile size classes — width/height for flex parents, grid-column/-row spans
-         for CSS Grid parents (.tiles-grid uses display:grid). */
-      .tile-small {
-        width: var(--tile-unit) !important;
-        height: var(--tile-unit) !important;
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-      .tile-medium {
-        width: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-        height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-        grid-column: span 2;
-        grid-row: span 2;
-      }
-      .tile-2x1 {
-        width: calc(2 * var(--tile-unit) + var(--tile-gap));
-        height: var(--tile-unit);
-        grid-column: span 2;
-        grid-row: span 1;
-      }
-      .tile-wide {
-        /* 4 cols × 2 rows — Metro "wide" banner, for featured/hero tiles */
-        width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap)) !important;
-        height: calc(2 * var(--tile-unit) + var(--tile-gap)) !important;
-        grid-column: span 4;
-        grid-row: span 2;
+      /* Override Metro's tile.less defaults that fight the INVARIANT above.
+         Metro sets `.tiles-grid { grid-template-rows: repeat(auto-fit, 70px) }`
+         which creates a 70px first row that disagrees with our 90px
+         grid-auto-rows — producing the 11px overlap bug. Metro also
+         hard-codes `.tile-wide { width: 310px; height: 150px }` etc.,
+         which would re-introduce the dual-source-of-truth problem now
+         that we no longer set our own widths. Both are neutralised below. */
+      .tiles-grid { grid-template-rows: none !important; }
+      .tiles-grid > .tile-small,
+      .tiles-grid > .tile-medium,
+      .tiles-grid > .tile-2x1,
+      .tiles-grid > .tile-wide {
+        width: auto;
+        height: auto;
       }
       /* Cat-tile flat (Metro): no border radius. */
       [class*="tile-"].cat-tile-v5 { border-radius: 0 !important; }

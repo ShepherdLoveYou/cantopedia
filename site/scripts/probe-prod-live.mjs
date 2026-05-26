@@ -10,54 +10,69 @@ mkdirSync(OUT, { recursive: true });
 const URL = 'https://shepherdloveyou.github.io/cantopedia/zh';
 
 const browser = await chromium.launch();
+const results = [];
 try {
-  // ---- DARK mode probe ----
-  for (const mode of ['dark', 'light']) {
-    const ctx = await browser.newContext({ viewport: { width: 414, height: 896 }, deviceScaleFactor: 2 });
-    const page = await ctx.newPage();
-    await page.goto(URL + '?_=' + Date.now(), { waitUntil: 'networkidle', timeout: 30000 });
-    await page.evaluate((m) => {
-      try { localStorage.setItem('cantopedia-theme', m); } catch (e) {}
-      document.documentElement.classList.toggle('dark-side', m === 'dark');
-    }, mode);
-    await page.reload({ waitUntil: 'networkidle' });
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(300);
+  for (const mode of ['light', 'dark']) {
+    for (const w of [414, 1280]) {
+      const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, deviceScaleFactor: 2 });
+      const page = await ctx.newPage();
+      const errs = [];
+      page.on('pageerror', (e) => errs.push({ kind: 'pageerror', msg: e.message }));
+      page.on('console', (m) => {
+        if (m.type() === 'error' && !m.text().includes('Failed to load resource')) {
+          errs.push({ kind: 'console', msg: m.text() });
+        }
+      });
 
-    const diag = await page.evaluate(() => {
-      function pick(el, label) {
-        if (!el) return { label, present: false };
-        const cs = getComputedStyle(el);
-        const r = el.getBoundingClientRect();
+      // Bust cache.
+      await page.goto(URL + '?_=' + Date.now(), { waitUntil: 'networkidle', timeout: 30000 });
+      await page.evaluate((m) => {
+        try { localStorage.setItem('cantopedia-theme', m); } catch (e) {}
+        document.documentElement.classList.toggle('dark-side', m === 'dark');
+      }, mode);
+      await page.reload({ waitUntil: 'networkidle' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(300);
+
+      const diag = await page.evaluate(() => {
+        const nav = document.querySelector('.metro-nav.app-bar');
         return {
-          label,
-          present: true,
-          rect: { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) },
-          color: cs.color,
-          bg: cs.backgroundColor,
-          opacity: cs.opacity,
-          text: el.textContent?.trim()?.slice(0, 30),
+          // Gone:
+          moreBtnExists: !!document.querySelector('[data-appbar="more"]'),
+          moreDialogExists: !!document.getElementById('appbar-more-menu'),
+          swatchExists: !!document.querySelector('[data-accent-swatch]'),
+          hamExists: !!document.querySelector('.metro-nav .hamburger'),
+          dropdownExists: !!document.querySelector('.metro-nav .app-bar-menu'),
+          dataAccent: document.documentElement.getAttribute('data-accent'),
+          // Remaining:
+          brandText: nav?.querySelector('.brand-name')?.textContent?.trim(),
+          themeBtn: !!nav?.querySelector('[data-theme-toggle]'),
+          tabCount: nav?.querySelectorAll('.pivot-tab').length ?? 0,
+          activeLocale: nav?.querySelector('.pivot-tab.active')?.getAttribute('data-loc'),
+          navBg: nav ? getComputedStyle(nav).backgroundColor : null,
+          accentVar: getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),
         };
-      }
-      const nav = document.querySelector('.metro-nav.app-bar');
-      const tabs = [...nav?.querySelectorAll('.pivot-tab') ?? []];
-      return {
-        isDark: document.documentElement.classList.contains('dark-side'),
-        navBgVar: getComputedStyle(document.documentElement).getPropertyValue('--nav-bg').trim(),
-        navFgVar: getComputedStyle(document.documentElement).getPropertyValue('--nav-fg').trim(),
-        nav: pick(nav, 'nav'),
-        brandName: pick(nav?.querySelector('.brand-name'), 'brand-name'),
-        themeBtn: pick(nav?.querySelector('[data-theme-toggle]'), 'theme-btn'),
-        moreBtn: pick(nav?.querySelector('[data-appbar="more"]'), 'more-btn'),
-        tabActive: pick(nav?.querySelector('.pivot-tab.active'), 'tab-active'),
-      };
-    });
+      });
 
-    await page.screenshot({ path: resolve(OUT, `prod-${mode}-nav.png`), clip: { x: 0, y: 0, width: 414, height: 50 } });
-    writeFileSync(resolve(OUT, `prod-${mode}-diag.json`), JSON.stringify(diag, null, 2));
-    console.log(`---- ${mode.toUpperCase()} ----`);
-    console.log(JSON.stringify(diag, null, 2));
-    await ctx.close();
+      await page.screenshot({ path: resolve(OUT, `prod-${mode}-${w}.png`), clip: { x: 0, y: 0, width: w, height: 50 } });
+      results.push({ mode, w, ...diag, errors: errs });
+      await ctx.close();
+    }
+  }
+
+  writeFileSync(resolve(OUT, 'prod-verify.json'), JSON.stringify(results, null, 2));
+
+  console.log('--- PROD VERIFICATION (commit 891d19f) ---');
+  const removed = ['moreBtnExists', 'moreDialogExists', 'swatchExists', 'hamExists', 'dropdownExists'];
+  for (const k of removed) {
+    const allGone = results.every((r) => r[k] === false);
+    console.log(`  ${k.padEnd(20)} ${allGone ? 'gone ✓' : 'STILL PRESENT ✗'}`);
+  }
+  const dataAccentGone = results.every((r) => r.dataAccent === null);
+  console.log(`  data-accent attr     ${dataAccentGone ? 'gone ✓' : 'still set ✗'}`);
+  console.log();
+  for (const r of results) {
+    console.log(`  ${r.mode}/${r.w}  bg=${r.navBg}  brand=${r.brandText}  themeBtn=${r.themeBtn}  tabs=${r.tabCount}  accent=${r.accentVar}  err=${r.errors.length}`);
   }
 } finally {
   await browser.close();
