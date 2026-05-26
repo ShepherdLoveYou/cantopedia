@@ -19,6 +19,7 @@
     "@olton/metroui": "^5.1.20",
     "astro": "^5.16.0",
     "js-yaml": "^4.1.0",
+    "motion": "^11.18.2",
     "typescript": "^5.7.0"
   },
   "devDependencies": {
