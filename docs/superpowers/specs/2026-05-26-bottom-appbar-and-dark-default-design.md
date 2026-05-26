@@ -2,8 +2,8 @@
 
 **Date**: 2026-05-26
 **Branch target**: `feat/wp10-metroui`
-**Status**: Draft for user review
-**Brainstormed with**: superpowers:brainstorming + ultrathink
+**Status**: Draft v2 for user review (animation library + CSS framework decisions added)
+**Brainstormed with**: superpowers:brainstorming + ultrathink (×2 passes)
 
 ---
 
@@ -135,6 +135,32 @@ Source: [Segoe UI font family — Microsoft Learn](https://learn.microsoft.com/e
 - Weights available: Light, Semilight, Regular, Semibold, Bold.
 - Current site already uses `"Segoe UI", -apple-system, sans-serif` with Noto Sans HK/SC/TC fallbacks for CJK. No change.
 
+### 2.11 Animation library + CSS framework decisions
+
+User explicitly authorized (2026-05-26 follow-up) optional Tailwind CSS and one of GSAP / Motion One / Anime.js.
+
+**Tailwind: NOT adopted.** Reason: project already has a mature CSS variable token system (`--t-bg`, `--t-ink`, `--fs-*`, `--sp-*`, `--tile-unit`, `--tile-gap`, see [BaseLayout.astro:267+](../../../site/src/layouts/BaseLayout.astro)). Adding Tailwind forces a parallel utility-class system mapped back to the same tokens — net negative. Astro scoped CSS + global tokens already give us isolation + reuse without runtime cost.
+
+**Motion One v10+: adopted.** Reason:
+- ~12 KB gzipped (smallest of the three; GSAP ~40 KB, Anime.js ~17 KB).
+- Built on Web Animations API (WAAPI) — browser-native compositor acceleration, same code path as View Transitions we already use.
+- Supports `cubic-bezier()` (required for Fluent easing §2.2) and spring physics (future use).
+- Returns Promise-like `Animation.finished` — testable from Playwright without `setTimeout()`.
+- ESM-first, tree-shakable, fits Astro's Vite bundler.
+
+**Animation responsibility boundaries** (every animation in the codebase maps to exactly one):
+
+| Tool | Use for | Examples |
+|---|---|---|
+| **CSS `@keyframes` + `animation`** | Declarative, time-driven, no JS state | `cat-face-front/back` flip ([Hub.astro:670](../../../site/src/components/Hub.astro)), `tile-enter`, Featured `slide-up` (Metro `data-effect`) |
+| **CSS `transition`** | Simple hover/focus state (1 property, 1 duration) | Tile hover bg, link color, button outline |
+| **Motion One `animate()`** | JS-triggered, state-driven, sequenced or imperative | More menu slide-up/down (§4.4), theme color cross-fade, accent swatch press feedback |
+| **View Transitions API** | Cross-page shared-element morph | tile-to-page zoom (existing, unchanged) |
+
+**No `setTimeout` for animation timing.** All async animation completion uses `Animation.finished` Promise (Motion One return value) or `transitionend` event (CSS transitions). Probes (§9) read these — not arbitrary delays.
+
+**Bundle impact**: +12 KB gzip to client JS. Current bundle is ~250 KB gzip (Metro v5 dominates). Motion One is <5% increase. Acceptable.
+
 ---
 
 ## 3. Architecture Overview
@@ -217,14 +243,34 @@ The current top-nav theme button + locale switcher both **move into the More men
 
 Trigger: tap on `⋯` button.
 
-**Animation**: slide-up from below.
-- Duration: **250ms** (ControlNormalAnimationDuration, §2.1)
-- Easing: `cubic-bezier(0, 0, 0, 1)` (Decelerate, §2.2)
-- Transform: `translateY(100%) → translateY(0)`
-- Backdrop: same Acrylic recipe as AppBar (§2.9)
+**Animation**: slide-up from below. Implementation via Motion One (per §2.11 boundary — state-driven JS animation):
+
+```js
+import { animate } from 'motion';
+
+// open
+const opening = animate(menuEl,
+  { transform: ['translateY(100%)', 'translateY(0%)'] },
+  { duration: 0.25, easing: [0, 0, 0, 1] }    // §2.1 ControlNormal + §2.2 Decelerate
+);
+await opening.finished;
+menuEl.dataset.state = 'open';
+
+// close
+const closing = animate(menuEl,
+  { transform: ['translateY(0%)', 'translateY(100%)'] },
+  { duration: 0.167, easing: [1, 0, 1, 1] }   // §2.1 ControlFast + §2.2 Accelerate
+);
+await closing.finished;
+menuEl.dataset.state = 'closed';
+```
+
+- Backdrop: same Acrylic recipe as AppBar (§2.9), applied on the menu container itself, not a separate scrim.
+- During open/close: `pointer-events: none` on the rest of `<main>` so taps land on outside-detector for dismiss.
 
 **Dismiss**: tap outside menu, or tap `⋯` again, or `Escape` key.
-- Animation: reverse — slide-down 167ms (ControlFastAnimationDuration) with Accelerate `cubic-bezier(1, 0, 1, 1)`.
+- Animation: reverse slide-down (see snippet above).
+- Focus: on open, focus moves to first interactive element (theme tile). On close, focus returns to `⋯` button (a11y requirement).
 
 **Content** (vertical stack):
 ```
@@ -415,6 +461,32 @@ New formula: `height: calc(100vh - 24px - 56px - 72px)` = `calc(100vh - 152px)`.
 
 This is a single-line change in Hub.astro but is **the most likely regression risk** in Phase A+F (horizontal scroll-snap break if formula is off).
 
+### 6.1 Z-index layering strategy
+
+All overlay surfaces in BaseLayout must share one z-index scale to avoid View-Transition-vs-AppBar paint-order bugs.
+
+| Layer | z-index | Notes |
+|---|---|---|
+| `<main>` content | `auto` (0) | Default flow |
+| `view-transition-name` morphs (tile→page) | `1` | Promoted automatically during transition; settles back to auto |
+| `.loading-bar` (top progress strip) | `100` | Above content, below AppBar so the bar isn't covered by More menu |
+| `.top-strip` (slim brand) | `200` | Above loading bar |
+| `.app-bar` (bottom) | `1000` | Above all page content |
+| `.app-bar .more-menu` | `1001` | One above AppBar so it appears to slide UP from inside the bar |
+| Toast notifications ([Toast.astro](../../../site/src/components/Toast.astro)) | `2000` | Above everything (existing pattern, unchanged) |
+
+**Verification gate** (§9 probe): When More menu is open, `view-transition-name` morphs MUST still appear above loading-bar but below More menu. Visual check via Playwright screenshot during a navigation while menu is closing.
+
+### 6.2 CSS variable namespace collision check
+
+Metro UI 5 may use `--accent` internally (Metro's accent theming). Before adding our `--accent` token in §5.4, audit:
+
+```bash
+grep -rE '^\s*--accent\b' node_modules/@olton/metroui/lib/metro.css | head
+```
+
+If collision found, prefix our variable as `--cantopedia-accent` and update §5.4–5.5 references. (One-shot check during implementation; not blocking design approval.)
+
 ---
 
 ## 7. Data Flow
@@ -467,10 +539,12 @@ Three new probes mirror existing `_probe-*.mjs` style:
 - Tilt-press class `wp-tile` applies; pointerdown triggers `pressing` class
 
 **`_probe-more-menu.mjs`** — verifies:
-- Tap `⋯` opens menu with `transform: translateY(0)` after 250ms
+- Tap `⋯` opens menu; await `Animation.finished` on the Motion One handle (NOT `setTimeout(250)`) by reading `menuEl.getAnimations()[0].finished` from the page evaluate context
 - Menu contains theme tiles, accent swatches, locale tabs
 - Tap accent swatch updates `<html data-accent>` and localStorage
-- Tap outside or `Escape` closes menu (animation reverses in 167ms)
+- Tap outside or `Escape` closes menu (await `getAnimations()[0].finished`, verify final `transform: matrix(1,0,0,1,0,Y)` where Y = menu height)
+- Focus moves to first interactive item on open; returns to `⋯` button on close
+- Tab key cycles through menu items in DOM order; Shift+Tab reverses; Escape always closes
 
 **`_probe-dark-default.mjs`** — verifies:
 - Fresh visit (localStorage cleared): html has `dark-side` class
@@ -520,6 +594,11 @@ User delegated ratification 2026-05-26 ("后面审批按照你的决策同意").
 3. **More menu width**: **Full-bar width** (left:0; right:0). Matches WP AppBar menu pop-up convention; narrower popover wastes mobile screen space.
 4. **Random button**: **Fully random across all 66 dishes**. The "骰子" metaphor in brief is about discovery; same-category browsing is already covered by the 8 category panels.
 5. **Top strip**: **Retain 24px slim brand strip** until Phase C lands the panorama header. Brand presence is a basic identity requirement; the strip is the minimal placeholder.
+6. **Animation library**: **Adopt Motion One v10+** (§2.11). User authorized animation library expansion 2026-05-26; Motion One is the smallest WAAPI-native option (~12 KB) and aligns with the existing View Transitions API code path. Tailwind rejected — existing CSS variable token system already covers utility needs without runtime cost.
+7. **AppBar scroll-aware hide**: **No.** Stay always-visible per WP10 convention. Scroll-hide is a modern-web idiom that breaks brief's "全局底栏" requirement and adds intersection-observer complexity for marginal screen-space gain.
+8. **Keyboard focus order**: Tab enters AppBar after `<main>`: **home → search → random → ⋯**. When ⋯ menu opens, focus auto-moves to first menu item; Escape returns focus to ⋯. Shift+Tab reverses through.
+9. **More menu trigger**: **Tap on `⋯` only** for v1. Swipe-up from bottom-edge gesture deferred — high implementation cost (Pointer events + scroll-conflict logic), low marginal authenticity gain. Revisit if users request.
+10. **`--accent` CSS variable name**: Use bare **`--accent`** by default; if §6.2 collision audit during implementation finds Metro UI uses the same name, rename to `--cantopedia-accent` in one batch. Single audit command in §6.2, no design rework either way.
 
 If any decision proves wrong during implementation, surface it before merging Phase A+F.
 
