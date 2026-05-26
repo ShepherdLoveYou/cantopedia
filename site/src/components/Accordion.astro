@@ -6,7 +6,12 @@ interface Props {
 const { title, open = false } = Astro.props;
 ---
 <details class="accordion" open={open}>
-  <summary class="accordion-head">
+  <summary
+    class="accordion-head"
+    role="button"
+    tabindex="0"
+    onkeydown="if(event.key === ' '){event.preventDefault(); this.click();}"
+  >
     <span class="accordion-title">{title}</span>
     <span class="accordion-chev" aria-hidden="true">›</span>
   </summary>
