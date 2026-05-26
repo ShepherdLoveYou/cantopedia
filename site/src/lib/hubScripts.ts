@@ -13,7 +13,7 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
   if (!tile || tile.dataset.wired === '1') return;
   tile.dataset.wired = '1';
 
-  const faces = tile.querySelectorAll<HTMLElement>('.featured-face');
+  const faces = tile.querySelectorAll<HTMLElement>('.slide.featured-slide');
   const withImg = dishesData.filter((d) => d.img);
   if (withImg.length === 0) return;
 
@@ -45,13 +45,11 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
   });
 
   const clickHandler = () => {
-    const active = tile.querySelector<HTMLElement>('.featured-face--active');
-    const f = active?.dataset.face;
-    if (!f) return;
-    const pick = picks[f];
-    if (pick) {
-      try { localStorage.setItem('cantopedia-last-dish', pick.id); } catch {}
-      tile.href = `${base}/${locale}/dishes/${pick.id}`;
+    // With Metro slide-up, there is no --active class. tile.href is kept in sync
+    // by the interval below, so we just persist the current href's dish id.
+    const recentId = tile.href.split('/').pop();
+    if (recentId) {
+      try { localStorage.setItem('cantopedia-last-dish', recentId); } catch {}
     }
   };
   tile.addEventListener('click', clickHandler);
@@ -59,12 +57,11 @@ export function initFeaturedTile(base: string, locale: string, dishesData: DishL
   tile.href = `${base}/${locale}/dishes/${todayDish.id}`;
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const slides = tile.querySelectorAll<HTMLElement>('.slide.featured-slide');
   let i = 0;
   const intervalId = window.setInterval(() => {
-    faces[i].classList.remove('featured-face--active');
-    i = (i + 1) % faces.length;
-    faces[i].classList.add('featured-face--active');
-    const f = faces[i].dataset.face;
+    i = (i + 1) % slides.length;
+    const f = slides[i].dataset.face;
     if (f && picks[f]) tile.href = `${base}/${locale}/dishes/${picks[f].id}`;
   }, 6000);
   (tile as any)._featuredInterval = intervalId;

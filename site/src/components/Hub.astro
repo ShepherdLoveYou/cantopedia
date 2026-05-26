@@ -152,20 +152,27 @@ const firstDishId = allDishes[0]?.id ?? '';
           dish-of-the-day prominence. Has its own .featured-face show/hide cycle driven
           by initFeaturedTile(). Do NOT add cat-face classes — they would conflict with
           featured-face's display:none/block toggle. */}
-      <a id="featured-tile" class="tile-wide featured-tile wp-tile" href={`${base}/${locale}/dishes/${firstDishId}`}>
-        <div class="featured-face featured-face--active" data-face="today">
+      <a
+        id="featured-tile"
+        class="tile-wide featured-tile wp-tile"
+        data-role="tile"
+        data-size="wide"
+        data-effect="slide-up"
+        href={`${base}/${locale}/dishes/${firstDishId}`}
+      >
+        <div class="slide featured-slide" data-face="today">
           <div class="featured-img"></div>
           <div class="featured-overlay"></div>
           <span class="branding-bar featured-label">{dict.featured_today}</span>
           <span class="featured-name"></span>
         </div>
-        <div class="featured-face" data-face="random">
+        <div class="slide featured-slide" data-face="random">
           <div class="featured-img"></div>
           <div class="featured-overlay"></div>
           <span class="branding-bar featured-label">{dict.featured_random}</span>
           <span class="featured-name"></span>
         </div>
-        <div class="featured-face" data-face="recent">
+        <div class="slide featured-slide" data-face="recent">
           <div class="featured-img"></div>
           <div class="featured-overlay"></div>
           <span class="branding-bar featured-label">{dict.featured_recent}</span>
@@ -548,13 +555,9 @@ const firstDishId = allDishes[0]?.id ?? '';
     text-decoration: none;
     display: block;
   }
-  .featured-tile .featured-face {
+  .featured-tile .slide.featured-slide {
     position: absolute;
     inset: 0;
-    display: none;
-  }
-  .featured-tile .featured-face--active {
-    display: block;
   }
   .featured-tile .featured-img {
     position: absolute; inset: 0;
