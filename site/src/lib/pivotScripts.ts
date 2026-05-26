@@ -38,9 +38,11 @@ export function initPivotPage() {
     tabsEl.appendChild(btn);
   });
 
-  // Find initial tab — URL hash > data-selected > first
+  // Find initial tab — URL hash > data-initial-tab > data-selected > first
   const hash = location.hash.replace(/^#/, '');
+  const dataInitial = root.dataset.initialTab;
   const initialId = tabs.find((t) => t.dataset.tabId === hash)?.dataset.tabId
+    ?? (dataInitial ? tabs.find((t) => t.dataset.tabId === dataInitial)?.dataset.tabId : undefined)
     ?? tabs.find((t) => t.dataset.selected === 'true')?.dataset.tabId
     ?? tabs[0].dataset.tabId;
   const initialIdx = tabs.findIndex((t) => t.dataset.tabId === initialId);

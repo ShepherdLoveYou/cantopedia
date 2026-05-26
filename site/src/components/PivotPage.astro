@@ -28,7 +28,7 @@ const { initialTab, pivotTitle, prevHref, nextHref, prevLabel, nextLabel } = Ast
 {pivotTitle && <HubPivot initialTitle={pivotTitle} />}
 
 <div class="pivot-page" data-initial-tab={initialTab ?? ''}>
-  <nav class="pivot-tabs" id="pivot-tabs" aria-label="Tabs">
+  <nav class="pivot-tabs" id="pivot-tabs" role="tablist" aria-label="Tabs">
     {/* Tab labels JS-rendered from children on mount */}
   </nav>
   <div class="pivot-panels" id="pivot-panels">
