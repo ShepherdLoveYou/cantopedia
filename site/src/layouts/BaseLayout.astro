@@ -958,28 +958,23 @@ const currentYear = new Date().getFullYear();
          acrylic; the bar is flat per WP10 status bar convention. */
       /* WP10 Mobile status bar — follows theme:
          light = white bg + black text, dark = black bg + white text.
-         Override Metro's --appbar-* CSS vars so all theme-aware Metro
-         rules auto-flip without us needing hardcoded colors. */
+         Use our own --nav-bg / --nav-fg tokens (sourced from --t-bg/--t-ink)
+         instead of Metro's --appbar-* vars to avoid CSS bundling cascade
+         conflicts where Metro's :root defaults loaded after ours. */
       :root {
-        --appbar-background: #ffffff;
-        --appbar-color: #000000;
-        --appbar-item-background: transparent;
-        --appbar-item-color: #000000;
-        --appbar-item-color-hover: #000000;
-        --appbar-item-background-hover: rgba(0, 0, 0, 0.06);
+        --nav-bg: #ffffff;
+        --nav-fg: #000000;
+        --nav-hover-bg: rgba(0, 0, 0, 0.06);
       }
       .dark-side {
-        --appbar-background: #000000;
-        --appbar-color: #ffffff;
-        --appbar-item-background: transparent;
-        --appbar-item-color: #ffffff;
-        --appbar-item-color-hover: #ffffff;
-        --appbar-item-background-hover: rgba(255, 255, 255, 0.08);
+        --nav-bg: #000000;
+        --nav-fg: #ffffff;
+        --nav-hover-bg: rgba(255, 255, 255, 0.08);
       }
 
       .metro-nav {
-        background: var(--appbar-background);
-        color: var(--appbar-color);
+        background: var(--nav-bg);
+        color: var(--nav-fg);
         padding: 0 var(--sp-3);
         height: var(--sp-6);
         display: flex;
@@ -999,8 +994,8 @@ const currentYear = new Date().getFullYear();
         min-height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         padding-top: env(safe-area-inset-top, 0px);
-        background-color: var(--appbar-background);
-        color: var(--appbar-color);
+        background-color: var(--nav-bg);
+        color: var(--nav-fg);
         padding-right: var(--sp-3);
         box-sizing: border-box;
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -1023,12 +1018,12 @@ const currentYear = new Date().getFullYear();
       }
       /* Hamburger color follows --appbar-color (theme-aware). */
       .metro-nav.app-bar .hamburger .line {
-        background-color: var(--appbar-color);
+        background-color: var(--nav-fg);
       }
       /* When collapsed (mobile), the menu drops down from below the bar
          using the same theme-aware background. */
       .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
-        background-color: var(--appbar-background);
+        background-color: var(--nav-bg);
         padding: var(--sp-2) 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       }
@@ -1049,7 +1044,7 @@ const currentYear = new Date().getFullYear();
       .metro-nav.app-bar .brand {
         font-size: inherit;
         flex: 1;
-        color: var(--appbar-color);
+        color: var(--nav-fg);
       }
       /* Theme + More buttons reuse Metro's .app-bar-button geometry (52×52)
          and theme-aware --appbar-color. */
@@ -1057,7 +1052,7 @@ const currentYear = new Date().getFullYear();
       .metro-nav-more-btn {
         background: transparent;
         border: 0;
-        color: var(--appbar-color);
+        color: var(--nav-fg);
         width: var(--sp-6);
         height: var(--sp-6);
         display: inline-flex;
@@ -1070,7 +1065,7 @@ const currentYear = new Date().getFullYear();
       }
       .metro-nav-theme-btn:hover,
       .metro-nav-more-btn:hover {
-        background: var(--appbar-item-background-hover);
+        background: var(--nav-hover-bg);
       }
       /* Theme button icon swap — show sun in dark mode (to switch to light),
          show moon in light mode (to switch to dark). */
@@ -1094,7 +1089,7 @@ const currentYear = new Date().getFullYear();
         justify-content: flex-start;
         display: flex;
         align-items: center;
-        color: var(--appbar-color) !important;
+        color: var(--nav-fg) !important;
         text-decoration: none;
       }
       .metro-nav .brand-name {
@@ -1103,7 +1098,7 @@ const currentYear = new Date().getFullYear();
         font-weight: var(--fw-medium);
         letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: var(--appbar-color);
+        color: var(--nav-fg);
       }
       .brand { display: flex; align-items: center; gap: 0.75rem; color: white !important; }
       .brand:hover { color: white !important; }
@@ -1117,20 +1112,23 @@ const currentYear = new Date().getFullYear();
       }
       .brand-name { font-family: var(--sans), var(--sans-zh); font-weight: var(--fw-regular); font-size: var(--fs-panel); letter-spacing: 0.02em; }
       .locale-switcher { display: flex; gap: 0; align-items: center; }
+      /* Pivot tabs follow --appbar-color (theme-aware) when inside .metro-nav.
+         Non-active: 0.55 opacity. Hover + active: full color. */
       .pivot-tab {
         font-family: var(--sans);
         font-size: var(--fs-caption);
         padding: 0.55rem 0.6rem;
-        color: rgba(255,255,255,0.5) !important;
+        color: var(--nav-fg) !important;
+        opacity: 0.55;
         letter-spacing: var(--ls-caps);
         font-weight: var(--fw-medium);
         text-transform: uppercase;
         text-decoration: none;
         position: relative;
-        transition: color var(--fluent-duration-fast) ease;
+        transition: opacity var(--fluent-duration-fast) ease, color var(--fluent-duration-fast) ease;
       }
-      .pivot-tab:hover { color: #fff !important; }
-      .pivot-tab.active { color: #fff !important; }
+      .pivot-tab:hover,
+      .pivot-tab.active { opacity: 1; }
       .pivot-tab.active::after {
         content: '';
         position: absolute;
