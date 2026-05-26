@@ -51,15 +51,22 @@ const currentYear = new Date().getFullYear();
       (function () {
         try {
           let saved = localStorage.getItem('cantopedia-theme');
-          /* Migration: legacy 'auto' value is treated as 'light' (matches default
-             behavior on first ever visit). Write back so Metro/probes see the
-             normalized value on next read. */
-          if (saved === 'auto') {
-            saved = 'light';
-            localStorage.setItem('cantopedia-theme', 'light');
+          /* Phase F: default theme is dark (WP10 original flavor). Legacy 'auto'
+             and first-visit (null) both map to dark. Users with explicit 'light'
+             or 'dark' preference are preserved (no surprise flips). */
+          if (saved === null || saved === 'auto') {
+            saved = 'dark';
+            try { localStorage.setItem('cantopedia-theme', 'dark'); } catch (e) {}
           }
           const isDark = saved === 'dark';
           document.documentElement.classList.toggle('dark-side', isDark);
+
+          /* Phase F: accent persistence. data-accent drives --accent CSS var.
+             Default cobalt. Reading this in the inline script (FOIT guard) avoids
+             a flash of wrong accent on first paint. */
+          let accent = localStorage.getItem('cantopedia-accent');
+          if (!['cobalt', 'red', 'orange', 'emerald'].includes(accent)) accent = 'cobalt';
+          document.documentElement.setAttribute('data-accent', accent);
         } catch (e) {}
       })();
     </script>
