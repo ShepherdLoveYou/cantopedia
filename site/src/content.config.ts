@@ -63,6 +63,12 @@ const ImageMeta = z.object({
   ]),
   credit: z.string(),
   alt: TriLangText.partial().optional(),
+  // Per-image background-position / object-position override. Any valid CSS
+  // <position> value, e.g. "center 30%", "top", "50% 35%". Default in the
+  // renderer is "50% 35%" (slight bias toward upper portion — fits typical
+  // top-down food photography). Used for art-direction control when the
+  // default crop chops off the dish (UI_AUDIT_2026-05-26 P2.4).
+  focal_point: z.string().optional(),
 });
 
 const dish = defineCollection({

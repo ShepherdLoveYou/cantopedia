@@ -103,3 +103,6 @@ images:
     source_id: wikimedia-commons
     license: CC0
     credit: Fumikas Sagisavas
+    # Photo is centered on a rim of shrimp; bias crop upward so the cooked
+    # shrimp in the middle of the tray are in frame. UI_AUDIT_2026-05-26 P2.4.
+    focal_point: "center 30%"

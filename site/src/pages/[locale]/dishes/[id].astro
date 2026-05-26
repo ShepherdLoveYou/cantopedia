@@ -119,7 +119,11 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     {/* Hero tile-banner — WP10 Metro wide tile (4×2) with dish photo */}
     <div slot="hero" class="dish-hero-banner" data-role="tile" data-size="wide" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
       {dish.data.images?.[0] && (
-        <div class="dish-hero-img" style={`background-image: url('${commonsThumb(dish.data.images[0].path, 1400)}'); background-size: cover; background-position: center;`} role="img" aria-label={`${dish.data.names.yue_hant} · ${dish.data.names.en}`}></div>
+        /* background-position fallback "50% 35%" biases the crop upward — fits
+           typical top-down food photography where the dish sits a bit above
+           image center. Per-dish override via images[0].focal_point (any valid
+           CSS <position>). Fixes UI_AUDIT_2026-05-26 P2.4. */
+        <div class="dish-hero-img" style={`background-image: url('${commonsThumb(dish.data.images[0].path, 1400)}'); background-size: cover; background-position: ${dish.data.images[0].focal_point ?? '50% 35%'};`} role="img" aria-label={`${dish.data.names.yue_hant} · ${dish.data.names.en}`}></div>
       )}
       <div class="dish-hero-overlay"></div>
       <div class="dish-hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
