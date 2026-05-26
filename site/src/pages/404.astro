@@ -11,3 +11,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     actionLabel="返回首頁"
   />
 </BaseLayout>
+
+<script is:inline define:vars={{ base }}>
+  // 404 is a single static page but the site is trilingual. Detect the
+  // locale segment from location.pathname and rewrite the action tile
+  // label + href to match. Fallback is zh.
+  (function () {
+    var LABELS = {
+      zh:  '返回首頁',
+      en:  'Back to home',
+      yue: '返主頁',
+    };
+    var segments = location.pathname.split('/').filter(Boolean);
+    // segments[0] should be the base segment ("cantopedia"); segments[1] the locale
+    var detected = 'zh';
+    for (var i = 0; i < segments.length; i++) {
+      if (LABELS.hasOwnProperty(segments[i])) {
+        detected = segments[i];
+        break;
+      }
+    }
+    var anchor = document.querySelector('.metro-empty-action');
+    var label  = document.querySelector('.metro-empty-action-label');
+    if (anchor) anchor.setAttribute('href', base + '/' + detected);
+    if (label)  label.textContent = LABELS[detected];
+  })();
+</script>

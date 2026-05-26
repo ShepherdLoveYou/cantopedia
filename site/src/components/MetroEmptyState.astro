@@ -24,7 +24,7 @@ const { bigText, subtitle, actionHref, actionLabel } = Astro.props;
     data-role="tile"
     data-size="medium"
     href={actionHref}
-    style="background: var(--m-red);"
+    style="background: var(--accent);"
   >
     <span class="metro-empty-action-label">{actionLabel}</span>
   </a>
@@ -59,7 +59,7 @@ const { bigText, subtitle, actionHref, actionLabel } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff; /* white text on red Metro tile — safe across themes */
+    color: #fff; /* white text on accent Metro tile — accent is always a saturated WP10 system color */
     text-decoration: none;
   }
   .metro-empty-action-label {
