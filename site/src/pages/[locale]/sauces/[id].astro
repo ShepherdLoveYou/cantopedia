@@ -1,6 +1,10 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import PivotPage from '~/components/PivotPage.astro';
+import PivotTab from '~/components/PivotTab.astro';
+import { tileColor as tileColorFor } from '~/lib/categoryColors';
+import { commonsThumb } from '~/lib/commonsImage';
 
 export async function getStaticPaths() {
   const sauces = await getCollection('sauce');
@@ -24,6 +28,9 @@ const baseIngs = await Promise.all(
   }))
 );
 
+const allDishes = await getCollection('dish');
+const usedInDishes = allDishes.filter((d) => d.data.sauce?.id === sauce.id);
+
 function tBody(body: any): string {
   if (!body) return '';
   if (locale === 'en' && body.en) return body.en;
@@ -33,68 +40,223 @@ function tBody(body: any): string {
 
 const title = locale === 'en' ? sauce.data.names.en : sauce.data.names.yue_hant;
 const dict = {
-  zh: { back: '← 首頁', ingredients: '配料', method: '做法', storage: '儲存', sources: '引用源', minutes: '分鐘' },
-  en: { back: '← Home', ingredients: 'Ingredients', method: 'Method', storage: 'Storage', sources: 'Sources', minutes: 'min' },
-  yue: { back: '← 返首頁', ingredients: '配料', method: '做法', storage: '儲存', sources: '引用源', minutes: '分鐘' },
+  zh: {
+    back: '← 首頁',
+    ingredients: '配料',
+    method: '做法',
+    storage: '儲存',
+    sources: '引用源',
+    minutes: '分鐘',
+    intro: '介紹',
+    used_in: '用在哪些菜',
+  },
+  en: {
+    back: '← Home',
+    ingredients: 'Ingredients',
+    method: 'Method',
+    storage: 'Storage',
+    sources: 'Sources',
+    minutes: 'min',
+    intro: 'About',
+    used_in: 'Used in',
+  },
+  yue: {
+    back: '← 返首頁',
+    ingredients: '配料',
+    method: '做法',
+    storage: '儲存',
+    sources: '引用源',
+    minutes: '分鐘',
+    intro: '介紹',
+    used_in: '用在哪些菜',
+  },
 }[locale];
 ---
 <BaseLayout title={title} locale={locale}>
-  <p class="meta"><a href={`${base}/${locale}`}>{dict.back}</a></p>
+  <PivotPage
+    pivotTitle={sauce.data.names.yue_hant}
+    initialTab="intro"
+  >
+    {/* Hero banner — crimson (Metro warm color for sauces) */}
+    <div slot="hero" class="sauce-hero-banner" data-role="tile" data-size="wide" style="background: var(--m-crimson);">
+      <div class="sauce-hero-overlay"></div>
+      <h2 class="sauce-hero-name">{sauce.data.names.yue_hant}</h2>
+      {sauce.data.names.en && (
+        <div class="sauce-hero-alt">{sauce.data.names.en}</div>
+      )}
+    </div>
 
-  <header style={`view-transition-name: sauce-${sauce.id};`}>
-    <div class="meta" style="color: var(--seal); font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.8rem;">{locale === 'en' ? 'SAUCE' : '醬料'}</div>
-    <h1 style="margin: 0.25rem 0;">{sauce.data.names.yue_hant}</h1>
-    <div class="meta" style="font-family: var(--mono); color: var(--ink-dim);">{sauce.data.names.jyutping}</div>
-    <div class="meta" style="margin-top: 0.5rem;">· {sauce.data.names.zh} · {sauce.data.names.en}</div>
-    {sauce.data.yield_ml && <div style="margin-top: 1rem;"><span class="badge">yield: {sauce.data.yield_ml} ml</span></div>}
-  </header>
+    <PivotTab id="intro" name={dict.intro} selected>
+      <header class="sauce-header" style={`view-transition-name: sauce-${sauce.id};`}>
+        <div class="meta" style="color: var(--seal); font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.8rem;">{locale === 'en' ? 'SAUCE' : '醬料'}</div>
+        <div class="meta" style="font-family: var(--mono); color: var(--t-ink-dim); margin-top: 0.25rem;">{sauce.data.names.jyutping}</div>
+        <div class="meta" style="margin-top: 0.5rem;">· {sauce.data.names.zh} · {sauce.data.names.en}</div>
+        {sauce.data.yield_ml && <div style="margin-top: 1rem;"><span class="badge">yield: {sauce.data.yield_ml} ml</span></div>}
+      </header>
 
-  <h2>{dict.ingredients}</h2>
-  <table>
-    <tbody>
-      {baseIngs.map((i: any) => (
-        <tr>
-          <td>
-            {i.entry ? (
-              <a href={`${base}/${locale}/ingredients/${i.entry.id}`}>
-                {locale === 'en' ? i.entry.data.names.en : i.entry.data.names.yue_hant}
+      <h2>{dict.ingredients}</h2>
+      <table>
+        <tbody>
+          {baseIngs.map((i: any) => (
+            <tr>
+              <td>
+                {i.entry ? (
+                  <a href={`${base}/${locale}/ingredients/${i.entry.id}`}>
+                    {locale === 'en' ? i.entry.data.names.en : i.entry.data.names.yue_hant}
+                  </a>
+                ) : i.ref.id}
+              </td>
+              <td style="text-align: right;">{i.qty} {i.unit}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {sauce.data.method && (
+        <>
+          <h2>{dict.method}</h2>
+          <ol>
+            {sauce.data.method.map((step: any) => (
+              <li style="margin: 1rem 0;">
+                <div>{tBody(step.body)}</div>
+                {(step.temperature_c || step.time_seconds) && (
+                  <div class="meta" style="margin-top: 0.25rem;">
+                    {step.temperature_c && <span style="margin-right: 0.75rem;">🌡 {step.temperature_c}°C</span>}
+                    {step.time_seconds && <span>⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+
+      {sauce.data.storage && (
+        <>
+          <h2>{dict.storage}</h2>
+          <p>{tBody(sauce.data.storage)}</p>
+        </>
+      )}
+
+      <h2>{dict.sources}</h2>
+      <ul class="meta">
+        {sauce.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
+      </ul>
+    </PivotTab>
+
+    <PivotTab id="used-in" name={dict.used_in}>
+      {usedInDishes.length === 0 ? (
+        <p class="no-content">{locale === 'en' ? 'Not used in any dish yet.' : '尚未用在任何菜式。'}</p>
+      ) : (
+        <div class="tiles-grid browse-tiles">
+          {usedInDishes.map((d) => {
+            const dishName = locale === 'en' ? d.data.names.en : d.data.names.yue_hant;
+            const heroImg = d.data.images?.[0];
+            const thumb = heroImg ? commonsThumb(heroImg.path, 800) : null;
+            const tileColor = tileColorFor(d.data.category.id);
+            return (
+              <a
+                class="tile-medium wp-tile dish-tile"
+                data-role="tile"
+                data-size="medium"
+                href={`${base}/${locale}/dishes/${d.id}`}
+                style={`background: ${tileColor}; ${thumb ? `background-image: url('${thumb}'); background-size: cover; background-position: center;` : ''} view-transition-name: dish-${d.id};`}
+                aria-label={dishName}
+              >
+                <span class="dish-scrim" aria-hidden="true"></span>
+                <span class="dish-no">#{String(d.data.menu_no).padStart(2, '0')}</span>
+                <span class="dish-name">{dishName}</span>
               </a>
-            ) : i.ref.id}
-          </td>
-          <td style="text-align: right;">{i.qty} {i.unit}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-
-  {sauce.data.method && (
-    <>
-      <h2>{dict.method}</h2>
-      <ol>
-        {sauce.data.method.map((step: any) => (
-          <li style="margin: 1rem 0;">
-            <div>{tBody(step.body)}</div>
-            {(step.temperature_c || step.time_seconds) && (
-              <div class="meta" style="margin-top: 0.25rem;">
-                {step.temperature_c && <span style="margin-right: 0.75rem;">🌡 {step.temperature_c}°C</span>}
-                {step.time_seconds && <span>⏱ {Math.round(step.time_seconds / 60)} {dict.minutes}</span>}
-              </div>
-            )}
-          </li>
-        ))}
-      </ol>
-    </>
-  )}
-
-  {sauce.data.storage && (
-    <>
-      <h2>{dict.storage}</h2>
-      <p>{tBody(sauce.data.storage)}</p>
-    </>
-  )}
-
-  <h2>{dict.sources}</h2>
-  <ul class="meta">
-    {sauce.data.sources.map((s: any) => <li>{s.source_id} · accessed {s.accessed}</li>)}
-  </ul>
+            );
+          })}
+        </div>
+      )}
+    </PivotTab>
+  </PivotPage>
 </BaseLayout>
+
+<style>
+  .sauce-header {
+    padding: var(--sp-3) 0 var(--sp-4);
+  }
+
+  /* ── Sauce hero banner ── */
+  .sauce-hero-banner {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    margin: 0 0 var(--sp-5);
+    height: calc(2 * var(--tile-unit) + var(--tile-gap));
+    width: 100%;
+    display: block;
+  }
+  .sauce-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0) 100%);
+  }
+  .sauce-hero-name {
+    position: absolute;
+    bottom: calc(var(--sp-4) + 1.5rem);
+    left: var(--sp-4);
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-panorama-sm);
+    font-weight: var(--fw-light);
+    margin: 0;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .sauce-hero-alt {
+    position: absolute;
+    bottom: var(--sp-4);
+    left: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    opacity: 0.85;
+    z-index: 2;
+    color: #fff;
+  }
+
+  /* ── Used-in dish tile grid ── */
+  .tiles-grid.browse-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--tile-unit));
+    grid-auto-rows: var(--tile-unit);
+    grid-auto-flow: dense;
+    gap: var(--tile-gap);
+    padding: var(--sp-4) 0;
+  }
+  .dish-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--sp-2) var(--sp-3);
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+  }
+  .dish-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 55%);
+    z-index: 0;
+  }
+  .dish-no {
+    font-family: var(--sans);
+    font-size: var(--fs-caption);
+    opacity: 0.8;
+    z-index: 1;
+  }
+  .dish-name {
+    font-family: var(--lang-font-primary);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: 1.2;
+    z-index: 1;
+  }
+
+  .no-content {
+    text-align: center;
+    color: var(--t-ink-dim);
+    padding: var(--sp-6) 0;
+  }
+</style>
