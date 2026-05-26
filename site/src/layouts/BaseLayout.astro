@@ -66,7 +66,7 @@ const currentYear = new Date().getFullYear();
 <html lang={locale === 'yue' ? 'yue-Hant' : locale === 'zh' ? 'zh-Hant' : 'en'}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <script is:inline data-astro-rerun>
       (function () {
@@ -762,7 +762,10 @@ const currentYear = new Date().getFullYear();
 
       @media (max-width: 540px) {
         :root {
-          --tile-unit: 56px;
+          /* Mobile: 2 medium tiles per row each ~half viewport wide.
+             Grid has 4 unit-tracks across; medium (2×2) = half row.
+             Side padding 16px each + 3 inner gaps. */
+          --tile-unit: calc((100vw - 32px - 3 * 8px) / 4);
           --tile-gap: 8px;
         }
       }

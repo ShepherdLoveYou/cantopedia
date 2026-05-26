@@ -483,6 +483,18 @@ const firstDishId = allDishes[0]?.id ?? '';
     margin-inline: auto;
     box-sizing: border-box;
   }
+  /* Mobile: lock to exactly 4 unit-tracks so 2 medium tiles (2×2 each) fill the
+     row at half viewport width each. Grid is centered with 16px side padding.
+     Featured wide (4×2) takes full row; stat/util (1×1) fit 4 per row. */
+  @media (max-width: 540px) {
+    .tiles-grid.start-tiles,
+    .tiles-grid.browse-tiles {
+      grid-template-columns: repeat(4, var(--tile-unit));
+      width: calc(4 * var(--tile-unit) + 3 * var(--tile-gap));
+      padding: var(--tile-gap) 0;
+      justify-content: center;
+    }
+  }
   /* === Dish tile (browse panels) — single face, photo bg + name overlay === */
   .dish-tile {
     position: relative;
