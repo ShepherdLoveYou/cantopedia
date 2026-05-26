@@ -299,7 +299,7 @@ const currentYear = new Date().getFullYear();
       /* Phase A: AppBar Random button + aria-current sync. */
       (function setupAppBar() {
         function pickRandomDish() {
-          const cfg = window.__hubBoot;
+          const cfg = (window as any).__hubBoot;
           if (!cfg || !Array.isArray(cfg.dishesData) || cfg.dishesData.length === 0) return null;
           const d = cfg.dishesData[Math.floor(Math.random() * cfg.dishesData.length)];
           return `${cfg.base}/${cfg.locale}/dishes/${d.id}`;
