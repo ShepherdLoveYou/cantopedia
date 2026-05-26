@@ -35,9 +35,30 @@ const ogDescription = description ?? (locale === 'en'
 const pageTitle = `${title} · 粵食典 Cantopedia`;
 
 const dict = {
-  zh: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: '切换主题' },
-  en: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: 'Toggle theme' },
-  yue: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: '切換主題' },
+  zh: {
+    yue: '粵語', zh: '中文', en: 'English',
+    theme_toggle: '切换主题',
+    nav_home: '首页', nav_search: '搜索', nav_random: '随机一菜', nav_more: '更多',
+    menu_theme: '主题', menu_accent: '主题色', menu_language: '语言', menu_about: '关于',
+    theme_light: '浅色', theme_dark: '深色',
+    accent_cobalt: '钴蓝', accent_red: '番茄红', accent_orange: '香橙', accent_emerald: '翡翠绿',
+  },
+  en: {
+    yue: '粵語', zh: '中文', en: 'English',
+    theme_toggle: 'Toggle theme',
+    nav_home: 'Home', nav_search: 'Search', nav_random: 'Random dish', nav_more: 'More',
+    menu_theme: 'Theme', menu_accent: 'Accent', menu_language: 'Language', menu_about: 'About',
+    theme_light: 'Light', theme_dark: 'Dark',
+    accent_cobalt: 'Cobalt', accent_red: 'Red', accent_orange: 'Orange', accent_emerald: 'Emerald',
+  },
+  yue: {
+    yue: '粵語', zh: '中文', en: 'English',
+    theme_toggle: '切換主題',
+    nav_home: '主頁', nav_search: '搵嘢', nav_random: '隨機餸', nav_more: '更多',
+    menu_theme: '主題', menu_accent: '主題色', menu_language: '語言', menu_about: '關於',
+    theme_light: '淺色', theme_dark: '深色',
+    accent_cobalt: '鈷藍', accent_red: '番茄紅', accent_orange: '香橙', accent_emerald: '翡翠綠',
+  },
 }[locale];
 const currentYear = new Date().getFullYear();
 ---
@@ -112,6 +133,20 @@ const currentYear = new Date().getFullYear();
     <main>
       <slot />
     </main>
+    <nav class="app-bar app-bar--bottom" aria-label="Application bar" transition:persist>
+      <a class="appbar-btn wp-tile" data-appbar="home" href={`${base}/${locale}`} aria-label={dict.nav_home}>
+        <span class="mif-home" aria-hidden="true"></span>
+      </a>
+      <a class="appbar-btn wp-tile" data-appbar="search" href={`${base}/${locale}/search`} aria-label={dict.nav_search}>
+        <span class="mif-search" aria-hidden="true"></span>
+      </a>
+      <button type="button" class="appbar-btn wp-tile" data-appbar="random" aria-label={dict.nav_random}>
+        <span class="mif-shuffle" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="appbar-btn wp-tile" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
+        <span class="mif-more-vert" aria-hidden="true"></span>
+      </button>
+    </nav>
     <footer>
       <p>
         &copy; {currentYear} ShepherdLoveYou ·
@@ -200,6 +235,36 @@ const currentYear = new Date().getFullYear();
         });
         ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => document.addEventListener(ev, release));
       })();
+
+        /* Phase A: AppBar Random button + aria-current sync. */
+        (function setupAppBar() {
+          function pickRandomDish() {
+            const cfg = (window as any).__hubBoot;
+            if (!cfg || !Array.isArray(cfg.dishesData) || cfg.dishesData.length === 0) return null;
+            const d = cfg.dishesData[Math.floor(Math.random() * cfg.dishesData.length)];
+            return `${cfg.base}/${cfg.locale}/dishes/${d.id}`;
+          }
+          document.addEventListener('click', (e) => {
+            const t = (e.target as Element | null)?.closest('[data-appbar="random"]');
+            if (!t) return;
+            const href = pickRandomDish();
+            if (href) window.location.href = href;
+          });
+          function syncAriaCurrent() {
+            const path = location.pathname.replace(/\/$/, '');
+            document.querySelectorAll('[data-appbar]').forEach((el) => {
+              const which = el.getAttribute('data-appbar');
+              const href = el.getAttribute('href');
+              const matches = which === 'search' ? path.endsWith('/search')
+                : which === 'home' ? (href ? path.endsWith(href.replace(/\/$/, '')) : false)
+                : false;
+              if (matches) el.setAttribute('aria-current', 'page');
+              else el.removeAttribute('aria-current');
+            });
+          }
+          syncAriaCurrent();
+          document.addEventListener('astro:page-load', syncAriaCurrent);
+        })();
     </script>
 
     <script>
@@ -412,6 +477,88 @@ const currentYear = new Date().getFullYear();
         text-decoration: none;
       }
       .top-strip-brand:hover { color: var(--t-ink); }
+
+      /* Phase A: bottom AppBar — WP10 Mobile geometry, Acrylic backdrop.
+         Spec ref: §4.1, §4.3. Tilt-press inherited from .wp-tile global delegation. */
+      .app-bar--bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 72px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        z-index: 1000;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .dark-side .app-bar--bottom {
+        border-top-color: rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.85);
+      }
+      @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
+        .app-bar--bottom {
+          backdrop-filter: blur(30px) saturate(125%);
+          -webkit-backdrop-filter: blur(30px) saturate(125%);
+          background: rgba(255, 255, 255, 0.7);
+        }
+        .dark-side .app-bar--bottom {
+          background: rgba(0, 0, 0, 0.6);
+        }
+        .app-bar--bottom::before {
+          /* Acrylic grain overlay using existing --acrylic-noise SVG token */
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: var(--acrylic-noise);
+          opacity: 0.35;
+          pointer-events: none;
+          mix-blend-mode: overlay;
+        }
+      }
+      .appbar-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin: 0 auto;
+        border: 1.5px solid currentColor;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--t-ink);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color var(--fluent-duration-fast) var(--fluent-curve-easy-ease);
+      }
+      .appbar-btn:hover,
+      .appbar-btn:focus-visible {
+        background: rgba(0, 0, 0, 0.06);
+        outline: none;
+      }
+      .dark-side .appbar-btn:hover,
+      .dark-side .appbar-btn:focus-visible {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .appbar-btn [class^="mif-"] {
+        font-size: 22px;
+        line-height: 1;
+      }
+      /* Active route indicator — 2px accent underline */
+      .appbar-btn[aria-current="page"]::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 25%;
+        right: 25%;
+        height: 2px;
+        background: var(--accent);
+      }
+      @media print {
+        .app-bar--bottom, .top-strip { display: none; }
+      }
 
       @media (max-width: 540px) {
         :root {
