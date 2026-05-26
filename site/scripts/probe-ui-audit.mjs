@@ -22,8 +22,8 @@ const PAGES_BY_LOCALE = (locale) => [
 const toUrl = (relOrPath) => {
   if (relOrPath.startsWith('http')) return relOrPath;
   if (relOrPath.startsWith('/cantopedia')) return ORIGIN + relOrPath;
-  if (relOrPath.startsWith('/')) return ORIGIN + relOrPath;
-  return BASE + (relOrPath.startsWith('/') ? '' : '/') + relOrPath;
+  if (relOrPath.startsWith('/')) return BASE + relOrPath;
+  return BASE + '/' + relOrPath;
 };
 
 const browser = await chromium.launch();
