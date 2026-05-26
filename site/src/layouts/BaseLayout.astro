@@ -104,24 +104,9 @@ const currentYear = new Date().getFullYear();
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="metro-nav app-bar" data-role="app-bar" data-expand="true" data-expand-point="0" aria-label="Site navigation" transition:persist>
-        <a class="brand app-bar-brand" href={`${base}/${locale}`}>
-          <span class="brand-name">CANTOPEDIA</span>
-        </a>
-        <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label={dict.theme_toggle ?? 'Toggle theme'}>
-          <span class="mif-sunny" aria-hidden="true"></span>
-          <span class="mif-moon-right" aria-hidden="true"></span>
-        </button>
-        <ul class="app-bar-menu locale-switcher">
-          {(['zh', 'yue', 'en'] as const).map((loc) => (
-            <li>
-              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
-                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <header class="top-strip" aria-label="Site brand" transition:persist>
+        <a class="top-strip-brand" href={`${base}/${locale}`}>CANTOPEDIA</a>
+      </header>
     )}
     <Toast />
     <main>
@@ -405,6 +390,28 @@ const currentYear = new Date().getFullYear();
       :root[data-accent="red"]     { --accent: #E51400; }
       :root[data-accent="orange"]  { --accent: #FA6800; }
       :root[data-accent="emerald"] { --accent: #008A00; }
+
+      /* Phase A: slim 24px brand strip replacing the former top nav.
+         Locale switcher + theme toggle now live in the bottom AppBar More menu. */
+      .top-strip {
+        position: relative;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        padding: 0 var(--sp-4);
+        background: transparent;
+        z-index: 10;
+      }
+      .top-strip-brand {
+        font-family: var(--sans);
+        font-size: var(--fs-tiny);
+        font-weight: var(--fw-regular);
+        letter-spacing: var(--ls-caps);
+        text-transform: uppercase;
+        color: var(--t-ink-dim);
+        text-decoration: none;
+      }
+      .top-strip-brand:hover { color: var(--t-ink); }
 
       @media (max-width: 540px) {
         :root {
