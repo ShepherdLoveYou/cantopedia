@@ -374,15 +374,26 @@ const firstDishId = allDishes[0]?.id ?? '';
   }
   .hub-pivot-link {
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: 0.4rem;
-    color: var(--ink);
+    color: var(--t-ink-dim);
     text-decoration: none;
+    padding: var(--sp-2) var(--sp-3);
+    min-height: 44px;
+    transition: color 120ms ease;
+  }
+  .hub-pivot-link:hover,
+  .hub-pivot-link:focus-visible {
+    color: var(--accent);
+    outline: none;
   }
   .hub-pivot-arrow {
-    font-size: var(--fs-title);
-    font-weight: var(--fw-light);
+    font-size: var(--fs-panel);
+    font-weight: var(--fw-regular);
     line-height: 1;
+  }
+  @media (max-width: 540px) {
+    .hub-pivot-arrow { font-size: var(--fs-title); }
   }
   .hub-pivot-peek {
     font-family: var(--sans), var(--sans-zh);
