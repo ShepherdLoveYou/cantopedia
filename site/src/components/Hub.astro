@@ -441,7 +441,7 @@ const firstDishId = allDishes[0]?.id ?? '';
   .tiles-grid.start-tiles,
   .tiles-grid.browse-tiles {
     /* CSS Grid on a --tile-unit pitch. Tiles span columns/rows via grid-column/-row
-       defined per tile class in CatTile.astro. auto-flow:dense packs 1×1 tiles into
+       defined per tile class in BaseLayout.astro. auto-flow:dense packs 1×1 tiles into
        holes left by 2×2 tiles so the layout fills uniformly instead of jagging.
        Width is capped to ~10 cols on wide viewports + margin auto so the whole
        tile block is visibly centered; on narrow viewports the cap takes 100% and
