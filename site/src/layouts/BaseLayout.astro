@@ -887,7 +887,15 @@ const currentYear = new Date().getFullYear();
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      main { max-width: 1200px; margin: 0 auto; padding: 6rem 1.5rem 1.5rem; }
+      /* width: 100% + min-width: 0 — Metro sets body { display: flex;
+         flex-direction: column }, so <main> is a flex item on the cross
+         axis. With default width:auto its cross-axis size grows past the
+         viewport when descendants (e.g. PivotPage .pivot-panels with
+         children that have min-width: 100%) create a circular sizing
+         constraint. Pinning main to 100% of body's width breaks the cycle.
+         Fixes UI_AUDIT_2026-05-26 P1#4 (mobile dish-detail 414-608px
+         horizontal overflow). */
+      main { width: 100%; max-width: 1200px; min-width: 0; margin: 0 auto; padding: 6rem 1.5rem 1.5rem; }
       h1 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h1-size); line-height: 1.1; letter-spacing: var(--lang-h1-tracking); margin: 0 0 0.5rem; }
       h2 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h2-size); margin: 2.5rem 0 1rem; line-height: 1.2; letter-spacing: var(--lang-h2-tracking); }
       h3 { font-family: var(--lang-font-primary); font-weight: var(--fw-medium); font-size: var(--lang-h3-size); text-transform: none; letter-spacing: 0.01em; color: var(--ink); margin: 2rem 0 0.75rem; }
