@@ -125,23 +125,21 @@ const currentYear = new Date().getFullYear();
   <body>
     <div class="loading-bar" id="loading-bar" transition:persist></div>
     {showNav && (
-      <nav class="metro-nav app-bar" data-role="app-bar" data-expand-point="md" aria-label="Site navigation" transition:persist>
-        <a class="brand app-bar-brand" href={`${base}/${locale}`}>
+      <nav class="metro-nav app-bar" aria-label="Site navigation" transition:persist>
+        <a class="brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
         <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label={dict.theme_toggle ?? 'Toggle theme'}>
           <span class="mif-sunny" aria-hidden="true"></span>
           <span class="mif-moon-right" aria-hidden="true"></span>
         </button>
-        <ul class="app-bar-menu locale-switcher">
+        <div class="locale-switcher" role="group" aria-label="Language">
           {(['zh', 'yue', 'en'] as const).map((loc) => (
-            <li>
-              <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
-                {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
-              </a>
-            </li>
+            <a class={`pivot-tab ${loc === locale ? 'active' : ''}`} data-loc={loc} href={localeHref(loc)}>
+              {loc === 'zh' ? '中' : loc === 'yue' ? '粵' : 'EN'}
+            </a>
           ))}
-        </ul>
+        </div>
         <button type="button" class="metro-nav-more-btn" data-appbar="more" aria-expanded="false" aria-controls="appbar-more-menu" aria-label={dict.nav_more}>
           <span class="mif-more-vert" aria-hidden="true"></span>
         </button>
@@ -1002,44 +1000,6 @@ const currentYear = new Date().getFullYear();
       }
       .dark-side .metro-nav.app-bar {
         border-bottom-color: rgba(255, 255, 255, 0.08);
-      }
-      /* At md+ (≥768px) the menu expands inline horizontally.
-         Below md, Metro auto-collapses the menu to a hamburger dropdown
-         which positions absolutely below the bar. */
-      .metro-nav.app-bar.app-bar-expand .app-bar-menu {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        width: auto;
-        position: static;
-        order: unset;
-      }
-      .metro-nav.app-bar .app-bar-menu > li {
-        list-style: none;
-      }
-      /* Hamburger color follows --appbar-color (theme-aware). */
-      .metro-nav.app-bar .hamburger .line {
-        background-color: var(--nav-fg);
-      }
-      /* When collapsed (mobile), the menu drops down from below the bar
-         using the same theme-aware background. */
-      .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
-        background-color: var(--nav-bg);
-        padding: var(--sp-2) 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      }
-      .dark-side .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
-        border-bottom-color: rgba(255, 255, 255, 0.08);
-      }
-      .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu > li > a {
-        padding: 0.75rem var(--sp-4);
-      }
-      /* App-bar items — let Metro's --appbar-item-* CSS vars drive most
-         of this; we only tighten geometry. */
-      .metro-nav.app-bar .app-bar-menu > li > a {
-        padding: 0.55rem 0.6rem;
-        font-size: var(--fs-caption);
-        line-height: 1;
-        border-radius: 0;
       }
       .metro-nav.app-bar .brand {
         font-size: inherit;
