@@ -287,14 +287,18 @@ const currentYear = new Date().getFullYear();
         --m-steel: #647687;
         --m-ink: #1d1d1d;
 
-        /* Theme tokens (light default) */
-        --t-bg: #f5f5f5;
-        --t-plate: #ebebeb;
+        /* Theme tokens — light defaults. The first 4 forward to Metro tokens
+           so toggling .dark-side on <html> flips them automatically. The
+           remaining 4 have no Metro equivalent: --t-plate-dark / --t-card /
+           --t-ink-dim get explicit .dark-side overrides below; --t-nav-bg
+           and --t-nav-ink are brand-fixed (nav always dark, ink always white). */
+        --t-bg: var(--body-background);
+        --t-ink: var(--body-color);
+        --t-rule: var(--border-color);
+        --t-plate: var(--default-background-disabled);
         --t-plate-dark: #cccccc;
-        --t-ink: #1d1d1d;
-        --t-ink-dim: #555;
-        --t-rule: #d8d8d8;
         --t-card: #ffffff;
+        --t-ink-dim: #555;
         --t-nav-bg: rgba(29, 29, 29, 0.72);
         --t-nav-ink: #ffffff;
 
@@ -420,16 +424,15 @@ const currentYear = new Date().getFullYear();
       /* Cat-tile flat (Metro): no border radius. */
       [class*="tile-"].cat-tile-v5 { border-radius: 0 !important; }
 
-      html[data-theme="dark"] {
-        --t-bg: #0e0e10;
-        --t-plate: #1a1a1c;
+      .dark-side {
+        /* Only override the 3 tokens that have no Metro equivalent.
+           --t-bg / --t-ink / --t-rule / --t-plate auto-flip via the
+           aliases in :root above (they read --body-background etc., which
+           Metro's base-theme.less .dark-side block already redefines).
+           --t-nav-bg / --t-nav-ink are brand-fixed (no override). */
         --t-plate-dark: #25252a;
-        --t-ink: #f0f0f0;
-        --t-ink-dim: #9a9a9a;
-        --t-rule: #2a2a2c;
         --t-card: #161618;
-        --t-nav-bg: rgba(10, 10, 12, 0.78);
-        --t-nav-ink: #f0f0f0;
+        --t-ink-dim: #9a9a9a;
       }
 
       /* ===== i18n typography overrides ===== */
@@ -472,19 +475,13 @@ const currentYear = new Date().getFullYear();
         --lang-font-size-adjust: 0.55;
         --lang-line-break: strict;
       }
-      html, body { background: var(--t-bg); color: var(--t-ink); transition: background-color var(--fluent-duration-gentle) ease, color var(--fluent-duration-gentle) ease; }
       * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
-      /* Belt-and-suspenders: the primary theme enforcement is the `html, body { background }`
-         rule below (sets background DIRECTLY, beating Metro's body { background: var(--body-background) }).
-         This :where() block additionally sets the Metro CSS vars from our tokens for any Metro
-         component that reads --body-background / --body-color directly. :where() has zero
-         specificity so we don't fight Metro's own :root defaults — if Metro changes its load
-         order or specificity we may need to revisit. */
-      :where(:root, html) {
-        --body-background: var(--t-bg);
-        --body-color: var(--t-ink);
-      }
+      html, body { margin: 0; padding: 0; }
+      /* Metro's body { background-color: var(--body-background); color: var(--body-color); }
+         rule handles the body background/color. Our --t-bg / --t-ink alias to those Metro
+         tokens in :root above, so every var(--t-*) consumer auto-follows. No explicit
+         body { background } override needed — and no :where(:root) forwarding either
+         (that would create a circular var reference now that the alias direction is reversed). */
       body {
         font-family: var(--lang-font-primary);
         font-size: 16px;
@@ -542,7 +539,6 @@ const currentYear = new Date().getFullYear();
         width: 3px;
         background: var(--m-red);
       }
-      html[data-theme="light"] footer { background: var(--m-ink); color: rgba(255,255,255,0.7); }
       footer a { color: #fff !important; text-decoration: none; }
       footer a:hover { color: var(--m-red) !important; }
 
@@ -578,10 +574,6 @@ const currentYear = new Date().getFullYear();
         /* mirrors .metro-nav base rule above — needed to beat Metro's .app-bar background */
         background-color: #000;
         padding-right: var(--sp-3);
-      }
-      html[data-theme="light"] .metro-nav.app-bar {
-        /* mirrors light-theme .metro-nav rule above — see line ~558 */
-        background-color: var(--m-ink);
       }
       .metro-nav.app-bar .app-bar-menu {
         flex-direction: row;
@@ -619,7 +611,6 @@ const currentYear = new Date().getFullYear();
       .loading-bar { view-transition-name: loading-bar; }
       ::view-transition-old(loading-bar),
       ::view-transition-new(loading-bar) { animation: none; }
-      html[data-theme="light"] .metro-nav { background: var(--m-ink) var(--acrylic-noise); background-blend-mode: overlay; }
       .metro-nav .brand {
         flex: 1;
         justify-content: center;
