@@ -89,9 +89,7 @@ const { initialTab, pivotTitle, prevHref, nextHref, prevLabel, nextLabel } = Ast
     border-bottom: 3px solid var(--m-red);
   }
   .pivot-panels {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 100%;
+    display: flex;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
@@ -100,6 +98,16 @@ const { initialTab, pivotTitle, prevHref, nextHref, prevLabel, nextLabel } = Ast
     -webkit-overflow-scrolling: touch;
   }
   .pivot-panels::-webkit-scrollbar { display: none; }
+  /* Force each PivotTab panel to take the full visible width of the scroll
+   * container. `grid-auto-columns: 100%` does not work here because in an
+   * overflow-x:auto container, % grid tracks resolve against the AVAILABLE
+   * space (effectively 0). Flex with flex: 0 0 100% on slotted children
+   * gives reliable 1-panel-per-view scroll-snap behavior. */
+  .pivot-panels :global(> *) {
+    flex: 0 0 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+  }
   .pivot-page-nav {
     display: flex;
     justify-content: space-between;
