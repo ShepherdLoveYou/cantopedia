@@ -603,6 +603,13 @@ const firstDishId = allDishes[0]?.id ?? '';
     opacity: 0.85;
     z-index: 2;
   }
+  /* Featured wide tile: label band picks up the user's accent on focus/active.
+     Default state stays neutral so the underlying dish photo doesn't compete
+     with the accent color. */
+  .featured-tile:hover .featured-label,
+  .featured-tile:focus-visible .featured-label {
+    color: var(--accent);
+  }
   /* Tile sizes now derive from --tile-unit + --tile-gap in BaseLayout.astro. No media-query fork needed. */
 
   /* ===== Tile defaults — all tiles are square WP10-style, no Metro radius ===== */
