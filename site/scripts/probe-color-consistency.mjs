@@ -4,10 +4,10 @@ const BASE = 'http://localhost:4321/cantopedia';
 
 // Expected accent hex per data-accent value (mirrors BaseLayout.astro :root[data-accent="..."] rules)
 const ACCENT_HEX = {
-  cobalt:  '#0078D7',
+  cobalt:  '#3E65FF',
   red:     '#E51400',
-  orange:  '#F7630C',
-  emerald: '#00B294',
+  orange:  '#FA6800',
+  emerald: '#008A00',
 };
 
 const norm = (rgb) => {
