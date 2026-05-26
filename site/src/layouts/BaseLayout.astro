@@ -543,12 +543,17 @@ const currentYear = new Date().getFullYear();
 
       /* Phase A: bottom AppBar — WP10 Mobile geometry, Acrylic backdrop.
          Spec ref: §4.1, §4.3. Tilt-press inherited from .wp-tile global delegation. */
-      .app-bar--bottom {
+      .app-bar.app-bar--bottom {
+        /* Override Metro .app-bar defaults (position:sticky, top:0, padding:0 10px,
+           flex-flow:row wrap, align-self/justify-self !important). */
         position: fixed;
+        top: auto;
         bottom: 0;
         left: 0;
         right: 0;
         height: 72px;
+        min-height: 72px;
+        padding: 0;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         align-items: center;
@@ -556,20 +561,20 @@ const currentYear = new Date().getFullYear();
         border-top: 1px solid rgba(0, 0, 0, 0.08);
         background: rgba(255, 255, 255, 0.85);
       }
-      .dark-side .app-bar--bottom {
+      .dark-side .app-bar.app-bar--bottom {
         border-top-color: rgba(255, 255, 255, 0.08);
         background: rgba(0, 0, 0, 0.85);
       }
       @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
-        .app-bar--bottom {
+        .app-bar.app-bar--bottom {
           backdrop-filter: blur(30px) saturate(125%);
           -webkit-backdrop-filter: blur(30px) saturate(125%);
           background: rgba(255, 255, 255, 0.7);
         }
-        .dark-side .app-bar--bottom {
+        .dark-side .app-bar.app-bar--bottom {
           background: rgba(0, 0, 0, 0.6);
         }
-        .app-bar--bottom::before {
+        .app-bar.app-bar--bottom::before {
           /* Acrylic grain overlay using existing --acrylic-noise SVG token */
           content: '';
           position: absolute;
@@ -620,7 +625,7 @@ const currentYear = new Date().getFullYear();
         background: var(--accent);
       }
       @media print {
-        .app-bar--bottom, .top-strip { display: none; }
+        .app-bar.app-bar--bottom, .top-strip { display: none; }
       }
 
       /* Phase A §4.4: More menu overlay. Slides up from below the AppBar.

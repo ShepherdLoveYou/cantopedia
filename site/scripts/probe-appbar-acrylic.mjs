@@ -14,7 +14,7 @@ let ok = true;
 
 try {
   const page = await browser.newPage({ viewport: { width: 414, height: 896 } });  // iPhone-ish
-  await page.goto(`http://localhost:${PORT}/cantopedia/zh/`, { waitUntil: 'networkidle' });
+  await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
 
   const data = await page.evaluate(() => {
     const bar = document.querySelector('.app-bar--bottom');

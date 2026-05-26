@@ -8,7 +8,7 @@ const OUT = resolve(__dirname, '..', 'probe-out');
 mkdirSync(OUT, { recursive: true });
 
 const PORT = process.env.PORT || '4321';
-const URL = `http://localhost:${PORT}/cantopedia/zh/`;
+const URL = `http://localhost:${PORT}/cantopedia/zh`;
 
 const browser = await chromium.launch();
 let ok = true;

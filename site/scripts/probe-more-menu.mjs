@@ -15,7 +15,7 @@ let ok = true;
 try {
   const ctx = await browser.newContext({ viewport: { width: 414, height: 896 } });
   const page = await ctx.newPage();
-  await page.goto(`http://localhost:${PORT}/cantopedia/zh/`, { waitUntil: 'networkidle' });
+  await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
 
   // 1. Tap the More button.
   await page.locator('[data-appbar="more"]').click();
