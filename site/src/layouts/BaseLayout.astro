@@ -335,52 +335,46 @@ const currentYear = new Date().getFullYear();
     </script>
 
     <script>
-      (function () {
-        function applyTheme(value) {
-          const isDark = value === 'dark';
-          document.documentElement.classList.toggle('dark-side', isDark);
-          try { localStorage.setItem('cantopedia-theme', value); } catch (e) {}
-          document.querySelectorAll('button[data-theme]').forEach(b => {
-            b.setAttribute('aria-pressed', b.dataset.theme === value ? 'true' : 'false');
-          });
-        }
+  import { bootThemeAndAccent, applyTheme, applyAccent, type Accent } from '~/lib/theme';
 
-        /* Delegated click: handles Hub tiles (data-theme="light"|"dark") and
-           nav toggle (data-theme-toggle, which flips current state). */
-        document.addEventListener('click', (e) => {
-          const target = e.target instanceof Element ? e.target : null;
-          if (!target) return;
-          const tile = target.closest('button[data-theme]');
-          if (tile && (tile.dataset.theme === 'light' || tile.dataset.theme === 'dark')) {
-            applyTheme(tile.dataset.theme);
-            return;
-          }
-          const toggle = target.closest('[data-theme-toggle]');
-          if (toggle) {
-            const next = document.documentElement.classList.contains('dark-side') ? 'light' : 'dark';
-            applyTheme(next);
-          }
-        });
+  /* Phase F: delegated click handlers for theme tiles + accent swatches.
+     applyTheme/applyAccent live in lib/theme.ts (single source of truth);
+     SPA-swap copies dark-side class + data-accent across, Astro's persist
+     keeps the menu DOM. */
+  document.addEventListener('click', (e) => {
+    const target = e.target instanceof Element ? e.target : null;
+    if (!target) return;
+    const themeTile = target.closest<HTMLButtonElement>('button[data-theme]');
+    if (themeTile && (themeTile.dataset.theme === 'light' || themeTile.dataset.theme === 'dark')) {
+      applyTheme(themeTile.dataset.theme);
+      return;
+    }
+    const swatch = target.closest<HTMLButtonElement>('button[data-accent-swatch]');
+    if (swatch) {
+      const a = swatch.dataset.accentSwatch as Accent | undefined;
+      if (a === 'cobalt' || a === 'red' || a === 'orange' || a === 'emerald') {
+        applyAccent(a);
+      }
+    }
+  });
 
-        /* Preserve .dark-side across ClientRouter swap by copying class to
-           incoming document before swap completes. Belt-and-suspenders with
-           the data-astro-rerun inline script in <head>. */
-        document.addEventListener('astro:before-swap', (e) => {
-          if (document.documentElement.classList.contains('dark-side')) {
-            e.newDocument.documentElement.classList.add('dark-side');
-          }
-        });
+  /* Carry theme + accent across SPA swap before the new doc paints. */
+  document.addEventListener('astro:before-swap', (e: any) => {
+    if (document.documentElement.classList.contains('dark-side')) {
+      e.newDocument.documentElement.classList.add('dark-side');
+    }
+    const accent = document.documentElement.getAttribute('data-accent');
+    if (accent) e.newDocument.documentElement.setAttribute('data-accent', accent);
+  });
 
-        /* After each SPA nav, sync aria-pressed on freshly rendered Hub tiles
-           (Hub is home-only; on other pages this is a no-op). */
-        document.addEventListener('astro:page-load', () => {
-          const current = document.documentElement.classList.contains('dark-side') ? 'dark' : 'light';
-          document.querySelectorAll('button[data-theme]').forEach(b => {
-            b.setAttribute('aria-pressed', b.dataset.theme === current ? 'true' : 'false');
-          });
-        });
-      })();
-    </script>
+  /* On each page load, re-sync aria-pressed on theme tiles + accent swatches. */
+  document.addEventListener('astro:page-load', () => {
+    bootThemeAndAccent();
+  });
+
+  /* Initial sync — runs once at script load. */
+  bootThemeAndAccent();
+</script>
     <style is:global>
       :root {
         /* Metro / W3CSS Metro palette */
