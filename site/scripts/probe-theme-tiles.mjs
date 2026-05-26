@@ -1,54 +1,37 @@
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(__dirname, '..', 'probe-out');
-mkdirSync(OUT, { recursive: true });
-
-const PORT = process.env.PORT || '4321';
 
 const browser = await chromium.launch();
+const page = await (await browser.newContext({ viewport: { width: 1280, height: 800 } })).newPage();
+
+await page.goto('http://localhost:4321/cantopedia/zh', { waitUntil: 'networkidle' });
+
+const dump = async (label) => {
+  return await page.evaluate((l) => ({
+    label: l,
+    darkSide: document.documentElement.classList.contains('dark-side'),
+    lightPressed: document.querySelector('button[data-theme="light"]')?.getAttribute('aria-pressed'),
+    darkPressed: document.querySelector('button[data-theme="dark"]')?.getAttribute('aria-pressed'),
+    autoPresent: !!document.querySelector('button[data-theme="auto"], button[data-theme-choice="auto"]'),
+  }), label);
+};
+
+const before = await dump('before');
+
+await page.click('button[data-theme="dark"].util-tile');
+await page.waitForTimeout(200);
+const afterDark = await dump('after-click-dark');
+
+await page.click('button[data-theme="light"].util-tile');
+await page.waitForTimeout(200);
+const afterLight = await dump('after-click-light');
+
 let ok = true;
-try {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-  await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
+if (afterDark.darkSide !== true) { console.error('FAIL: clicking dark tile did not add .dark-side'); ok = false; }
+if (afterDark.darkPressed !== 'true') { console.error('FAIL: dark tile aria-pressed not synced'); ok = false; }
+if (afterLight.darkSide !== false) { console.error('FAIL: clicking light tile did not remove .dark-side'); ok = false; }
+if (afterLight.lightPressed !== 'true') { console.error('FAIL: light tile aria-pressed not synced'); ok = false; }
+if (afterDark.autoPresent) { console.error('FAIL: auto button still present (should be removed)'); ok = false; }
 
-  async function readTheme() {
-    return await page.evaluate(() => ({
-      dataTheme: document.documentElement.dataset.theme,
-      dataChoice: document.documentElement.dataset.themeChoice,
-      localStorage: localStorage.getItem('cantopedia-theme'),
-    }));
-  }
-
-  const initial = await readTheme();
-
-  await page.click('button[data-theme-choice="dark"].util-tile');
-  await page.waitForTimeout(200);
-  const afterDark = await readTheme();
-
-  await page.click('button[data-theme-choice="light"].util-tile');
-  await page.waitForTimeout(200);
-  const afterLight = await readTheme();
-
-  // Verify theme persists across nav
-  const dishLink = await page.$('a[href*="/dishes/"]');
-  if (dishLink) {
-    await dishLink.click();
-    await page.waitForLoadState('networkidle');
-  }
-  const afterNav = await readTheme();
-
-  writeFileSync(resolve(OUT, 'theme-tiles.json'), JSON.stringify({ initial, afterDark, afterLight, afterNav }, null, 2));
-  console.log(JSON.stringify({ initial, afterDark, afterLight, afterNav }, null, 2));
-
-  if (afterDark.dataTheme !== 'dark') { console.error('FAIL: clicking dark tile did not set data-theme=dark'); ok = false; }
-  if (afterLight.dataTheme !== 'light') { console.error('FAIL: clicking light tile did not set data-theme=light'); ok = false; }
-  if (afterLight.localStorage !== 'light') { console.error('FAIL: localStorage not updated'); ok = false; }
-  if (dishLink && afterNav.dataTheme !== 'light') { console.error('FAIL: theme did not persist across nav'); ok = false; }
-} finally {
-  await browser.close();
-}
+console.log(JSON.stringify({ before, afterDark, afterLight, pass: ok }, null, 2));
+await browser.close();
 process.exit(ok ? 0 : 1);

@@ -13,46 +13,37 @@ const dump = async (label) => {
     const html = document.documentElement;
     const body = document.body;
     return {
-      dataTheme: html.dataset.theme,
-      dataChoice: html.dataset.themeChoice,
+      darkSide: html.classList.contains('dark-side'),
       htmlBg: getComputedStyle(html).backgroundColor,
       bodyBg: getComputedStyle(body).backgroundColor,
       mainBg: getComputedStyle(document.querySelector('main')).backgroundColor,
       vars: {
         '--t-bg': getComputedStyle(html).getPropertyValue('--t-bg').trim(),
         '--body-background': getComputedStyle(html).getPropertyValue('--body-background').trim(),
-        '--bg': getComputedStyle(html).getPropertyValue('--bg').trim(),
-        '--ink': getComputedStyle(html).getPropertyValue('--ink').trim(),
+        '--t-ink': getComputedStyle(html).getPropertyValue('--t-ink').trim(),
+        '--body-color': getComputedStyle(html).getPropertyValue('--body-color').trim(),
       },
-      // Check tile colors
-      catTileFront: (() => {
-        const f = document.querySelector('.cat-tile-v5 .slide--front');
-        if (!f) return null;
-        return getComputedStyle(f).color;
-      })(),
-      // Check toggle button presence
-      themeButtons: Array.from(document.querySelectorAll('[data-theme-choice]')).map(b => ({
-        choice: b.dataset.themeChoice,
+      hubTiles: Array.from(document.querySelectorAll('button[data-theme]')).map(b => ({
+        theme: b.dataset.theme,
         pressed: b.getAttribute('aria-pressed'),
       })),
+      navToggle: !!document.querySelector('[data-theme-toggle]'),
+      localStorage: (() => { try { return localStorage.getItem('cantopedia-theme'); } catch { return null; } })(),
     };
   });
   return { label, ...d };
 };
 
-// Pass 1: Home, initial (no localStorage)
 await p.goto('http://localhost:4321/cantopedia/zh', { waitUntil: 'networkidle' });
 const r1 = await dump('home-initial');
 
-// Click dark
-const darkBtn = await p.$('[data-theme-choice="dark"]');
-if (darkBtn) {
-  await darkBtn.click();
+const darkTile = await p.$('button[data-theme="dark"]');
+if (darkTile) {
+  await darkTile.click();
   await p.waitForTimeout(300);
 }
-const r2 = await dump('home-after-dark');
+const r2 = await dump('home-after-click-dark-tile');
 
-// Navigate to dish page
 const dishLink = await p.$('a[href*="/dishes/"]');
 if (dishLink) {
   await dishLink.click();
@@ -61,14 +52,12 @@ if (dishLink) {
 }
 const r3 = await dump('dish-after-dark-nav');
 
-// Click light from dish page (if button still visible) or navigate back
-const lightBtn = await p.$('[data-theme-choice="light"]');
-const r4 = lightBtn ? await (async () => {
-  await lightBtn.click(); await p.waitForTimeout(300);
-  return await dump('dish-after-light');
-})() : { label: 'dish-no-light-btn (NO theme btn on dish page!)' };
+const navBtn = await p.$('[data-theme-toggle]');
+const r4 = navBtn ? await (async () => {
+  await navBtn.click(); await p.waitForTimeout(300);
+  return await dump('dish-after-nav-toggle-click');
+})() : { label: 'dish-no-nav-toggle (FAIL: nav toggle missing)' };
 
-// AppList page
 await p.goto('http://localhost:4321/cantopedia/zh/all', { waitUntil: 'networkidle' });
 const r5 = await dump('applist-fresh');
 

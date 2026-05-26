@@ -1,101 +1,41 @@
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(__dirname, '..', 'probe-out');
-mkdirSync(OUT, { recursive: true });
-
-const PORT = process.env.PORT || '4321';
-
-async function snap(page, label) {
-  await page.screenshot({ path: resolve(OUT, `theme-visual-${label}.png`), fullPage: false });
-  return await page.evaluate(() => {
-    const css = (sel) => {
-      const el = document.querySelector(sel);
-      if (!el) return null;
-      const cs = getComputedStyle(el);
-      return { bg: cs.backgroundColor, fg: cs.color };
-    };
-    const html = document.documentElement;
-    return {
-      dataTheme: html.dataset.theme,
-      dataChoice: html.dataset.themeChoice,
-      localStorage: localStorage.getItem('cantopedia-theme'),
-      bodyBg: getComputedStyle(document.body).backgroundColor,
-      htmlBg: getComputedStyle(html).backgroundColor,
-      mainBg: css('main')?.bg,
-      navBg: css('.metro-nav')?.bg,
-      catTileSolid: css('.cat-tile .cat-face--solid')?.bg,
-      appListBg: css('.hub-panel--applist')?.bg,
-      mediaPrefersDark: matchMedia('(prefers-color-scheme: dark)').matches,
-      ariaPressedLight: document.querySelector('[data-theme-choice="light"]')?.getAttribute('aria-pressed'),
-      ariaPressedDark: document.querySelector('[data-theme-choice="dark"]')?.getAttribute('aria-pressed'),
-      ariaPressedAuto: document.querySelector('[data-theme-choice="auto"]')?.getAttribute('aria-pressed'),
-    };
-  });
-}
 
 const browser = await chromium.launch();
-try {
-  const results = {};
+const page = await (await browser.newContext({ viewport: { width: 1280, height: 900 } })).newPage();
 
-  // Pass 1: home page, no localStorage — observe initial state
-  {
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-    const page = await ctx.newPage();
-    await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
-    results.initial = await snap(page, '1-initial');
+const inspect = async (label) => {
+  return await page.evaluate((l) => ({
+    label: l,
+    darkSide: document.documentElement.classList.contains('dark-side'),
+    bodyBg: getComputedStyle(document.body).backgroundColor,
+    ariaPressedLight: document.querySelector('button[data-theme="light"]')?.getAttribute('aria-pressed'),
+    ariaPressedDark: document.querySelector('button[data-theme="dark"]')?.getAttribute('aria-pressed'),
+    navToggle: !!document.querySelector('[data-theme-toggle]'),
+  }), label);
+};
 
-    await page.click('[data-theme-choice="dark"]');
-    await page.waitForTimeout(500);
-    results.afterClickDark = await snap(page, '2-after-dark');
+const results = [];
 
-    await page.click('[data-theme-choice="light"]');
-    await page.waitForTimeout(500);
-    results.afterClickLight = await snap(page, '3-after-light');
+await page.goto('http://localhost:4321/cantopedia/zh', { waitUntil: 'networkidle' });
+results.push(await inspect('home-initial'));
 
-    await page.click('[data-theme-choice="auto"]');
-    await page.waitForTimeout(500);
-    results.afterClickAuto = await snap(page, '4-after-auto');
+await page.click('button[data-theme="dark"]');
+await page.waitForTimeout(200);
+results.push(await inspect('home-after-click-dark'));
 
-    await ctx.close();
-  }
+await page.click('button[data-theme="light"]');
+await page.waitForTimeout(200);
+results.push(await inspect('home-after-click-light'));
 
-  // Pass 2: dish page (non-Hub) — does theme apply there?
-  {
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-    const page = await ctx.newPage();
-    await page.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
-    await page.click('[data-theme-choice="dark"]');
-    await page.waitForTimeout(300);
-    const homeDark = await snap(page, '5-home-dark');
-    // Navigate to a dish page via in-page link
-    const dishLink = await page.$('a[href*="/dishes/"]');
-    if (dishLink) {
-      await dishLink.click();
-      await page.waitForLoadState('networkidle');
-    }
-    results.dishAfterDark = await snap(page, '6-dish-after-dark');
-    await ctx.close();
-  }
+await page.goto('http://localhost:4321/cantopedia/zh/all', { waitUntil: 'networkidle' });
+results.push(await inspect('applist-fresh'));
 
-  // Pass 3: AppList page — does theme apply there?
-  {
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-    const page = await ctx.newPage();
-    await page.goto(`http://localhost:${PORT}/cantopedia/zh/all`, { waitUntil: 'networkidle' });
-    results.appListInitial = await snap(page, '7-applist-initial');
+await page.click('[data-theme-toggle]');
+await page.waitForTimeout(200);
+results.push(await inspect('applist-after-nav-toggle'));
 
-    await page.click('[data-theme-choice="dark"]');
-    await page.waitForTimeout(500);
-    results.appListAfterDark = await snap(page, '8-applist-after-dark');
-    await ctx.close();
-  }
+await page.goto('http://localhost:4321/cantopedia/zh/dishes/001-ceoi3-pei4-zaai1-ceon1-gyun2', { waitUntil: 'networkidle' });
+results.push(await inspect('dish-after-nav-toggle'));
 
-  writeFileSync(resolve(OUT, 'theme-visual.json'), JSON.stringify(results, null, 2));
-  console.log(JSON.stringify(results, null, 2));
-} finally {
-  await browser.close();
-}
+console.log(JSON.stringify(results, null, 2));
+await browser.close();
