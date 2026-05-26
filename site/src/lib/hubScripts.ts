@@ -138,19 +138,25 @@ export function initHubNav() {
   }
   updatePivot(initialIdx >= 0 ? initialIdx : 0);
 
-  prevLink?.addEventListener('click', (e) => {
+  const prevClick = (e: Event) => {
     e.preventDefault();
     scrollToIndex((getActiveIndex() - 1 + panels.length) % panels.length);
-  });
-  nextLink?.addEventListener('click', (e) => {
+  };
+  const nextClick = (e: Event) => {
     e.preventDefault();
     scrollToIndex((getActiveIndex() + 1) % panels.length);
-  });
+  };
+  prevLink?.addEventListener('click', prevClick);
+  nextLink?.addEventListener('click', nextClick);
+  (hub as any)._prevClick = prevClick;
+  (hub as any)._nextClick = nextClick;
 
-  hub.addEventListener('keydown', (e) => {
+  const keydownHandler = (e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); prevLink?.click(); }
     if (e.key === 'ArrowRight') { e.preventDefault(); nextLink?.click(); }
-  });
+  };
+  hub.addEventListener('keydown', keydownHandler);
+  (hub as any)._keydownHandler = keydownHandler;
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -188,6 +194,23 @@ export function initHubNav() {
 export function teardownHubNav() {
   const hub = document.getElementById('hub') as HTMLElement | null;
   if (!hub) return;
+  const prevClick = (hub as any)._prevClick;
+  const nextClick = (hub as any)._nextClick;
+  const keydownHandler = (hub as any)._keydownHandler;
+  const prevLink = document.getElementById('hub-pivot-prev');
+  const nextLink = document.getElementById('hub-pivot-next');
+  if (typeof prevClick === 'function' && prevLink) {
+    prevLink.removeEventListener('click', prevClick);
+    delete (hub as any)._prevClick;
+  }
+  if (typeof nextClick === 'function' && nextLink) {
+    nextLink.removeEventListener('click', nextClick);
+    delete (hub as any)._nextClick;
+  }
+  if (typeof keydownHandler === 'function') {
+    hub.removeEventListener('keydown', keydownHandler);
+    delete (hub as any)._keydownHandler;
+  }
   const handler = (hub as any)._hubResizeHandler;
   if (typeof handler === 'function') {
     window.removeEventListener('resize', handler);
