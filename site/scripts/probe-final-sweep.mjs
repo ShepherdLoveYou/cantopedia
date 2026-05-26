@@ -7,7 +7,21 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(__dirname, '..', 'probe-out', 'sweep');
 mkdirSync(OUT, { recursive: true });
 
-const PORT = process.env.PORT || '4321';
+async function findDevPort() {
+  if (process.env.PORT) return process.env.PORT;
+  for (let p = 4321; p <= 4329; p++) {
+    try {
+      const r = await fetch(`http://localhost:${p}/cantopedia/`, {
+        method: 'HEAD',
+        signal: AbortSignal.timeout(800),
+      });
+      if (r.status < 500) return String(p);
+    } catch {}
+  }
+  throw new Error('No dev server found on ports 4321-4329');
+}
+const PORT = await findDevPort();
+console.log(`Using dev server on port ${PORT}`);
 
 const VIEWPORTS = [
   { name: 'desktop', width: 1280, height: 800 },
