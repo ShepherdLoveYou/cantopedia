@@ -123,17 +123,19 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
       )}
       <div class="dish-hero-overlay"></div>
       <div class="dish-hero-no">#{String(dish.data.menu_no).padStart(2, '0')}</div>
-      <h2 class="dish-hero-name">{dish.data.names.yue_hant}</h2>
-      {locale !== 'en' && (
-        <div class="dish-hero-alt">
-          {dish.data.names.zh && dish.data.names.zh !== dish.data.names.yue_hant && (
-            <span class="alt-zh">{dish.data.names.zh}</span>
-          )}
-          {dish.data.names.zh && dish.data.names.en && <span class="alt-sep">·</span>}
-          {dish.data.names.en && <span class="alt-en">{dish.data.names.en}</span>}
-        </div>
-      )}
-      <div class="dish-hero-jyut">{dish.data.names.jyutping}</div>
+      <div class="dish-hero-text">
+        <h2 class="dish-hero-name">{dish.data.names.yue_hant}</h2>
+        {locale !== 'en' && (
+          <div class="dish-hero-alt">
+            {dish.data.names.zh && dish.data.names.zh !== dish.data.names.yue_hant && (
+              <span class="alt-zh">{dish.data.names.zh}</span>
+            )}
+            {dish.data.names.zh && dish.data.names.en && <span class="alt-sep">·</span>}
+            {dish.data.names.en && <span class="alt-en">{dish.data.names.en}</span>}
+          </div>
+        )}
+        <div class="dish-hero-jyut">{dish.data.names.jyutping}</div>
+      </div>
       {dish.data.images?.[0] && (
         <div class="dish-hero-credit">
           <a href={commonsPageUrl(dish.data.images[0].path)} target="_blank" rel="noopener">
@@ -343,9 +345,19 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     overflow: hidden;
     color: #fff;
     margin: 0 0 var(--sp-5);
-    height: calc(2 * var(--tile-unit) + var(--tile-gap));
+    height: calc(3 * var(--tile-unit) + 2 * var(--tile-gap));
     width: 100%;
     display: block;
+  }
+  .dish-hero-text {
+    position: absolute;
+    bottom: var(--sp-5);
+    left: var(--sp-4);
+    right: var(--sp-5);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
   }
   .dish-hero-img { position: absolute; inset: 0; }
   .dish-hero-overlay {
@@ -361,30 +373,23 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     z-index: 2;
   }
   .dish-hero-name {
-    position: absolute; bottom: calc(var(--sp-4) + 3rem); left: var(--sp-4);
     font-family: var(--lang-font-primary);
     font-size: var(--fs-panorama-sm);
     font-weight: var(--fw-light);
     margin: 0;
-    z-index: 2;
+    line-height: 1.1;
     text-shadow: 0 1px 3px rgba(0,0,0,0.6);
   }
-  .dish-hero-jyut {
-    position: absolute; bottom: var(--sp-4); left: var(--sp-4);
-    font-family: var(--mono);
-    font-size: var(--fs-body);
-    opacity: 0.85;
-    z-index: 2;
-  }
   .dish-hero-alt {
-    position: absolute;
-    bottom: calc(var(--sp-4) + 1.5rem);
-    left: var(--sp-4);
-    z-index: 2;
     font-family: var(--lang-font-primary);
     font-size: var(--fs-body);
     color: rgba(255, 255, 255, 0.85);
     text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .dish-hero-jyut {
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    opacity: 0.85;
   }
   .dish-hero-alt .alt-sep { margin: 0 0.4em; opacity: 0.6; }
   .dish-hero-credit {
