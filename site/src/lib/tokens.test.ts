@@ -6,16 +6,23 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SRC = resolve(__dirname, '..');
 
+// Exact-match tokens for font-size. The test passes when the value contains
+// any of these substrings. We deliberately do NOT allow bare "rem" or "em"
+// here — that would defeat the guard. Functions like clamp() are allowed.
 const ALLOWED_FONT_SIZE_PATTERNS = [
-  // Tokens
+  // WP10 Mobile type ramp tokens
   'var(--fs-caption)', 'var(--fs-tiny)', 'var(--fs-body)', 'var(--fs-panel)',
   'var(--fs-title)', 'var(--fs-panorama-sm)', 'var(--fs-panorama)',
-  // Lang-derived ramp
+  // Lang-derived ramp (i18n overrides in BaseLayout)
   'var(--lang-h1-size)', 'var(--lang-h2-size)', 'var(--lang-h3-size)',
-  // CSS-defined functions / units / fixed icon sizes
-  'clamp(', 'inherit', 'em', 'rem',
+  // CSS functions and keywords
+  'clamp(', 'inherit',
+  // Special intentional values: 16px (body baseline), fixed icon sizes,
+  // and the 8rem 404 display. Listed explicitly.
   '16px', '18px', '20px', '22px', '24px', '28px', '32px', '40px', '48px',
   '8rem',
+  // The 0.875em on <code> is intentionally relative — keep as-is
+  '0.875em',
 ];
 
 const ALLOWED_FONT_WEIGHT_PATTERNS = [
