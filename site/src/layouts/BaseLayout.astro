@@ -510,6 +510,15 @@ const currentYear = new Date().getFullYear();
       :root[data-accent="orange"]  { --accent: #FA6800; }
       :root[data-accent="emerald"] { --accent: #008A00; }
 
+      /* Phase A: reserve room for fixed bottom AppBar (72px) + 16 buffer. */
+      main {
+        padding-bottom: 88px;
+      }
+      /* Hub home panel has its own layout — it manages bottom space via .hub height calc. */
+      main:has(#hub) {
+        padding-bottom: 0;
+      }
+
       /* Phase A: slim 24px brand strip replacing the former top nav.
          Locale switcher + theme toggle now live in the bottom AppBar More menu. */
       .top-strip {
@@ -792,6 +801,8 @@ const currentYear = new Date().getFullYear();
         --t-plate-dark: #25252a;
         --t-card: #161618;
         --t-ink-dim: #9a9a9a;
+        --t-bg: #000000;
+        --t-ink: #FFFFFF;
       }
 
       /* ===== i18n typography overrides ===== */
