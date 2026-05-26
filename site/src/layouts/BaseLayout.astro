@@ -916,13 +916,20 @@ const currentYear = new Date().getFullYear();
       .badge--warn { background: var(--m-yellow); border-color: var(--m-yellow); color: #4a3800; }
       .badge--green { background: var(--m-green); color: white; border-color: var(--m-green); }
       /* WP10 Mobile footer — solid dark panel (matches the status bar at
-         top), small uppercase letter-spaced text, thin red Metro stripe
-         on the left as accent. Full-bleed via negative margin so it
-         breaks out of main's max-width. */
+         top), small uppercase letter-spaced text, thin Metro stripe on
+         the left as accent. Full-bleed (edge-to-edge) — footer is a
+         sibling of <main>, not a child, so it can simply take width:100%
+         of body. The previous negative-margin trick was a hold-over from
+         when footer was nested inside <main>; with footer hoisted out,
+         the explicit calc() margins were actually SUPPRESSING flex
+         align-items:stretch and pinning footer to its intrinsic content
+         width (~680px). Fixes UI_AUDIT_2026-05-26 P2.3. */
       footer {
         view-transition-name: site-footer;
-        margin: 4rem calc(-50vw + 50%) 0;
+        margin: 4rem 0 0;
+        width: 100%;
         padding: 1.75rem 1.5rem 2rem 2.75rem;
+        box-sizing: border-box;
         max-width: none !important;
         background: #000;
         color: rgba(255,255,255,0.7);
