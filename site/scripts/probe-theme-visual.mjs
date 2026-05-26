@@ -30,12 +30,17 @@ results.push(await inspect('home-after-click-light'));
 await page.goto('http://localhost:4321/cantopedia/zh/all', { waitUntil: 'networkidle' });
 results.push(await inspect('applist-fresh'));
 
-await page.click('[data-theme-toggle]');
-await page.waitForTimeout(200);
-results.push(await inspect('applist-after-nav-toggle'));
+const navBtn = await page.$('[data-theme-toggle]');
+if (navBtn) {
+  await navBtn.click();
+  await page.waitForTimeout(200);
+  results.push(await inspect('applist-after-nav-toggle'));
+} else {
+  results.push({ label: 'applist-nav-toggle-missing', skipped: true });
+}
 
 await page.goto('http://localhost:4321/cantopedia/zh/dishes/001-ceoi3-pei4-zaai1-ceon1-gyun2', { waitUntil: 'networkidle' });
-results.push(await inspect('dish-after-nav-toggle'));
+results.push(await inspect('dish-fresh-load-reads-localstorage'));
 
 console.log(JSON.stringify(results, null, 2));
 await browser.close();

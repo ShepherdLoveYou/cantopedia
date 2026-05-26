@@ -16,7 +16,7 @@ const dump = async (label) => {
       darkSide: html.classList.contains('dark-side'),
       htmlBg: getComputedStyle(html).backgroundColor,
       bodyBg: getComputedStyle(body).backgroundColor,
-      mainBg: getComputedStyle(document.querySelector('main')).backgroundColor,
+      mainBg: (() => { const m = document.querySelector('main'); return m ? getComputedStyle(m).backgroundColor : null; })(),
       vars: {
         '--t-bg': getComputedStyle(html).getPropertyValue('--t-bg').trim(),
         '--body-background': getComputedStyle(html).getPropertyValue('--body-background').trim(),
