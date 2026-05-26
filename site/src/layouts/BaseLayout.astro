@@ -35,9 +35,9 @@ const ogDescription = description ?? (locale === 'en'
 const pageTitle = `${title} · 粵食典 Cantopedia`;
 
 const dict = {
-  zh: { yue: '粵語', zh: '中文', en: 'English' },
-  en: { yue: '粵語', zh: '中文', en: 'English' },
-  yue: { yue: '粵語', zh: '中文', en: 'English' },
+  zh: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: '切换主题' },
+  en: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: 'Toggle theme' },
+  yue: { yue: '粵語', zh: '中文', en: 'English', theme_toggle: '切換主題' },
 }[locale];
 const currentYear = new Date().getFullYear();
 ---
@@ -101,7 +101,7 @@ const currentYear = new Date().getFullYear();
         <a class="brand app-bar-brand" href={`${base}/${locale}`}>
           <span class="brand-name">CANTOPEDIA</span>
         </a>
-        <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <button type="button" class="metro-nav-theme-btn" data-theme-toggle aria-label={dict.theme_toggle ?? 'Toggle theme'}>
           <span class="mif-sunny" aria-hidden="true"></span>
           <span class="mif-moon-right" aria-hidden="true"></span>
         </button>

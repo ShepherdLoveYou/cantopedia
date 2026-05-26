@@ -76,6 +76,8 @@ const dict = {
     dishes_text: '菜',
     home_label: '粵食典',
     applist_label: '所有菜式',
+    theme_light: '浅色主题',
+    theme_dark: '深色主题',
   },
   en: {
     hero_title: 'Cantopedia',
@@ -89,6 +91,8 @@ const dict = {
     dishes_text: 'dishes',
     home_label: 'Cantopedia',
     applist_label: 'All dishes',
+    theme_light: 'Light theme',
+    theme_dark: 'Dark theme',
   },
   yue: {
     hero_title: '粵食典',
@@ -102,6 +106,8 @@ const dict = {
     dishes_text: '菜',
     home_label: '粵食典',
     applist_label: '所有菜式',
+    theme_light: '淺色主題',
+    theme_dark: '深色主題',
   },
 }[locale];
 
@@ -248,14 +254,11 @@ const firstDishId = allDishes[0]?.id ?? '';
       <a class="tile-small wp-tile util-tile" data-role="tile" data-size="small" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
         <span class="mif-search util-icon"></span>
       </a>
-      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme-choice="light" style="background: var(--m-yellow);" aria-label={dict.light ?? 'Light'}>
+      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme="light" style="background: var(--m-yellow);" aria-label={dict.theme_light ?? 'Light theme'}>
         <span class="mif-sunny util-icon"></span>
       </button>
-      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme-choice="dark" style="background: var(--m-purple);" aria-label={dict.dark ?? 'Dark'}>
+      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme="dark" style="background: var(--m-purple);" aria-label={dict.theme_dark ?? 'Dark theme'}>
         <span class="mif-moon-right util-icon"></span>
-      </button>
-      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme-choice="auto" style="background: var(--m-steel);" aria-label={dict.auto ?? 'Auto'}>
-        <span class="mif-cog util-icon"></span>
       </button>
       <a class="tile-small wp-tile util-tile" data-role="tile" data-size="small" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
         <span class="mif-github util-icon"></span>
