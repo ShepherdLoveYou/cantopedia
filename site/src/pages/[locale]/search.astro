@@ -73,7 +73,7 @@ const dict = {
           return `
             <li class="search-hit">
               <a href="${data.url.replace(/\/$/, '')}">
-                <span class="app-list-thumb"></span>
+                <span class="app-list-thumb" aria-hidden="true"></span>
                 <span class="app-list-text">
                   <span class="app-list-name">${data.meta?.title ?? data.url}</span>
                   <span class="app-list-meta">${data.excerpt}</span>
