@@ -956,10 +956,30 @@ const currentYear = new Date().getFullYear();
       /* WP10 Mobile status bar — slim, solid (no acrylic on the bar itself),
          app name in small uppercase letter-spaced text. The drawer keeps its
          acrylic; the bar is flat per WP10 status bar convention. */
+      /* WP10 Mobile status bar — follows theme:
+         light = white bg + black text, dark = black bg + white text.
+         Override Metro's --appbar-* CSS vars so all theme-aware Metro
+         rules auto-flip without us needing hardcoded colors. */
+      :root {
+        --appbar-background: #ffffff;
+        --appbar-color: #000000;
+        --appbar-item-background: transparent;
+        --appbar-item-color: #000000;
+        --appbar-item-color-hover: #000000;
+        --appbar-item-background-hover: rgba(0, 0, 0, 0.06);
+      }
+      .dark-side {
+        --appbar-background: #000000;
+        --appbar-color: #ffffff;
+        --appbar-item-background: transparent;
+        --appbar-item-color: #ffffff;
+        --appbar-item-color-hover: #ffffff;
+        --appbar-item-background-hover: rgba(255, 255, 255, 0.08);
+      }
+
       .metro-nav {
-        background: #000 var(--acrylic-noise);
-        background-blend-mode: overlay;
-        color: #fff;
+        background: var(--appbar-background);
+        color: var(--appbar-color);
         padding: 0 var(--sp-3);
         height: var(--sp-6);
         display: flex;
@@ -974,19 +994,19 @@ const currentYear = new Date().getFullYear();
         view-transition-name: status-bar;
       }
       /* Metro v5 app-bar overrides — restore WP10 status-bar look.
-       * Compound selector `.metro-nav.app-bar` (0,2,0) beats Metro's `.app-bar` (0,1,0)
-       * specificity-wise, so plain declarations win without !important. The TWO uses of
-       * !important below are necessary because Metro's JS writes inline display styles
-       * on `.collapsed` and injects `.hamburger` with inline styles after init. */
+       * Compound selector `.metro-nav.app-bar` (0,2,0) beats Metro's `.app-bar`. */
       .metro-nav.app-bar {
         min-height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         padding-top: env(safe-area-inset-top, 0px);
-        flex-flow: row nowrap;
-        /* mirrors .metro-nav base rule above — needed to beat Metro's .app-bar background */
-        background-color: #000;
+        background-color: var(--appbar-background);
+        color: var(--appbar-color);
         padding-right: var(--sp-3);
         box-sizing: border-box;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .dark-side .metro-nav.app-bar {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
       }
       /* At md+ (≥768px) the menu expands inline horizontally.
          Below md, Metro auto-collapses the menu to a hamburger dropdown
@@ -1001,23 +1021,26 @@ const currentYear = new Date().getFullYear();
       .metro-nav.app-bar .app-bar-menu > li {
         list-style: none;
       }
-      /* Hamburger color override — match nav dark background. */
+      /* Hamburger color follows --appbar-color (theme-aware). */
       .metro-nav.app-bar .hamburger .line {
-        background-color: rgba(255,255,255,0.7);
+        background-color: var(--appbar-color);
       }
       /* When collapsed (mobile), the menu drops down from below the bar
-         with our nav dark background. */
+         using the same theme-aware background. */
       .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
-        background-color: #000;
+        background-color: var(--appbar-background);
         padding: var(--sp-2) 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .dark-side .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
       }
       .metro-nav.app-bar:not(.app-bar-expand) .app-bar-menu > li > a {
         padding: 0.75rem var(--sp-4);
       }
-      /* Override Metro's light-theme color vars on app-bar items inside our dark nav */
+      /* App-bar items — let Metro's --appbar-item-* CSS vars drive most
+         of this; we only tighten geometry. */
       .metro-nav.app-bar .app-bar-menu > li > a {
-        background-color: transparent;
-        color: rgba(255,255,255,0.5);
         padding: 0.55rem 0.6rem;
         font-size: var(--fs-caption);
         line-height: 1;
@@ -1026,11 +1049,15 @@ const currentYear = new Date().getFullYear();
       .metro-nav.app-bar .brand {
         font-size: inherit;
         flex: 1;
+        color: var(--appbar-color);
       }
-      .metro-nav-theme-btn {
+      /* Theme + More buttons reuse Metro's .app-bar-button geometry (52×52)
+         and theme-aware --appbar-color. */
+      .metro-nav-theme-btn,
+      .metro-nav-more-btn {
         background: transparent;
         border: 0;
-        color: rgba(255, 255, 255, 0.7);
+        color: var(--appbar-color);
         width: var(--sp-6);
         height: var(--sp-6);
         display: inline-flex;
@@ -1039,26 +1066,18 @@ const currentYear = new Date().getFullYear();
         font-size: var(--fs-panel);
         cursor: pointer;
         padding: 0;
+        transition: background-color 120ms ease;
       }
-      .metro-nav-theme-btn:hover { color: #fff; }
+      .metro-nav-theme-btn:hover,
+      .metro-nav-more-btn:hover {
+        background: var(--appbar-item-background-hover);
+      }
+      /* Theme button icon swap — show sun in dark mode (to switch to light),
+         show moon in light mode (to switch to dark). */
       .metro-nav-theme-btn .mif-sunny { display: none; }
       .metro-nav-theme-btn .mif-moon-right { display: inline-flex; }
       .dark-side .metro-nav-theme-btn .mif-sunny { display: inline-flex; }
       .dark-side .metro-nav-theme-btn .mif-moon-right { display: none; }
-      .metro-nav-more-btn {
-        background: transparent;
-        border: 0;
-        color: rgba(255, 255, 255, 0.7);
-        width: var(--sp-6);
-        height: var(--sp-6);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: var(--fs-panel);
-        cursor: pointer;
-        padding: 0;
-      }
-      .metro-nav-more-btn:hover { color: #fff; }
       ::view-transition-old(status-bar),
       ::view-transition-new(status-bar) {
         animation: none;   /* nav is persisted; no cross-fade needed */
@@ -1066,12 +1085,16 @@ const currentYear = new Date().getFullYear();
       .loading-bar { view-transition-name: loading-bar; }
       ::view-transition-old(loading-bar),
       ::view-transition-new(loading-bar) { animation: none; }
-      .metro-nav .brand {
+      /* Brand inside the metro-nav follows --appbar-color (theme-aware).
+         Pre-existing .brand global rule (~L1104) uses !important white;
+         override here with same specificity + !important to win. */
+      .metro-nav .brand,
+      .metro-nav .brand:hover {
         flex: 1;
-        justify-content: center;
+        justify-content: flex-start;
         display: flex;
         align-items: center;
-        color: #fff !important;
+        color: var(--appbar-color) !important;
         text-decoration: none;
       }
       .metro-nav .brand-name {
@@ -1080,7 +1103,7 @@ const currentYear = new Date().getFullYear();
         font-weight: var(--fw-medium);
         letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: #fff;
+        color: var(--appbar-color);
       }
       .brand { display: flex; align-items: center; gap: 0.75rem; color: white !important; }
       .brand:hover { color: white !important; }
