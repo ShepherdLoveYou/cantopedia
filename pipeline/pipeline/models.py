@@ -105,6 +105,7 @@ class ImageMeta(BaseModel):
     license: License
     credit: str
     alt: TriLangTextPartial | None = None
+    focal_point: str | None = None
 
 
 # ---------- collection schemas ----------
