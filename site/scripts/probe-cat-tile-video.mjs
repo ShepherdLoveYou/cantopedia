@@ -10,7 +10,8 @@ mkdirSync(OUT, { recursive: true });
 const browser = await chromium.launch();
 const p = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 await p.emulateMedia({ reducedMotion: 'no-preference' });
-await p.goto('http://localhost:4321/cantopedia/zh', { waitUntil: 'networkidle' });
+const PORT = process.env.PORT || '4321';
+await p.goto(`http://localhost:${PORT}/cantopedia/zh`, { waitUntil: 'networkidle' });
 
 // Crop to just the cat tiles area for clarity
 const clip = await p.evaluate(() => {
