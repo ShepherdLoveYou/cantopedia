@@ -117,7 +117,7 @@ const nextName = nextDish ? (locale === 'en' ? nextDish.data.names.en : nextDish
     initialTab="ingredients"
   >
     {/* Hero tile-banner — WP10 Metro wide tile (4×2) with dish photo */}
-    <div slot="hero" class="dish-hero-banner" data-role="tile" data-size="wide" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
+    <div slot="hero" class="dish-hero-banner" style={`background: ${catColor}; view-transition-name: dish-${dish.id};`}>
       {dish.data.images?.[0] && (
         /* background-position fallback "50% 35%" biases the crop upward — fits
            typical top-down food photography where the dish sits a bit above

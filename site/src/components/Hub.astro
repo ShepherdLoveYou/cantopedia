@@ -13,6 +13,7 @@
  */
 import { getCollection } from 'astro:content';
 import CategoryIcon from '~/components/CategoryIcon.astro';
+import Icon from '~/components/Icon.astro';
 import { tileColors, tileColor as tileColorFor } from '~/lib/categoryColors';
 import { commonsThumb } from '~/lib/commonsImage';
 import AppListPanel from '~/components/AppListPanel.astro';
@@ -172,9 +173,6 @@ const firstDishId = allDishes[0]?.id ?? '';
       <a
         id="featured-tile"
         class="tile-wide featured-tile wp-tile"
-        data-role="tile"
-        data-size="wide"
-        data-effect="slide-up"
         href={`${base}/${locale}/dishes/${firstDishId}`}
       >
         <div class="slide featured-slide" data-face="today">
@@ -238,35 +236,35 @@ const firstDishId = allDishes[0]?.id ?? '';
       {/* 4 stat tiles (medium, single-face, no flip — they show stats not pictures).
           Empty counts render as em-dash (—) to signal "no items in this state" typographically
           instead of a bare 0 which reads as a broken counter (UI_AUDIT_2026-05-26 P2.1). */}
-      <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-green); view-transition-name: stat-complete;">
         <span class="stat-num">{complete === 0 ? '—' : complete}</span>
         <span class="stat-label">{dict.complete}</span>
       </a>
-      <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-orange);">
         <span class="stat-num">{draft === 0 ? '—' : draft}</span>
         <span class="stat-label">{dict.draft}</span>
       </a>
-      <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-steel);">
         <span class="stat-num">{(total - complete - draft) === 0 ? '—' : (total - complete - draft)}</span>
         <span class="stat-label">{dict.stub}</span>
       </a>
-      <a class="tile-medium wp-tile stat-tile-mt" data-role="tile" data-size="medium" href={`${base}/${locale}/all`} style="background: var(--m-red);">
+      <a class="tile-medium wp-tile stat-tile-mt" href={`${base}/${locale}/all`} style="background: var(--m-red);">
         <span class="stat-num">{total === 0 ? '—' : total}</span>
         <span class="stat-label">{dict.pieces}</span>
       </a>
 
       {/* Utility row: search + 3 theme + github (all 1×1, single-face icon only) */}
-      <a class="tile-small wp-tile util-tile" data-role="tile" data-size="small" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
-        <span class="mif-search util-icon"></span>
+      <a class="tile-small wp-tile util-tile" href={`${base}/${locale}/search`} style="background: var(--m-cyan);" aria-label={dict.tag_search ?? 'Search'}>
+        <Icon name="search" class="util-icon" />
       </a>
-      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme="light" style="background: var(--m-yellow);" aria-label={dict.theme_light ?? 'Light theme'}>
-        <span class="mif-sunny util-icon"></span>
+      <button type="button" class="tile-small wp-tile util-tile" data-theme="light" style="background: var(--m-yellow);" aria-label={dict.theme_light ?? 'Light theme'}>
+        <Icon name="sun" class="util-icon" />
       </button>
-      <button type="button" class="tile-small wp-tile util-tile" data-role="tile" data-size="small" data-theme="dark" style="background: var(--m-purple);" aria-label={dict.theme_dark ?? 'Dark theme'}>
-        <span class="mif-moon-right util-icon"></span>
+      <button type="button" class="tile-small wp-tile util-tile" data-theme="dark" style="background: var(--m-purple);" aria-label={dict.theme_dark ?? 'Dark theme'}>
+        <Icon name="moon" class="util-icon" />
       </button>
-      <a class="tile-small wp-tile util-tile" data-role="tile" data-size="small" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
-        <span class="mif-github util-icon"></span>
+      <a class="tile-small wp-tile util-tile" href="https://github.com/ShepherdLoveYou/cantopedia" target="_blank" rel="noopener" style="background: var(--m-ink);" aria-label="GitHub">
+        <Icon name="github" class="util-icon" />
       </a>
     </div>
   </section>
@@ -302,8 +300,6 @@ const firstDishId = allDishes[0]?.id ?? '';
             return (
               <a
                 class="tile-medium wp-tile dish-tile"
-                data-role="tile"
-                data-size="medium"
                 href={`${base}/${locale}/dishes/${dish.id}`}
                 style={`background: ${tileColor}; ${thumb ? `background-image: url('${thumb}'); background-size: cover; background-position: center;` : ''} view-transition-name: dish-${dish.id};`}
                 aria-label={dishName}
@@ -609,6 +605,26 @@ const firstDishId = allDishes[0]?.id ?? '';
   .featured-tile .slide.featured-slide {
     position: absolute;
     inset: 0;
+    /* 18s cycle through 3 slides — each visible ~5s with ~1s crossfade.
+       Replaces Metro's `data-effect="slide-up"` JS rotator. The matching
+       `tile.href` cycling stays in lib/hubScripts.ts (interval 6000ms,
+       aligned with this 6s-per-slide animation period). */
+    opacity: 0;
+    animation: featured-cycle 18s linear infinite;
+  }
+  .featured-tile .slide.featured-slide:nth-child(1) { animation-delay: 0s; }
+  .featured-tile .slide.featured-slide:nth-child(2) { animation-delay: 6s; }
+  .featured-tile .slide.featured-slide:nth-child(3) { animation-delay: 12s; }
+  @keyframes featured-cycle {
+    0%        { opacity: 0; transform: translateY(20%); }
+    3.3%      { opacity: 1; transform: translateY(0); }
+    30%       { opacity: 1; transform: translateY(0); }
+    36.6%     { opacity: 0; transform: translateY(-20%); }
+    100%      { opacity: 0; transform: translateY(-20%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured-tile .slide.featured-slide { animation: none; opacity: 0; }
+    .featured-tile .slide.featured-slide:nth-child(1) { opacity: 1; }
   }
   .featured-tile .featured-img {
     position: absolute; inset: 0;
