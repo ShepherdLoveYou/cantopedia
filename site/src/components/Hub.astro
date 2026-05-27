@@ -359,14 +359,19 @@ const firstDishId = allDishes[0]?.id ?? '';
     margin: 0 auto;
   }
   .hub-pivot-title {
-    font-size: clamp(1.6rem, 7vw, 3.25rem);
-    font-weight: var(--lang-min-weight, 300);
-    letter-spacing: var(--lang-h1-tracking, -0.025em);
+    /* WP10 Panorama 招牌：巨大、light、紧密、刻意溢出。clamp 上限 4.5rem
+       让标题在桌面端撑得很大；7.5vw 在 mobile 视口 414px 大约 31px (=2rem)。
+       letter-spacing 紧到 -0.035em 是 Win10 Mobile 招牌的"挤压感"。 */
+    font-size: clamp(1.8rem, 7.5vw, 4.5rem);
+    font-weight: 200;
+    letter-spacing: -0.035em;
     line-height: 1;
     margin: 0;
     text-align: center;
     color: var(--t-ink);
-    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
   }
   .hub-pivot-link {
     display: inline-flex;
@@ -461,16 +466,35 @@ const firstDishId = allDishes[0]?.id ?? '';
     border: 0;
   }
 
-  /* Tile entrance: one-shot reveal for featured tile. */
+  /* WP10 招牌 cascade entrance — 每个 tile 错峰飞入。stagger 30ms 是 WP10
+     原版节奏；24 个 nth-child 槽位覆盖 hub home (1 featured + 8 cat + 4 stat
+     + 4 util + headroom) 和 browse panel (8-22 dish tiles)。 */
   @keyframes tile-enter {
-    0%   { opacity: 0; transform: translateY(20px) scale(0.92); }
+    0%   { opacity: 0; transform: translateY(24px) scale(0.94); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
   }
-  .featured-tile {
-    animation: tile-enter 520ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
+  .tiles-grid > * {
+    animation: tile-enter 480ms var(--fluent-curve-decelerate-mid, ease-out) backwards;
   }
+  .tiles-grid > *:nth-child(1)  { animation-delay:   0ms; }
+  .tiles-grid > *:nth-child(2)  { animation-delay:  30ms; }
+  .tiles-grid > *:nth-child(3)  { animation-delay:  60ms; }
+  .tiles-grid > *:nth-child(4)  { animation-delay:  90ms; }
+  .tiles-grid > *:nth-child(5)  { animation-delay: 120ms; }
+  .tiles-grid > *:nth-child(6)  { animation-delay: 150ms; }
+  .tiles-grid > *:nth-child(7)  { animation-delay: 180ms; }
+  .tiles-grid > *:nth-child(8)  { animation-delay: 210ms; }
+  .tiles-grid > *:nth-child(9)  { animation-delay: 240ms; }
+  .tiles-grid > *:nth-child(10) { animation-delay: 270ms; }
+  .tiles-grid > *:nth-child(11) { animation-delay: 300ms; }
+  .tiles-grid > *:nth-child(12) { animation-delay: 330ms; }
+  .tiles-grid > *:nth-child(13) { animation-delay: 360ms; }
+  .tiles-grid > *:nth-child(14) { animation-delay: 390ms; }
+  .tiles-grid > *:nth-child(15) { animation-delay: 420ms; }
+  .tiles-grid > *:nth-child(16) { animation-delay: 450ms; }
+  .tiles-grid > *:nth-child(n+17) { animation-delay: 480ms; }
   @media (prefers-reduced-motion: reduce) {
-    .featured-tile {
+    .tiles-grid > * {
       animation: tile-enter-fade 200ms ease-out both;
     }
     @keyframes tile-enter-fade {

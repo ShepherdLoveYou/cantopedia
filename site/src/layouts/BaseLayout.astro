@@ -751,20 +751,45 @@ const currentYear = new Date().getFullYear();
            appears to resize / jiggle on mobile. */
         view-transition-name: status-bar;
       }
-      /* Metro v5 app-bar overrides — restore WP10 status-bar look.
-       * Compound selector `.metro-nav.app-bar` (0,2,0) beats Metro's `.app-bar`. */
+      /* WP10 status-bar look with Acrylic (Fluent-style blur + saturate + noise).
+         Background is translucent so what's behind the nav (tile photos, hero
+         images, hub-pivot title) shows through softly — signature Win10 Mobile feel. */
       .metro-nav.app-bar {
+        position: sticky;
+        top: 0;
         min-height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         height: calc(var(--sp-6) + env(safe-area-inset-top, 0px));
         padding-top: env(safe-area-inset-top, 0px);
-        background-color: var(--nav-bg);
+        background-color: rgba(255, 255, 255, 0.78);
         color: var(--nav-fg);
         padding-right: var(--sp-3);
         box-sizing: border-box;
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        isolation: isolate;
       }
       .dark-side .metro-nav.app-bar {
+        background-color: rgba(0, 0, 0, 0.62);
         border-bottom-color: rgba(255, 255, 255, 0.08);
+      }
+      @supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
+        .metro-nav.app-bar {
+          backdrop-filter: blur(30px) saturate(125%);
+          -webkit-backdrop-filter: blur(30px) saturate(125%);
+          background-color: rgba(255, 255, 255, 0.62);
+        }
+        .dark-side .metro-nav.app-bar {
+          background-color: rgba(0, 0, 0, 0.48);
+        }
+      }
+      .metro-nav.app-bar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--acrylic-noise);
+        opacity: 0.35;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+        z-index: -1;
       }
       .metro-nav.app-bar .brand {
         font-size: inherit;

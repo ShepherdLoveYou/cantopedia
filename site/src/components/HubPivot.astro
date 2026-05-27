@@ -43,14 +43,17 @@ const { initialTitle, prevId = 'hub-pivot-prev', nextId = 'hub-pivot-next', titl
     margin: 0 auto;
   }
   .hub-pivot-title {
-    font-size: clamp(var(--fs-title), 7vw, var(--fs-panorama));
-    font-weight: var(--fw-light);
-    letter-spacing: var(--ls-meta);
+    /* WP10 Panorama style — see Hub.astro for rationale. */
+    font-size: clamp(1.8rem, 7.5vw, 4.5rem);
+    font-weight: 200;
+    letter-spacing: -0.035em;
     line-height: 1;
     margin: 0;
     text-align: center;
     color: var(--t-ink);
-    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
   }
   .hub-pivot-link {
     display: inline-flex;
