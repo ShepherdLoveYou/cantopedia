@@ -394,12 +394,14 @@ const currentYear = new Date().getFullYear();
         /* WP10 Mobile tile grid pitch — single source of truth for all tile sizes.
            INTEGER pixel values only — fractional units (calc/division) cause
            CSS Grid to round inconsistently across rows, producing 1-3 px tile
-           overlaps when an item spans multiple rows. See L<tile-classes> for
-           the INVARIANT that goes with this. */
-        --tile-unit: 90px;
+           overlaps when an item spans multiple rows. Tiered by viewport so
+           4 cols × unit + 3 × gap fits inside every common mobile width.
+           See L<tile-classes> for the INVARIANT that goes with this. */
+        --tile-unit: 70px;    /* 320+ floor: 4×70 + 3×8 = 304 fits 320 vw */
         --tile-gap: 8px;
       }
-
+      @media (min-width: 360px) { :root { --tile-unit: 80px; } }  /* 4×80+24 = 344 */
+      @media (min-width: 414px) { :root { --tile-unit: 90px; } }  /* 4×90+24 = 384 */
       /* Restored Metro top nav (~40px + iOS notch). Use --nav-h so a
          device with a notch passes its safe-area inset down to Hub. */
       :root {
@@ -658,6 +660,12 @@ const currentYear = new Date().getFullYear();
          Fixes UI_AUDIT_2026-05-26 P1#4 (mobile dish-detail 414-608px
          horizontal overflow). */
       main { width: 100%; max-width: 1200px; min-width: 0; margin: 0 auto; padding: 6rem 1.5rem 1.5rem; }
+      /* Phone widths: reclaim main's 1.5rem side padding so the tile grid
+         (4 × --tile-unit + 3 × --tile-gap) fits the viewport with even
+         margins. Must follow the rule above to win the cascade. */
+      @media (max-width: 414px) {
+        main { padding-left: 0; padding-right: 0; }
+      }
       h1 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h1-size); line-height: 1.1; letter-spacing: var(--lang-h1-tracking); margin: 0 0 0.5rem; }
       h2 { font-family: var(--lang-font-primary); font-weight: var(--lang-min-weight, 300); font-size: var(--lang-h2-size); margin: 2.5rem 0 1rem; line-height: 1.2; letter-spacing: var(--lang-h2-tracking); }
       h3 { font-family: var(--lang-font-primary); font-weight: var(--fw-medium); font-size: var(--lang-h3-size); text-transform: none; letter-spacing: 0.01em; color: var(--ink); margin: 2rem 0 0.75rem; }

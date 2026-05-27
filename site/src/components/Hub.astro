@@ -443,6 +443,12 @@ const firstDishId = allDishes[0]?.id ?? '';
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
   }
+  /* Phone widths: drop the 1.5rem side padding so the tile grid
+     (4 × --tile-unit + 3 × --tile-gap) fits the viewport with even
+     margins instead of overflowing on the right. */
+  @media (max-width: 414px) {
+    .hub-panel { padding-left: 0; padding-right: 0; }
+  }
   .hub-panel::-webkit-scrollbar { width: 6px; }
   .hub-panel::-webkit-scrollbar-thumb { background: var(--t-rule); border-radius: 3px; }
 
